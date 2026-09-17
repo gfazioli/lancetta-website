@@ -129,7 +129,7 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
   {
     question: 'Is Lancetta only in the menu bar?',
     answer:
-      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the daily token chart, both agents in detail, and the background processes the agents have left running. Lancetta still puts no icon in the Dock: closing the window quits nothing, and the menu-bar item is always the way back. On a MacBook Pro the reading also sits under the notch.',
+      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the daily token chart, both agents in detail, and the background processes the agents have left running. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch.',
   },
   {
     question: 'What is the memory half?',

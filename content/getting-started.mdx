@@ -17,9 +17,11 @@ description: "Install Lancetta on macOS, wire Codex and Claude Code, and read yo
 
 ## Install
 
-Download the DMG, drag Lancetta to Applications, and launch it. It puts an item in your menu bar and **no icon in the Dock** — it is an accessory app, and the menu bar is where it lives.
+Download the DMG, drag Lancetta to Applications, and launch it. It puts an item in your menu bar and, at rest, **nothing in the Dock** — the menu bar is where it lives.
 
-There *is* a window, opened with **Open Lancetta…** (⌘O) from that menu, but the app does not need it: closing it does not quit anything, and the menu-bar item is always the way back.
+There *is* a window, opened with **Open Lancetta…** (⌘O) from that menu, but the app does not need it: closing it does not quit anything, and the menu-bar item is always the way back. A Dock icon appears while that window is open and goes with it, because a window needs its app to be a normal one; [one switch](/docs/settings#general) keeps the icon there permanently if you prefer.
+
+**Open Lancetta at login** is a switch in the same place, off by default.
 
 On first launch it looks for each agent it knows about. It does this itself because **a GUI app inherits almost no `PATH`**: launched from the Finder, a Mac app sees `/usr/bin:/bin:/usr/sbin:/sbin` and neither agent is in any of those. Lancetta looks in the places these tools actually install to, and falls back to asking your login shell.
 

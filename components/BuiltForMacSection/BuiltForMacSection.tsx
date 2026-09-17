@@ -22,7 +22,7 @@ const techPills = [
   { label: 'Under the Notch', icon: IconDeviceDesktop },
   { label: 'Light & Dark', icon: IconPalette },
   { label: 'Auto-Refresh', icon: IconRefresh },
-  { label: 'No Dock Icon', icon: IconWindowMinimize },
+  { label: 'Stays Out of the Dock', icon: IconWindowMinimize },
   { label: 'Apple Silicon', icon: IconCpu },
 ];
 
@@ -88,9 +88,9 @@ export function BuiltForMacSection() {
           </Group>
 
           <Text c="dimmed" ta="center" size="lg" maw={620} mt="lg">
-            No Dock icon, no Electron, no window you have to keep open. Native SwiftUI that sits in
-            the menu bar and gets out of the way — and on a MacBook Pro, one thin bar per agent
-            under the notch.
+            No Electron, and no window you have to keep open. Native SwiftUI that sits in the menu
+            bar and gets out of the way — and on a MacBook Pro, one thin bar per agent under the
+            notch.
           </Text>
         </Stack>
       </Container>
