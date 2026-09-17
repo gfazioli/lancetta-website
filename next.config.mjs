@@ -8,10 +8,10 @@ const withBundleAnalyzer = bundleAnalyzer({
 const withNextra = nextra({
   latex: true,
   search: {
-    codeblocks: false
+    codeblocks: false,
   },
   contentDirBasePath: '/docs',
-})
+});
 
 export default withNextra(
   withBundleAnalyzer({
@@ -31,4 +31,5 @@ export default withNextra(
         },
       },
     },
-  }));
+  })
+);

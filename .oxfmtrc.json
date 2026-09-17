@@ -22,12 +22,5 @@
     "(?<!\\.module)\\.css$"
   ],
   "sortPackageJson": false,
-  "ignorePatterns": [
-    "*.d.ts",
-    "*.mdx",
-    "*.md",
-    ".next",
-    "content",
-    "public/_pagefind"
-  ]
+  "ignorePatterns": ["*.d.ts", "*.mdx", "*.md", ".next", "content", "public/_pagefind"]
 }

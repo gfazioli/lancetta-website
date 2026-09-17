@@ -100,6 +100,29 @@ darkened cut for light mode because the app's own values read 2.3:1 and 2.7:1 on
 white. **Do not use either one as a decorative accent.** That is what
 `--lan-accent` is for.
 
+### The favicon is a different drawing, and that is deliberate
+
+The gradient app icon does not survive 16px. Measured rather than judged: its
+bars cover 27% of the tile and its plate another 25%, so three bars share 66
+pixels, and the gradients and rim glow smear what is left. Rendered magnified on
+a light and a dark tab plate, it is mud.
+
+`public/favicon.svg` is therefore the icon's **flat** variant — no gradient, no
+glow, so each bar stays one solid colour down to 2px — redrawn as vector from
+`../Lancetta/Brand/app-icon-flat-1024.png` and **full bleed**, because the
+master's ~10% transparent margin is an app-icon convention and dead area in a
+tab. That alone took the bars from 21% of the tile to 35%.
+
+`favicon-16x16.png`, `favicon-32x32.png` and `favicon.ico` are rendered from
+that SVG, so all four routes draw the same mark. `apple-touch-icon.png` and
+everything from 64px up stay the gradient icon, which reads at those sizes and
+is the app's own face.
+
+If you change any of it, look at it: `scripts/` has no favicon tool, so it is a
+throwaway that magnifies the shipped PNGs with NEAREST-NEIGHBOUR onto both tab
+plates. A favicon judged from the 1024px master is judged from a picture nobody
+will ever see.
+
 ## Content guidelines
 
 - All website content is in **English**.

@@ -1,27 +1,27 @@
 <!--
-  THE TAB MARK — the app icon's three bars, alone.
+  THE TAB MARK — the app icon's FLAT variant, redrawn as vector and full bleed.
 
-  Not the app icon. At 16px the icon is unreadable and it was measured rather
-  than guessed: the bars cover 27% of the tile and the plate another 25%, so
-  three bars get 66 pixels between them and smear into each other. The plate is
-  what eats the space, so the tab mark drops it.
+  Why a variant at all: the main icon does not survive 16px, and it was
+  measured rather than judged by eye. Its bars cover 27% of the tile and its
+  plate another 25%, so three bars share 66 pixels; its gradients and rim glow
+  then smear what is left into mud. The flat variant has no gradient and no
+  glow, so each bar stays one solid colour all the way down to 2px wide.
 
-  Laid out on a 16-unit grid so every edge lands on a pixel boundary at the one
-  size that matters: 1u margin, 4u bars, 1u gaps, common baseline at y=15. The
-  heights keep the icon's proportions (10 / 14 / 11 against its 424 / 582 / 458).
+  Why full bleed: the master carries about 10% transparent margin on every
+  side, which is the convention for an APP icon and is dead area in a favicon.
+  Dropping it takes the bars from 21% of the tile to 35% — measured, same
+  script — with no change to the drawing itself.
 
-  The fills are the app's OWN values, not a fourth set: #E8833A is
-  ClaudeSource.tintHex, #2FBFA8 is CodexSource.tintHex, and #8D78F5 is
-  lancetta-5, the brand accent that stands for no agent. On a light tab they
-  measure about 2:1, which is low for text and fine for a 4px solid — the mark
-  is carried by three distinct hues at three distinct heights, and darkening
-  them to chase a text ratio would stop them being the app's colours.
+  Geometry is normalised to the plate of `Lancetta/Brand/app-icon-flat-1024.png`
+  (plate 1000x986 px at x=127, y=137; corner radius 234 px = 23.4% of width;
+  bars at 233/510/791 with a common baseline at y=951). Fills are sampled off
+  that same file, not picked.
 
-  `public/brand-mark.svg` is the faithful redraw of the whole icon, for anywhere
-  it is drawn large.
+  `public/brand-mark.svg` is the gradient icon, for anywhere it is drawn large.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Lancetta">
-  <rect x="1"  y="5" width="4" height="10" rx="2" fill="#E8833A"/>
-  <rect x="6"  y="1" width="4" height="14" rx="2" fill="#2FBFA8"/>
-  <rect x="11" y="4" width="4" height="11" rx="2" fill="#8D78F5"/>
+  <rect x="0" y="0" width="16" height="16" rx="3.75" fill="#122440"/>
+  <rect x="1.70"  y="5.27" width="3.68" height="7.95"  rx="1.84" fill="#FF960F"/>
+  <rect x="6.13"  y="2.56" width="3.74" height="10.68" rx="1.87" fill="#00EDC6"/>
+  <rect x="10.62" y="5.24" width="3.66" height="7.98"  rx="1.83" fill="#AC71FB"/>
 </svg>

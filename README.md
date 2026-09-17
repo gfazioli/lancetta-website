@@ -109,7 +109,7 @@ The palette is the app icon's, **sampled rather than picked** — the three bars
 
 The brand accent is deliberately the icon's **third** bar. The other two hues already mean *which agent* inside the app — teal is Codex, orange is Claude Code — so the site keeps those semantic and takes its accent from the one the app spends on no agent. An accent borrowed from an agent hue would disagree with every screenshot on the page.
 
-`public/favicon.svg` is a different drawing on purpose: at 16px the app icon's plate eats the tile and the three bars smear into each other, so the tab gets the bars alone on a 16-unit grid. Details in [`CLAUDE.md`](CLAUDE.md).
+`public/favicon.svg` is a different drawing on purpose: the gradient icon does not survive 16px — measured, its bars get 66 pixels between them and its glow smears the rest — so the tab gets the icon's **flat** variant, redrawn as vector and full bleed. Details in its own comment and in [`CLAUDE.md`](CLAUDE.md).
 
 ## Licence
 
