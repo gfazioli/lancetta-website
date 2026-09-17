@@ -1,6 +1,6 @@
 'use client';
 
-import { type CSSProperties, useEffect, useState } from 'react';
+import { type CSSProperties, useState } from 'react';
 import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
 import { TextAnimate } from '@gfazioli/mantine-text-animate';
@@ -22,7 +22,6 @@ import {
   Badge,
   Box,
   Button,
-  Center,
   Container,
   Grid,
   Group,
@@ -46,6 +45,7 @@ import {
   type ReleaseCadence as Cadence,
 } from '../ReleaseCadence/release-cadence';
 import { ShareButtons } from '../ShareButtons/ShareButtons';
+import { type GalleryShot, ScrollGallery } from '../ScrollGallery/ScrollGallery';
 import { SolutionSection } from '../SolutionSection/SolutionSection';
 import { FAQ } from '../FAQ/FAQ';
 import classes from './Welcome.module.css';
@@ -143,107 +143,35 @@ function ZoomableScreenshot({
   );
 }
 
-/**
- * Hero carousel: cross-fades through the shots on a timer, with clickable
- * dots. Auto-advance pauses on hover and while the lightbox is open.
+/*
+ * The three surfaces, in the order a reader meets them, for the scroll-driven
+ * gallery under the hero. It replaced a timer-and-dots carousel: the frame is
+ * now a function of how far the reader has scrolled, which is what the user
+ * asked for and what Apple's product pages do. Three frames, not four — the
+ * light-mode menu is the same content as the dark one and made a weak step;
+ * it still lives in the docs.
  */
-function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
-  const [index, setIndex] = useState(0);
-  const [paused, setPaused] = useState(false);
-  const [zoomed, setZoomed] = useState(false);
-
-  useEffect(() => {
-    if (paused || zoomed || shots.length < 2) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % shots.length), 5000);
-    return () => clearInterval(id);
-  }, [paused, zoomed, shots.length]);
-
-  const active = shots[index];
-
-  return (
-    <Box>
-      <UnstyledButton
-        onClick={() => setZoomed(true)}
-        aria-label={`Open enlarged screenshot: ${active.alt}`}
-        onMouseEnter={() => setPaused(true)}
-        onMouseLeave={() => setPaused(false)}
-        style={{ display: 'block', width: '100%', cursor: 'zoom-in' }}
-      >
-        {/* Fixed-ratio stage so the fade does not jolt the layout between
-            shots of different heights; each one is contained within it. */}
-        <Box pos="relative" mx="auto" maw={860} style={{ width: '100%', aspectRatio: '14 / 10' }}>
-          {shots.map((shot, i) => (
-            <Image
-              key={shot.src}
-              src={shot.src}
-              alt={shot.alt}
-              aria-hidden={i !== index}
-              style={{
-                position: 'absolute',
-                inset: 0,
-                width: '100%',
-                height: '100%',
-                objectFit: 'contain',
-                opacity: i === index ? 1 : 0,
-                transition: 'opacity 800ms ease',
-                pointerEvents: 'none',
-                filter: 'drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55))',
-              }}
-            />
-          ))}
-        </Box>
-      </UnstyledButton>
-
-      <Center mt="lg" mb={40}>
-        <Group gap={10}>
-          {shots.map((shot, i) => (
-            <UnstyledButton
-              key={shot.src}
-              onClick={() => setIndex(i)}
-              aria-label={`Show screenshot ${i + 1} of ${shots.length}: ${shot.alt}`}
-              aria-current={i === index}
-              style={{
-                width: i === index ? 26 : 9,
-                height: 9,
-                borderRadius: 999,
-                backgroundColor: i === index ? 'var(--lan-accent)' : 'var(--mantine-color-gray-5)',
-                opacity: i === index ? 1 : 0.5,
-                transition: 'width 250ms ease, opacity 250ms ease, background-color 250ms ease',
-              }}
-            />
-          ))}
-        </Group>
-      </Center>
-
-      <FullscreenImageModal
-        opened={zoomed}
-        onClose={() => setZoomed(false)}
-        src={active.src}
-        alt={active.alt}
-      />
-    </Box>
-  );
-}
-
-// The menu is the product's face, so it leads in both schemes; the island is the
-// thing nobody expects, and the window is the half of the app a menu-bar
-// screenshot cannot show at all.
-const heroShots = [
+const galleryShots: GalleryShot[] = [
   {
     src: '/screenshot-menu-dark.png',
     alt: 'The Lancetta menu: Claude Code and Codex, each with a 5-hour and a 7-day quota window and the time it resets',
-  },
-  {
-    src: '/screenshot-menu-light.png',
-    alt: 'The same Lancetta menu in light mode',
+    title: 'The menu.',
+    caption:
+      'Both windows for both agents, the plan each account is on, and when every window resets. The number and the bar say the same thing, so a glance is enough.',
   },
   {
     src: '/screenshot-notch-open.png',
     alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, and both windows as bars',
+    title: 'The island.',
+    caption:
+      'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. Point at it and it opens.',
   },
   {
     src: '/screenshot-window-overview.png',
     alt: 'The Lancetta window: the daily token chart for Codex, and both agents’ quota bars underneath',
+    title: 'The window.',
+    caption:
+      '⌘O for the rest: daily tokens over weeks, each agent in detail, and the background processes the agents have left running.',
   },
 ];
 
@@ -501,17 +429,20 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
               <ShareButtons />
             </Group>
           </Stack>
-
-          <Box mt={16}>
-            <HeroCarousel shots={heroShots} />
-          </Box>
         </Container>
       </Box>
+
+      {/* ─── Where you read it: pinned, and driven by the scroll ─── */}
+      <ScrollGallery
+        shots={galleryShots}
+        eyebrow="Where you read it"
+        title="One reading. Three places."
+      />
 
       {/* ─── The Problem ─── */}
       <ProblemSection />
 
-      {/* ─── Two halves ─── */}
+      {/* ─── One job ─── */}
       <SolutionSection />
 
       {/* ─── Features ─── */}
