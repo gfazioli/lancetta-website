@@ -1,34 +1,83 @@
-# lancetta-website
+<p align="center">
+  <img src="public/icon-512x512.png" alt="Lancetta" width="160" height="160" />
+</p>
 
-The marketing, documentation and download site for **Lancetta** — a native macOS
-menu-bar monitor for coding agents.
+<h1 align="center">Lancetta</h1>
 
-> **This is not the app.** It is a Next.js site deployed on Vercel. The app
-> itself is a separate, private repository.
+<p align="center">
+  <strong>A menu-bar monitor for coding agents, on macOS.</strong><br/>
+  What Codex and Claude Code are spending, and what they left running — without spending a single token to find out.
+</p>
 
-- **Live**: https://lancetta.app *(not deployed yet)*
-- **App repo** (private, Swift): https://github.com/gfazioli/Lancetta
-- **This repo**: https://github.com/gfazioli/lancetta-website
+<p align="center">
+  <img src="https://img.shields.io/badge/status-v0.1%20in%20progress-8D78F5" alt="v0.1 in progress" />
+  <a href="https://www.apple.com/macos/"><img src="https://img.shields.io/badge/macOS-15%2B-2FBFA8" alt="macOS 15+" /></a>
+  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-E8833A" alt="MIT License" /></a>
+</p>
 
-## What Lancetta is
+<p align="center">
+  <a href="https://lancetta.app">Website</a>
+  ·
+  <a href="https://lancetta.app/docs">Documentation</a>
+  ·
+  <a href="https://lancetta.app/docs/roadmap">Roadmap</a>
+</p>
 
-Two panels that happen to share a window:
+<p align="center">
+  <img src="public/screenshot-menu-dark.png" alt="The Lancetta menu: Codex and Claude Code, each with a 5-hour and a 7-day quota window, a drawn bar and the time it resets" width="700" />
+</p>
 
-- **Quota** — the 5-hour and 7-day windows for Codex and Claude Code, with the
-  bucket that refused named rather than averaged away, and every reading
-  carrying its own age.
-- **Memory** — the background agent process trees nothing ever reaps. *(v0.2.)*
+## What is Lancetta?
 
-Reading a quota costs **no tokens**, and that is the constraint the whole app is
-built around. Measured: twelve account reads left the lifetime token counter
-unchanged at 318,009,023, against a positive control showing the same counter
-move by 29,188,602 across a day of real use.
+A *lancetta* is the hand of an instrument — the needle that says where you are. The app is two panels that happen to share a window:
 
-## Stack
+- **Quota** — the 5-hour and 7-day windows for **Codex** and **Claude Code**, drawn as bars, with the time each one resets and the plan each account is on.
+- **Memory** — the background process trees the agents leave behind and nothing ever reaps. *(v0.2 — see the [roadmap](https://lancetta.app/docs/roadmap).)*
 
-Next.js 16 + Nextra 4 (MDX docs), Mantine 9, Yarn 4. Bootstrapped from
-`findergit-website`, which is the same template `netfox-website` and
-`vicenda-website` run.
+### Reading a quota costs nothing
+
+A monitor that spends quota in order to display quota is self-defeating, and the failure would be invisible — a few hundred tokens per poll, every forty-five seconds, is a real bite out of a five-hour window and nothing in the UI would say so. So it was measured rather than assumed:
+
+| | before | after |
+|---|---|---|
+| Lifetime tokens | 318,009,023 | 318,009,023 |
+| Percentages used | 33% / 13% | 33% / 13% |
+
+Twelve account reads on one connection moved nothing. And the instrument works, which is the half that makes the zero mean something: the same counter moved by **29,188,602** across a day of ordinary use. A counter that *cannot* move looks exactly like a counter that did not.
+
+Claude Code's side is free by construction — the app makes no request at all, because the numbers arrive in a payload Claude Code already produces for its own status line.
+
+**Asking a model how much quota is left is a turn, and it would cost tokens on every poll.** It is the easiest route to build and the one this app will never take.
+
+### An unknown is never a number
+
+The defect that started the project was a status line rendering an unknown as `0%`, and a three-hour-old reading as current. So a window with no reading is drawn as *unknown*, every reading carries the time it was taken, and a source that has fallen behind its own cadence says so — a frozen number is itself an event.
+
+## Status
+
+**Not released yet.** v0.1 is being built: the menu, both agents, both windows, the notch panel, Settings and About are real; the process reaper, the notifications and the updater are not. The first build will appear on this repository's [Releases](https://github.com/gfazioli/lancetta-website/releases) page.
+
+## Requirements
+
+- macOS 15 (Sequoia) or later
+- Codex, Claude Code, or both. Lancetta finds them itself — a GUI app on macOS inherits almost no `PATH`, so it looks in the places these tools actually install to rather than assuming a shell.
+- The notch panel needs a Mac that has a notch. On every other Mac that pane is hidden entirely and the menu-bar item behaves identically.
+
+## Documentation
+
+Full documentation, screenshots and FAQ at **[lancetta.app](https://lancetta.app)**.
+
+## Trademarks
+
+The Codex and Claude marks shown in the app are the vendors' own artwork, used **nominatively** — to name the products Lancetta reads. Lancetta is not affiliated with, or endorsed by, OpenAI or Anthropic, and one switch in Settings replaces the whole menu with neutral system symbols.
+
+---
+
+## About this repository
+
+This repo hosts the **marketing site**, the **documentation** and, once there is one, the **release download** for Lancetta. The app source lives in a separate, private repository.
+
+It runs the same Next.js 16 + Nextra 4 + Mantine 9 template as [findergit.app](https://findergit.app) and [netfox.app](https://netfox.app); a fix that lands in one is usually a candidate for the others.
 
 ```sh
 yarn install
@@ -37,19 +86,13 @@ yarn build        # production build + pagefind index
 yarn test         # typegen, format check, lint, typecheck, jest
 ```
 
-If `yarn <cmd>` answers `command not found: next` / `oxfmt`, the Yarn PATH shim
-is not wired on this machine — run the binary directly
-(`./node_modules/.bin/next dev`). `yarn test` and `yarn jest` route through the
-npm-run shim and work regardless.
+If `yarn <cmd>` answers `command not found: next` / `oxfmt`, the Yarn PATH shim is not wired on this machine — run the binary directly (`./node_modules/.bin/next dev`). `yarn test` and `yarn jest` route through the npm-run shim and work regardless.
 
-## Before the first release
+### Before the first release
 
-`config.app.released` is `false`, and several things key off it: the hero CTA,
-the release strip, the Download tab, and the `downloadUrl`/`dateModified` in the
-JSON-LD. Flip it in the same commit that publishes the first build, and restore
-the `download` entry in `app/_meta.tsx` and the footer highlight with it.
+`config.app.released` is `false`, and several things key off it: the hero CTA, the release strip, the Download tab, and the `downloadUrl` / `dateModified` in the JSON-LD. Flip it in the same commit that publishes the first build, and restore the `download` entry in `app/_meta.tsx` and the footer highlight with it.
 
-## Structure
+### Layout
 
 | | |
 |---|---|
@@ -60,13 +103,13 @@ the `download` entry in `app/_meta.tsx` and the footer highlight with it.
 | `theme.ts` | The palette, derived from the app icon |
 | `theme/global.css` | Design tokens, including the two agent tints |
 
-## Brand
+### Brand
 
-The palette is the app icon's, sampled rather than picked — see the comments in
-`theme.ts`. The short version: the brand accent is the icon's **third** bar,
-because the other two hues already mean *which agent* inside the app (teal is
-Codex, orange is Claude Code) and a site accent borrowed from one of them would
-disagree with every screenshot on the page.
+The palette is the app icon's, **sampled rather than picked** — the three bars were measured off the 1254px master (a common baseline at y=907; widths 213 / 229 / 216) and `public/brand-mark.svg` redraws them from those numbers.
+
+The brand accent is deliberately the icon's **third** bar. The other two hues already mean *which agent* inside the app — teal is Codex, orange is Claude Code — so the site keeps those semantic and takes its accent from the one the app spends on no agent. An accent borrowed from an agent hue would disagree with every screenshot on the page.
+
+`public/favicon.svg` is a different drawing on purpose: at 16px the app icon's plate eats the tile and the three bars smear into each other, so the tab gets the bars alone on a 16-unit grid. Details in [`CLAUDE.md`](CLAUDE.md).
 
 ## Licence
 
