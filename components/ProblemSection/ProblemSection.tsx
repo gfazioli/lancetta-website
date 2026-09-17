@@ -1,7 +1,7 @@
 'use client';
 
 import type { CSSProperties } from 'react';
-import { IconFolder, IconGitMerge, IconTerminal2 } from '@tabler/icons-react';
+import { IconClockExclamation, IconSwitch3, IconWand } from '@tabler/icons-react';
 import {
   Box,
   Container,
@@ -15,54 +15,70 @@ import {
 } from '@mantine/core';
 import classes from './ProblemSection.module.css';
 
-// Icon colours pick a vivid, distinct hue per tool so each card has a
-// clear visual identity in both light and dark mode. The previous palette
-// (gray / dark / blue) collapsed to barely-visible washes against the
-// card backgrounds. Filled variants guarantee contrast on either theme
-// without depending on the card's own surface colour.
+/*
+ * The three defects that started the project, on one afternoon. Each one
+ * rendered as a plausible number, which is the whole point: none of them
+ * looked like a failure, and two of them were comfortable.
+ *
+ * Every figure quoted here is from that session's own measurements — the
+ * 0% against a real 59%, the three-hour-old reading, the 9% fallback. Do
+ * not round them and do not add any that were not measured.
+ */
 const problems = [
   {
-    icon: IconFolder,
-    title: 'Finder',
-    description: 'Shows files, but ',
-    highlight: 'no Git state',
-    rest: '. Your repos look like any other folder.',
+    icon: IconClockExclamation,
+    title: 'Stale',
+    description: 'It read a file that only moves when you run the tool ',
+    highlight: 'on that machine',
+    rest: '. The last good reading was three hours old, and nothing said so.',
     color: 'blue',
   },
   {
-    icon: IconTerminal2,
-    title: 'Terminal',
-    description: 'Gives status, but ',
-    highlight: 'no big picture',
-    rest: '. One repo at a time, no visual overview.',
+    icon: IconSwitch3,
+    title: 'Substituted',
+    description: 'The newest reading was a refused turn, which records ',
+    highlight: 'no limits at all',
+    rest: '. So the search fell back to an older, comfortable 9%.',
     color: 'teal',
   },
   {
-    icon: IconGitMerge,
-    title: 'Git GUIs',
-    description: 'Powerful, but ',
-    highlight: 'heavyweight',
-    rest: '. Designed for deep work, not quick scanning.',
+    icon: IconWand,
+    title: 'Invented',
+    description: 'A reset time already in the past was drawn as 0%, on the assumption that a ',
+    highlight: 'rolled-over window is an empty one',
+    rest: '. It is not.',
     color: 'grape',
   },
 ];
 
-// The same five folders the Solution section then lights up — shown here in
-// plain Finder (names only) so the Problem → Solution flow reads as one
-// before/after, with no dedicated comparison section needed.
-const finderRepos = ['my-ios-app', 'api-server', 'design-system', 'landing-page', 'cli-tools'];
+/** What was on screen, and what was actually true, at the same moment. */
+const readings = [
+  { label: 'On the status line', value: '0%', tone: 'wrong' as const },
+  { label: 'What the tool itself said', value: '59% left', tone: 'right' as const },
+  { label: 'Age of the reading', value: '3 hours', tone: 'wrong' as const },
+];
 
 export function ProblemSection() {
   return (
     <Box py={80} className={classes.sectionBand}>
       <Container size="lg">
         <Stack align="center" gap="md" mb={48}>
-          <Text size="sm" fw={700} tt="uppercase" style={{ letterSpacing: 3 }} c="orange">
-            The Problem
+          <Text
+            size="sm"
+            fw={700}
+            tt="uppercase"
+            style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
+          >
+            The problem
           </Text>
           <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
-            Managing multiple Git repos shouldn&apos;t require juggling tools
+            The number was wrong. It looked right.
           </Title>
+          <Text c="dimmed" ta="center" size="lg" maw={660}>
+            A quota readout is the one kind of number nobody double-checks — you glance at it and
+            carry on. Three separate defects stacked up in one afternoon, and every one of them
+            produced a figure you would have believed.
+          </Text>
         </Stack>
 
         <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="lg">
@@ -71,8 +87,6 @@ export function ProblemSection() {
               key={item.title}
               p="lg"
               className={classes.problemCard}
-              // Per-card accent: resolve the card's Mantine palette hex into the
-              // --card-color CSS var the card's tint/border/glow read.
               style={{ '--card-color': `var(--mantine-color-${item.color}-5)` } as CSSProperties}
             >
               <Stack gap={10} align="flex-start">
@@ -100,53 +114,32 @@ export function ProblemSection() {
           ))}
         </SimpleGrid>
 
-        {/* The standard Finder — the "before": the same folders, just names and
-            no Git state. Sets up the Solution's lit-up window right below. */}
-        <Stack align="center" gap="sm" mt={56}>
-          <Paper
-            radius="lg"
-            bg="var(--mantine-color-dark-7)"
-            maw={680}
-            w="100%"
-            style={{ overflow: 'hidden', border: '1px solid var(--mantine-color-dark-5)' }}
-          >
-            <Group
-              px="md"
-              py="sm"
-              bg="var(--mantine-color-dark-6)"
-              style={{ borderBottom: '1px solid var(--mantine-color-dark-5)' }}
-            >
-              <Group gap={8}>
-                <Box w={12} h={12} style={{ borderRadius: '50%', backgroundColor: '#ff5f57' }} />
-                <Box w={12} h={12} style={{ borderRadius: '50%', backgroundColor: '#febc2e' }} />
-                <Box w={12} h={12} style={{ borderRadius: '50%', backgroundColor: '#28c840' }} />
-              </Group>
-              <Text size="sm" c="dimmed" style={{ fontFamily: 'monospace' }}>
-                Finder — ~/Developer
+        <Group justify="center" gap={0} mt={48} wrap="wrap">
+          {readings.map((r) => (
+            <Stack key={r.label} gap={2} align="center" px={32} py={12}>
+              <Text
+                fz={{ base: 28, sm: 34 }}
+                fw={900}
+                lh={1}
+                style={{
+                  color: r.tone === 'wrong' ? 'var(--lan-alarm)' : 'var(--lan-codex)',
+                  fontVariantNumeric: 'tabular-nums',
+                }}
+              >
+                {r.value}
               </Text>
-            </Group>
-            <Stack gap={0} px="lg" py="md">
-              {finderRepos.map((name) => (
-                <Group
-                  key={name}
-                  gap="sm"
-                  wrap="nowrap"
-                  py="sm"
-                  style={{ borderBottom: '1px solid var(--mantine-color-dark-6)' }}
-                >
-                  <IconFolder size={18} color="var(--mantine-color-dark-2)" />
-                  <Text size="sm" c="gray.5" style={{ fontFamily: 'monospace' }}>
-                    {name}
-                  </Text>
-                </Group>
-              ))}
+              <Text c="dimmed" fz="sm" ta="center">
+                {r.label}
+              </Text>
             </Stack>
-          </Paper>
-          <Text c="dimmed" fz="sm" ta="center" maw={520}>
-            Your ~/Developer in Finder today: just folders &mdash; no branch, no status, no idea
-            which repo needs you.
-          </Text>
-        </Stack>
+          ))}
+        </Group>
+
+        <Text c="dimmed" fz="sm" ta="center" maw={600} mx="auto" mt="lg">
+          All three were fixed in the status line that afternoon. But a shell script is visible to
+          one terminal — and the numbers belong somewhere that is on screen whatever window is in
+          front.
+        </Text>
       </Container>
     </Box>
   );

@@ -3,19 +3,83 @@
 import type { ReactNode } from 'react';
 import { Accordion, Anchor, Text } from '@mantine/core';
 
+/*
+ * Every answer here is a claim someone can check, so each one has to be true
+ * of the build that is actually shipping. Two rules when editing:
+ *
+ *  - Do not describe the process reaper, notifications or auto-updates in the
+ *    present tense until they ship. They are v0.2, v0.3 and v0.4.
+ *  - `faqItems` is paired with the FAQPage JSON-LD in StructuredData.tsx.
+ *    Change one and change the other, or the rich result quotes an answer
+ *    that is no longer on the page.
+ */
 const faqItems: { value: string; question: string; answer: ReactNode }[] = [
   {
     value: 'what',
-    question: 'What is FinderGit?',
+    question: 'What is Lancetta?',
     answer:
-      'FinderGit is a native macOS application that works as a Git-aware file browser. Think of it as Finder’s list view, but with Git status, branch info, inline diffs, and commit/push/pull actions built in.',
+      'Lancetta is a native macOS menu-bar app that shows how much quota your coding agents have left. It reads Codex and Claude Code, draws the 5-hour and the 7-day window for each, and tells you when each one resets — without you opening a terminal to ask.',
   },
   {
-    value: 'free',
-    question: 'Is FinderGit free?',
+    value: 'name',
+    question: 'Why “Lancetta”?',
+    answer:
+      'A lancetta is the hand of an instrument — the needle that says where you are. It names what the app does rather than which tools it happens to watch, which is why it survives a third and a fourth agent.',
+  },
+  {
+    value: 'tokens',
+    question: 'Does Lancetta spend tokens to read my quota?',
+    answer:
+      'No, and that is the constraint the whole app is built around. Codex answers an account question directly — measured over twelve reads, the lifetime token counter did not move by one. Claude Code’s numbers arrive in a payload it already produces for its own status line, so there is no request to bill. Asking a model how much quota is left would cost tokens on every poll, and it is the one route Lancetta will never take.',
+  },
+  {
+    value: 'agents',
+    question: 'Which agents does it support?',
+    answer:
+      'Codex and Claude Code today. A new agent needs code that can read its quota without spending any, which is the whole constraint — so agents arrive with the app rather than being added by hand in Settings.',
+  },
+  {
+    value: 'refresh',
+    question: 'Why can I refresh Codex on demand but not Claude?',
+    answer:
+      'Because they are not symmetrical. Codex can be asked a question and will answer. Claude Code has no equivalent — its quota numbers exist only in what it hands its own status line, so they arrive when a session renders one. Lancetta says which of the two you are looking at rather than pretending they behave the same.',
+  },
+  {
+    value: 'stale',
+    question: 'What happens when a reading goes stale?',
+    answer:
+      'It says so. Every reading carries the time it was taken, and an unknown is drawn as an unknown — never as 0%. A status line rendering an unknown as zero, and a three-hour-old number as current, is the defect this app exists because of.',
+  },
+  {
+    value: 'memory',
+    question: 'What is the memory half?',
+    answer:
+      'Coding agents leave a background process tree behind for every folder they worked in, and nothing ever reaps them: close the folder before the session ends and nothing is ever told to stop. Measured once on one Mac: 28 processes holding 2.68 GB, 12 of them serving folders that had already been deleted. Lancetta will list them and let you reclaim the memory — that lands in v0.2, and it will always show you what it is about to stop before it stops it.',
+  },
+  {
+    value: 'privacy',
+    question: 'Does anything leave my Mac?',
+    answer:
+      'No. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server and no telemetry — nothing is sent anywhere.',
+  },
+  {
+    value: 'macos',
+    question: 'What macOS version do I need?',
+    answer:
+      'macOS 15 (Sequoia) or later. The notch panel needs a Mac that has a notch; on any other Mac that pane is hidden entirely, and the menu-bar item works the same everywhere.',
+  },
+  {
+    value: 'marks',
+    question: 'Are those the real Codex and Claude logos?',
+    answer:
+      'They are the vendors’ own marks, drawn from vector data so they stay sharp at any size, and used nominatively — to name the products Lancetta reads. Lancetta is not affiliated with, or endorsed by, OpenAI or Anthropic, and one switch in Settings replaces the whole menu with neutral system symbols.',
+  },
+  {
+    value: 'price',
+    question: 'What does it cost?',
     answer: (
       <>
-        Yes, FinderGit is currently free. If you find it useful, consider{' '}
+        Lancetta is free. If you find it useful, consider{' '}
         <Anchor href="https://github.com/sponsors/gfazioli" size="sm">
           sponsoring the project
         </Anchor>
@@ -24,175 +88,20 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
     ),
   },
   {
-    value: 'appstore',
-    question: 'Is FinderGit on the App Store? How do updates work?',
-    answer:
-      'FinderGit is distributed directly from findergit.app as a signed and notarized DMG — it’s not on the App Store. Updates are automatic: the app checks for new releases and installs them in place, so you’re always one click away from the latest version.',
-  },
-  {
-    value: 'macos',
-    question: 'What macOS version do I need?',
-    answer:
-      'macOS 15 (Sequoia) or later. FinderGit is built with SwiftUI and uses APIs available from macOS 15+.',
-  },
-  {
-    value: 'languages',
-    question: 'Which languages does FinderGit speak?',
-    answer:
-      'English, Italian, French, German, and Spanish. FinderGit follows your Mac’s system language automatically — there is no in-app switcher. To use a different language, reorder your preferred languages in System Settings → General → Language & Region.',
-  },
-  {
-    value: 'replace',
-    question: 'Does FinderGit replace my Git client?',
-    answer:
-      'Not entirely — but it covers more ground every release. Day-to-day work happens without leaving the app: status across many repos at once, stage/unstage and discard, commit (with AI-generated messages), push/pull/fetch, branch switching, and keeping forks in sync with their upstream. For advanced surgery (interactive rebase, cherry-pick, complex merges) you’ll still want a full Git client or the terminal.',
-  },
-  {
-    value: 'github-account',
-    question: 'Do I need to connect a GitHub account?',
+    value: 'when',
+    question: 'When can I download it?',
     answer: (
       <>
-        Only for the GitHub-powered extras — the{' '}
-        <Anchor href="/docs/account" size="sm">
-          Account
+        Not yet — v0.1 is still being built, and this site goes up before the first release rather
+        than after it. The{' '}
+        <Anchor href="/docs/roadmap" size="sm">
+          roadmap
         </Anchor>{' '}
-        dashboard, the issue / pull-request / star counts in the file browser, and new-star alerts.
-        FinderGit reuses the GitHub CLI if it&apos;s already set up, or a personal access token you
-        paste into Settings — kept in your Keychain, never written to disk. Plain browsing, Git
-        status, diffs and commit / push / pull all work with no GitHub connection at all.{' '}
-        <strong>Codeberg, GitLab and Bitbucket repositories need nothing at all</strong> — their
-        counts fill in without an account or a token, because those forges answer questions about
-        public repositories anonymously. (Bitbucket retired its issue tracker, so its Issues column
-        stays empty, and its &quot;stars&quot; are watchers.) See{' '}
-        <Anchor href="/docs/github-integration" size="sm">
-          GitHub Integration
+        says what is in each version, and the{' '}
+        <Anchor href="https://github.com/gfazioli/lancetta-website/releases" size="sm">
+          releases page
         </Anchor>{' '}
-        for GitHub setup and what each forge covers.
-      </>
-    ),
-  },
-  {
-    value: 'star-alerts',
-    question: 'Can FinderGit tell me when one of my repos gets a star?',
-    answer: (
-      <>
-        Yes. The{' '}
-        <Anchor href="/docs/account#new-star-notifications" size="sm">
-          Account
-        </Anchor>{' '}
-        view shows a badge the moment a repository earns a star — naming which repo, not just
-        bumping a number — and you can optionally turn on desktop notifications in Settings → Git.
-        It checks periodically in the background while the app is running.
-      </>
-    ),
-  },
-  {
-    value: 'detect',
-    question: 'How does FinderGit detect repositories?',
-    answer:
-      'When you add a root folder, FinderGit recursively scans for directories containing .git/. The scan depth is configurable in Settings (default: 5 levels). Heavy directories like node_modules and DerivedData are automatically skipped.',
-  },
-  {
-    value: 'modify',
-    question: 'Does FinderGit modify my repositories?',
-    answer:
-      'Only when you explicitly perform an action (commit, push, pull, stage, etc.). FinderGit reads your repository state via git status and git diff — it never modifies anything without your command.',
-  },
-  {
-    value: 'trust',
-    question: 'Is it safe to open repositories I don’t fully trust?',
-    answer: (
-      <>
-        That&apos;s what{' '}
-        <Anchor href="/docs/repo-trust" size="sm">
-          Repo Trust
-        </Anchor>{' '}
-        is for. FinderGit scans each repository&apos;s auto-run surface — hooks and configuration
-        that could execute code when you open, build, or install — without ever running any of it.
-        Repos with findings are flagged in the list, and you get an alert when that surface changes
-        after a pull.
-      </>
-    ),
-  },
-  {
-    value: 'verify',
-    question: 'How do I verify a download — and what if a virus scanner flags it?',
-    answer: (
-      <>
-        Every release is signed with an Apple Developer ID and notarized by Apple, and each release
-        page publishes the SHA-256 of its DMG, so you can confirm the file you downloaded is
-        byte-for-byte the one we shipped —{' '}
-        <Anchor href="/docs/getting-started#verifying-your-download" size="sm">
-          Verifying your download
-        </Anchor>{' '}
-        has the two commands. Antivirus engines do sometimes flag a notarized Mac app on a
-        machine-learning heuristic rather than an actual malware signature. A matching checksum
-        can't prove a detection wrong on its own, but together with Apple's notarization scan and a
-        clean spctl run it makes a heuristic false positive much the likeliest reading, and we
-        report those to the vendor. If the checksum doesn't match, or macOS rejects the file, don't
-        open it —{' '}
-        <Anchor
-          href="mailto:feedback@findergit.app?subject=FinderGit%20download%20verification"
-          size="sm"
-        >
-          tell us
-        </Anchor>
-        .
-      </>
-    ),
-  },
-  {
-    value: 'privacy',
-    question: 'Does FinderGit send my data anywhere?',
-    answer: (
-      <>
-        No telemetry, ever. Forge data (issues, pull requests, stars, fork status) is fetched
-        directly from the forge a repo lives on — GitHub with your own credentials; Codeberg, GitLab
-        and Bitbucket without credentials, so they are not told who you are — though, like any
-        direct request, it reaches them from your own IP address. The only other traffic is the
-        optional{' '}
-        <Anchor href="/docs/ai-commit-messages" size="sm">
-          AI commit message
-        </Anchor>{' '}
-        feature: when you click ✨ AI, your staged diff is sent to generate the message — nothing is
-        stored, and nothing is sent unless you ask.
-      </>
-    ),
-  },
-  {
-    value: 'live',
-    question: 'How does the live update work?',
-    answer:
-      'FinderGit uses macOS FSEvents to monitor file system changes in real time. When a file changes inside a watched repository, the status is automatically refreshed within ~300ms.',
-  },
-  {
-    value: 'bug',
-    question: 'I found a bug. How do I report it?',
-    answer: (
-      <>
-        Please send us a{' '}
-        <Anchor href="mailto:feedback@findergit.app?subject=FinderGit%20bug%20report" size="sm">
-          bug report
-        </Anchor>{' '}
-        by email. Include your FinderGit version, macOS version, and steps to reproduce the issue.
-        Screenshots are very helpful!
-      </>
-    ),
-  },
-  {
-    value: 'feature',
-    question: 'I have an idea for a new feature. Where can I suggest it?',
-    answer: (
-      <>
-        We&apos;d love to hear your ideas! Send us a{' '}
-        <Anchor
-          href="mailto:feedback@findergit.app?subject=FinderGit%20feature%20request"
-          size="sm"
-        >
-          feature request
-        </Anchor>{' '}
-        by email and describe what you&apos;d like FinderGit to do. The more detail you provide, the
-        better we can evaluate and prioritize it.
+        is where the first build will appear.
       </>
     ),
   },
@@ -203,9 +112,11 @@ export function FAQ() {
     <Accordion variant="separated" radius="md">
       {faqItems.map((item) => (
         <Accordion.Item key={item.value} value={item.value}>
-          <Accordion.Control>{item.question}</Accordion.Control>
+          <Accordion.Control>
+            <Text fw={600}>{item.question}</Text>
+          </Accordion.Control>
           <Accordion.Panel>
-            <Text c="dimmed" size="sm">
+            <Text c="dimmed" size="sm" lh={1.65}>
               {item.answer}
             </Text>
           </Accordion.Panel>
@@ -214,3 +125,6 @@ export function FAQ() {
     </Accordion>
   );
 }
+
+/** Exported for the FAQPage JSON-LD, which must quote what the page shows. */
+export const faqQuestions = faqItems.map((i) => i.question);

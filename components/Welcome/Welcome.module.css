@@ -84,7 +84,7 @@
 }
 
 /*
- * Subtle section band: a soft indigo wash from the top so the feature cards
+ * Subtle section band: a soft violet wash from the top so the feature cards
  * and their icon tiles lift off the page instead of sitting on a flat fill.
  * Theme-aware via light-dark() and deliberately faint — atmosphere, not a
  * coloured block.
@@ -93,8 +93,8 @@
   background: radial-gradient(
     100% 70% at 50% -10%,
     light-dark(
-      color-mix(in srgb, var(--mantine-color-indigo-3) 28%, transparent),
-      color-mix(in srgb, var(--mantine-color-indigo-9) 30%, transparent)
+      color-mix(in srgb, var(--mantine-color-lancetta-3) 28%, transparent),
+      color-mix(in srgb, var(--mantine-color-lancetta-9) 30%, transparent)
     ),
     transparent 62%
   );
@@ -118,9 +118,9 @@
   letter-spacing: rem(0.6px);
   background: linear-gradient(
     135deg,
-    var(--mantine-color-red-6) 0%,
-    var(--mantine-color-pink-5) 55%,
-    var(--mantine-color-orange-5) 100%
+    var(--mantine-color-lancetta-7) 0%,
+    var(--mantine-color-lancetta-5) 55%,
+    var(--mantine-color-teal-5) 100%
   );
   transform: rotate(8deg);
   transform-origin: center;
@@ -133,15 +133,15 @@
   100% {
     transform: rotate(8deg) scale(1);
     box-shadow:
-      0 4px 14px -2px color-mix(in srgb, var(--mantine-color-red-6) 60%, transparent),
-      0 0 0 0 color-mix(in srgb, var(--mantine-color-pink-5) 55%, transparent);
+      0 4px 14px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 60%, transparent),
+      0 0 0 0 color-mix(in srgb, var(--mantine-color-teal-5) 55%, transparent);
   }
 
   50% {
     transform: rotate(8deg) scale(1.09);
     box-shadow:
-      0 7px 20px -2px color-mix(in srgb, var(--mantine-color-red-6) 78%, transparent),
-      0 0 0 7px color-mix(in srgb, var(--mantine-color-pink-5) 0%, transparent);
+      0 7px 20px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 78%, transparent),
+      0 0 0 7px color-mix(in srgb, var(--mantine-color-teal-5) 0%, transparent);
   }
 }
 
@@ -149,7 +149,7 @@
 @media (prefers-reduced-motion: reduce) {
   .newBadge {
     animation: none;
-    box-shadow: 0 4px 14px -2px color-mix(in srgb, var(--mantine-color-red-6) 60%, transparent);
+    box-shadow: 0 4px 14px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 60%, transparent);
   }
 }
 
@@ -165,4 +165,35 @@
   .featureCard:hover {
     transform: none;
   }
+}
+
+/*
+ * Roadmap card. `data-state` is the only thing that differs: the version
+ * being built now gets the brand hairline, the planned ones stay quiet, so
+ * the eye lands on the step that is actually moving.
+ */
+.roadmapCard {
+  height: 100%;
+  border: 1px solid light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 6%));
+  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  transition: border-color 180ms ease;
+}
+
+.roadmapCard[data-state='building'] {
+  border-color: color-mix(in srgb, var(--lan-accent) 45%, transparent);
+  box-shadow: 0 12px 30px -16px color-mix(in srgb, var(--lan-accent) 60%, transparent);
+}
+
+.roadmapCard:hover {
+  border-color: color-mix(in srgb, var(--lan-accent) 35%, transparent);
+}
+
+/*
+ * The closing band sits on the icon's plate in both schemes — the screenshots
+ * above it carry dark macOS chrome, and the StarField needs a dark ground to
+ * exist at all. Its copy is forced light for the same reason.
+ */
+.ctaBand {
+  overflow: hidden;
+  background: linear-gradient(200deg, #17122b -20%, var(--lan-plate) 55%, #0d1a2e 120%);
 }

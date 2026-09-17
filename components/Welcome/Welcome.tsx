@@ -5,151 +5,54 @@ import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
 import { TextAnimate } from '@gfazioli/mantine-text-animate';
 import {
-  IconDownload,
-  IconGitBranch,
-  IconEye,
-  IconSearch,
-  IconColumns3,
+  IconAlertTriangle,
   IconArrowRight,
-  IconCode,
-  IconMarkdown,
-  IconBolt,
-  IconSparkles,
-  IconGitCompare,
-  IconDatabase,
-  IconShieldHalfFilled,
-  IconLayoutGrid,
-  IconUserCircle,
-  IconStar,
-  IconLanguage,
+  IconBellRinging,
+  IconBook2,
+  IconClockHour4,
+  IconCreditCardOff,
+  IconGauge,
+  IconHistory,
+  IconLayoutNavbar,
+  IconPalette,
+  IconTrash,
 } from '@tabler/icons-react';
 import {
+  Badge,
   Box,
   Button,
+  Center,
   Container,
   Grid,
   Group,
   Image,
   Modal,
   Paper,
-  UnstyledButton,
   SimpleGrid,
   Stack,
   Text,
   ThemeIcon,
   Title,
-  Badge,
-  Center,
+  UnstyledButton,
 } from '@mantine/core';
 import config from '@/config';
-import { ShareButtons } from '@/components/ShareButtons/ShareButtons';
-import { ReleaseCadence } from '@/components/ReleaseCadence/ReleaseCadence';
+import { BuiltForMacSection } from '../BuiltForMacSection/BuiltForMacSection';
+import { CostsNothingSection } from '../CostsNothingSection/CostsNothingSection';
+import { ProblemSection } from '../ProblemSection/ProblemSection';
+import { ReleaseCadence } from '../ReleaseCadence/ReleaseCadence';
 import {
   fallbackReleaseCadence,
   type ReleaseCadence as Cadence,
-} from '@/components/ReleaseCadence/release-cadence';
-import { FAQ } from '../FAQ/FAQ';
-import { ProblemSection } from '../ProblemSection/ProblemSection';
+} from '../ReleaseCadence/release-cadence';
+import { ShareButtons } from '../ShareButtons/ShareButtons';
 import { SolutionSection } from '../SolutionSection/SolutionSection';
-import { DiffViewerSection } from '../DiffViewerSection/DiffViewerSection';
-import { AICommitSection } from '../AICommitSection/AICommitSection';
-import { BuiltForMacSection } from '../BuiltForMacSection/BuiltForMacSection';
+import { FAQ } from '../FAQ/FAQ';
 import classes from './Welcome.module.css';
 
 /**
- * Single feature row in the "In action" showcase. Pairs a large screenshot
- * with copy on the opposite side, alternating left/right per row to give
- * the section vertical rhythm. Mobile collapses both columns into a stack
- * with the screenshot always on top, regardless of `reverse` — copy
- * second is the natural reading order on a phone.
- */
-function FeatureRow({
-  icon: Icon,
-  iconColor,
-  title,
-  description,
-  image,
-  imageAlt,
-  href,
-  reverse = false,
-}: {
-  icon: typeof IconMarkdown;
-  iconColor: string;
-  title: string;
-  description: string;
-  image: string;
-  imageAlt: string;
-  /** Optional "Learn more" link to the feature's docs page. */
-  href?: string;
-  /** When true, copy is on the left and screenshot on the right at md+. */
-  reverse?: boolean;
-}) {
-  // Each row renders inside the "In action" dark band (see Welcome()), so
-  // the copy is forced to light colours — white title, gray-4 description —
-  // rather than the theme-default near-black, which would be unreadable on
-  // the dark backdrop in light mode.
-  const copyCol = (
-    <Stack gap="md" justify="center" h="100%">
-      <ThemeIcon size={44} radius="md" variant="light" color={iconColor}>
-        <Icon size={24} />
-      </ThemeIcon>
-      <Title order={3} fz={{ base: 24, sm: 30 }} fw={800} lh={1.15} c="white">
-        {title}
-      </Title>
-      <Text c="gray.4" size="md" lh={1.65}>
-        {description}
-      </Text>
-      {href && (
-        <Button
-          component={Link}
-          href={href}
-          variant="subtle"
-          color="gray"
-          size="compact-md"
-          rightSection={<IconArrowRight size={16} />}
-          w="fit-content"
-          px={0}
-          c="white"
-          aria-label={`Learn more about ${title}`}
-        >
-          Learn more
-        </Button>
-      )}
-    </Stack>
-  );
-
-  // No Paper / border / radius wrapper: each screenshot already carries
-  // its own macOS Tahoe-rounded window chrome inside the bitmap, so any
-  // outer border just shrinks the perceived size and clashes with the
-  // real chrome. `ZoomableScreenshot` uses `filter: drop-shadow` for
-  // elevation (follows the alpha channel of the PNG instead of the
-  // rectangular bounding box) and adds click-to-zoom so the user can
-  // read the small text without us blowing up the image inline.
-  const imageCol = <ZoomableScreenshot src={image} alt={imageAlt} />;
-
-  // 7/5 split: the screenshot gets the dominant side (~58% of the row)
-  // so detail like file names, branch labels and diff lines actually
-  // becomes legible; the copy still has comfortable measure for the
-  // headline + paragraph.
-  // `Grid.Col.order` lets us alternate desktop side without breaking the
-  // mobile reading order — image always stays on top in the stacked view.
-  return (
-    <Grid gap={{ base: 32, md: 56 }} align="center">
-      <Grid.Col span={{ base: 12, md: 7 }} order={{ base: 1, md: reverse ? 2 : 1 }}>
-        {imageCol}
-      </Grid.Col>
-      <Grid.Col span={{ base: 12, md: 5 }} order={{ base: 2, md: reverse ? 1 : 2 }}>
-        {copyCol}
-      </Grid.Col>
-    </Grid>
-  );
-}
-
-/**
- * Fullscreen image lightbox shared by `ZoomableScreenshot` and the hero
- * carousel: a transparent fullScreen Modal that centres the image at
- * 95vw/95vh (`object-fit: contain`) on a near-black backdrop, closing on
- * backdrop click, the system close button, and Escape (Mantine default).
+ * Fullscreen image lightbox: a transparent fullScreen Modal that centres the
+ * image at its natural size, capped to the viewport. Clicking anywhere closes
+ * it, so the whole backdrop is the dismiss target.
  */
 function FullscreenImageModal({
   opened,
@@ -167,77 +70,52 @@ function FullscreenImageModal({
       opened={opened}
       onClose={onClose}
       fullScreen
-      withCloseButton
+      withCloseButton={false}
       padding={0}
-      radius={0}
-      transitionProps={{ transition: 'fade', duration: 180 }}
       styles={{
         content: { backgroundColor: 'transparent', boxShadow: 'none' },
-        body: {
-          padding: 0,
+        body: { height: '100%' },
+        overlay: { backgroundColor: 'rgba(0, 0, 0, 0.82)' },
+      }}
+    >
+      <UnstyledButton
+        onClick={onClose}
+        aria-label="Close enlarged screenshot"
+        style={{
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          backgroundColor: 'rgba(0, 0, 0, 0.92)',
-          minHeight: '100vh',
-        },
-        header: {
-          position: 'absolute',
-          top: 16,
-          right: 16,
-          background: 'transparent',
-          zIndex: 10,
-          padding: 0,
-          minHeight: 0,
-        },
-        close: { color: 'white' },
-      }}
-    >
-      <Image
-        src={src}
-        alt={alt}
-        onClick={onClose}
-        style={{
-          maxWidth: '95vw',
-          maxHeight: '95vh',
-          width: 'auto',
-          height: 'auto',
+          width: '100%',
+          height: '100%',
           cursor: 'zoom-out',
-          objectFit: 'contain',
         }}
-      />
+      >
+        <Image
+          src={src}
+          alt={alt}
+          style={{ maxWidth: '94vw', maxHeight: '92vh', width: 'auto', height: 'auto' }}
+        />
+      </UnstyledButton>
     </Modal>
   );
 }
 
-/**
- * Click-to-zoom screenshot. The thumbnail uses a `drop-shadow` filter so
- * the soft halo follows the rounded macOS chrome already baked into each
- * PNG's alpha channel; clicking opens a fullscreen Modal where the same
- * image renders constrained to 95vw/95vh with `object-fit: contain` so
- * landscape and portrait shots both fit. The Modal closes on backdrop
- * click, on the system close button, and on Escape (Mantine default).
- */
+/** A screenshot that opens full size on click, with a soft alpha-following drop. */
 function ZoomableScreenshot({
   src,
   alt,
+  maw,
   shadowOpacity = 0.55,
 }: {
   src: string;
   alt: string;
-  /** 0..1, drop-shadow alpha. The hero sits on a coloured wallpaper
-   *  background, so a stronger shadow (higher alpha) reads better there
-   *  — the dark feature-row backdrop tolerates a softer one. */
+  maw?: number;
   shadowOpacity?: number;
 }) {
   const [opened, setOpened] = useState(false);
 
   return (
     <>
-      {/* `UnstyledButton` gives the thumbnail real button semantics — */}
-      {/* keyboard focusability, Enter/Space activation, ARIA role —    */}
-      {/* without imposing any visual chrome of its own. Plain `onClick`*/}
-      {/* on the `Image` would not be reachable without a mouse.        */}
       <UnstyledButton
         onClick={() => setOpened(true)}
         aria-label={`Open enlarged screenshot: ${alt}`}
@@ -247,9 +125,14 @@ function ZoomableScreenshot({
           src={src}
           alt={alt}
           display="block"
+          mx="auto"
           style={{
             width: '100%',
+            maxWidth: maw,
             height: 'auto',
+            // `drop-shadow` (not box-shadow) follows the PNG's alpha channel,
+            // so the shadow traces the menu's rounded corners rather than the
+            // square <img> bounding box.
             filter: `drop-shadow(0 30px 60px rgba(0, 0, 0, ${shadowOpacity}))`,
           }}
         />
@@ -260,11 +143,8 @@ function ZoomableScreenshot({
 }
 
 /**
- * Hero carousel: cross-fades through several screenshots on a timer, with
- * clickable dots to jump between them. Auto-advance pauses on hover. The
- * active shot keeps the click-to-zoom affordance (opens a fullscreen Modal,
- * same as `ZoomableScreenshot`). Built without a carousel dependency — a
- * stack of absolutely-positioned images whose opacity we cross-fade.
+ * Hero carousel: cross-fades through the shots on a timer, with clickable
+ * dots. Auto-advance pauses on hover and while the lightbox is open.
  */
 function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
   const [index, setIndex] = useState(0);
@@ -273,9 +153,7 @@ function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
 
   useEffect(() => {
     if (paused || zoomed || shots.length < 2) return;
-    const id = setInterval(() => {
-      setIndex((i) => (i + 1) % shots.length);
-    }, 5000);
+    const id = setInterval(() => setIndex((i) => (i + 1) % shots.length), 5000);
     return () => clearInterval(id);
   }, [paused, zoomed, shots.length]);
 
@@ -283,8 +161,6 @@ function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
 
   return (
     <Box>
-      {/* Fixed-ratio stage so the fade doesn't jolt the layout when shots
-          differ slightly in height; each shot is contained within it. */}
       <UnstyledButton
         onClick={() => setZoomed(true)}
         aria-label={`Open enlarged screenshot: ${active.alt}`}
@@ -292,7 +168,9 @@ function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
         onMouseLeave={() => setPaused(false)}
         style={{ display: 'block', width: '100%', cursor: 'zoom-in' }}
       >
-        <Box pos="relative" style={{ width: '100%', aspectRatio: '16 / 13' }}>
+        {/* Fixed-ratio stage so the fade does not jolt the layout between
+            shots of different heights; each one is contained within it. */}
+        <Box pos="relative" mx="auto" maw={860} style={{ width: '100%', aspectRatio: '14 / 10' }}>
           {shots.map((shot, i) => (
             <Image
               key={shot.src}
@@ -308,15 +186,14 @@ function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
                 opacity: i === index ? 1 : 0,
                 transition: 'opacity 800ms ease',
                 pointerEvents: 'none',
-                filter: 'drop-shadow(0 30px 60px rgba(0, 0, 0, 0.7))',
+                filter: 'drop-shadow(0 30px 60px rgba(0, 0, 0, 0.55))',
               }}
             />
           ))}
         </Box>
       </UnstyledButton>
 
-      {/* Dots */}
-      <Center mt="lg" mb={56}>
+      <Center mt="lg" mb={40}>
         <Group gap={10}>
           {shots.map((shot, i) => (
             <UnstyledButton
@@ -328,8 +205,7 @@ function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
                 width: i === index ? 26 : 9,
                 height: 9,
                 borderRadius: 999,
-                backgroundColor:
-                  i === index ? 'var(--mantine-color-findergit-5)' : 'var(--mantine-color-gray-5)',
+                backgroundColor: i === index ? 'var(--lan-accent)' : 'var(--mantine-color-gray-5)',
                 opacity: i === index ? 1 : 0.5,
                 transition: 'width 250ms ease, opacity 250ms ease, background-color 250ms ease',
               }}
@@ -348,26 +224,25 @@ function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
   );
 }
 
-// The hero rotation — the Repository List leads, the dashboards follow, the
-// file browser anchors.
+// The menu is the product's face, so it leads in both schemes; the notch
+// panel is the thing nobody expects and anchors the rotation.
 const heroShots = [
   {
-    src: '/screenshot-portfolio.png',
-    alt: 'FinderGit — every repository at a glance in the flat Repository List',
+    src: '/screenshot-menu-dark.png',
+    alt: 'The Lancetta menu: Codex and Claude Code, each with a 5-hour and a 7-day quota window and the time it resets',
   },
   {
-    src: '/screenshot-hero-overview.png',
-    alt: 'FinderGit Overview — an at-a-glance dashboard across every repository',
+    src: '/screenshot-menu-light.png',
+    alt: 'The same Lancetta menu in light mode',
   },
   {
-    src: '/screenshot-hero-account.png',
-    alt: 'FinderGit Account — your GitHub profile and contributions at a glance',
+    src: '/screenshot-notch.png',
+    alt: 'The Lancetta panel under a MacBook Pro notch, showing one bar per agent per window',
   },
-  { src: '/screenshot-hero-browser.png', alt: 'FinderGit — a Git-aware file browser for macOS' },
 ];
 
 interface Feature {
-  icon: typeof IconMarkdown;
+  icon: typeof IconGauge;
   title: string;
   description: string;
   color: string;
@@ -375,190 +250,165 @@ interface Feature {
   badge?: string;
 }
 
+/*
+ * `badge: 'Next'` means the feature is NOT in the build being described. Keep
+ * the description in the future tense to match, and remove both together when
+ * it ships — a card that says "will" with no badge reads as a missing feature,
+ * and a card with no "will" and a badge reads as a lie.
+ */
 const features: Feature[] = [
   {
-    icon: IconLanguage,
-    title: 'Speaks Your Language',
+    icon: IconGauge,
+    title: 'Both windows, both agents',
     description:
-      '🇬🇧 🇮🇹 🇫🇷 🇩🇪 🇪🇸 — fully localized into English, Italian, French, German, and Spanish. FinderGit follows your Mac’s system language automatically.',
-    color: 'grape',
-    href: '/docs/getting-started#language',
-    badge: 'New',
-  },
-  {
-    icon: IconLayoutGrid,
-    title: 'Overview Dashboard',
-    description:
-      'Your whole workspace at a glance \u2014 clean/dirty/unpushed counts, disk usage, stars, and a "needs attention" list across every repository.',
-    color: 'blue',
-    href: '/docs/overview',
-    badge: 'New',
-  },
-  {
-    icon: IconUserCircle,
-    title: 'GitHub Account',
-    description:
-      'Your profile, stat tiles, top repos, languages, and a full year of contributions \u2014 as a heatmap or a line graph \u2014 without leaving the app.',
-    color: 'cyan',
-    href: '/docs/account',
-    badge: 'New',
-  },
-  {
-    icon: IconStar,
-    title: 'New-Star Alerts',
-    description:
-      'Know the moment one of your repositories earns a star \u2014 named, with an in-app badge and optional desktop notifications.',
-    color: 'yellow',
-    href: '/docs/account#new-star-notifications',
-    badge: 'New',
-  },
-  {
-    icon: IconGitBranch,
-    title: 'Live Git Status',
-    description: 'Branch, clean/dirty/unpushed state, changed files \u2014 updated in real time.',
-    color: 'green',
-    href: '/docs/file-browser#git-indicators',
-  },
-  {
-    icon: IconColumns3,
-    title: 'Sortable Columns',
-    description:
-      'Browse files in an outline table sorted by branch, status, changes, size, or date.',
-    color: 'blue',
-    href: '/docs/file-browser#sorting',
-  },
-  {
-    icon: IconEye,
-    title: 'Inline Diff Viewer',
-    description: 'Click any modified file to see a colored diff with line numbers.',
-    color: 'orange',
-    href: '/docs/diff-viewer',
-  },
-  {
-    icon: IconBolt,
-    title: 'Git Actions',
-    description: 'Stage, commit, push, pull, fetch, and switch branches without leaving the app.',
-    color: 'violet',
-    href: '/docs/git-actions',
-  },
-  {
-    icon: IconSearch,
-    title: 'Search & Filter',
-    description: 'Filter by name instantly or toggle "Git Only" to show just your repositories.',
-    color: 'cyan',
-    href: '/docs/file-browser#search-and-filter',
-  },
-  {
-    icon: IconCode,
-    title: 'Quick Look',
-    description:
-      'Press Space to preview any file in-window — syntax-highlighted code, rendered Markdown, images, PDFs and media.',
-    color: 'grape',
-    href: '/docs/file-browser#quick-look',
-  },
-  {
-    icon: IconShieldHalfFilled,
-    title: 'Repo Trust',
-    description:
-      'Catch the obfuscated dropper behind supply-chain worms like Shai-Hulud / Miasma — across every branch — plus the hooks that auto-run a repo, with an alert when they change after a pull.',
-    color: 'indigo',
-    href: '/docs/repo-trust',
-  },
-  {
-    icon: IconDatabase,
-    title: 'Repo Maintenance',
-    description: 'See how much disk space each repo eats, then reclaim it with one-click cleanup.',
+      'The 5-hour and the 7-day window for Codex and Claude Code, drawn as bars, with the time each one resets beside it.',
     color: 'teal',
-    href: '/docs/repo-maintenance',
+    href: '/docs/the-menu',
   },
   {
-    icon: IconSparkles,
-    title: 'AI Commit Messages',
+    icon: IconClockHour4,
+    title: 'Every reading carries its age',
     description:
-      'Generate a properly-formatted commit message from your staged diff in a click — free, no API key.',
+      'A number with no timestamp is a number you cannot trust. Lancetta says when each one was taken, and a source that has fallen behind says so rather than going quiet.',
+    color: 'blue',
+    href: '/docs/how-it-reads',
+  },
+  {
+    icon: IconAlertTriangle,
+    title: 'The bucket that refused is named',
+    description:
+      'When a limit is hit, the window that hit it is the one you see — not an average across all of them that lands somewhere comfortable and tells you nothing.',
+    color: 'red',
+    href: '/docs/the-menu#limits',
+  },
+  {
+    icon: IconCreditCardOff,
+    title: 'Reading costs nothing',
+    description:
+      'No model is asked anything. Both agents are read from numbers they already keep, which is why the poll can be frequent without ever eating into the window it is showing you.',
+    color: 'grape',
+    href: '/docs/how-it-reads',
+  },
+  {
+    icon: IconLayoutNavbar,
+    title: 'Under the notch',
+    description:
+      'On a MacBook Pro the reading also lives in the notch — exactly as wide as the notch when collapsed, so the items either side stay clickable. Point at it and it opens.',
+    color: 'violet',
+    href: '/docs/the-notch',
+  },
+  {
+    icon: IconPalette,
+    title: 'Your marks, or none',
+    description:
+      'Each agent carries its own colour and the vendor’s own mark, drawn from vector data so they stay sharp at any size. One switch replaces the lot with neutral system symbols.',
+    color: 'orange',
+    href: '/docs/settings#appearance',
+  },
+  {
+    icon: IconTrash,
+    title: 'Reclaim the memory',
+    description:
+      'Agents leave a background tree behind for every folder they worked in. Lancetta will list the ones serving folders that no longer exist, and free them — showing you the list first.',
+    color: 'indigo',
+    href: '/docs/roadmap#v020',
+    badge: 'Next',
+  },
+  {
+    icon: IconBellRinging,
+    title: 'Before the wall, not after it',
+    description:
+      'Two moments worth interrupting for: a window about to refuse you, and a window about to reset with most of it unspent. Lancetta will speak first for both.',
     color: 'pink',
-    href: '/docs/ai-commit-messages',
+    href: '/docs/roadmap#v030',
+    badge: 'Next',
+  },
+];
+
+/** The versions, and what each one is for. Mirrors `content/roadmap.mdx`. */
+const roadmap = [
+  {
+    version: 'v0.1',
+    title: 'The quota, in the menu bar',
+    body: 'Both agents, both windows, the plan each account is on, the notch panel, Settings and About.',
+    state: 'building',
+  },
+  {
+    version: 'v0.2',
+    title: 'The memory back',
+    body: 'Count, total footprint, and a reclaim that lists what it will stop before stopping it.',
+    state: 'planned',
+  },
+  {
+    version: 'v0.3',
+    title: 'It speaks first',
+    body: 'A window that refused, a threshold crossed, a source gone quiet — and quota about to evaporate unused.',
+    state: 'planned',
+  },
+  {
+    version: 'v0.4',
+    title: 'Everyone else’s Mac',
+    body: 'Signed, notarized, downloadable, and updating itself. The version where the app stops assuming one machine.',
+    state: 'planned',
   },
 ];
 
 /**
  * `cadence` is fetched on the server in `app/page.tsx` so the release count
  * and date ship inside the initial HTML. It defaults to the config-derived
- * fallback, which keeps the strip rendering in Storybook, in tests, and on
- * any path that mounts the hero without the server fetch.
+ * fallback, which keeps the strip rendering in Storybook and in tests.
  */
 export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
+  const released = config.app.released;
+
   return (
     <>
       {/* ─── Hero ─── */}
       <Box pos="relative" style={{ overflow: 'hidden' }}>
         {/*
-          The Scene background needs enough opacity to read on a *white*
-          page (light mode) without becoming garish in dark mode. The
-          combination below — soft mesh + two sized glows + dotgrid +
-          noise — gives noticeable atmosphere on white and a richer wash
-          on dark, with no theme-specific branching needed.
+          The Scene wash is the icon's own light: a violet/indigo mesh with
+          the Codex teal as the far stop, plus two glows in the same family.
+          Enough opacity to read on a white page without going garish on dark.
         */}
         <Scene lazy>
           <Scene.Mesh
             stops={[
-              { color: 'blue', position: '20% 25%', spread: 55 },
-              { color: 'cyan', position: '80% 70%', spread: 55 },
+              { color: 'violet', position: '20% 25%', spread: 55 },
+              { color: 'teal', position: '80% 70%', spread: 55 },
               { color: 'indigo', position: '50% 50%', spread: 70 },
             ]}
             opacity={0.22}
           />
-          <Scene.Glow color="blue" size={560} blur={140} opacity={0.4} top="5%" left="-10%" />
-          <Scene.Glow color="cyan" size={460} blur={120} opacity={0.32} top="65%" left="85%" />
+          <Scene.Glow color="violet" size={560} blur={140} opacity={0.4} top="5%" left="-10%" />
+          <Scene.Glow color="teal" size={460} blur={120} opacity={0.28} top="65%" left="85%" />
           <Scene.DotGrid color="gray" opacity={0.14} spacing={32} />
           <Scene.Noise opacity={0.022} />
         </Scene>
+
         <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
           <Stack align="center" gap="xl" py={80}>
             <Badge
               size="lg"
               variant="filled"
-              color="blue"
-              style={{
-                // Solid filled badge plus a soft brand-tinted shadow so it
-                // reads as elevated against the Scene's blue/cyan wash —
-                // the previous `variant="light"` blended into the
-                // atmosphere and lost legibility on light mode.
-                boxShadow: '0 8px 22px -8px rgba(0, 90, 200, 0.45)',
-              }}
+              color="lancetta"
+              style={{ boxShadow: '0 8px 22px -8px rgba(90, 60, 200, 0.5)' }}
             >
-              Free for macOS 15+
+              {released ? `Free for macOS ${config.app.minMacOS}+` : 'In the workshop — v0.1'}
             </Badge>
 
             <Image
               src="/icon-512x512.png"
-              alt="FinderGit"
+              alt="Lancetta"
               w={{ base: 120, sm: 160, md: 200 }}
               h={{ base: 120, sm: 160, md: 200 }}
               style={{
-                // `filter: drop-shadow` (not box-shadow) follows the PNG's
-                // alpha channel, so the shadow traces the icon's actual
-                // rounded macOS-app-icon silhouette instead of the square
-                // <img> bounding box. Two layered drops give depth without
-                // the "rectangular halo behind a rounded shape" artifact.
                 filter:
-                  'drop-shadow(0 18px 26px rgba(0, 90, 200, 0.32)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.18))',
+                  'drop-shadow(0 18px 26px rgba(90, 60, 200, 0.35)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.2))',
               }}
             />
 
-            {/*
-              HERO COPY — two A/B variants. Variant A (control / at-a-glance) is
-              LIVE below; Variant B (problem-first) is kept here as a commented
-              alternative so we can swap and compare.
-
-              ── Variant B (problem-first) ──
-              Headline: Your repos look like any other folder.{' '}
-                        <gradient>FinderGit makes Git visible.</gradient>
-              Subhead:  Branch, status, unpushed commits, and diffs for every
-                        repository — at a glance, in one native macOS window.
-            */}
             <Title maw="90vw" mx="auto" className={classes.title} ta="center">
-              Every Git repo. One window.{' '}
+              Every agent&apos;s quota. One glance.{' '}
               <TextAnimate
                 animate="in"
                 by="character"
@@ -569,88 +419,77 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                 duration={1.5}
                 animation="scale"
                 animateProps={{ scaleAmount: 2 }}
-                gradient={{ from: 'blue', to: 'cyan' }}
+                gradient={{ from: 'violet', to: 'teal' }}
               >
-                Always live.
+                Costs nothing.
               </TextAnimate>
             </Title>
 
-            <Text c="dimmed" ta="center" size="xl" maw={640} mx="auto">
-              FinderGit is a native macOS file browser that shows branch, status, changes, and diffs
-              for all your repositories at a glance — no app-switching, no terminal round-trips.
+            <Text c="dimmed" ta="center" size="xl" maw={660} mx="auto">
+              Lancetta is a native macOS menu-bar monitor for Codex and Claude Code. Both quota
+              windows, the plan each account is on, and how old every reading is — without spending
+              a single token to find out.
             </Text>
 
             <Group justify="center" mt="md">
+              {released ? (
+                <Button
+                  href="/download"
+                  component="a"
+                  leftSection={<IconGauge size={20} />}
+                  size="xl"
+                  radius="xl"
+                  px={40}
+                >
+                  Download for macOS
+                </Button>
+              ) : (
+                <Button
+                  href="/docs"
+                  component="a"
+                  leftSection={<IconBook2 size={20} />}
+                  size="xl"
+                  radius="xl"
+                  px={40}
+                >
+                  See what it does
+                </Button>
+              )}
               <Button
-                href="/download"
-                component="a"
-                leftSection={<IconDownload size={20} />}
-                size="xl"
-                radius="xl"
-                px={40}
-              >
-                Download for macOS
-              </Button>
-              <Button
-                href="/docs"
+                href="/docs/roadmap"
                 component="a"
                 rightSection={<IconArrowRight size={18} />}
                 variant="subtle"
                 size="xl"
               >
-                See what it does
+                {released ? 'See the roadmap' : 'Follow the build'}
               </Button>
             </Group>
 
             <Stack gap="sm" align="center" mt={8}>
               <Text c="dimmed" ta="center" size="sm">
                 {/*
-                  One interpolated string rather than JSX text, because the
-                  JSX version of this line shipped as "v0.28.0· macOS 15+":
-                  in a text chunk spanning more than one line, the space
-                  between an interpolation and a following HTML ENTITY is
-                  dropped. Measured on the live site and reproduced in a
-                  probe route - a plain character in the same position keeps
-                  its space, and so does the entity while the chunk fits on
-                  one line, so it takes both the entity and the wrap.
-
-                  Fixing it with an explicit {' '} does not hold: oxfmt
-                  removes it and rejoins the lines, which is why the defect
-                  survived on the homepage. A template literal puts the
-                  separators inside a string, where neither the formatter
-                  nor the JSX whitespace rules can reach them.
+                  One interpolated template literal rather than JSX text. In a
+                  text chunk spanning more than one source line, the space
+                  between an interpolation and a following HTML entity is
+                  dropped — both sibling sites shipped "v0.28.0· macOS 15+"
+                  that way for months. An explicit {' '} does not survive
+                  oxfmt, which removes it and rejoins the lines; a string is
+                  out of reach of both the formatter and the JSX rules.
                 */}
-                {`Free · v${config.app.version} · macOS 15+ · Universal (Apple Silicon + Intel) · Signed & notarized`}
+                {released
+                  ? `Free · v${config.app.version} · macOS ${config.app.minMacOS}+ · Universal · Signed & notarized`
+                  : `Free · v${config.app.version} in progress · macOS ${config.app.minMacOS}+ · No account, no server, no telemetry`}
               </Text>
-              {/*
-                Replaces a bare "Release notes" anchor that used to sit here.
-                The strip links to the same page, and two links to it 30px
-                apart was the only thing the old anchor added.
-              */}
-              <ReleaseCadence cadence={cadence} />
+              {released && <ReleaseCadence cadence={cadence} />}
             </Stack>
 
-            <Group justify="center" gap="md" mt="sm">
-              <a
-                href="https://www.producthunt.com/products/findergit/launches/findergit?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-findergit"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <img
-                  src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1126262&theme=neutral&t=1780989836593"
-                  alt="FinderGit - See every Git repo's status from one native Mac window | Product Hunt"
-                  width={250}
-                  height={54}
-                />
-              </a>
-            </Group>
             <Group justify="center" mt="sm">
               <ShareButtons />
             </Group>
           </Stack>
 
-          {/* ─── Screenshot carousel ─── */}
-          <Box mt={32}>
+          <Box mt={16}>
             <HeroCarousel shots={heroShots} />
           </Box>
         </Container>
@@ -659,52 +498,43 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       {/* ─── The Problem ─── */}
       <ProblemSection />
 
-      {/* ─── The Solution ─── */}
+      {/* ─── Two panels ─── */}
       <SolutionSection />
 
       {/* ─── Features ─── */}
       <Box py={80} className={classes.sectionBand}>
         <Container size="lg">
           <Stack align="center" gap="md" mb={48}>
-            <Text size="sm" fw={700} tt="uppercase" style={{ letterSpacing: 3 }} c="orange">
-              And there&apos;s more
+            <Text
+              size="sm"
+              fw={700}
+              tt="uppercase"
+              style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
+            >
+              What is in it
             </Text>
             <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
-              Beyond the at-a-glance overview
+              An instrument, not a dashboard
             </Title>
             <Text c="dimmed" ta="center" size="lg" maw={620}>
-              The control center is the core. Around it, a handful of extras for when you go deeper
-              into a repo.
+              It has one job: tell you where you stand, honestly, without being asked and without
+              costing anything to ask.
             </Text>
           </Stack>
 
-          <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
-            {features.map((feature, i) => (
-              // Whole card is a Next.js Link via Mantine's polymorphic
-              // `component` prop — keeps the Paper/Raycast card styling while
-              // making the entire card clickable, keyboard-focusable, and
-              // prefetched. `cardLink` resets the anchor's default text color /
-              // underline and adds a focus-visible ring matching the hover tint.
+          <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
+            {features.map((feature) => (
               <Paper
                 key={feature.title}
                 component={Link}
                 href={feature.href}
                 p="lg"
                 className={`${classes.featureCard} ${classes.cardLink}`}
-                // Per-card accent: resolve the feature's Mantine palette hex
-                // into the --card-color CSS var the card's tint/border/glow read.
                 style={
-                  {
-                    '--card-color': `var(--mantine-color-${feature.color}-5)`,
-                    // A lone leftover card (odd count) spans the whole row so
-                    // the grid ends flush instead of lopsided.
-                    ...(i === features.length - 1 && features.length % 3 === 1
-                      ? { gridColumn: '1 / -1' }
-                      : {}),
-                  } as CSSProperties
+                  { '--card-color': `var(--mantine-color-${feature.color}-5)` } as CSSProperties
                 }
               >
-                {'badge' in feature && feature.badge && (
+                {feature.badge && (
                   <Badge className={classes.newBadge} variant="filled" size="sm" radius="sm">
                     {feature.badge}
                   </Badge>
@@ -732,132 +562,165 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         </Container>
       </Box>
 
-      {/* ─── Diff Viewer ─── */}
-      <DiffViewerSection />
-
-      {/* ─── AI Commit Messages ─── */}
-      <AICommitSection />
+      {/* ─── The founding constraint ─── */}
+      <CostsNothingSection />
 
       {/* ─── Built for macOS ─── */}
       <BuiltForMacSection />
 
-      {/* ─── In action — feature showcase with alternating image/copy rows ─── */}
-      <Box py={96} style={{ backgroundColor: 'var(--mantine-color-dark-9)' }}>
-        <Container size="xl">
-          <Stack align="center" gap="md" mb={72}>
-            <Text size="sm" fw={700} tt="uppercase" style={{ letterSpacing: 3 }} c="findergit.5">
+      {/* ─── In action ─── */}
+      <Box py={96} style={{ backgroundColor: 'var(--lan-plate)' }}>
+        <Container size="lg">
+          <Stack align="center" gap="md" mb={64}>
+            <Text
+              size="sm"
+              fw={700}
+              tt="uppercase"
+              style={{ letterSpacing: 3, color: 'var(--mantine-color-lancetta-4)' }}
+            >
               In action
             </Text>
-            {/* This band sits on a hardcoded dark backdrop (the screenshots
-                carry dark macOS chrome, so the dark band is intentional —
-                same idiom as the Get Started CTA below). Force light text so
-                the heading + copy read on the dark band in *both* schemes
-                instead of falling back to the near-black default token in
-                light mode. */}
             <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900} c="white">
-              Built around the way you actually work
+              One click from the menu bar
             </Title>
-            <Text c="gray.4" ta="center" size="lg" maw={640}>
-              Five touches that make Git feel native to the file browser — not bolted on top.
+            <Text c="gray.4" ta="center" size="lg" maw={620}>
+              Two agents, four windows, and the reset time for each. Nothing to open, nothing to
+              arrange, nothing to close again.
             </Text>
           </Stack>
 
-          <Stack gap={96}>
-            <FeatureRow
-              icon={IconShieldHalfFilled}
-              iconColor="indigo"
-              title="Catch a supply-chain worm before it runs"
-              description="Cloning or pulling a repo can quietly arm it to run code — on folder open, on agent load, on npm install. Repo Trust surfaces that auto-run surface in plain language and detects the obfuscated dropper behind supply-chain worms like Shai-Hulud / Miasma — across every branch, not just the one you checked out. It flags changes after a pull, walks you through cleanup if a repo looks compromised, and never runs anything it finds."
-              image="/screenshot-feature-trust.png"
-              imageAlt="The Repo Trust tab listing a repository's auto-run hooks with a plain-language explanation of what each one runs"
-              href="/docs/repo-trust"
-            />
-
-            <FeatureRow
-              icon={IconEye}
-              iconColor="blue"
-              title="Preview any file without leaving the browser"
-              description="Press Space (or ⌘Y) on any file and FinderGit previews it inline — source code with full syntax highlighting, rendered Markdown, images, PDFs and media. Space or Escape closes it again, Finder-style. No app switch, no terminal round-trip when you're just trying to remember what a folder contains."
-              image="/screenshot-feature-code-preview.png"
-              imageAlt="Source code preview with syntax highlighting inside FinderGit"
-              href="/docs/file-browser#quick-look"
-              reverse
-            />
-
-            <FeatureRow
-              icon={IconSparkles}
-              iconColor="grape"
-              title="Commit messages, generated from your diff"
-              description="Click the ✨ button next to the commit field — get a properly-formatted message in about a second. Conventional Commits, optional emoji prefix, four tone presets. Free for everyone, no account, no API key to manage."
-              image="/screenshot-feature-ai-commit.png"
-              imageAlt="AI-generated commit message in the FinderGit detail panel"
-              href="/docs/ai-commit-messages"
-            />
-
-            <FeatureRow
-              icon={IconGitCompare}
-              iconColor="cyan"
-              title="Diffs at the file level, with one-click stage"
-              description="Click any modified file and the detail panel shows the patch — additions in green, deletions in red, line numbers preserved. The Stage button right above adds the file to the index without dropping into a shell."
-              image="/screenshot-feature-diff.png"
-              imageAlt="File-level diff view in the FinderGit detail panel"
-              href="/docs/diff-viewer"
-              reverse
-            />
-
-            <FeatureRow
-              icon={IconDatabase}
-              iconColor="teal"
-              title="Reclaim the space your repos waste"
-              description="The Maintenance tab shows exactly where a repository's Git data goes — packs, loose objects, undo history. A one-click Optimize tidies it up, and a careful Deep Clean frees the rest while your stashes stay safe. And the Size column gives you every repo's footprint at a glance, so you always know which one to clean first."
-              image="/screenshot-feature-maintenance.png"
-              imageAlt="Repo Maintenance tab showing Git disk-space breakdown with Optimize and Deep Clean actions in FinderGit"
-              href="/docs/repo-maintenance"
-            />
-          </Stack>
+          <Grid gap={{ base: 40, md: 56 }} align="center">
+            <Grid.Col span={{ base: 12, md: 7 }}>
+              <ZoomableScreenshot
+                src="/screenshot-menu-dark.png"
+                alt="The Lancetta status menu with both agents, their quota bars and their reset times"
+                shadowOpacity={0.7}
+              />
+            </Grid.Col>
+            <Grid.Col span={{ base: 12, md: 5 }}>
+              <Stack gap="md">
+                <ThemeIcon size={44} radius="md" variant="light" color="violet">
+                  <IconHistory size={24} />
+                </ThemeIcon>
+                <Title order={3} fz={{ base: 24, sm: 30 }} fw={800} lh={1.15} c="white">
+                  The reading, and how old it is
+                </Title>
+                <Text c="gray.4" size="md" lh={1.65}>
+                  Codex can be asked a question and will answer, so its numbers refresh on demand.
+                  Claude Code cannot — its quota exists only in what it hands its own status line,
+                  so it arrives when a session renders one. The menu says which of the two you are
+                  looking at, and how long ago it was true.
+                </Text>
+                <Button
+                  component={Link}
+                  href="/docs/how-it-reads"
+                  variant="subtle"
+                  color="gray"
+                  size="compact-md"
+                  rightSection={<IconArrowRight size={16} />}
+                  w="fit-content"
+                  px={0}
+                  c="white"
+                >
+                  How it reads each agent
+                </Button>
+              </Stack>
+            </Grid.Col>
+          </Grid>
         </Container>
       </Box>
 
+      {/* ─── Roadmap ─── */}
+      <Container size="lg" py={80}>
+        <Stack align="center" gap="md" mb={48}>
+          <Text
+            size="sm"
+            fw={700}
+            tt="uppercase"
+            style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
+          >
+            Where it is going
+          </Text>
+          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
+            Four versions, in order
+          </Title>
+          <Text c="dimmed" ta="center" size="lg" maw={620}>
+            Nothing here is a promise with a date on it. It is the order the work is being done in,
+            and what each step has to do before it counts as done.
+          </Text>
+        </Stack>
+
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
+          {roadmap.map((step) => (
+            <Paper
+              key={step.version}
+              p="lg"
+              radius="lg"
+              className={classes.roadmapCard}
+              data-state={step.state}
+            >
+              <Stack gap={8}>
+                <Group gap="xs">
+                  <Text fw={900} fz={20} style={{ color: 'var(--lan-accent)' }}>
+                    {step.version}
+                  </Text>
+                  {step.state === 'building' && (
+                    <Badge size="xs" variant="light" color="teal" radius="sm">
+                      Now
+                    </Badge>
+                  )}
+                </Group>
+                <Text fw={700} fz={16}>
+                  {step.title}
+                </Text>
+                <Text c="dimmed" fz="sm" lh={1.55}>
+                  {step.body}
+                </Text>
+              </Stack>
+            </Paper>
+          ))}
+        </SimpleGrid>
+      </Container>
+
       {/* ─── Get Started CTA ─── */}
-      <Box
-        pos="relative"
-        py={80}
-        style={{
-          backgroundColor: 'var(--mantine-color-dark-8)',
-          overflow: 'hidden',
-        }}
-      >
+      <Box pos="relative" py={80} className={classes.ctaBand}>
         <Scene lazy>
           <Scene.StarField count={{ base: 60, md: 120 }} twinkle opacity={0.7} />
           <Scene.ShootingStar count={2} minInterval={5} maxInterval={12} opacity={0.5} />
-          <Scene.Glow color="orange" size={500} blur={170} opacity={0.18} top="30%" left="50%" />
+          <Scene.Glow color="violet" size={500} blur={170} opacity={0.22} top="30%" left="50%" />
         </Scene>
         <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
           <Stack align="center" gap="lg">
-            <Text size="sm" fw={700} tt="uppercase" style={{ letterSpacing: 3 }} c="orange">
-              Get Started
+            <Text
+              size="sm"
+              fw={700}
+              tt="uppercase"
+              style={{ letterSpacing: 3, color: 'var(--mantine-color-lancetta-4)' }}
+            >
+              {released ? 'Get started' : 'Not yet'}
             </Text>
             <Title order={2} ta="center" fz={{ base: 36, sm: 48 }} fw={900} c="white">
-              Every repo, under control.
+              Know where you stand.
             </Title>
-            <Text c="dimmed" ta="center" size="lg" maw={500}>
-              Download FinderGit and see — and manage — every repository from one native window.
+            <Text c="dimmed" ta="center" size="lg" maw={520}>
+              {released
+                ? 'Put both agents in your menu bar and stop reading a number you have to squint at a terminal for.'
+                : 'The first build is not out yet. The roadmap says what is in it, and the releases page is where it will appear.'}
             </Text>
 
             <Button
-              href="/download"
+              href={released ? '/download' : '/docs/roadmap'}
               component="a"
-              leftSection={<IconDownload size={20} />}
+              leftSection={released ? <IconGauge size={20} /> : <IconBook2 size={20} />}
               size="xl"
               radius="xl"
               px={48}
-              color="orange"
               mt="md"
             >
-              Download for macOS
+              {released ? 'Download for macOS' : 'Read the roadmap'}
             </Button>
             <Text c="dimmed" size="sm">
-              Free &middot; macOS 15 Sequoia or later
+              {`Free · macOS ${config.app.minMacOS} Sequoia or later`}
             </Text>
           </Stack>
         </Container>
@@ -866,7 +729,12 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       {/* ─── FAQ ─── */}
       <Container size="lg">
         <Stack align="center" gap="md" my={64}>
-          <Text size="sm" fw={700} tt="uppercase" style={{ letterSpacing: 3 }} c="orange">
+          <Text
+            size="sm"
+            fw={700}
+            tt="uppercase"
+            style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
+          >
             FAQ
           </Text>
           <Title order={2} ta="center">

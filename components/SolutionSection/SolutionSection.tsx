@@ -1,316 +1,171 @@
 'use client';
 
+import type { CSSProperties } from 'react';
+import { Scene } from '@gfazioli/mantine-scene';
+import { IconGauge, IconTrash, IconCheck, IconClock } from '@tabler/icons-react';
 import {
-  IconFolder,
-  IconLayoutList,
-  IconShieldHalfFilled,
-  IconStar,
-  IconStarFilled,
-} from '@tabler/icons-react';
-import { Badge, Box, Container, Group, Paper, Stack, Text, Title } from '@mantine/core';
+  Badge,
+  Box,
+  Container,
+  Divider,
+  Group,
+  List,
+  Paper,
+  SimpleGrid,
+  Stack,
+  Text,
+  ThemeIcon,
+  Title,
+} from '@mantine/core';
+import classes from './SolutionSection.module.css';
 
-type Trust = 'none' | 'hooks' | 'changed';
-
-const repos: Array<{
-  name: string;
-  branch: string;
-  branchColor: string;
-  status: string;
-  statusColor: string;
-  statusIcon: string;
-  dirty: boolean;
-  stars: number;
-  size: string;
-  trust: Trust;
-}> = [
+/*
+ * TWO PANELS, AND ONLY ONE OF THEM SHIPS TODAY.
+ *
+ * Quota is v0.1.0. Memory is v0.2.0 and is drawn here with a "Next" badge and
+ * the future tense, because the site may not describe as shipped something the
+ * app does not do yet. If you are editing this file after the reaper lands,
+ * change `shipped` and the tense together — a badge left behind is the same
+ * lie the other way round.
+ */
+const panels = [
   {
-    name: 'my-ios-app',
-    branch: 'main',
-    branchColor: 'green',
-    status: 'Clean',
-    statusColor: 'teal',
-    statusIcon: '✔',
-    dirty: false,
-    stars: 128,
-    size: '24 MB',
-    trust: 'none',
+    key: 'quota',
+    icon: IconGauge,
+    eyebrow: 'Panel one',
+    title: 'What they are spending',
+    lead: 'Both windows for both agents, in the menu bar, refreshed on a schedule you set.',
+    color: 'var(--lan-codex)',
+    shipped: true,
+    points: [
+      'The 5-hour and the 7-day window, side by side, with the time each one resets.',
+      'The plan the account is on, read from the account itself rather than typed into a setting.',
+      'The bucket that refused is named — not averaged away into a comfortable total.',
+      'Every reading carries its own age, so a frozen number gives itself away.',
+    ],
   },
   {
-    name: 'api-server',
-    branch: 'develop',
-    branchColor: 'gray',
-    status: '3 changes',
-    statusColor: 'orange',
-    statusIcon: '●',
-    dirty: true,
-    stars: 47,
-    size: '156 MB',
-    trust: 'hooks',
+    key: 'memory',
+    icon: IconTrash,
+    eyebrow: 'Panel two',
+    title: 'What they left running',
+    lead: 'Agent processes outlive the sessions that started them, and nothing ever reaps them.',
+    color: 'var(--lan-accent)',
+    shipped: false,
+    points: [
+      'One background tree per working directory, and it exits only when asked.',
+      'Close the directory before the session ends and nothing is ever asked.',
+      'Measured once on one Mac: 28 processes holding 2.68 GB — 12 of them serving folders that had already been deleted.',
+      'Lancetta will show you the list before it stops anything on it.',
+    ],
   },
-  {
-    name: 'design-system',
-    branch: 'feat/tokens',
-    branchColor: 'violet',
-    status: '2 ahead',
-    statusColor: 'blue',
-    statusIcon: '↑',
-    dirty: false,
-    stars: 312,
-    size: '8 MB',
-    trust: 'none',
-  },
-  {
-    name: 'landing-page',
-    branch: 'main',
-    branchColor: 'green',
-    status: 'Clean',
-    statusColor: 'teal',
-    statusIcon: '✔',
-    dirty: false,
-    stars: 12,
-    size: '3 MB',
-    trust: 'none',
-  },
-  {
-    name: 'cli-tools',
-    branch: 'v2.0',
-    branchColor: 'yellow',
-    status: '1 change',
-    statusColor: 'orange',
-    statusIcon: '●',
-    dirty: true,
-    stars: 89,
-    size: '41 MB',
-    trust: 'changed',
-  },
-];
-
-const trustHelp: Record<Exclude<Trust, 'none'>, string> = {
-  hooks: 'Auto-run hooks — review before trusting',
-  changed: 'Auto-run surface changed since last seen',
-};
-
-// The redesigned sidebar, in miniature: Library + status-driven Smart Views +
-// remote Filters. `active` marks the current scope; `dot` is the Smart View's
-// accent colour.
-type SidebarItem =
-  | { section: string }
-  | { label: string; count?: number; active?: boolean; dot?: string };
-
-const sidebar: SidebarItem[] = [
-  { section: 'Library' },
-  { label: 'All Repositories', count: 5, active: true },
-  { label: 'Favorites' },
-  { section: 'Smart Views' },
-  { label: 'Changes', count: 2, dot: 'orange' },
-  { label: 'Ahead', count: 1, dot: 'blue' },
-  { label: 'Clean', count: 2, dot: 'teal' },
-  { section: 'Filters' },
-  { label: 'GitHub' },
 ];
 
 export function SolutionSection() {
   return (
-    <Box
-      py={80}
-      style={{
-        background:
-          'radial-gradient(120% 120% at 50% 0%, var(--mantine-color-dark-7) 0%, var(--mantine-color-dark-8) 70%)',
-      }}
-    >
-      <Container size="lg">
+    <Box pos="relative" py={88} style={{ overflow: 'hidden' }}>
+      <Scene lazy>
+        <Scene.Mesh
+          stops={[
+            { color: 'violet', position: '18% 22%', spread: 58 },
+            { color: 'teal', position: '82% 72%', spread: 55 },
+            { color: 'indigo', position: '50% 50%', spread: 72 },
+          ]}
+          opacity={0.16}
+        />
+        <Scene.Noise opacity={0.018} />
+      </Scene>
+
+      <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
         <Stack align="center" gap="md" mb={48}>
-          <Text size="sm" fw={700} tt="uppercase" style={{ letterSpacing: 3 }} c="orange">
-            The Solution
+          <Text
+            size="sm"
+            fw={700}
+            tt="uppercase"
+            style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
+          >
+            The app
           </Text>
-          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900} c="white">
-            One window. All your repos. Always live.
+          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
+            Two panels that share a window
           </Title>
+          <Text c="dimmed" ta="center" size="lg" maw={660}>
+            A coding agent costs you two things you cannot see: quota, and memory. Lancetta is the
+            needle for both.
+          </Text>
         </Stack>
 
-        {/* Mock window */}
-        <Paper
-          radius="lg"
-          bg="var(--mantine-color-dark-7)"
-          style={{ overflow: 'hidden', border: '1px solid var(--mantine-color-dark-5)' }}
-          maw={900}
-          mx="auto"
-        >
-          {/* Title bar */}
-          <Group
-            px="md"
-            py="sm"
-            bg="var(--mantine-color-dark-6)"
-            style={{ borderBottom: '1px solid var(--mantine-color-dark-5)' }}
-          >
-            <Group gap={8}>
-              <Box w={12} h={12} style={{ borderRadius: '50%', backgroundColor: '#ff5f57' }} />
-              <Box w={12} h={12} style={{ borderRadius: '50%', backgroundColor: '#febc2e' }} />
-              <Box w={12} h={12} style={{ borderRadius: '50%', backgroundColor: '#28c840' }} />
-            </Group>
-            <Text size="sm" c="dimmed" style={{ fontFamily: 'monospace' }}>
-              FinderGit — All Repositories
-            </Text>
-          </Group>
-
-          {/* Body: status sidebar + repo list */}
-          <Group gap={0} align="stretch" wrap="nowrap">
-            {/* Sidebar */}
-            <Stack
-              gap={2}
-              p="sm"
-              w={186}
-              visibleFrom="sm"
-              style={{ flexShrink: 0, borderRight: '1px solid var(--mantine-color-dark-5)' }}
+        <SimpleGrid cols={{ base: 1, md: 2 }} spacing="xl">
+          {panels.map((panel) => (
+            <Paper
+              key={panel.key}
+              p={{ base: 'lg', sm: 'xl' }}
+              className={classes.panel}
+              style={{ '--panel-color': panel.color } as CSSProperties}
             >
-              {sidebar.map((item, i) =>
-                'section' in item ? (
-                  <Text
-                    key={item.section}
-                    size="xs"
-                    fw={700}
-                    tt="uppercase"
-                    c="dimmed"
-                    mt={i === 0 ? 0 : 10}
-                    mb={2}
-                    style={{ letterSpacing: 1 }}
+              <Stack gap="md">
+                <Group justify="space-between" align="flex-start" wrap="nowrap">
+                  <ThemeIcon
+                    size={52}
+                    radius="md"
+                    variant="light"
+                    color="gray"
+                    className={classes.panelIcon}
+                    style={{ color: panel.color }}
                   >
-                    {item.section}
-                  </Text>
-                ) : (
-                  <Group
-                    key={item.label}
-                    justify="space-between"
-                    wrap="nowrap"
-                    gap={6}
-                    px={8}
-                    py={4}
-                    style={{
-                      borderRadius: 6,
-                      backgroundColor: item.active
-                        ? 'var(--mantine-color-findergit-light)'
-                        : undefined,
-                    }}
+                    <panel.icon size={28} />
+                  </ThemeIcon>
+                  <Badge
+                    size="sm"
+                    radius="sm"
+                    variant="light"
+                    color={panel.shipped ? 'teal' : 'grape'}
+                    leftSection={panel.shipped ? <IconCheck size={12} /> : <IconClock size={12} />}
                   >
-                    <Group gap={7} wrap="nowrap" style={{ minWidth: 0 }}>
-                      {item.dot ? (
-                        <Box
-                          w={7}
-                          h={7}
-                          style={{
-                            borderRadius: '50%',
-                            backgroundColor: `var(--mantine-color-${item.dot}-5)`,
-                            flexShrink: 0,
-                          }}
-                        />
-                      ) : item.label === 'All Repositories' ? (
-                        <IconLayoutList size={14} color="var(--mantine-color-findergit-4)" />
-                      ) : item.label === 'Favorites' ? (
-                        <IconStar size={14} color="var(--mantine-color-dark-2)" />
-                      ) : (
-                        <Box w={7} h={7} style={{ flexShrink: 0 }} />
-                      )}
-                      <Text
-                        size="xs"
-                        c={item.active ? 'findergit.4' : 'gray.4'}
-                        fw={item.active ? 600 : 400}
-                        truncate
-                      >
-                        {item.label}
-                      </Text>
-                    </Group>
-                    {item.count !== undefined && (
-                      <Text size="xs" c="dimmed" style={{ fontFamily: 'monospace' }}>
-                        {item.count}
-                      </Text>
-                    )}
-                  </Group>
-                )
-              )}
-            </Stack>
-
-            {/* Repo list */}
-            <Stack gap={0} px="lg" py="md" style={{ flex: 1, minWidth: 0 }}>
-              {repos.map((repo) => (
-                <Group
-                  key={repo.name}
-                  justify="space-between"
-                  wrap="nowrap"
-                  py="sm"
-                  style={{ borderBottom: '1px solid var(--mantine-color-dark-6)' }}
-                >
-                  <Group gap="sm" wrap="nowrap" style={{ minWidth: 0 }}>
-                    <IconFolder size={18} color="var(--mantine-color-dark-2)" />
-                    <Text size="sm" c="gray.3" style={{ fontFamily: 'monospace' }} truncate>
-                      {repo.name}
-                    </Text>
-                    {repo.trust !== 'none' && (
-                      <IconShieldHalfFilled
-                        size={15}
-                        color={
-                          repo.trust === 'changed'
-                            ? 'var(--mantine-color-orange-5)'
-                            : 'var(--mantine-color-yellow-5)'
-                        }
-                        aria-label={trustHelp[repo.trust]}
-                      />
-                    )}
-                  </Group>
-                  <Group gap="sm" wrap="nowrap">
-                    <Group gap={3} wrap="nowrap" visibleFrom="sm">
-                      <IconStarFilled size={11} color="var(--mantine-color-yellow-5)" />
-                      <Text size="xs" c="dimmed" style={{ fontFamily: 'monospace' }}>
-                        {repo.stars}
-                      </Text>
-                    </Group>
-                    <Text
-                      size="xs"
-                      c="dimmed"
-                      visibleFrom="sm"
-                      style={{ fontFamily: 'monospace', minWidth: 52, textAlign: 'right' }}
-                    >
-                      {repo.size}
-                    </Text>
-                    <Badge variant="light" color={repo.branchColor} size="sm" radius="sm">
-                      {repo.branch}
-                    </Badge>
-                    <Badge variant="light" color={repo.statusColor} size="sm" radius="sm">
-                      {repo.statusIcon} {repo.status}
-                    </Badge>
-                  </Group>
+                    {panel.shipped ? 'In v0.1' : 'Next, in v0.2'}
+                  </Badge>
                 </Group>
-              ))}
-            </Stack>
-          </Group>
 
-          {/* Summary bar */}
-          <Group
-            px="md"
-            py={7}
-            justify="space-between"
-            wrap="nowrap"
-            bg="var(--mantine-color-dark-6)"
-            style={{ borderTop: '1px solid var(--mantine-color-dark-5)' }}
-          >
-            <Text size="xs" c="dimmed" style={{ fontFamily: 'monospace' }}>
-              5 repositories
-            </Text>
-            <Group gap="md" wrap="nowrap" visibleFrom="sm">
-              <Text size="xs" c="teal.4" style={{ fontFamily: 'monospace' }}>
-                ✔ 2 clean
-              </Text>
-              <Text size="xs" c="orange.4" style={{ fontFamily: 'monospace' }}>
-                ● 2 dirty
-              </Text>
-              <Text size="xs" c="blue.4" style={{ fontFamily: 'monospace' }}>
-                ↑ 1 ahead
-              </Text>
-            </Group>
-            <Text size="xs" c="dimmed" style={{ fontFamily: 'monospace' }}>
-              232 MB
-            </Text>
-          </Group>
-        </Paper>
+                <Stack gap={4}>
+                  <Text fz={12} fw={700} tt="uppercase" c="dimmed" style={{ letterSpacing: 2 }}>
+                    {panel.eyebrow}
+                  </Text>
+                  <Title order={3} fz={{ base: 24, sm: 28 }} fw={800} lh={1.2}>
+                    {panel.title}
+                  </Title>
+                </Stack>
+
+                <Text c="dimmed" lh={1.6}>
+                  {panel.lead}
+                </Text>
+
+                <Divider />
+
+                <List
+                  spacing="sm"
+                  size="sm"
+                  center={false}
+                  icon={
+                    <Box
+                      w={6}
+                      h={6}
+                      mt={7}
+                      style={{ borderRadius: 999, backgroundColor: panel.color }}
+                    />
+                  }
+                >
+                  {panel.points.map((point) => (
+                    <List.Item key={point}>
+                      <Text c="dimmed" fz="sm" lh={1.6}>
+                        {point}
+                      </Text>
+                    </List.Item>
+                  ))}
+                </List>
+              </Stack>
+            </Paper>
+          ))}
+        </SimpleGrid>
       </Container>
     </Box>
   );
