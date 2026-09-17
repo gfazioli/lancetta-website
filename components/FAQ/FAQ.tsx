@@ -60,7 +60,7 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
   },
   {
     value: 'memory',
-    question: 'What is the memory half?',
+    question: 'What about the processes the agents leave behind?',
     answer:
       'Coding agents leave a background process tree behind for every folder they worked in, and nothing ever reaps them: close the folder before the session ends and nothing is ever told to stop. Measured once on one Mac: 28 processes holding 2.68 GB, 12 of them serving folders that had already been deleted. Lancetta lists them and reclaims that memory on your say-so — and it always shows you what it is about to stop before it stops it.',
   },

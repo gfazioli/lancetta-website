@@ -42,7 +42,7 @@ export default {
   'the-window': nav(IconAppWindow, 'The Window', 'cyan'),
   '---how-it-works': { type: 'separator', title: 'How it works' },
   'how-it-reads': nav(IconEye, 'How it reads each agent', 'blue'),
-  memory: nav(IconTrash, 'The memory half', 'indigo'),
+  memory: nav(IconTrash, 'Processes left behind', 'indigo'),
   '---reference': { type: 'separator', title: 'Reference' },
   settings: nav(IconSettings, 'Settings'),
   privacy: nav(IconLock, 'Privacy'),

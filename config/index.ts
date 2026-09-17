@@ -4,8 +4,8 @@ export default {
       // 57 characters — inside the 50–60 OG/SERP sweet spot. "Menu-Bar"
       // and "Coding Agents" both pull weight in the click decision: the
       // first says where it lives, the second who it watches. "Quota"
-      // carries the search intent; the memory half is in the description,
-      // because it does not ship until v0.2.0.
+      // carries the search intent, and it is the ONE job: the reaper is a
+      // feature, and neither the title nor the description sells it.
       default: 'Lancetta — Menu-Bar Quota Monitor for Coding Agents',
       template: '%s | Lancetta',
     },

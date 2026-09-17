@@ -1,32 +1,9 @@
 /*
- * The two panels. Each one carries its own accent through --panel-color:
- * teal for the quota half (the app's Codex tint) and the brand violet for
- * the memory half. Same Raycast-card idiom as .featureCard, one size up.
+ * The footnote about the reaper sits under a hairline so it reads as what it
+ * is — a note under the one job, not a second heading. The two-panel styles
+ * that used to live here went with the panels.
  */
-.panel {
-  position: relative;
-  height: 100%;
-  border-radius: rem(20px);
-  border: 1px solid light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 7%));
-  background:
-    radial-gradient(
-      120% 110% at 0% 0%,
-      color-mix(in srgb, var(--panel-color) 10%, transparent) 0%,
-      transparent 58%
-    ),
-    light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
-  transition:
-    border-color 200ms ease,
-    box-shadow 200ms ease;
-}
-
-.panel:hover {
-  border-color: color-mix(in srgb, var(--panel-color) 32%, transparent);
-  box-shadow: 0 18px 40px -20px color-mix(in srgb, var(--panel-color) 50%, transparent);
-}
-
-.panelIcon {
-  background: color-mix(in srgb, var(--panel-color) 14%, transparent);
-  border: 1px solid color-mix(in srgb, var(--panel-color) 32%, transparent);
-  box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--panel-color) 55%, transparent);
+.footnote {
+  padding-top: rem(20px);
+  border-top: 1px solid light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 8%));
 }
