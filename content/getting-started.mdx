@@ -17,7 +17,9 @@ description: "Install Lancetta on macOS, wire Codex and Claude Code, and read yo
 
 ## Install
 
-Download the DMG, drag Lancetta to Applications, and launch it. It puts an item in your menu bar and no icon in the Dock — there is no main window to find.
+Download the DMG, drag Lancetta to Applications, and launch it. It puts an item in your menu bar and **no icon in the Dock** — it is an accessory app, and the menu bar is where it lives.
+
+There *is* a window, opened with **Open Lancetta…** (⌘O) from that menu, but the app does not need it: closing it does not quit anything, and the menu-bar item is always the way back.
 
 On first launch it looks for each agent it knows about. It does this itself because **a GUI app inherits almost no `PATH`**: launched from the Finder, a Mac app sees `/usr/bin:/bin:/usr/sbin:/sbin` and neither agent is in any of those. Lancetta looks in the places these tools actually install to, and falls back to asking your login shell.
 
@@ -51,3 +53,8 @@ Two consequences worth knowing about, because Lancetta shows both rather than hi
 Click the menu-bar item. You get one card per agent: the plan the account is on, then a row per window — the percentage used, a bar, and the time that window resets.
 
 [What every row means →](/docs/the-menu)
+
+## And then the rest of it
+
+- On a MacBook Pro, the same reading sits under the notch and opens when you point at it — [The Notch](/docs/the-notch).
+- **Open Lancetta…** (⌘O) gives you usage over weeks, both agents in detail, and the background processes the agents have left running — [The Window](/docs/the-window).

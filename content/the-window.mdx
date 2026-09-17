@@ -1,0 +1,56 @@
+---
+description: "Lancetta's window: four panes — Overview, Usage, Limits and Processes — with the daily token chart, the quota bars, and the background process trees the agents leave behind."
+---
+
+# The Window
+
+The menu answers *how much is left*. The window answers everything that does not fit in a menu: how much has been spent over weeks, what each window is doing in detail, and what the agents have left running.
+
+**Open Lancetta…** (⌘O) from the menu bar.
+
+![Lancetta's Overview pane: the daily token chart for Codex, and the quota bars for both agents](/screenshot-window-overview.png)
+
+It is a normal window and it closes like one. Lancetta still has **no Dock icon** — it stays an accessory app, so quitting the window does not quit the app and the menu-bar item is always the way back.
+
+## Overview
+
+Three cards, in the order you would ask the questions in:
+
+- **Total Usage** — tokens over the last seven days, one bar per day.
+- **Quota Used** — both agents, one bar each, with a chooser for the 5-hour or the 7-day window. The title follows the setting that decides what the bars are filled with, so it reads *Quota Left* when you are counting down.
+- **Processes** — how many background trees are running, what they are holding, and how many of them nothing will ever close.
+
+## Usage
+
+![The Usage pane: thirty days of Codex tokens, with the lifetime total, the best day and the streaks underneath](/screenshot-window-usage.png)
+
+The same chart over **7, 30 or 90 days**, and the totals underneath: lifetime tokens, the best single day, how many days have been recorded at all, the current and longest streaks, and the longest single turn.
+
+Two things about this chart are worth knowing, because both would otherwise read as bugs.
+
+**It is Codex's chart, and it says so.** Codex keeps the whole token history and gives it away free — one bucket per day used, and the buckets sum to the lifetime figure exactly, so it is the complete series rather than a window onto it. **Claude Code has no counterpart at all**: its payload carries two percentages and two reset instants and nothing else. A chart that pooled the two would be drawing one agent's data under both their names.
+
+**The last column is still growing.** Codex publishes a day's tokens with a lag of hours, not of a day — on the afternoon this was measured the newest bucket was still yesterday's, and by the evening today's had appeared. So the caption under the chart says which of those two states you are looking at, rather than asserting one of them. A day with no usage is drawn as a gap, never as a zero: the series only contains days that were used, and inventing the quiet ones would compress months into weeks.
+
+The percentage beside the total compares those days with **the same length of time immediately before**. That is the only comparison the buckets support without inventing a baseline.
+
+## Limits
+
+![The Limits pane: one card per agent, with both windows, their bars and their resets](/screenshot-window-limits.png)
+
+One card per agent, and this is where the asymmetry between the two is on screen rather than in a footnote:
+
+- **Codex** is marked **live** — it can be asked, so the reading is as current as the last poll.
+- **Claude Code** is marked **seen *n* ago** — it cannot be asked, so the card shows its age instead of pretending to a freshness it does not have.
+
+Under that, both windows: the percentage, the bar, and when it rolls over. A window with no reading shows `—`, never `0%`. See [How it reads each agent](/docs/how-it-reads).
+
+## Processes
+
+Every Codex background tree on the machine, with the directory it was started for, what it is holding, and whether anything can still reach it.
+
+A tree whose working directory no longer exists is marked as an orphan, and the **Reclaim…** button is only live when there is one. It lists what it will close before closing anything. The full story is on [The memory half](/docs/memory).
+
+## Why the window is dark
+
+Because it always is. The window has one appearance rather than following the system, the same call Netfox makes — the surface is a dense instrument panel of bars and charts, and the palette is part of reading it. The menu, which sits in the menu bar and has to belong there, follows the system appearance like everything else in the menu bar.

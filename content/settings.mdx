@@ -1,41 +1,61 @@
 ---
-description: "Lancetta's Settings: refresh interval, the menu-bar percentage, per-agent colour and visibility, the vendor marks or neutral symbols, and the notch switch."
+description: "Lancetta's Settings: the refresh interval, counting down what is left, what each agent puts in the menu bar, the order they take, their colours, the vendor marks, and the notch switch."
 ---
 
 # Settings
 
-⌘, from the menu, or **Settings…**.
+⌘, from the menu, or **Settings…**. Six panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
+
+![Lancetta's Settings, on the General pane: the refresh interval, counting down what is left, and the rotation interval for the menu bar](/screenshot-settings-general.png)
 
 ## General
 
-- **Refresh interval** — how often the agents that *can* be asked are asked. It has no effect on Claude Code, whose reading arrives when a session renders its status line.
-- **Show a percentage in the menu bar** — one number beside the icon, for when you do not want to open the menu at all.
+**Refresh every** — 15 seconds to 5 minutes, 45 by default. This is a **CPU budget, not a quota one**, and the difference is the whole point: reading a quota spends no tokens, so there is no cost pressure to poll slowly. What there is, is a process to spawn. See [How it reads each agent](/docs/how-it-reads).
+
+It has no effect on Claude Code either way, whose reading arrives when a session renders its status line.
+
+**Count down what is left** — off, the number is what has been *used* and rises from 0. On, a fresh window reads 100% and falls as tokens go, which is how Codex's own status line puts it.
+
+Whichever you pick, the bars are filled with **the number that is shown**, and every label that names the quantity follows it. That sounds like a detail and is not: a card headed *Quota left* over a bar filled with what was used is the exact defect this app was built in response to, and the app has written it twice by accident since.
+
+**Rotate agents every** — with more than one agent in the menu bar they take turns, cross-fading. The item holds a fixed width at the widest of them so its neighbours never shift. With one agent in the bar there is nothing to rotate, and the control is disabled rather than silently doing nothing.
 
 ## Appearance
 
-- **Marks** — the agents' own artwork, or neutral system symbols. The marks are drawn from vector data rather than bundled as images, so they stay sharp at any row height.
-- **Light and dark** — the menu follows the system appearance.
-
-## Agents
-
-One row per agent Lancetta knows how to read, each with:
-
-- a **switch** — hide an agent you do not want on screen;
-- a **colour** — the tint its bars are drawn in;
-- a **line saying how it is wired** — which route that agent's numbers arrive by, so a card that is not updating tells you where to look.
-
-Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
-
-Visibility is stored as the set of agents you have **hidden**, rather than the set you have shown. An agent added in a later version is therefore absent from that set and is visible by default; stored the other way round, every new agent would ship invisible and read as broken.
+**Marks** — the agents' own artwork, or neutral system symbols. The marks are drawn from vector path data rather than bundled as images, so they stay sharp at any row height.
 
 ## Notch
 
-One switch. On a Mac with no notch the pane is hidden regardless — see [The Notch](/docs/the-notch).
+One switch, and the pane only exists on a Mac that has a notch. Hidden rather than shown dead: a pane whose feature can never run reads as broken. See [The Notch](/docs/the-notch).
+
+## Agents
+
+A list with a page per agent, the way System Settings does accounts and devices.
+
+**The list is where the order is set** — drag a row and everything follows it: the menu, the window, the island, and the turn each agent takes in the menu bar. There is one sort, in one place, so no surface can have an order of its own. Before this existed Codex was always first, for no better reason than being first in an array; an order nobody chose is still an order somebody has to live with.
+
+A row opens on a click anywhere, and drags from anywhere. The grip on the left says it can be dragged — it is the affordance, not the only handle.
+
+**Each agent's page** carries:
+
+- **Colour** — the tint its bars are drawn in, everywhere: the menu, the window, the island, and the token chart if the data is that agent's. A colour you set is a colour you expect to see. There is a Reset beside it.
+- **Watch this agent** — off, it keeps no card in the menu and no cell in the bar. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
+- **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width.
+- **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
+- **How it is wired** — which route that agent's numbers arrive by, so a card that is not updating tells you where to look.
+
+Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
+
+Visibility is stored as the set of agents you have **hidden**, rather than the set you have shown. An agent added in a later version is therefore absent from that set and is visible by default; stored the other way round, every new agent would ship invisible and read as broken until somebody found the setting. The same rule applies to the order: an agent the stored order has never heard of lands last, never nowhere.
 
 ## Updates
 
-**Check for Updates…** reports what state the build is in. Automatic updates land in v0.4; see the [Roadmap](/docs/roadmap).
+The build you are running, and **Check for Updates…**, which reports what state it is in. Automatic updates arrive with the first signed release — which is when there is something to check against. See the [Roadmap](/docs/roadmap).
+
+## About
+
+Version, build date, the sponsor link, and the trademark notice. It is reached from the header at the top of the sidebar, and also has its own window under **About Lancetta** in the menu.
 
 ## The marks, and the trademark notice
 
-The Codex and Claude marks are the vendors' own artwork, used **nominatively** — to name the products Lancetta reads. Lancetta is not affiliated with, or endorsed by, OpenAI or Anthropic. The marks are unmodified apart from colour, the notice is in the About window, and the switch above turns them off for anyone who would rather not display them.
+The Codex and Claude marks are the vendors' own artwork, used **nominatively** — to name the products Lancetta reads. Lancetta is not affiliated with, or endorsed by, OpenAI or Anthropic. The marks are unmodified apart from colour, the notice is in About, and the switch under Appearance turns them off for anyone who would rather not display them.

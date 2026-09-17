@@ -29,10 +29,12 @@
 
 ## What is Lancetta?
 
-A *lancetta* is the hand of an instrument — the needle that says where you are. The app is two panels that happen to share a window:
+A *lancetta* is the hand of an instrument — the needle that says where you are. The app answers two questions:
 
 - **Quota** — the 5-hour and 7-day windows for **Codex** and **Claude Code**, drawn as bars, with the time each one resets and the plan each account is on.
-- **Memory** — the background process trees the agents leave behind and nothing ever reaps. *(v0.2 — see the [roadmap](https://lancetta.app/docs/roadmap).)*
+- **Memory** — the background process trees the agents leave behind and nothing ever reaps, listed and reclaimed on your say-so.
+
+It does it on three surfaces: the **menu bar** for the glance, the **island under the notch** for the glance that needs no mouse, and a **window** for usage over weeks, both agents in detail, and the process list.
 
 ### Reading a quota costs nothing
 
@@ -55,7 +57,7 @@ The defect that started the project was a status line rendering an unknown as `0
 
 ## Status
 
-**Not released yet.** v0.1 is being built: the menu, both agents, both windows, the notch panel, Settings and About are real; the process reaper, the notifications and the updater are not. The first build will appear on this repository's [Releases](https://github.com/gfazioli/lancetta-website/releases) page.
+**Not released yet.** v0.1 is being built, and it now carries more than it was scoped to: the menu, both agents, both windows, the notch island, the app window with the daily token chart, and the process reaper are real. The notifications and the updater are not. The first build will appear on this repository's [Releases](https://github.com/gfazioli/lancetta-website/releases) page.
 
 ## Requirements
 

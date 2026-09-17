@@ -8,10 +8,16 @@ description: "Lancetta documentation — the native macOS menu-bar monitor for c
 
 ![The Lancetta menu: Codex and Claude Code, each with a 5-hour and a 7-day quota window and the time it resets](/screenshot-menu-dark.png)
 
-It is two panels that happen to share a window:
+It answers two questions:
 
 - **Quota** — the 5-hour and 7-day windows for **Codex** and **Claude Code**, with the bucket that refused named rather than averaged away, and every reading carrying its own age.
-- **Memory** — the background process trees the agents leave behind and nothing ever reaps. *(Not in v0.1 — see [Roadmap](/docs/roadmap).)*
+- **Memory** — the background process trees the agents leave behind and nothing ever reaps, found and closed on your say-so.
+
+and it does it on three surfaces, so the one you need is the one already in front of you:
+
+- the **menu bar**, for the glance;
+- the **island under the notch**, for the glance that does not need the mouse;
+- the **window**, for usage over weeks, both agents in detail, and the process list.
 
 ## Why it exists
 
@@ -19,7 +25,7 @@ Two failures on one afternoon, both invisible without a terminal and a reason to
 
 **The quota readout was wrong and it looked right.** A status line showed `0%` while the tool itself reported 59% remaining and two and three quarter hours to reset. Three separate defects had stacked up, and each one rendered as a plausible number: a reading three hours old with nothing saying so, a refused turn that records no limits at all so the search fell back to an older comfortable figure, and a reset time already in the past drawn as zero. Fixing it in a shell script fixed it for one terminal. The numbers belong somewhere that is on screen whatever window is in front.
 
-**Twenty-eight orphaned processes were holding 2.68 GB.** Fourteen background trees, every one of them adopted by the system, twelve serving working directories that had already been deleted, the oldest alive for a day and eight hours. Reaped by hand, that came back to four processes and 436 MB.
+**Twenty-eight orphaned processes were holding 2.68 GB.** Fourteen background trees, every one of them adopted by the system, twelve serving working directories that had already been deleted, the oldest alive for a day and eight hours. Reaped by hand, that came back to four processes and 436 MB. That is now a line in the menu and a pane in the window — see [The memory half](/docs/memory).
 
 ## Reading a quota costs nothing
 
@@ -57,5 +63,7 @@ The defect that started this project was a display rendering an unknown as `0%`,
 - [Getting Started](/docs/getting-started) — install it and wire each agent
 - [The Menu](/docs/the-menu) — what every row on screen means
 - [The Notch](/docs/the-notch) — the reading without moving the mouse
+- [The Window](/docs/the-window) — usage over weeks, and the process list
 - [How it reads each agent](/docs/how-it-reads) — and why the two are not symmetrical
+- [The memory half](/docs/memory) — what the agents leave running, and what it costs
 - [Roadmap](/docs/roadmap) — what is in each version

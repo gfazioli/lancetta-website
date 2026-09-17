@@ -9,6 +9,7 @@ import {
   IconArrowRight,
   IconBellRinging,
   IconBook2,
+  IconChartHistogram,
   IconClockHour4,
   IconCreditCardOff,
   IconGauge,
@@ -224,20 +225,25 @@ function HeroCarousel({ shots }: { shots: { src: string; alt: string }[] }) {
   );
 }
 
-// The menu is the product's face, so it leads in both schemes; the notch
-// panel is the thing nobody expects and anchors the rotation.
+// The menu is the product's face, so it leads in both schemes; the island is the
+// thing nobody expects, and the window is the half of the app a menu-bar
+// screenshot cannot show at all.
 const heroShots = [
   {
     src: '/screenshot-menu-dark.png',
-    alt: 'The Lancetta menu: Codex and Claude Code, each with a 5-hour and a 7-day quota window and the time it resets',
+    alt: 'The Lancetta menu: Claude Code and Codex, each with a 5-hour and a 7-day quota window and the time it resets',
   },
   {
     src: '/screenshot-menu-light.png',
     alt: 'The same Lancetta menu in light mode',
   },
   {
-    src: '/screenshot-notch.png',
-    alt: 'The Lancetta panel under a MacBook Pro notch, showing one bar per agent per window',
+    src: '/screenshot-notch-open.png',
+    alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, and both windows as bars',
+  },
+  {
+    src: '/screenshot-window-overview.png',
+    alt: 'The Lancetta window: the daily token chart for Codex, and both agents’ quota bars underneath',
   },
 ];
 
@@ -309,10 +315,17 @@ const features: Feature[] = [
     icon: IconTrash,
     title: 'Reclaim the memory',
     description:
-      'Agents leave a background tree behind for every folder they worked in. Lancetta will list the ones serving folders that no longer exist, and free them — showing you the list first.',
+      'Agents leave a background tree behind for every folder they worked in. Lancetta lists the ones serving folders that no longer exist and frees them — showing you the list first, and never touching a live one.',
     color: 'indigo',
-    href: '/docs/roadmap#v020',
-    badge: 'Next',
+    href: '/docs/memory',
+  },
+  {
+    icon: IconChartHistogram,
+    title: 'Where the tokens went',
+    description:
+      'A window with the daily token series over 7, 30 or 90 days, both agents in detail, and the processes still running. It is Codex’s history, and the chart says so — Claude Code publishes none.',
+    color: 'cyan',
+    href: '/docs/the-window',
   },
   {
     icon: IconBellRinging,
@@ -329,15 +342,9 @@ const features: Feature[] = [
 const roadmap = [
   {
     version: 'v0.1',
-    title: 'The quota, in the menu bar',
-    body: 'Both agents, both windows, the plan each account is on, the notch panel, Settings and About.',
+    title: 'The quota, and the memory back',
+    body: 'Both agents, both windows, the notch island, the window with the daily token chart — and the reclaim that lists what it will stop before stopping it. The memory half was planned as v0.2 and landed here.',
     state: 'building',
-  },
-  {
-    version: 'v0.2',
-    title: 'The memory back',
-    body: 'Count, total footprint, and a reclaim that lists what it will stop before stopping it.',
-    state: 'planned',
   },
   {
     version: 'v0.3',
@@ -349,6 +356,12 @@ const roadmap = [
     version: 'v0.4',
     title: 'Everyone else’s Mac',
     body: 'Signed, notarized, downloadable, and updating itself. The version where the app stops assuming one machine.',
+    state: 'planned',
+  },
+  {
+    version: 'v0.5',
+    title: 'Reset credits',
+    body: 'Redeeming a Codex reset credit from the menu, with every safety rule an irreversible action needs.',
     state: 'planned',
   },
 ];
@@ -498,7 +511,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       {/* ─── The Problem ─── */}
       <ProblemSection />
 
-      {/* ─── Two panels ─── */}
+      {/* ─── Two halves ─── */}
       <SolutionSection />
 
       {/* ─── Features ─── */}
@@ -522,7 +535,11 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
             </Text>
           </Stack>
 
-          <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
+          {/*
+            Three across, not four: there are nine cards, and 9 in a 4-column
+            grid is two full rows and a single orphan. 3x3 is exact.
+          */}
+          <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
             {features.map((feature) => (
               <Paper
                 key={feature.title}

@@ -6,26 +6,27 @@ description: "What is in each version of Lancetta, in the order the work is bein
 
 Nothing here is a promise with a date on it. It is the order the work is being done in, and — more usefully — **what each step has to do before it counts as finished**.
 
-## v0.1 — the quota, in the menu bar
+## v0.1 — the quota, and rather more than the quota
 
 *In progress.*
 
-The point of this version is narrow and concrete: stop reading a quota number off a terminal status line. That cannot be done with one agent, because the status line shows both — so both quota cards ship together or the first version does not achieve the one thing it exists for.
+The point of this version was narrow and concrete: stop reading a quota number off a terminal status line. That cannot be done with one agent, because the status line shows both — so both quota cards ship together or the first version does not achieve the one thing it exists for.
 
 - Codex quota, with binary discovery that works from a Finder launch (where a GUI app inherits almost no `PATH`)
 - Claude Code quota, from the status-line payload, with the card honest about its age when nothing has rendered
-- The menu-bar icon: alarm first, percentage second, age visible when a source falls behind
+- The menu-bar item: alarm first, percentage second, age visible when a source falls behind, and configurable per agent
 - Per-agent identity — a colour and the vendor's own mark, carried by the agent rather than hardcoded in the menu, so a third agent is one new file
-- The notch panel
+- The order the agents take, set once and obeyed by every surface
+- The island under the notch
 - Settings, About, and a Check-for-Updates that says what state the build is in
 
 **Done when** it runs launched from the Finder — not from a terminal that has a `PATH` — both cards agree with what each tool reports directly, and a working day passes without anyone looking at the status line.
 
-## v0.2 — the memory back
+**Two things arrived early and are in this version rather than the next two.**
 
-The reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it.
+**The memory half** — the reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it, in the menu and in the window. It was planned as v0.2 and is built. It reproduces the twelve-of-fourteen result with zero live trees touched, and it is driven against decoy processes in an automated self-test rather than against the machine it is running on. See [The memory half](/docs/memory).
 
-**Done when** it reproduces the twelve-of-fourteen result with zero live trees touched. See [The memory half](/docs/memory).
+**The window** — Overview, Usage, Limits and Processes, with the daily token series drawn as a chart. The series was planned as half of v0.5 and turned out to be free: Codex already keeps it and gives it away. See [The Window](/docs/the-window).
 
 ## v0.3 — it speaks first
 
@@ -41,9 +42,9 @@ The advice half ships only if the reset observations collected from v0.1 onward 
 
 Signed, notarized, downloadable, and updating itself. Discovery UI, the Sources pane, a consenting status-line wiring step with an undo. This is the version where the app stops assuming one machine, and it is a bigger step than it looks.
 
-## v0.5 — credits and history
+## v0.5 — reset credits
 
-Reset credits, with every safety rule they need, plus daily usage as a sparkline.
+Redeeming a Codex reset credit from the menu, with every safety rule an irreversible action needs.
 
 ---
 

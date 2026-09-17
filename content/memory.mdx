@@ -1,13 +1,10 @@
 ---
-description: "The second half of Lancetta: the background agent processes that outlive the sessions that started them, why nothing reaps them, and what reclaiming them will look like."
+description: "The second half of Lancetta: the background agent processes that outlive the sessions that started them, why nothing reaps them, and how Lancetta finds and closes the ones nothing can reach."
 ---
 
 # The memory half
 
-<Callout type="info">
-  **This is v0.2, and it is not built yet.** The page describes what was measured
-  and what the feature has to do; see the [Roadmap](/docs/roadmap).
-</Callout>
+Quota is what the agents cost you while you are working. This is what they cost you afterwards.
 
 ## What accumulates
 
@@ -20,6 +17,8 @@ They exit when they are told to. The trouble is what happens when nobody tells t
 
 Either way the result is certain: **nothing will ever reap them.**
 
+They also hide well. The broker is a `node` process and shows in Activity Monitor under that generic name, so what looks like twenty-eight processes is really forty-two. And a tree is deeper than its own documentation says: the shape published for it is three processes, and a real one measured **eleven descendants holding 392 MB**, because the server had gone on to spawn helpers of its own. Lancetta walks the parent table rather than trusting a fixed depth.
+
 ## What that cost, once, on one Mac
 
 | | |
@@ -29,14 +28,22 @@ Either way the result is certain: **nothing will ever reap them.**
 | Trees whose working directory no longer existed | 12 of 14 |
 | Oldest still alive | 1 day, 8 hours |
 
-Reaped by hand: **28 → 4 processes, 2680 → 436 MB.** 2.24 GB returned.
+Reaped: **28 → 4 processes, 2680 → 436 MB.** 2.24 GB returned.
 
-They also hide well. The broker shows in Activity Monitor under a generic runtime name, so what looks like twenty-eight processes is really forty-two.
-
-## The rule Lancetta will follow
+## The rule
 
 **A broker whose working directory no longer exists on disk.** On the fourteen candidates measured, that predicate gave **twelve true positives and no false positives** — the two it spared were live.
 
-Stopping one means signalling the **broker**, never its children: its own handler tears the tree down cleanly, and measured, the whole tree was gone in under a tenth of a second while the live trees were untouched.
+Three things keep it that way, and each one is a way the obvious version would have been wrong:
 
-And one rule that is not negotiable: **it shows you the list before it stops anything on it.** The entire point of the feature is that you can finally see what you could not.
+- **A broker with no working directory in its arguments is never an orphan.** Unknown is not gone, and that is the one place where being wrong ends somebody's running session.
+- **The directory is read to the end of its argument, not to the first space.** A folder whose name contains a space would otherwise be truncated to a path that does not exist — and *the path does not exist* is precisely the orphan test. The naive parse turns a live tree into a target.
+- **Stopping one means signalling the broker, never its children.** Its own handler tears the tree down cleanly; measured, the whole tree was gone in under a tenth of a second and the live trees were untouched.
+
+## What it looks like
+
+The menu grows a **Processes** line whenever there is something to say — how many trees, what they hold, and a **Reclaim** item when some of them are orphaned. It is drawn only when trees are running: a permanent row of zeroes teaches you to stop reading that part of the menu.
+
+The [window's Processes pane](/docs/the-window#processes) has the whole list: each tree, the directory it was started for, what it is holding, how many children it has.
+
+And one rule that is not negotiable: **it shows you the list before it stops anything on it.** The entire point of the feature is that you can finally see what you could not. The confirmation puts **Cancel** on the default key and gives Reclaim no keyboard shortcut at all, which is the arrangement an irreversible action wants.

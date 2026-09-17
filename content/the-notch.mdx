@@ -1,25 +1,35 @@
 ---
-description: "Lancetta's notch panel on a MacBook Pro: collapsed it is exactly as wide as the notch, so the menu-bar items either side stay clickable; point at it and it opens into both agents."
+description: "Lancetta's island under the MacBook Pro notch: collapsed it is exactly as wide as the notch, so the menu-bar items either side stay clickable; point at it and it grows out of the notch into a ring and two bars per agent."
 ---
 
 # The Notch
 
 On a MacBook Pro the reading also lives under the notch — the one piece of screen that was doing nothing.
 
-![The Lancetta panel under a MacBook Pro notch, showing one bar per agent per window](/screenshot-notch.png)
+![Lancetta's island collapsed under the notch: one bar per agent, in that agent's colour](/screenshot-notch-collapsed.png)
 
 ## Collapsed
 
 Exactly as wide as the notch, and no wider. That is deliberate rather than tidy: a panel that overhangs the notch covers menu-bar items on either side, and a menu item you can see but cannot press is worse than no panel at all.
 
-Collapsed, it shows **one thin bar per agent** — the five-hour window, readable without moving the mouse.
+Collapsed, it shows **one thin bar per agent** — the five-hour window, in that agent's own colour, readable without moving the mouse. It is as tall as it needs to be for the agents you watch, so a third agent gets a third bar rather than being quietly cut off the bottom.
 
 ## Expanded
 
-Point at it and it opens into both agents with both windows and their reset times. Move away and it collapses again. The menu-bar item on the right-hand side keeps working exactly as before; the notch panel is an addition, not a replacement.
+![The Lancetta island open under the notch: a ring per agent carrying its mark and its five-hour reading, with both windows as bars](/screenshot-notch-open.png)
+
+Point at it and it **grows out of the notch**: a ring per agent carrying that agent's mark and its five-hour reading, its name, its plan, when the window resets, and then both windows as bars. Move away and it settles back.
+
+Two things about how it behaves are on purpose:
+
+**It is a "T", because the hardware is.** A column exactly the notch's width runs up to the top edge of the screen, and the wider body hangs underneath it. The physical cutout has rounded bottom corners, so an island with a straight top drawn from below the notch leaves two wedges of wallpaper showing between the two — it reads as detached however precisely it is positioned. This is the shape a phone's island has, for the same reason.
+
+**Expanded, it is far wider than the notch — and the menu bar still works.** Everything that is not the island itself passes clicks straight through, including the notch's own column. You can see the island and press the menu-bar item behind its overhang.
+
+**Every effect ends.** The rings, the bars and the digits reveal once with a stagger, a highlight crosses the bars once, and then nothing moves. A HUD that is on screen for the whole session cannot afford a perpetual animation; the workspace has already pinned a CPU core to a spinner that never stopped.
 
 ## On a Mac without a notch
 
-There is no API that says whether a display has a notch — it is the *gap* between the two auxiliary areas of the menu bar, and a Mac without one looks identical until you measure it. Lancetta measures it, and on a Mac with no notch the pane is hidden entirely.
+There is no API that says whether a display has a notch — it is the *gap* between the two auxiliary areas of the menu bar, and a Mac without one looks identical until you measure it. Lancetta measures it, and on a Mac with no notch the island never appears and the Settings pane for it is hidden entirely.
 
-One switch in [Settings](/docs/settings#notch) turns it off on a Mac that does have one.
+One switch in [Settings](/docs/settings#notch) turns it off on a Mac that does have one. The setting survives moving between machines rather than being reset by whichever display you happened to be on.
