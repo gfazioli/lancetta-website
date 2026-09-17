@@ -127,9 +127,14 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
       'It says so. Every reading carries the time it was taken, and an unknown is drawn as an unknown — never as 0%. A status line rendering an unknown as zero, and a three-hour-old number as current, is the defect this app exists because of.',
   },
   {
+    question: 'Is Lancetta only in the menu bar?',
+    answer:
+      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the daily token chart, both agents in detail, and the background processes the agents have left running. Lancetta still puts no icon in the Dock: closing the window quits nothing, and the menu-bar item is always the way back. On a MacBook Pro the reading also sits under the notch.',
+  },
+  {
     question: 'What is the memory half?',
     answer:
-      'Coding agents leave a background process tree behind for every folder they worked in, and nothing ever reaps them: close the folder before the session ends and nothing is ever told to stop. Measured once on one Mac: 28 processes holding 2.68 GB, 12 of them serving folders that had already been deleted. Lancetta will list them and let you reclaim the memory — that lands in v0.2, and it will always show you what it is about to stop before it stops it.',
+      'Coding agents leave a background process tree behind for every folder they worked in, and nothing ever reaps them: close the folder before the session ends and nothing is ever told to stop. Measured once on one Mac: 28 processes holding 2.68 GB, 12 of them serving folders that had already been deleted. Lancetta lists them and reclaims that memory on your say-so — and it always shows you what it is about to stop before it stops it.',
   },
   {
     question: 'Does anything leave my Mac?',

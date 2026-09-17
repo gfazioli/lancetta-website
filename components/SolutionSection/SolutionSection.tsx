@@ -20,19 +20,18 @@ import {
 import classes from './SolutionSection.module.css';
 
 /*
- * TWO PANELS, AND ONLY ONE OF THEM SHIPS TODAY.
+ * TWO HALVES, BOTH OF THEM BUILT.
  *
- * Quota is v0.1.0. Memory is v0.2.0 and is drawn here with a "Next" badge and
- * the future tense, because the site may not describe as shipped something the
- * app does not do yet. If you are editing this file after the reaper lands,
- * change `shipped` and the tense together — a badge left behind is the same
- * lie the other way round.
+ * Memory was v0.2.0 and landed inside v0.1.0, so this file changed in the same
+ * pass: `shipped` and the tense move TOGETHER. A badge left behind is the same
+ * lie as a missing one, only the other way round — keep that rule if a third
+ * half is ever added for something that has not shipped.
  */
 const panels = [
   {
     key: 'quota',
     icon: IconGauge,
-    eyebrow: 'Panel one',
+    eyebrow: 'Half one',
     title: 'What they are spending',
     lead: 'Both windows for both agents, in the menu bar, refreshed on a schedule you set.',
     color: 'var(--lan-codex)',
@@ -47,16 +46,16 @@ const panels = [
   {
     key: 'memory',
     icon: IconTrash,
-    eyebrow: 'Panel two',
+    eyebrow: 'Half two',
     title: 'What they left running',
     lead: 'Agent processes outlive the sessions that started them, and nothing ever reaps them.',
     color: 'var(--lan-accent)',
-    shipped: false,
+    shipped: true,
     points: [
       'One background tree per working directory, and it exits only when asked.',
       'Close the directory before the session ends and nothing is ever asked.',
       'Measured once on one Mac: 28 processes holding 2.68 GB — 12 of them serving folders that had already been deleted.',
-      'Lancetta will show you the list before it stops anything on it.',
+      'Lancetta shows you the list before it stops anything on it.',
     ],
   },
 ];
@@ -87,7 +86,7 @@ export function SolutionSection() {
             The app
           </Text>
           <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
-            Two panels that share a window
+            Two halves of one instrument
           </Title>
           <Text c="dimmed" ta="center" size="lg" maw={660}>
             A coding agent costs you two things you cannot see: quota, and memory. Lancetta is the

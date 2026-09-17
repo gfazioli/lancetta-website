@@ -29,11 +29,17 @@ lands on an empty Releases page is a promise the site cannot keep.
 
 Flip all of it in **one** commit when the first build ships.
 
-The same rule inside the page: the feature cards and the two solution panels
-carry a `Next` badge and the future tense for anything past v0.1 — the process
-reaper (v0.2) and the notifications (v0.3). A badge without the future tense and
-a future tense without the badge are the same defect in opposite directions, so
-change them together.
+The same rule inside the page: a feature card carries a `Next` badge **and** the
+future tense for anything the build does not do. A badge without the future
+tense and a future tense without the badge are the same defect in opposite
+directions, so change them together.
+
+Today exactly one card is `Next`: the notifications (v0.3). **The process reaper
+and the window are not** — both are built, and the site was two versions behind
+the app on 2026-09-17 until this was swept. That is the failure mode to watch
+for here: the app moves and nothing on this site fails when it does. The gate is
+reading `../Lancetta/CLAUDE.md` and `git log` in the app repo before believing
+any page, not running `yarn test`.
 
 ## Claims, and where each one comes from
 
@@ -53,6 +59,14 @@ The ones currently in use:
 | a `9%` fallback after a refused turn | same |
 | `28` processes, `2.68 GB`, `12` of `14` orphaned | the process census |
 | `28 → 4`, `2680 → 436 MB` | the same census, after reaping |
+| `2.24 GB` reclaimed, and the `Reclaim 12 orphaned` menu line | the same census, arithmetic on the two rows above |
+| `11` descendants holding `392 MB` in one tree | the 2026-09-17 walk of a real tree, against the three-process shape its own docs give |
+| `46` buckets across `163` days, summing to the lifetime total exactly | the usage-history read, same day |
+| one day, eight hours | the oldest orphan in the census |
+
+Numbers that are **not** claims and must not become them: anything read off a
+screenshot. The captures are of one developer's machine, so its token totals,
+plan names and percentages are illustration. Prose quotes the table above.
 
 ## Commands
 
@@ -139,13 +153,32 @@ will ever see.
 ## Screenshots
 
 `public/screenshot-*.png` are captures of the real build, taken with
-`../Lancetta/scripts/app.sh shot`.
+`../Lancetta/scripts/app.sh` — `shot` for the menu, `window <title>` for the
+window and Settings, and a hover on the notch for the island.
 
-**Check what is in the frame before publishing one.** The Settings window shows
-the absolute path each agent is read from — which on a developer's Mac contains
-their home directory and therefore their name. That is why only the menu and the
-notch panel are published today. A proper screenshot pipeline with fixture
-values belongs with v0.4, alongside the rest of *Distribution*.
+Published today: the menu in both appearances, the island collapsed and open,
+the window's Overview, Usage and Limits panes, and Settings → General.
+
+**Two surfaces may not be published, and both for the same reason.** The
+**Processes pane** lists each tree by the directory it was started for, and an
+**agent's page in Settings** carries the absolute path that agent is read from.
+On a developer's Mac both contain the home directory, and therefore the user's
+name, and often the names of their employer's repositories. Check what is in the
+frame before publishing, every time — a proper pipeline with fixture values
+belongs with v0.4, alongside the rest of *Distribution*.
+
+**`APP_LANG=en_GB` is not optional.** The app ships no localised strings and
+still renders dates and numbers through the system locale, so captured on an
+Italian Mac the usage chart's axis reads `ven sab dom` and the token total reads
+`107.226.026`. Nothing about the resulting PNG says it is in the wrong language.
+
+Two capture traps, both paid for on 2026-09-17 and both fixed in the app repo's
+scripts rather than here: the menu lookup answered with the **notch island**
+when the menu failed to open (it took the largest window above layer 0, and the
+island grew past the menu), and `app.sh` drove the app **by process name**, which
+AppleScript resolves to the first match — so with a worktree's build running
+beside the checkout's, the click went to the other copy and the capture
+photographed whatever this one had on screen.
 
 ## Testing
 
@@ -174,13 +207,17 @@ nothing in this repo can assert what is currently there.
 from the real mark and a real capture of the menu.
 
 **Check what is actually set before assuming.** The one found on this repo on
-2026-09-17 was a mockup of a product Lancetta is not: a windowed app with a
-sidebar (it has no window and no Dock icon), "842,320 tokens" over a weekly bar
-chart (the app shows percentages and reset times, and daily usage is v0.5),
-"OpenAI" as a provider rather than Codex — and an axis reading Mon Tue Wed Thu
-Fri Fri Sat Sun, eight bars for seven days. It is the image every link to this
-repo previews as, so it is marketing copy and the same rule applies to it as to
-the homepage.
+2026-09-17 was a mockup of a product Lancetta is not: "842,320 tokens" over a
+weekly bar chart with "OpenAI" as a provider rather than Codex, and an axis
+reading Mon Tue Wed Thu Fri Fri Sat Sun — eight bars for seven days. It is the
+image every link to this repo previews as, so it is marketing copy and the same
+rule applies to it as to the homepage.
+
+Its other fault has since half-corrected itself, which is worth recording
+because it is the direction nobody checks: it drew a **windowed app with a
+sidebar**, and at the time the app had no window at all. It does now. The
+mockup was not right, it was early — and "wrong about the product" and "ahead of
+the product" look identical in a picture.
 
     curl -sL -A 'Mozilla/5.0' https://github.com/gfazioli/lancetta-website \
       | grep -oE '<meta property="og:image" content="[^"]*"' | head -1
@@ -206,6 +243,17 @@ Two things that cost time here and will cost it again:
   of its headline spans through the same tool. Do not "fix" the headline. If a
   picture of it is needed, force those spans visible before the snapshot and say
   that the shot is staged for that one element.
+
+  **It does not always photograph as a blank gap, and the partial form is far
+  more convincing.** On 2026-09-17 the third line came out as `osts nothing.` —
+  one missing character, which reads like a truncation bug rather than like an
+  animation that did not run. The check is the same and takes one command:
+  `document.querySelector("h1").textContent` returned the whole
+  `"Every agent's quota. One glance. Costs nothing."`, and every span in the
+  animated half measured `opacity: 0` — *including the thirteen that were
+  visible in the PNG*. When the render and the computed style disagree like
+  that, the render is the thing that is lying. Read the DOM before believing a
+  screenshot of this headline, whatever shape the damage takes.
 
 And the trap that wasted a round here: **a process outlives its bundle.** A
 `next start` left running from an earlier build kept port 3111, the new one

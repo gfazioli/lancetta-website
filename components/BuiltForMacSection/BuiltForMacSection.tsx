@@ -88,8 +88,9 @@ export function BuiltForMacSection() {
           </Group>
 
           <Text c="dimmed" ta="center" size="lg" maw={620} mt="lg">
-            No Dock icon, no window to manage, no Electron. Native SwiftUI that sits in the menu bar
-            and gets out of the way — and on a MacBook Pro, one thin bar per agent under the notch.
+            No Dock icon, no Electron, no window you have to keep open. Native SwiftUI that sits in
+            the menu bar and gets out of the way — and on a MacBook Pro, one thin bar per agent
+            under the notch.
           </Text>
         </Stack>
       </Container>

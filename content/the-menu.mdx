@@ -1,5 +1,5 @@
 ---
-description: "Every row in the Lancetta menu explained: the percentage, the bar, the reset time, the plan, the freshness marker, and what a refused window looks like."
+description: "Every row in the Lancetta menu explained: the percentage, the bar, the reset time, the plan, the freshness marker, the process line, and what the menu-bar item itself shows."
 ---
 
 # The Menu
@@ -11,24 +11,37 @@ One card per agent, one row per window.
 ## The card header
 
 ```
-Codex · plus · seen 3s
+Claude · max 20× · seen 9s
 ```
 
 - **The mark and the name** — the agent this card is about. The marks are the vendors' own artwork; one switch in [Settings](/docs/settings#appearance) replaces them with neutral system symbols.
 - **The plan** — read from the account itself rather than typed into a setting, so it cannot drift out of date.
-- **The freshness marker** — how long ago this reading was taken. It appears when the reading is not effectively live; a source that has fallen well behind its own cadence is called out rather than left to look current.
+- **The freshness marker** — how long ago this reading was taken. It appears when the reading is not effectively live. Codex can be asked and so has none; Claude Code cannot, and always shows its age. That asymmetry is real and the menu shows it rather than smoothing it over — see [How it reads each agent](/docs/how-it-reads).
 
 ## The rows
 
 ```
-25%   5h   ▓▓▓▓░░░░░░░░░░░░   ↻ 3h04m
-21%   7d   ▓▓▓░░░░░░░░░░░░░   ↻ 6d
+20%   5h   ▓▓▓▓░░░░░░░░░░░░   ↻ 1h46m
+46%   7d   ▓▓▓▓▓▓▓░░░░░░░░░   ↻ 18h06m
 ```
 
-- **The percentage** — how much of that window is spent.
+- **The percentage** — how much of that window is spent, or how much is left, depending on [one setting](/docs/settings#general). The bar is filled with whichever number is on screen, never with its opposite.
 - **The window** — `5h` is the rolling five-hour bucket, `7d` the weekly one.
-- **The bar** — the same number, drawn, so a glance is enough. It is tinted with the agent's own colour.
+- **The bar** — the same number, drawn, so a glance is enough. It is tinted with the colour you gave that agent.
 - **The reset** — when this window rolls over. This is the number that makes the percentage actionable: 80% with four hours to go is a different afternoon from 80% with ten minutes to go.
+
+The agents appear in **the order you put them in**, set by dragging in [Settings → Agents](/docs/settings#agents). Every surface reads the same order.
+
+## Processes
+
+```
+Processes · 14 Codex trees · 2.68 GB
+  Reclaim 12 orphaned · 2.24 GB
+```
+
+*(Those are the figures from the census that produced this feature, not a mock-up.)*
+
+A line for the background trees the agents have left running, and a **Reclaim** item when some of them are serving directories that no longer exist. It is drawn only when there are trees to report — a permanent row of zeroes teaches you to stop reading that part of the menu. It shows you the list before it stops anything on it. See [The memory half](/docs/memory).
 
 ## Limits
 
@@ -41,6 +54,13 @@ A window Lancetta has no reading for is drawn as unknown. It is never drawn as `
 ## The rest of the menu
 
 - **Refresh now** (⌘R) — asks every agent that *can* be asked. Claude Code cannot, so its card is refreshed by the next session that renders a status line, not by this item.
+- **Open Lancetta…** (⌘O) — the window: usage over weeks, both agents in detail, and the process list. See [The Window](/docs/the-window).
 - **Settings…** (⌘,) — see [Settings](/docs/settings).
 - **Check for Updates…** — reports what state the build is in.
-- **About Lancetta** — version, and the trademark notice for the agent marks.
+- **About Lancetta** — version, build date, and the trademark notice for the agent marks.
+
+## The menu-bar item itself
+
+What sits in the menu bar is configurable per agent: its mark, its percentage, its reset, in any combination. With more than one agent in the bar they take turns, cross-fading, and the item holds a fixed width at the widest of them so the items beside it never shift.
+
+An agent can be watched and still kept out of the bar — the menu bar is narrow, and an agent worth a card is not always worth the width.

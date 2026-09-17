@@ -32,6 +32,21 @@ They are not symmetrical, and the app says so rather than pretending otherwise.
 
 **Claude Code** has no equivalent. There is no usage subcommand, its hooks carry no rate-limit block, and its metrics export carries no quota figure. The numbers exist in exactly one place: the payload it hands to your status-line command. That means the reading arrives when a session renders one — so **Refresh now** cannot make it newer, and Lancetta's Claude card shows its age instead of a refresh button that would do nothing.
 
+## The history, and why the chart is Codex's alone
+
+Alongside the rate limits, Codex keeps **the whole token history** and gives it away on the same free route: a lifetime total, the best single day, the streaks, and one bucket per day that was used. Measured on 2026-09-17: 46 buckets across a 163-day span, and the buckets **sum to the lifetime total exactly** — so it is the complete series rather than a window onto it.
+
+**Claude Code has no counterpart at all.** Its payload is two percentages and two reset instants. There is no history in it, anywhere.
+
+That is why [the window's chart](/docs/the-window#usage) says *tokens · Codex* on its face. A chart that pooled the two would be drawing one agent's data under both their names, and it would be wrong by exactly the amount Claude was used.
+
+Two properties of that series shape how it is drawn:
+
+- **It is sparse.** Only days with usage appear — 46 entries across 163 days. Plotting the buckets in the order they arrive turns five months into a month and a half, so the quiet days are filled back in. They are drawn as gaps, never as zeroes.
+- **It lags by hours, not by a day.** On one afternoon the newest bucket was still yesterday's; by that evening the current day had appeared. The caption under the chart says which of those two states you are looking at rather than asserting one.
+
+The history is not on the poll timer. It is a second round trip and it only changes once a day, so it is read when the window opens and when you ask for it.
+
 ## 3. An unknown is never a number
 
 `0%` is a reading. *Unknown* is the absence of one. Conflating them is what produced a status line saying a healthy account was empty, so in Lancetta the two are different things all the way down: the value that carries a percentage has no numeric default, and the timestamp on a reading is not optional.
