@@ -1,0 +1,168 @@
+.title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-size: rem(100px);
+  font-weight: 900;
+  letter-spacing: rem(-2px);
+
+  @media (max-width: $mantine-breakpoint-md) {
+    font-size: rem(50px);
+  }
+}
+
+/*
+ * Raycast-style feature card. The per-card accent comes from --card-color,
+ * set inline from the feature's Mantine palette hex. A very low-alpha radial
+ * tint of --card-color washes in from the top-left and fades to transparent
+ * so each card carries its own hue. The base adapts per scheme via
+ * light-dark(): a near-white surface on light mode (so the near-black title
+ * token stays readable) and the original dark-7 surface on dark mode. The
+ * border likewise switches from a faint black hairline (light) to the faint
+ * white hairline (dark) so the card edge reads against either page colour.
+ */
+.featureCard {
+  position: relative;
+  border-radius: rem(16px);
+  border: 1px solid light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 6%));
+  background:
+    radial-gradient(
+      120% 120% at 0% 0%,
+      color-mix(in srgb, var(--card-color) 8%, transparent) 0%,
+      transparent 55%
+    ),
+    light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  transition:
+    transform 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background 180ms ease;
+}
+
+.featureCard:hover {
+  transform: translateY(-3px);
+  border-color: color-mix(in srgb, var(--card-color) 35%, transparent);
+  background:
+    radial-gradient(
+      120% 120% at 0% 0%,
+      color-mix(in srgb, var(--card-color) 14%, transparent) 0%,
+      transparent 60%
+    ),
+    light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  box-shadow:
+    0 12px 30px -12px color-mix(in srgb, var(--card-color) 45%, transparent),
+    0 0 0 1px color-mix(in srgb, var(--card-color) 20%, transparent);
+}
+
+/*
+ * Card-as-link reset + keyboard affordance. The card now renders as an
+ * <a> (Next.js Link via Mantine's polymorphic component), so strip the
+ * anchor's default underline/colour and inherit the card text colour, and
+ * make the whole surface read as clickable. focus-visible mirrors the hover
+ * treatment (tinted border + soft accent ring) so keyboard users get the
+ * same affordance as the pointer hover.
+ */
+.cardLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cardLink:focus-visible {
+  outline: none;
+  border-color: color-mix(in srgb, var(--card-color) 35%, transparent);
+  box-shadow:
+    0 12px 30px -12px color-mix(in srgb, var(--card-color) 45%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--card-color) 45%, transparent);
+}
+
+/* Rounded tinted icon square with a faint matching glow + a crisp accent
+ * hairline so the tile keeps a defined edge against any section background
+ * (otherwise the light-variant fill melts into a flat dark band). */
+.featureIcon {
+  border: 1px solid color-mix(in srgb, var(--card-color) 32%, transparent);
+  box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--card-color) 55%, transparent);
+}
+
+/*
+ * Subtle section band: a soft indigo wash from the top so the feature cards
+ * and their icon tiles lift off the page instead of sitting on a flat fill.
+ * Theme-aware via light-dark() and deliberately faint — atmosphere, not a
+ * coloured block.
+ */
+.sectionBand {
+  background: radial-gradient(
+    100% 70% at 50% -10%,
+    light-dark(
+      color-mix(in srgb, var(--mantine-color-indigo-3) 28%, transparent),
+      color-mix(in srgb, var(--mantine-color-indigo-9) 30%, transparent)
+    ),
+    transparent 62%
+  );
+}
+
+/*
+ * "NEW" sticker on a highlighted feature card. A hot red→pink→orange
+ * gradient, tilted like a peel-off sticker, with a gentle breathing scale
+ * and an expanding "ping" ring (the second box-shadow layer) so it pulls the
+ * eye without being obnoxious. The CSS-module class sits outside Mantine's
+ * @layer, so its background/transform win over the Badge's filled variant.
+ */
+.newBadge {
+  position: absolute;
+  top: rem(14px);
+  right: rem(14px);
+  z-index: 2;
+  border: none;
+  color: var(--mantine-color-white);
+  font-weight: 800;
+  letter-spacing: rem(0.6px);
+  background: linear-gradient(
+    135deg,
+    var(--mantine-color-red-6) 0%,
+    var(--mantine-color-pink-5) 55%,
+    var(--mantine-color-orange-5) 100%
+  );
+  transform: rotate(8deg);
+  transform-origin: center;
+  animation: new-badge-pulse 2.4s ease-in-out infinite;
+  will-change: transform, box-shadow;
+}
+
+@keyframes new-badge-pulse {
+  0%,
+  100% {
+    transform: rotate(8deg) scale(1);
+    box-shadow:
+      0 4px 14px -2px color-mix(in srgb, var(--mantine-color-red-6) 60%, transparent),
+      0 0 0 0 color-mix(in srgb, var(--mantine-color-pink-5) 55%, transparent);
+  }
+
+  50% {
+    transform: rotate(8deg) scale(1.09);
+    box-shadow:
+      0 7px 20px -2px color-mix(in srgb, var(--mantine-color-red-6) 78%, transparent),
+      0 0 0 7px color-mix(in srgb, var(--mantine-color-pink-5) 0%, transparent);
+  }
+}
+
+/* Opt out of motion: keep the tilt + gradient + glow, drop the animation. */
+@media (prefers-reduced-motion: reduce) {
+  .newBadge {
+    animation: none;
+    box-shadow: 0 4px 14px -2px color-mix(in srgb, var(--mantine-color-red-6) 60%, transparent);
+  }
+}
+
+/* Respect users who opt out of motion: keep tint/border, drop the lift. */
+@media (prefers-reduced-motion: reduce) {
+  .featureCard {
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      background 180ms ease;
+  }
+
+  .featureCard:hover {
+    transform: none;
+  }
+}
