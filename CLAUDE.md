@@ -301,7 +301,51 @@ failed to bind, and `curl` answered 200 from the stale server — so a removed
 string was still on the page. Kill the port, restart, and confirm which build
 answers before believing anything it says.
 
+## The one job, and the gallery that shows it
+
+The copy is built around **one job**: how much of each agent's quota is left,
+and when it comes back. The reaper is a feature card and a footnote, never a
+"second half" — the page used to have two panels, "Half one" and "Half two",
+and that layout said the app does two things (user, 2026-09-17: *"l'app alla
+fine deve svolgere 'un solo compito' bene"*). If a new feature is big, it still
+goes under that job, not beside it.
+
+`components/ScrollGallery` is the pinned, scroll-driven gallery under the hero,
+in the shape Apple's product pages use: a tall track, a viewport-high stage
+stuck under the navbar, and the frame a pure function of how far the stage has
+travelled through the track (`frameIndex`, tested). **Nothing intercepts the
+wheel** — that is what makes it work the same with a trackpad, a mouse, the
+keyboard and VoiceOver. Phones and `prefers-reduced-motion` get the same frames
+as a plain stack. The frame is measured between the stage's box and the track's
+box, never against the viewport, so the navbar's height never enters the
+arithmetic; the CSS sticks the stage under `--nextra-navbar-height` with a 4rem
+fallback.
+
+Three frames, not four: the light-mode menu is the dark one's content again and
+made a weak step. It stays in the docs.
+
+## The release-notes page has THREE states, and the middle one was missing
+
+`ReleaseNotes.tsx` shows a skeleton, a list, or an empty state, and the hook
+reports `ready` separately from SWR's `isLoading`, because the MDX compile that
+fills the list runs after the fetch and the two flags disagree for a moment.
+The first version folded "no releases" into "loading", and on a repo with no
+releases yet that skeleton never went away: lancetta.app showed *"Loading
+releases…"* forever on the day it went live. `ReleaseNotes.test.tsx` drives all
+three screens through a mocked hook — a test that only ever fed it releases
+would have passed on the broken code.
+
 ## Tooling
 
 oxfmt (`.oxfmtrc.json`), oxlint + stylelint, TypeScript 6, **Yarn 4**. Do not
 use npm or pnpm.
+
+<!-- BEGIN:nextjs-agent-rules -->
+
+# This is NOT the Next.js you know
+
+This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` (resolved from this file's directory; in monorepos the `next` package may not be visible from the repo root) before writing any code. Heed deprecation notices.
+
+This block is written and re-added by `next dev` — verify at `node_modules/next/dist/server/lib/generate-agent-files.js`. Removing it from a diff only re-creates the uncommitted change; committing it with your work keeps the tree clean.
+
+<!-- END:nextjs-agent-rules -->

@@ -29,12 +29,11 @@
 
 ## What is Lancetta?
 
-A *lancetta* is the hand of an instrument — the needle that says where you are. The app answers two questions:
+A *lancetta* is the hand of an instrument — the needle that says where you are. The app does one job: **how much of each agent's quota is left, and when it comes back.** The 5-hour and the 7-day window for **Codex** and **Claude Code**, drawn as bars, with the time each one resets, the plan each account is on, and not one token spent to find out.
 
-- **Quota** — the 5-hour and 7-day windows for **Codex** and **Claude Code**, drawn as bars, with the time each one resets and the plan each account is on.
-- **Memory** — the background process trees the agents leave behind and nothing ever reaps, listed and reclaimed on your say-so.
+It puts that reading on three surfaces: the **menu bar** for the glance, the **island under the notch** for the glance that needs no mouse, and a **window** for usage over weeks and each agent in detail.
 
-It does it on three surfaces: the **menu bar** for the glance, the **island under the notch** for the glance that needs no mouse, and a **window** for usage over weeks, both agents in detail, and the process list.
+Agents also leave background processes running long after they are done. Lancetta lists those too and closes the orphans on your say-so — a footnote to the job, not a second one.
 
 ### Reading a quota costs nothing
 
