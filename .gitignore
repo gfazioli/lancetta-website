@@ -144,3 +144,6 @@ POST.md
 # Local, temporary advisor / improve plans — never committed
 plans/
 advisor-plans/
+
+# Built by scripts/page.sh — sources are tracked, binaries are not.
+scripts/.bin/
