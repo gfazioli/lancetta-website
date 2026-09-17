@@ -139,6 +139,29 @@ which splits it per character, and `getByText` matches an element's own text —
 the sibling site's version only passes because half of its headline sits outside
 the animated span.
 
+## The repository's own metadata, which git does not carry
+
+Description, homepage and topics are set (`gh repo edit`, readable back with
+`gh repo view --json description,homepageUrl,repositoryTopics`). The **social
+preview** is not: there is no field for it in the repo object and no `gh`
+command, so it is a drag-and-drop in Settings → General → Social preview and
+nothing in this repo can assert what is currently there.
+
+`/.github/social-preview.png` is the image that belongs there, 1280×640, built
+from the real mark and a real capture of the menu.
+
+**Check what is actually set before assuming.** The one found on this repo on
+2026-09-17 was a mockup of a product Lancetta is not: a windowed app with a
+sidebar (it has no window and no Dock icon), "842,320 tokens" over a weekly bar
+chart (the app shows percentages and reset times, and daily usage is v0.5),
+"OpenAI" as a provider rather than Codex — and an axis reading Mon Tue Wed Thu
+Fri Fri Sat Sun, eight bars for seven days. It is the image every link to this
+repo previews as, so it is marketing copy and the same rule applies to it as to
+the homepage.
+
+    curl -sL -A 'Mozilla/5.0' https://github.com/gfazioli/lancetta-website \
+      | grep -oE '<meta property="og:image" content="[^"]*"' | head -1
+
 ## Seeing the page, and the one thing a headless render cannot show
 
 Grepping the served HTML proves the markup and is structurally blind to
