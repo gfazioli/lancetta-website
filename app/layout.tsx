@@ -33,6 +33,16 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           nonce={head.mantine.nonce}
           defaultColorScheme={head.mantine.defaultColorScheme}
         />
+        {/*
+          The tab icons are the TAB MARK (public/favicon.svg and the two PNGs
+          rendered from it), not the app icon: at 16px the app icon's plate eats
+          the tile and the three bars smear into each other. The SVG is declared
+          first and carries no `sizes`, which is how a browser that supports one
+          picks it at every density; the PNGs and the .ico are what the rest
+          fall back to. apple-touch-icon stays the app icon — at 180px it reads,
+          and a home-screen icon should be the app's own face.
+        */}
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="shortcut icon" href="/favicon.ico" />
