@@ -1,0 +1,61 @@
+---
+description: "Lancetta documentation — the native macOS menu-bar monitor for coding agents: what each agent's quota reads, how it is read without spending tokens, and what the app does with the processes they leave behind."
+---
+
+# Lancetta
+
+**Lancetta** is a native macOS menu-bar app that tells you where your coding agents stand. A *lancetta* is the hand of an instrument — the needle that says where you are.
+
+![The Lancetta menu: Codex and Claude Code, each with a 5-hour and a 7-day quota window and the time it resets](/screenshot-menu-dark.png)
+
+It is two panels that happen to share a window:
+
+- **Quota** — the 5-hour and 7-day windows for **Codex** and **Claude Code**, with the bucket that refused named rather than averaged away, and every reading carrying its own age.
+- **Memory** — the background process trees the agents leave behind and nothing ever reaps. *(Not in v0.1 — see [Roadmap](/docs/roadmap).)*
+
+## Why it exists
+
+Two failures on one afternoon, both invisible without a terminal and a reason to suspect.
+
+**The quota readout was wrong and it looked right.** A status line showed `0%` while the tool itself reported 59% remaining and two and three quarter hours to reset. Three separate defects had stacked up, and each one rendered as a plausible number: a reading three hours old with nothing saying so, a refused turn that records no limits at all so the search fell back to an older comfortable figure, and a reset time already in the past drawn as zero. Fixing it in a shell script fixed it for one terminal. The numbers belong somewhere that is on screen whatever window is in front.
+
+**Twenty-eight orphaned processes were holding 2.68 GB.** Fourteen background trees, every one of them adopted by the system, twelve serving working directories that had already been deleted, the oldest alive for a day and eight hours. Reaped by hand, that came back to four processes and 436 MB.
+
+## Reading a quota costs nothing
+
+This is the constraint the whole app is built around, and it was measured rather than assumed.
+
+A monitor that spends quota in order to display quota is self-defeating, and the failure would be invisible: a few hundred tokens per poll, every forty-five seconds, is a real bite out of a five-hour window, and nothing in the UI would say so.
+
+| | before | after |
+|---|---|---|
+| Lifetime tokens | 318,009,023 | 318,009,023 |
+| Percentages used | 33% / 13% | 33% / 13% |
+
+Twelve account reads on one connection moved nothing. And the instrument works, which is the half that makes the zero mean something — the same counter moved by 29,188,602 across a day of ordinary use. A counter that *cannot* move is indistinguishable from one that did not.
+
+Claude Code's side is free by construction: the app makes no request at all, because the numbers arrive in a payload Claude Code already produces for its own status line.
+
+**Asking a model how much quota is left is a turn, and it would cost tokens on every poll.** It is the easiest thing to build and the one route this app will never take. See [How it reads each agent](/docs/how-it-reads).
+
+## An unknown is never a number
+
+The defect that started this project was a display rendering an unknown as `0%`, and a three-hour-old reading as current. So:
+
+- a window with no reading is drawn as *unknown*, never as zero;
+- every reading carries the time it was taken;
+- a source that has fallen behind its own cadence says so, because a frozen number is itself an event.
+
+## Requirements
+
+- macOS 15 (Sequoia) or later
+- At least one of **Codex** or **Claude Code** installed. Lancetta finds them itself; nothing has to be configured by hand.
+- The notch panel needs a Mac that has a notch. On every other Mac that pane is hidden entirely and the menu-bar item behaves identically.
+
+## Where to go next
+
+- [Getting Started](/docs/getting-started) — install it and wire each agent
+- [The Menu](/docs/the-menu) — what every row on screen means
+- [The Notch](/docs/the-notch) — the reading without moving the mouse
+- [How it reads each agent](/docs/how-it-reads) — and why the two are not symmetrical
+- [Roadmap](/docs/roadmap) — what is in each version

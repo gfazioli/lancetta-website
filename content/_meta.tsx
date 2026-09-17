@@ -3,28 +3,20 @@ import { Group } from '@mantine/core';
 import {
   IconBook2,
   IconRocket,
-  IconLayoutList,
-  IconFolders,
-  IconLayoutSidebarRight,
-  IconLayoutGrid,
-  IconUserCircle,
-  IconBrandGithub,
-  IconCloudDownload,
-  IconGitBranch,
-  IconShieldHalfFilled,
-  IconDatabase,
-  IconSparkles,
-  IconGitCompare,
+  IconLayoutNavbar,
+  IconDeviceDesktop,
+  IconEye,
+  IconTrash,
+  IconMap2,
   IconSettings,
-  IconKeyboard,
+  IconLock,
   IconHelpCircle,
 } from '@tabler/icons-react';
 
 // Sidebar entry with a leading icon. The icon inherits `currentColor`, so it
-// tracks the link's active/hover colour automatically — which is why the
-// label stays a bare string (a Mantine `Text` would impose its own colour
-// token and break that inheritance). Kept as a small helper so every page
-// entry reads as `nav(Icon, 'Label')`.
+// tracks the link's active/hover colour automatically — which is why the label
+// stays a bare string (a Mantine `Text` would impose its own colour token and
+// break that inheritance).
 function nav(Icon: typeof IconBook2, label: string, color?: string): { title: ReactNode } {
   return {
     title: (
@@ -41,27 +33,19 @@ function nav(Icon: typeof IconBook2, label: string, color?: string): { title: Re
 }
 
 export default {
-  index: nav(IconBook2, 'Introduction', 'blue'),
+  index: nav(IconBook2, 'Introduction', 'lancetta'),
   '---get-started': { type: 'separator', title: 'Get Started' },
   'getting-started': nav(IconRocket, 'Getting Started', 'orange'),
-  'repository-list': nav(IconLayoutList, 'Repository List', 'findergit'),
-  'file-browser': nav(IconFolders, 'File Browser', 'yellow'),
-  'detail-panel': nav(IconLayoutSidebarRight, 'Detail Panel', 'grape'),
-  '---dashboards': { type: 'separator', title: 'Dashboards' },
-  overview: nav(IconLayoutGrid, 'Overview', 'blue'),
-  account: nav(IconUserCircle, 'Account', 'cyan'),
-  '---guides': { type: 'separator', title: 'Guides' },
-  'github-integration': nav(IconBrandGithub, 'GitHub Integration'),
-  'clone-repositories': nav(IconCloudDownload, 'Clone Repositories', 'teal'),
-  'git-actions': nav(IconGitBranch, 'Git Actions', 'green'),
-  'repo-trust': nav(IconShieldHalfFilled, 'Repo Trust', 'orange'),
-  'repo-maintenance': nav(IconDatabase, 'Repo Maintenance', 'grape'),
-  'ai-commit-messages': nav(IconSparkles, 'AI Commit Messages', 'violet'),
-  'diff-viewer': nav(IconGitCompare, 'Diff Viewer', 'teal'),
+  'the-menu': nav(IconLayoutNavbar, 'The Menu', 'teal'),
+  'the-notch': nav(IconDeviceDesktop, 'The Notch', 'violet'),
+  '---how-it-works': { type: 'separator', title: 'How it works' },
+  'how-it-reads': nav(IconEye, 'How it reads each agent', 'blue'),
+  memory: nav(IconTrash, 'The memory half', 'indigo'),
   '---reference': { type: 'separator', title: 'Reference' },
   settings: nav(IconSettings, 'Settings'),
-  'keyboard-shortcuts': nav(IconKeyboard, 'Keyboard Shortcuts'),
+  privacy: nav(IconLock, 'Privacy'),
   '---resources': { type: 'separator', title: 'Resources' },
-  faq: nav(IconHelpCircle, 'FAQ', 'blue'),
+  roadmap: nav(IconMap2, 'Roadmap', 'grape'),
+  faq: nav(IconHelpCircle, 'FAQ', 'lancetta'),
   'release-notes': '',
 };

@@ -1,0 +1,41 @@
+---
+description: "Lancetta's Settings: refresh interval, the menu-bar percentage, per-agent colour and visibility, the vendor marks or neutral symbols, and the notch switch."
+---
+
+# Settings
+
+⌘, from the menu, or **Settings…**.
+
+## General
+
+- **Refresh interval** — how often the agents that *can* be asked are asked. It has no effect on Claude Code, whose reading arrives when a session renders its status line.
+- **Show a percentage in the menu bar** — one number beside the icon, for when you do not want to open the menu at all.
+
+## Appearance
+
+- **Marks** — the agents' own artwork, or neutral system symbols. The marks are drawn from vector data rather than bundled as images, so they stay sharp at any row height.
+- **Light and dark** — the menu follows the system appearance.
+
+## Agents
+
+One row per agent Lancetta knows how to read, each with:
+
+- a **switch** — hide an agent you do not want on screen;
+- a **colour** — the tint its bars are drawn in;
+- a **line saying how it is wired** — which route that agent's numbers arrive by, so a card that is not updating tells you where to look.
+
+Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
+
+Visibility is stored as the set of agents you have **hidden**, rather than the set you have shown. An agent added in a later version is therefore absent from that set and is visible by default; stored the other way round, every new agent would ship invisible and read as broken.
+
+## Notch
+
+One switch. On a Mac with no notch the pane is hidden regardless — see [The Notch](/docs/the-notch).
+
+## Updates
+
+**Check for Updates…** reports what state the build is in. Automatic updates land in v0.4; see the [Roadmap](/docs/roadmap).
+
+## The marks, and the trademark notice
+
+The Codex and Claude marks are the vendors' own artwork, used **nominatively** — to name the products Lancetta reads. Lancetta is not affiliated with, or endorsed by, OpenAI or Anthropic. The marks are unmodified apart from colour, the notice is in the About window, and the switch above turns them off for anyone who would rather not display them.

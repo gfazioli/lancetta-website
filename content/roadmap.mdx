@@ -1,0 +1,52 @@
+---
+description: "What is in each version of Lancetta, in the order the work is being done — and what each step has to prove before it counts as done."
+---
+
+# Roadmap
+
+Nothing here is a promise with a date on it. It is the order the work is being done in, and — more usefully — **what each step has to do before it counts as finished**.
+
+## v0.1 — the quota, in the menu bar
+
+*In progress.*
+
+The point of this version is narrow and concrete: stop reading a quota number off a terminal status line. That cannot be done with one agent, because the status line shows both — so both quota cards ship together or the first version does not achieve the one thing it exists for.
+
+- Codex quota, with binary discovery that works from a Finder launch (where a GUI app inherits almost no `PATH`)
+- Claude Code quota, from the status-line payload, with the card honest about its age when nothing has rendered
+- The menu-bar icon: alarm first, percentage second, age visible when a source falls behind
+- Per-agent identity — a colour and the vendor's own mark, carried by the agent rather than hardcoded in the menu, so a third agent is one new file
+- The notch panel
+- Settings, About, and a Check-for-Updates that says what state the build is in
+
+**Done when** it runs launched from the Finder — not from a terminal that has a `PATH` — both cards agree with what each tool reports directly, and a working day passes without anyone looking at the status line.
+
+## v0.2 — the memory back
+
+The reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it.
+
+**Done when** it reproduces the twelve-of-fourteen result with zero live trees touched. See [The memory half](/docs/memory).
+
+## v0.3 — it speaks first
+
+A percentage on an icon is passive: it rewards looking. The value is in the two moments the app can speak first.
+
+**Alarms** — a window refused you, a threshold was crossed, or a source has gone quiet past its own cadence. A frozen number is the original defect of this whole project, so its silence is itself an event.
+
+**Advice** — nothing changed, but the shape of the next hour did. *"The 5-hour window resets in 12 minutes and you are at 33% — the remaining 67% goes with it."*
+
+The advice half ships only if the reset observations collected from v0.1 onward come back as a step function. If they come back as a slope, that feature is deleted rather than softened.
+
+## v0.4 — everyone else's Mac
+
+Signed, notarized, downloadable, and updating itself. Discovery UI, the Sources pane, a consenting status-line wiring step with an undo. This is the version where the app stops assuming one machine, and it is a bigger step than it looks.
+
+## v0.5 — credits and history
+
+Reset credits, with every safety rule they need, plus daily usage as a sparkline.
+
+---
+
+## Not planned
+
+**Asking a model how much quota is left.** It is the easiest source to write and it costs tokens on every poll. It is the one route this app will never take — see [How it reads each agent](/docs/how-it-reads).

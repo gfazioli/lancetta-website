@@ -1,0 +1,46 @@
+---
+description: "Every row in the Lancetta menu explained: the percentage, the bar, the reset time, the plan, the freshness marker, and what a refused window looks like."
+---
+
+# The Menu
+
+One card per agent, one row per window.
+
+![The Lancetta menu in light mode](/screenshot-menu-light.png)
+
+## The card header
+
+```
+Codex · plus · seen 3s
+```
+
+- **The mark and the name** — the agent this card is about. The marks are the vendors' own artwork; one switch in [Settings](/docs/settings#appearance) replaces them with neutral system symbols.
+- **The plan** — read from the account itself rather than typed into a setting, so it cannot drift out of date.
+- **The freshness marker** — how long ago this reading was taken. It appears when the reading is not effectively live; a source that has fallen well behind its own cadence is called out rather than left to look current.
+
+## The rows
+
+```
+25%   5h   ▓▓▓▓░░░░░░░░░░░░   ↻ 3h04m
+21%   7d   ▓▓▓░░░░░░░░░░░░░   ↻ 6d
+```
+
+- **The percentage** — how much of that window is spent.
+- **The window** — `5h` is the rolling five-hour bucket, `7d` the weekly one.
+- **The bar** — the same number, drawn, so a glance is enough. It is tinted with the agent's own colour.
+- **The reset** — when this window rolls over. This is the number that makes the percentage actionable: 80% with four hours to go is a different afternoon from 80% with ten minutes to go.
+
+## Limits
+
+When a window refuses you, **that window is the one you see**. Lancetta does not average the buckets into one comfortable total — an average across a refused bucket and a healthy one lands somewhere reassuring and tells you nothing about why the last request failed.
+
+## Unknown is not zero
+
+A window Lancetta has no reading for is drawn as unknown. It is never drawn as `0%`, and a reading whose reset time has already passed is not silently treated as an empty window — a rolled-over window does not mean nothing was spent since.
+
+## The rest of the menu
+
+- **Refresh now** (⌘R) — asks every agent that *can* be asked. Claude Code cannot, so its card is refreshed by the next session that renders a status line, not by this item.
+- **Settings…** (⌘,) — see [Settings](/docs/settings).
+- **Check for Updates…** — reports what state the build is in.
+- **About Lancetta** — version, and the trademark notice for the agent marks.

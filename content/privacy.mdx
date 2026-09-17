@@ -1,0 +1,29 @@
+---
+description: "What Lancetta reads, what it writes, and what it sends — which is nothing. No account, no server, no telemetry."
+---
+
+# Privacy
+
+Lancetta has no account, no server and no telemetry. **Nothing you do in it leaves your Mac.**
+
+## What it reads
+
+- **Codex** — an account read, on your machine, over the agent's own local interface. It returns your rate-limit percentages, reset times and plan. It does not return, and Lancetta does not read, the contents of any session.
+- **Claude Code** — one file on your disk, written by your own status-line command, holding the rate-limit block and the time it was observed. Lancetta does not read your transcripts, your prompts or your projects.
+- **Your plan** — read from the account metadata the agent already keeps locally.
+
+## What it writes
+
+Your own preferences — refresh interval, colours, which agents are hidden — in the standard macOS preferences location for the app. Nothing else.
+
+## What it sends
+
+Nothing. There is no analytics call, no crash reporter, no update ping in v0.1. When automatic updates arrive in v0.4 they will fetch a signed feed, and that fetch will be the only outbound request the app ever makes.
+
+## Why reading costs nothing
+
+Not a privacy point exactly, but it is usually the next question: Lancetta never sends a prompt to a model to find out how much quota is left. That would be a model turn, it would cost tokens on every poll, and it would send something. See [How it reads each agent](/docs/how-it-reads).
+
+## This website
+
+The site records anonymous page-view analytics through its host, and nothing else. There is no sign-up, no newsletter form and no third-party tracker.

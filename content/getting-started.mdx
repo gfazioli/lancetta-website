@@ -1,0 +1,53 @@
+---
+description: "Install Lancetta on macOS, wire Codex and Claude Code, and read your first quota — including why the Claude side needs one line in your status-line script."
+---
+
+# Getting Started
+
+<Callout type="warning">
+  **Lancetta v0.1 has not been released yet.** This page describes the build being
+  worked on, so that it is ready when the first one ships. Follow the
+  [Roadmap](/docs/roadmap) for where it has got to.
+</Callout>
+
+## Requirements
+
+- **macOS 15 (Sequoia) or later.**
+- **Codex, Claude Code, or both.** Lancetta shows a card per agent it can read; an agent you do not have installed simply does not appear.
+
+## Install
+
+Download the DMG, drag Lancetta to Applications, and launch it. It puts an item in your menu bar and no icon in the Dock — there is no main window to find.
+
+On first launch it looks for each agent it knows about. It does this itself because **a GUI app inherits almost no `PATH`**: launched from the Finder, a Mac app sees `/usr/bin:/bin:/usr/sbin:/sbin` and neither agent is in any of those. Lancetta looks in the places these tools actually install to, and falls back to asking your login shell.
+
+## Codex
+
+Nothing to do. Codex can be asked how much quota is left and will answer, so Lancetta asks it — on the schedule you choose in Settings, and again whenever you pick **Refresh now**.
+
+That question costs no tokens. It is an account read, not a model turn; see [How it reads each agent](/docs/how-it-reads).
+
+## Claude Code
+
+Claude Code has no equivalent question. It has no usage subcommand, its hooks carry no rate-limit block, and its metrics export has no quota figure in it. The numbers exist in exactly one place: the payload it hands to your **status-line command** every time a session renders one.
+
+So the status line becomes a *sensor*. One line in the script Claude Code already runs writes the quota block to a file, and Lancetta watches that file:
+
+```sh
+# in your status-line script, immediately after you read stdin:
+mkdir -p ~/.cache/claude-statusline
+printf '%s' "$input" | /usr/bin/jq -c \
+  '{rate_limits, observed_at: (now | todate)}' \
+  > ~/.cache/claude-statusline/claude-limits.json
+```
+
+Two consequences worth knowing about, because Lancetta shows both rather than hiding them:
+
+- **The card is only as fresh as your last rendered session.** If nothing has rendered a status line for two hours, the reading is two hours old, and the menu says so.
+- **The file is a shared slot.** Every Claude Code session that renders writes it, so two sessions can disagree. Lancetta prefers a complete older reading over a fresher partial one.
+
+## Read the menu
+
+Click the menu-bar item. You get one card per agent: the plan the account is on, then a row per window — the percentage used, a bar, and the time that window resets.
+
+[What every row means →](/docs/the-menu)

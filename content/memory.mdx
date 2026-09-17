@@ -1,0 +1,42 @@
+---
+description: "The second half of Lancetta: the background agent processes that outlive the sessions that started them, why nothing reaps them, and what reclaiming them will look like."
+---
+
+# The memory half
+
+<Callout type="info">
+  **This is v0.2, and it is not built yet.** The page describes what was measured
+  and what the feature has to do; see the [Roadmap](/docs/roadmap).
+</Callout>
+
+## What accumulates
+
+A coding agent starts a small background tree for each working directory it operates in — a broker, a server, a host process. One chain per directory.
+
+They exit when they are told to. The trouble is what happens when nobody tells them:
+
+- The broker has **no idle timeout**. Nothing closes one whose socket has had no client for a day.
+- Cleanup does exist — there are session-end hooks that resolve the broker and shut it down. But if the **working directory was deleted before the session ended**, the state that would resolve it went with the directory, and the shutdown is never sent. A session killed hard enough that its end hook never ran has the same outcome.
+
+Either way the result is certain: **nothing will ever reap them.**
+
+## What that cost, once, on one Mac
+
+| | |
+|---|---|
+| Processes | 28 |
+| Resident memory | 2.68 GB |
+| Trees whose working directory no longer existed | 12 of 14 |
+| Oldest still alive | 1 day, 8 hours |
+
+Reaped by hand: **28 → 4 processes, 2680 → 436 MB.** 2.24 GB returned.
+
+They also hide well. The broker shows in Activity Monitor under a generic runtime name, so what looks like twenty-eight processes is really forty-two.
+
+## The rule Lancetta will follow
+
+**A broker whose working directory no longer exists on disk.** On the fourteen candidates measured, that predicate gave **twelve true positives and no false positives** — the two it spared were live.
+
+Stopping one means signalling the **broker**, never its children: its own handler tears the tree down cleanly, and measured, the whole tree was gone in under a tenth of a second while the live trees were untouched.
+
+And one rule that is not negotiable: **it shows you the list before it stops anything on it.** The entire point of the feature is that you can finally see what you could not.
