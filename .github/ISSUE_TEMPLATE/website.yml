@@ -1,7 +1,7 @@
 name: Website Issue
-description: Report a problem with the FinderGit website or documentation
-title: "[Website]: "
-labels: ["website"]
+description: Report a problem with the Lancetta website or documentation
+title: '[Website]: '
+labels: ['website']
 body:
   - type: markdown
     attributes:
@@ -22,7 +22,7 @@ body:
     attributes:
       label: Page URL
       description: Which page has the issue?
-      placeholder: "https://findergit-website.vercel.app/docs/..."
+      placeholder: 'https://lancetta-website.vercel.app/docs/...'
 
   - type: textarea
     id: screenshots

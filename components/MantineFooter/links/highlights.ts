@@ -1,15 +1,15 @@
 export const highlights = [
   {
-    key: 'download',
-    title: 'Download FinderGit',
-    // `/download` redirects straight to the latest macOS .dmg (same route the
-    // hero + CTA Download buttons use), instead of the GitHub Releases page.
-    href: '/download',
+    key: 'roadmap',
+    // No Download entry until there is something to download: a link that
+    // resolves to an empty Releases page is worse than no link.
+    title: 'Roadmap',
+    href: '/docs/roadmap',
   },
   {
-    key: 'release-notes',
-    title: 'Release Notes',
-    href: '/docs/release-notes',
+    key: 'how-it-reads',
+    title: 'How it reads each agent',
+    href: '/docs/how-it-reads',
   },
   {
     key: 'sponsor',

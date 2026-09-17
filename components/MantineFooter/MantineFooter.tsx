@@ -24,7 +24,6 @@ import {
   Title,
 } from '@mantine/core';
 import { Logo } from '@/components/Logo/Logo';
-import { NewsletterSignup } from '@/components/NewsletterSignup/NewsletterSignup';
 import { ShareButtons } from '@/components/ShareButtons/ShareButtons';
 import { AnimateBadge } from './AnimateBadge';
 import { apps, highlights, resources, sponsors } from './links';
@@ -61,7 +60,6 @@ const VerticalLinks = ({ list }: { list: VerticalLink[] }) => {
 export const MantineFooter = () => {
   return (
     <div className={classes.contentFooter}>
-      <NewsletterSignup />
       <Divider my="md" className={classes.lastDivider} />
       <Container className={classes.footer} size="lg">
         <Grid grow>
@@ -69,7 +67,7 @@ export const MantineFooter = () => {
             <Stack gap="xs">
               <Logo size={48} />
               <Text fz={13} mr={64}>
-                FinderGit is a native macOS app that combines file browsing with Git intelligence.
+                Lancetta is a native macOS app that combines file browsing with Git intelligence.
                 Built with SwiftUI by{' '}
                 <Anchor fz={13} href="https://gfazioli.github.io/">
                   Undolog
@@ -91,7 +89,7 @@ export const MantineFooter = () => {
                 <ActionIcon variant="subtle" component="a" href="https://twitter.com/gfazioli">
                   <IconBrandX size={24} />
                 </ActionIcon>
-                <ActionIcon variant="subtle" component="a" href="https://findergit.substack.com">
+                <ActionIcon variant="subtle" component="a" href="https://lancetta.substack.com">
                   <IconMailHeart size={24} />
                 </ActionIcon>
               </Group>

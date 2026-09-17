@@ -1,5 +1,11 @@
 export const apps = [
   {
+    key: 'findergit',
+    title: 'FinderGit',
+    href: 'https://findergit.app',
+    newWindow: true,
+  },
+  {
     key: 'netfox',
     title: 'Netfox',
     href: 'https://netfox.app',

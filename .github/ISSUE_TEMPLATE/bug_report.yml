@@ -1,7 +1,7 @@
 name: Bug Report
-description: Report a bug in FinderGit for macOS
-title: "[Bug]: "
-labels: ["bug", "app"]
+description: Report a bug in Lancetta for macOS
+title: '[Bug]: '
+labels: ['bug', 'app']
 body:
   - type: markdown
     attributes:
@@ -32,7 +32,7 @@ body:
       label: Steps to reproduce
       description: How can we reproduce the bug?
       placeholder: |
-        1. Open FinderGit
+        1. Open Lancetta
         2. Add root folder '...'
         3. Click on '...'
         4. See error
@@ -42,9 +42,9 @@ body:
   - type: input
     id: version
     attributes:
-      label: FinderGit version
-      description: Which version of FinderGit are you using? (FinderGit → About)
-      placeholder: "1.0.0"
+      label: Lancetta version
+      description: Which version of Lancetta are you using? (Lancetta → About)
+      placeholder: '1.0.0'
     validations:
       required: true
 

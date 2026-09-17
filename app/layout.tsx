@@ -14,7 +14,6 @@ import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/c
 // !! End of important imports !!
 
 import { MantineFooter, MantineNavBar } from '@/components';
-import { NewsletterModal } from '@/components/NewsletterSignup/NewsletterModal';
 import { WebsiteJsonLd } from '@/components/StructuredData/StructuredData';
 import config from '@/config';
 import { theme } from '../theme';
@@ -50,17 +49,15 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <MantineProvider theme={theme} defaultColorScheme={head.mantine.defaultColorScheme}>
           <Layout
             banner={
-              <Banner storageKey={`findergit-release-${config.app.version}`}>
+              <Banner storageKey={`lancetta-${config.app.version}`}>
                 {/*
-                  Wrap the banner body in a single span. Nextra's Banner
-                  internally maps over its children; passing two siblings
-                  (the text node + the <a>) triggers React 19's "Each
-                  child should have a unique key" warning surfaced through
-                  the ConfigProvider.
+                  Wrap the banner body in a single span. Nextra's Banner maps
+                  over its children internally; two siblings (a text node plus
+                  the <a>) trip React 19's unique-key warning.
                 */}
                 <span>
-                  FinderGit v{config.app.version} is here — a Git-aware file browser for macOS.{' '}
-                  <a href="/docs/release-notes">See what&apos;s new</a>
+                  Lancetta v{config.app.version} is being built in the open —{' '}
+                  <a href="/docs/roadmap">see what is in it</a>
                 </span>
               </Banner>
             }
@@ -72,7 +69,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           >
             {children}
           </Layout>
-          <NewsletterModal />
         </MantineProvider>
         <WebsiteJsonLd />
         <Analytics />

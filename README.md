@@ -1,85 +1,73 @@
-<p align="center">
-  <img src="public/icon-512x512.png" alt="FinderGit" width="160" height="160" />
-</p>
+# lancetta-website
 
-<h1 align="center">FinderGit</h1>
+The marketing, documentation and download site for **Lancetta** — a native macOS
+menu-bar monitor for coding agents.
 
-<p align="center">
-  <strong>A Git-aware file browser for macOS.</strong><br/>
-  Finder-style list view, real-time Git status, inline diffs, full git actions — all in one window.
-</p>
+> **This is not the app.** It is a Next.js site deployed on Vercel. The app
+> itself is a separate, private repository.
 
-<p align="center">
-  <a href="https://github.com/gfazioli/findergit-website/releases/latest"><img src="https://img.shields.io/github/v/release/gfazioli/findergit-website?label=Download&color=blue" alt="Latest Release" /></a>
-  <a href="https://www.apple.com/macos/"><img src="https://img.shields.io/badge/macOS-15%2B-blue" alt="macOS 15+" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-green" alt="MIT License" /></a>
-</p>
+- **Live**: https://lancetta.app *(not deployed yet)*
+- **App repo** (private, Swift): https://github.com/gfazioli/Lancetta
+- **This repo**: https://github.com/gfazioli/lancetta-website
 
-<p align="center">
-  <a href="https://findergit.app">Website</a>
-  ·
-  <a href="https://findergit.app/docs/getting-started">Documentation</a>
-  ·
-  <a href="https://github.com/gfazioli/findergit-website/releases/latest">Download</a>
-</p>
+## What Lancetta is
 
-<p align="center">
-  <img src="public/screenshot-hero.png" alt="FinderGit window showing the Finder-style tree view with Branch, Status and Changes columns" width="820" />
-</p>
+Two panels that happen to share a window:
 
-## What is FinderGit?
+- **Quota** — the 5-hour and 7-day windows for Codex and Claude Code, with the
+  bucket that refused named rather than averaged away, and every reading
+  carrying its own age.
+- **Memory** — the background agent process trees nothing ever reaps. *(v0.2.)*
 
-FinderGit is a native macOS app that combines file browsing with Git intelligence. Instead of switching between Finder and a Git client, you get everything in one window:
+Reading a quota costs **no tokens**, and that is the constraint the whole app is
+built around. Measured: twelve account reads left the lifetime token counter
+unchanged at 318,009,023, against a positive control showing the same counter
+move by 29,188,602 across a day of real use.
 
-- **Tree view with columns** — browse files like Finder's list view, with sortable columns for Branch, Status, Changes, Size, and Date Modified
-- **Live Git status** — every repository shows its branch, clean/dirty/unpushed state, and number of changed files, updated in real time via FSEvents
-- **Ahead/behind counter** — the status badge shows `↑N`, `↓N`, or `↑N ↓M` so you can spot repos that need a push, a pull, or both at a glance
-- **Auto-fetch** — optional background `git fetch` at a user-chosen interval to keep the ahead/behind counter fresh
-- **Diff viewer** — click any modified file to see a colored inline diff
-- **Git actions** — stage, unstage, commit, push, pull, fetch, branch switch, all from the UI
-- **Repo Trust — supply-chain safety** — surface a repo's *auto-run surface* (editor tasks, AI-agent configs, dev-container and npm hooks) and get alerted when it changes after a pull. FinderGit also detects the committed **dropper** behind supply-chain worms like **Shai-Hulud / Miasma** — the obfuscated `.github/setup.js`-style payload — across *every* branch, not just the checkout, and never runs anything it finds. When a repo looks compromised it shows an incident runbook: revoke the OAuth authorization, then reset (not revert) the infected branches
-- **Repo Maintenance** — a per-repo disk-usage breakdown and one-click cleanup (Optimize / Deep Clean) to reclaim Git space, with a sortable Size column in the browser
-- **Native Markdown preview** — press Space on any `.md` file for a rendered preview
-- **Smart context menus** — adapts to whether you're on a regular file, a tracked file, or a repository
-- **Multiple root folders** — add as many as you want; drop folders from the macOS Finder into the sidebar to add them as roots
-- **Universal binary** — one DMG runs on Apple Silicon and Intel Macs
-- **Auto-updates** — built in via Sparkle
+## Stack
 
-## Download
+Next.js 16 + Nextra 4 (MDX docs), Mantine 9, Yarn 4. Bootstrapped from
+`findergit-website`, which is the same template `netfox-website` and
+`vicenda-website` run.
 
-[**→ Download the latest version**](https://github.com/gfazioli/findergit-website/releases/latest)
-
-After downloading, open the DMG and drag FinderGit into your Applications folder. Launch it normally — the app is signed with Apple Developer ID and notarized by Apple, so Gatekeeper accepts it on first open.
-
-## Requirements
-
-- macOS 15 Sequoia or later
-- Xcode Command Line Tools (FinderGit uses the system `git` binary). On a fresh Mac, run once:
-  ```bash
-  xcode-select --install
-  sudo xcodebuild -license
-  ```
-- Repositories that use [Git LFS](https://git-lfs.com) need `git-lfs` installed (`brew install git-lfs && git lfs install`). FinderGit detects when it's missing and tells you exactly how to fix it instead of failing silently.
-
-## Documentation
-
-Full documentation, screenshots and FAQ at **[findergit.app](https://findergit.app)**.
-
-## About this repository
-
-This repo hosts the **marketing site** and **release downloads** for FinderGit. The app source lives in a separate repository.
-
-The site is built with [Next.js 16](https://nextjs.org/), [Mantine 9](https://mantine.dev/) and [Nextra 4](https://nextra.site/).
-
-### Local development
-
-```bash
+```sh
 yarn install
-yarn dev
+yarn dev          # dev server
+yarn build        # production build + pagefind index
+yarn test         # typegen, format check, lint, typecheck, jest
 ```
 
-Then visit [http://localhost:3000](http://localhost:3000).
+If `yarn <cmd>` answers `command not found: next` / `oxfmt`, the Yarn PATH shim
+is not wired on this machine — run the binary directly
+(`./node_modules/.bin/next dev`). `yarn test` and `yarn jest` route through the
+npm-run shim and work regardless.
 
-## License
+## Before the first release
 
-MIT
+`config.app.released` is `false`, and several things key off it: the hero CTA,
+the release strip, the Download tab, and the `downloadUrl`/`dateModified` in the
+JSON-LD. Flip it in the same commit that publishes the first build, and restore
+the `download` entry in `app/_meta.tsx` and the footer highlight with it.
+
+## Structure
+
+| | |
+|---|---|
+| `app/` | App Router — homepage, docs route, API routes, sitemap, manifest |
+| `components/` | Homepage sections, navbar, footer, release notes, structured data |
+| `content/` | The MDX docs, served under `/docs` |
+| `config/index.ts` | Everything site-specific: metadata, GitHub repo, app version |
+| `theme.ts` | The palette, derived from the app icon |
+| `theme/global.css` | Design tokens, including the two agent tints |
+
+## Brand
+
+The palette is the app icon's, sampled rather than picked — see the comments in
+`theme.ts`. The short version: the brand accent is the icon's **third** bar,
+because the other two hues already mean *which agent* inside the app (teal is
+Codex, orange is Claude Code) and a site accent borrowed from one of them would
+disagree with every screenshot on the page.
+
+## Licence
+
+MIT — see [LICENSE](./LICENSE).

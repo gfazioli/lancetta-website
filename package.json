@@ -47,7 +47,7 @@
     "turbopack-inline-svg-loader": "^1.0.3",
     "typescript": "6.0.3"
   },
-  "name": "mantine-next-nextra-template",
+  "name": "lancetta-website",
   "packageManager": "yarn@4.18.0",
   "private": true,
   "scripts": {

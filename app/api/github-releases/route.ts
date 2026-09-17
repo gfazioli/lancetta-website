@@ -17,7 +17,7 @@ export async function GET(request: Request) {
     const url = `${config.gitHub.releasesUrl}?per_page=${config.releaseNotes.maxReleases}`;
     const baseHeaders: Record<string, string> = {
       Accept: 'application/vnd.github+json',
-      'User-Agent': 'findergit-website',
+      'User-Agent': 'lancetta-website',
     };
 
     // Try authenticated first if a token is configured (5000 req/hour vs 60/hour).
@@ -75,7 +75,7 @@ export async function GET(request: Request) {
     }
 
     const releases = await response.json();
-    // Keep only FinderGit app releases (see config.releaseNotes
+    // Keep only Lancetta app releases (see config.releaseNotes
     // .appReleaseNamePrefix) so the website's own template releases don't
     // leak into the app's release-notes feed.
     const prefix = config.releaseNotes.appReleaseNamePrefix;

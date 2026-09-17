@@ -1,12 +1,12 @@
 name: Feature Request
-description: Suggest a new feature for FinderGit
-title: "[Feature]: "
-labels: ["enhancement", "app"]
+description: Suggest a new feature for Lancetta
+title: '[Feature]: '
+labels: ['enhancement', 'app']
 body:
   - type: markdown
     attributes:
       value: |
-        Have an idea to make FinderGit better? We'd love to hear it!
+        Have an idea to make Lancetta better? We'd love to hear it!
 
   - type: textarea
     id: problem
@@ -22,7 +22,7 @@ body:
     attributes:
       label: Proposed solution
       description: How would you like this to work?
-      placeholder: It would be great if FinderGit could...
+      placeholder: It would be great if Lancetta could...
     validations:
       required: true
 

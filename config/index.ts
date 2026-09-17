@@ -1,40 +1,43 @@
 export default {
   metadata: {
     title: {
-      // 58 characters — within the 50-60 OG sweet spot.
-      // "Native macOS" + "Git Intelligence" both pull weight in
-      // the click decision: the first frames the platform, the
-      // second the differentiator over a plain file browser.
-      default: 'FinderGit — Native macOS File Browser with Git Intelligence',
-      template: '%s | FinderGit',
+      // 57 characters — inside the 50–60 OG/SERP sweet spot. "Menu-Bar"
+      // and "Coding Agents" both pull weight in the click decision: the
+      // first says where it lives, the second who it watches. "Quota"
+      // carries the search intent; the memory half is in the description,
+      // because it does not ship until v0.2.0.
+      default: 'Lancetta — Menu-Bar Quota Monitor for Coding Agents',
+      template: '%s | Lancetta',
     },
     description:
-      'A native macOS app that combines file browsing with Git intelligence. See branch, status, changes, and diffs for all your repositories at a glance.',
-    metadataBase: new URL('https://findergit.app/'),
+      'A native macOS menu-bar monitor for Codex and Claude Code. See both quota windows, the plan each account is on, and how old every reading is — without spending a single token to find out.',
+    metadataBase: new URL('https://lancetta.app/'),
     keywords: [
-      'FinderGit',
+      'Lancetta',
       'macOS',
-      'Git',
-      'file browser',
-      'repository manager',
+      'menu bar',
+      'Codex',
+      'Claude Code',
+      'coding agent',
+      'quota monitor',
+      'rate limit',
+      'token usage',
       'SwiftUI',
       'developer tools',
-      'git client',
-      'Finder alternative',
     ],
     generator: 'Next.js',
-    applicationName: 'FinderGit',
+    applicationName: 'Lancetta',
     appleWebApp: {
-      title: 'FinderGit',
+      title: 'Lancetta',
     },
     openGraph: {
       url: './',
-      siteName: 'FinderGit',
+      siteName: 'Lancetta',
       locale: 'en_US',
       type: 'website',
     },
     other: {
-      'msapplication-TileColor': '#228be6',
+      'msapplication-TileColor': '#7a5bea',
     },
     twitter: {
       card: 'summary_large_image',
@@ -46,7 +49,7 @@ export default {
     },
   },
   nextraLayout: {
-    docsRepositoryBase: 'https://github.com/gfazioli/findergit-website/tree/main/app/docs/',
+    docsRepositoryBase: 'https://github.com/gfazioli/lancetta-website/tree/main/content/',
     sidebar: {
       defaultMenuCollapseLevel: 1,
     },
@@ -58,28 +61,19 @@ export default {
     },
   },
   gitHub: {
-    // Note: the app repo is PRIVATE. Releases API will be configured
-    // when a public releases repo is created.
-    repo: 'gfazioli/findergit-website',
+    // The app repo is PRIVATE, so releases are published on this website
+    // repo — the same arrangement FinderGit and Netfox run.
+    repo: 'gfazioli/lancetta-website',
     apiUrl: 'https://api.github.com',
-    releasesUrl: 'https://api.github.com/repos/gfazioli/findergit-website/releases',
+    releasesUrl: 'https://api.github.com/repos/gfazioli/lancetta-website/releases',
   },
   releaseNotes: {
-    // External link to the GitHub Releases page — used by the
-    // "View full changelog on GitHub" button at the bottom of /docs/release-notes.
-    url: 'https://github.com/gfazioli/findergit-website/releases',
+    url: 'https://github.com/gfazioli/lancetta-website/releases',
     maxReleases: 10,
-    // Releases live on the website repo, which ALSO carries the website's
-    // own releases (the Mantine/Nextra template tags a `v6.x` release when
-    // its packages are bumped). release.sh names every FinderGit app
-    // release "FinderGit X.Y.Z"; the feed keeps only releases with this
-    // name prefix so a website-internal entry never appears in the app's
-    // release notes. (Cross-port: netfox-website would use 'Netfox'.)
-    appReleaseNamePrefix: 'FinderGit',
-    // How many recent releases to render on the page + in the TOC. The
-    // rest stay one click away via "View full changelog on GitHub" at the
-    // bottom — the page was growing unbounded. Sliced AFTER the app-name
-    // filter so a website template release can't eat a visible slot.
+    // release.sh will name every app release "Lancetta X.Y.Z"; the feed keeps
+    // only releases with this name prefix, so a website-internal release (the
+    // Mantine/Nextra template tags its own) never appears in the app's notes.
+    appReleaseNamePrefix: 'Lancetta',
     displayCount: 3,
   },
   search: {
@@ -92,14 +86,17 @@ export default {
     defaultLanguage: 'en',
   },
   app: {
-    version: '0.37.0',
-    // Publication date of `version`, UTC, written by release.sh next to the
-    // version itself. It is the OFFLINE FALLBACK for the homepage release
-    // strip: the live date and the release count come from the GitHub
-    // releases API, and this is what the strip shows when that call is
-    // rate-limited or down. Also the JSON-LD `dateModified`.
-    releaseDate: '2026-09-15',
+    // v0.1.0 is not released yet: the menu, Settings, About and the update
+    // check are built; the process reaper, notifications and the updater are
+    // not. Nothing on this site may describe those as shipped.
+    version: '0.1.0',
+    released: false,
+    releaseDate: '',
+    // Read off the app's own Package.swift (`platforms: [.macOS(.v15)]`).
+    // When the first build exists, take it from the .app's
+    // LSMinimumSystemVersion instead — a build setting is not what the
+    // product declares.
     minMacOS: '15.0',
-    downloadUrl: 'https://github.com/gfazioli/findergit-website/releases/latest',
+    downloadUrl: 'https://github.com/gfazioli/lancetta-website/releases/latest',
   },
 } as const;

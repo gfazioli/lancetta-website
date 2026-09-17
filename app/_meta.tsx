@@ -1,6 +1,12 @@
 import { Group } from '@mantine/core';
 import { IconCoffee, IconHeartFilled } from '@tabler/icons-react';
 
+/*
+ * No `download` page entry while `config.app.released` is false — a top-level
+ * Download tab pointing at an empty Releases page is a promise the site cannot
+ * keep. Restore it (and `/download`, and the footer highlight) in the same
+ * commit that flips `released` to true.
+ */
 export default {
   index: {
     display: 'hidden',
@@ -9,22 +15,22 @@ export default {
     type: 'page',
     title: 'Documentation',
   },
-  download: {
+  roadmap: {
     type: 'page',
-    title: 'Download',
-    href: 'https://github.com/gfazioli/findergit-website/releases/latest',
+    title: 'Roadmap',
+    href: '/docs/roadmap',
   },
   community: {
     title: 'Community',
     type: 'menu',
     items: {
-      newsletter: {
-        title: 'Newsletter',
-        href: 'https://findergit.substack.com',
+      releases: {
+        title: 'Releases',
+        href: 'https://github.com/gfazioli/lancetta-website/releases',
       },
       issues: {
         title: 'Report an Issue',
-        href: 'mailto:feedback@findergit.app?subject=FinderGit%20feedback',
+        href: 'mailto:feedback@lancetta.app?subject=Lancetta%20feedback',
       },
     },
   },
@@ -48,7 +54,6 @@ export default {
         ),
         href: '#sponsors',
       },
-      // External donation link — Nextra keeps the ↗ external indicator.
       coffee: {
         title: (
           <Group component="span" gap={8} wrap="nowrap" align="center">

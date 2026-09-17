@@ -11419,6 +11419,57 @@ __metadata:
   languageName: node
   linkType: hard
 
+"lancetta-website@workspace:.":
+  version: 0.0.0-use.local
+  resolution: "lancetta-website@workspace:."
+  dependencies:
+    "@babel/core": "npm:^7.29.7"
+    "@gfazioli/mantine-marquee": "npm:^4.1.6"
+    "@gfazioli/mantine-scene": "npm:^2.2.10"
+    "@gfazioli/mantine-text-animate": "npm:^4.0.10"
+    "@mantine/core": "npm:9.6.1"
+    "@mantine/hooks": "npm:9.6.1"
+    "@mdx-js/loader": "npm:^3.1.1"
+    "@mdx-js/react": "npm:^3.1.1"
+    "@next/bundle-analyzer": "npm:^16.3.5"
+    "@storybook/addon-themes": "npm:^10.6.0"
+    "@storybook/nextjs": "npm:^10.6.0"
+    "@storybook/react": "npm:^10.6.0"
+    "@tabler/icons-react": "npm:^3.46.0"
+    "@testing-library/dom": "npm:^10.4.2"
+    "@testing-library/jest-dom": "npm:^6.10.0"
+    "@testing-library/react": "npm:^16.3.3"
+    "@testing-library/user-event": "npm:^14.6.7"
+    "@types/jest": "npm:^30.0.0"
+    "@types/node": "npm:^24.13.4"
+    "@types/react": "npm:19.3.0"
+    "@vercel/analytics": "npm:^1.6.1"
+    babel-loader: "npm:^10.1.1"
+    cobe: "npm:^2.0.1"
+    jest: "npm:^30.5.1"
+    jest-environment-jsdom: "npm:^30.5.1"
+    next: "npm:16.3.5"
+    nextra: "npm:4.6.1"
+    nextra-theme-docs: "npm:4.6.1"
+    oxfmt: "npm:^0.68.0"
+    oxlint: "npm:^1.83.0"
+    pagefind: "npm:^1.5.2"
+    postcss: "npm:^8.5.28"
+    postcss-import: "npm:^16.2.0"
+    postcss-preset-mantine: "npm:1.18.0"
+    postcss-simple-vars: "npm:^7.0.1"
+    react: "npm:19.3.0"
+    react-dom: "npm:19.3.0"
+    storybook: "npm:^10.6.0"
+    stylelint: "npm:^16.26.1"
+    stylelint-config-standard-scss: "npm:^16.0.0"
+    swr: "npm:^2.5.1"
+    ts-jest: "npm:^29.4.12"
+    turbopack-inline-svg-loader: "npm:^1.0.3"
+    typescript: "npm:6.0.3"
+  languageName: unknown
+  linkType: soft
+
 "layout-base@npm:^1.0.0":
   version: 1.0.2
   resolution: "layout-base@npm:1.0.2"
@@ -11664,57 +11715,6 @@ __metadata:
   checksum: 10c0/43b9f6dcbc6fe8b8604cb6396957c3698857a15ba4dbc38284f7f0e61f248300585ef1eb8cc62df54e9c724af977e45b5cdfd88320ef7f53e45070ed3488da55
   languageName: node
   linkType: hard
-
-"mantine-next-nextra-template@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "mantine-next-nextra-template@workspace:."
-  dependencies:
-    "@babel/core": "npm:^7.29.7"
-    "@gfazioli/mantine-marquee": "npm:^4.1.6"
-    "@gfazioli/mantine-scene": "npm:^2.2.10"
-    "@gfazioli/mantine-text-animate": "npm:^4.0.10"
-    "@mantine/core": "npm:9.6.1"
-    "@mantine/hooks": "npm:9.6.1"
-    "@mdx-js/loader": "npm:^3.1.1"
-    "@mdx-js/react": "npm:^3.1.1"
-    "@next/bundle-analyzer": "npm:^16.3.5"
-    "@storybook/addon-themes": "npm:^10.6.0"
-    "@storybook/nextjs": "npm:^10.6.0"
-    "@storybook/react": "npm:^10.6.0"
-    "@tabler/icons-react": "npm:^3.46.0"
-    "@testing-library/dom": "npm:^10.4.2"
-    "@testing-library/jest-dom": "npm:^6.10.0"
-    "@testing-library/react": "npm:^16.3.3"
-    "@testing-library/user-event": "npm:^14.6.7"
-    "@types/jest": "npm:^30.0.0"
-    "@types/node": "npm:^24.13.4"
-    "@types/react": "npm:19.3.0"
-    "@vercel/analytics": "npm:^1.6.1"
-    babel-loader: "npm:^10.1.1"
-    cobe: "npm:^2.0.1"
-    jest: "npm:^30.5.1"
-    jest-environment-jsdom: "npm:^30.5.1"
-    next: "npm:16.3.5"
-    nextra: "npm:4.6.1"
-    nextra-theme-docs: "npm:4.6.1"
-    oxfmt: "npm:^0.68.0"
-    oxlint: "npm:^1.83.0"
-    pagefind: "npm:^1.5.2"
-    postcss: "npm:^8.5.28"
-    postcss-import: "npm:^16.2.0"
-    postcss-preset-mantine: "npm:1.18.0"
-    postcss-simple-vars: "npm:^7.0.1"
-    react: "npm:19.3.0"
-    react-dom: "npm:19.3.0"
-    storybook: "npm:^10.6.0"
-    stylelint: "npm:^16.26.1"
-    stylelint-config-standard-scss: "npm:^16.0.0"
-    swr: "npm:^2.5.1"
-    ts-jest: "npm:^29.4.12"
-    turbopack-inline-svg-loader: "npm:^1.0.3"
-    typescript: "npm:6.0.3"
-  languageName: unknown
-  linkType: soft
 
 "markdown-extensions@npm:^2.0.0":
   version: 2.0.0

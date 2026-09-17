@@ -1,4 +1,4 @@
-# https://findergit.app/robots.txt
+# https://lancetta.app/robots.txt
 
 # ─────────────────────────────────────────────────────────────
 # Search engines — welcome.
@@ -120,4 +120,4 @@ Disallow: /
 User-agent: *
 Allow: /
 
-Sitemap: https://findergit.app/sitemap.xml
+Sitemap: https://lancetta.app/sitemap.xml
