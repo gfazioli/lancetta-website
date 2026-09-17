@@ -61,6 +61,14 @@ export function useReleaseNotes() {
 
   const [compiledReleases, setCompiledReleases] = useState<Release[]>([]);
   const [error, setError] = useState<string | null>(null);
+  // True once the list is FINAL: compiled, or confirmed empty. `isLoading` is
+  // SWR's and goes false the moment the API answers, while the MDX compile
+  // that fills `compiledReleases` is still running -- so for a moment the
+  // caller sees "not loading" and "no releases" at once. The first version of
+  // the component papered over that by treating an empty list as loading, and
+  // on a repo with NO releases yet that skeleton never went away: lancetta.app
+  // showed "Loading releases..." forever on 2026-09-17.
+  const [ready, setReady] = useState(false);
 
   const {
     data,
@@ -79,17 +87,18 @@ export function useReleaseNotes() {
 
       const fetchReleases = async () => {
         const releases = await Promise.all(
-          data.releases.map(async (release) => ({
+          (data.releases ?? []).map(async (release) => ({
             ...release,
             displayDate: formatReleaseDate(release.published_at, release.created_at),
             body: await compileMdx(release.body),
           }))
         );
         setCompiledReleases(releases);
+        setReady(true);
       };
       fetchReleases();
     }
   }, [data, isLoading, error]); // Add isLoading and error to the dependency array
 
-  return { data: compiledReleases, error: error || swrError, isLoading } as const;
+  return { data: compiledReleases, error: error || swrError, isLoading, ready } as const;
 }
