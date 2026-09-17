@@ -139,6 +139,34 @@ which splits it per character, and `getByText` matches an element's own text —
 the sibling site's version only passes because half of its headline sits outside
 the animated span.
 
+## Seeing the page, and the one thing a headless render cannot show
+
+Grepping the served HTML proves the markup and is structurally blind to
+opacity, z-index, transforms and font size — which is how a hero headline once
+shipped invisible on the sibling site with `curl` reporting it present. So a
+layout claim about this site is a picture, taken from a `WKWebView` snapshot of
+`next start` on a spare port.
+
+Two things that cost time here and will cost it again:
+
+- **`takeSnapshot` on a detached web view answers `WKErrorDomain Code=1 "An
+  unknown error occurred"`**, which reads like a page fault and is a
+  view-hierarchy one. The view has to be in a real `NSWindow`.
+- **`mantine-text-animate` never advances in a headless render.** Its characters
+  start at `opacity: 0` and are revealed on an in-view trigger that does not
+  fire there, so the gradient half of the hero headline photographs as a blank
+  gap. **This is the instrument, not the page** — settled with a positive
+  control: findergit.app, live and correct, measures `opacity: 0` on every one
+  of its headline spans through the same tool. Do not "fix" the headline. If a
+  picture of it is needed, force those spans visible before the snapshot and say
+  that the shot is staged for that one element.
+
+And the trap that wasted a round here: **a process outlives its bundle.** A
+`next start` left running from an earlier build kept port 3111, the new one
+failed to bind, and `curl` answered 200 from the stale server — so a removed
+string was still on the page. Kill the port, restart, and confirm which build
+answers before believing anything it says.
+
 ## Tooling
 
 oxfmt (`.oxfmtrc.json`), oxlint + stylelint, TypeScript 6, **Yarn 4**. Do not
