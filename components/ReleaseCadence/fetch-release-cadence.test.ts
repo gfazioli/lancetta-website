@@ -6,7 +6,7 @@ const NOW = new Date('2026-08-31T18:00:00Z');
 /** One app release, dated `days` before NOW so the ordering is predictable. */
 function release(n: number, days: number) {
   const at = new Date(NOW.getTime() - days * 86_400_000).toISOString();
-  return { name: `FinderGit 0.${n}.0`, tag_name: `v0.${n}.0`, published_at: at };
+  return { name: `Lancetta 0.${n}.0`, tag_name: `v0.${n}.0`, published_at: at };
 }
 
 /** Serves the given pages in order, then empty pages. */
@@ -48,8 +48,9 @@ describe('fetchReleaseCadence', () => {
     const cadence = await fetchReleaseCadence(NOW);
     expect(cadence.total).toBeNull();
     expect(cadence.since).toBeNull();
-    // Still a usable strip: the config date stands in.
-    expect(cadence.latestDate).toContain('2026');
+    // The config date stands in — which before the first release is empty, and
+    // the strip then draws nothing at all rather than an invented date.
+    expect(cadence.latestDate).toBe(config.app.releaseDate ? expect.stringContaining('20') : '');
   });
 
   it('stops at the cap instead of walking the API forever', async () => {

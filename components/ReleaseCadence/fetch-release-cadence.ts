@@ -50,7 +50,7 @@ export async function fetchReleaseCadence(now: Date = new Date()): Promise<Relea
         {
           headers: {
             Accept: 'application/vnd.github+json',
-            'User-Agent': 'findergit-website',
+            'User-Agent': 'lancetta-website',
           },
           next: { revalidate: 3600 },
           signal: AbortSignal.timeout(TIMEOUT_MS),

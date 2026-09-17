@@ -90,9 +90,9 @@ describe('summariseReleases', () => {
     // those inflates the number the homepage claims.
     const summary = summariseReleases(
       [
-        { name: 'FinderGit 0.28.0', published_at: '2026-08-31T12:21:31Z' },
+        { name: 'Lancetta 0.28.0', published_at: '2026-08-31T12:21:31Z' },
         { name: 'v6.0.7', published_at: '2026-08-30T09:00:00Z' },
-        { name: 'FinderGit 0.27.1', published_at: '2026-08-26T06:21:41Z' },
+        { name: 'Lancetta 0.27.1', published_at: '2026-08-26T06:21:41Z' },
       ],
       prefix
     );
@@ -107,12 +107,12 @@ describe('summariseReleases', () => {
     const summary = summariseReleases(
       [
         {
-          name: 'FinderGit 0.29.0',
+          name: 'Lancetta 0.29.0',
           draft: true,
           published_at: null,
           created_at: '2026-09-01T08:00:00Z',
         },
-        { name: 'FinderGit 0.28.0', published_at: '2026-08-31T12:21:31Z' },
+        { name: 'Lancetta 0.28.0', published_at: '2026-08-31T12:21:31Z' },
       ],
       prefix
     );
@@ -123,9 +123,9 @@ describe('summariseReleases', () => {
   it('finds the endpoints in a payload that is not in order', () => {
     const summary = summariseReleases(
       [
-        { name: 'FinderGit 0.14.0', published_at: '2026-06-14T10:00:00Z' },
-        { name: 'FinderGit 0.28.0', published_at: '2026-08-31T12:21:31Z' },
-        { name: 'FinderGit 0.1.0', published_at: '2026-04-15T08:42:00Z' },
+        { name: 'Lancetta 0.14.0', published_at: '2026-06-14T10:00:00Z' },
+        { name: 'Lancetta 0.28.0', published_at: '2026-08-31T12:21:31Z' },
+        { name: 'Lancetta 0.1.0', published_at: '2026-04-15T08:42:00Z' },
       ],
       prefix
     );
@@ -140,7 +140,7 @@ describe('summariseReleases', () => {
     const summary = summariseReleases(
       [
         {
-          name: 'FinderGit 0.25.0',
+          name: 'Lancetta 0.25.0',
           published_at: '2026-08-06T09:08:57Z',
           created_at: '2026-08-01T17:24:23Z',
         },
@@ -181,6 +181,15 @@ describe('fallbackReleaseCadence', () => {
     // Asserted against config rather than a literal, so the test does not need
     // editing at every release - and so it stays red if the date is ever
     // hardcoded in the component instead.
+    //
+    // Before the first release that value is empty, and there is no date to
+    // take. Both halves are asserted here so the day release.sh fills it in,
+    // the second one starts doing the work and the first one stops.
+    if (!config.app.releaseDate) {
+      expect(fallbackReleaseCadence(new Date()).latestDate).toBe('');
+      expect(fallbackReleaseCadence(new Date()).freshness).toBeNull();
+      return;
+    }
     const onReleaseDay = new Date(`${config.app.releaseDate}T18:00:00Z`);
     expect(fallbackReleaseCadence(onReleaseDay).freshness).toBe('Updated today');
   });

@@ -14,6 +14,13 @@ export function ReleaseCadence({ cadence }: { cadence: Cadence }) {
   const { freshness, latestDate, total, since } = cadence;
   const isFresh = freshness !== null;
 
+  // Nothing to say: no live data AND no release date in the config, which is
+  // the state before the first release. Drawing the strip here would print
+  // "Latest release " followed by nothing, or by "Invalid Date".
+  if (!isFresh && !latestDate) {
+    return null;
+  }
+
   return (
     <Paper className={classes.strip} radius="xl" px="xl" py={10} withBorder>
       <Stack gap={2} align="center">

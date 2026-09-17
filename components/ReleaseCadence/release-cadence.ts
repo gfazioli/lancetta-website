@@ -154,8 +154,18 @@ export function toCadence(summary: ReleaseSummary, now: Date): ReleaseCadence {
  * out of the config, which release.sh writes in the same commit that publishes
  * the release. No count and no first-release date, because neither is knowable
  * offline and an undercount on the homepage is worse than no number at all.
+ *
+ * **Before the first release `config.app.releaseDate` is empty**, and there is
+ * no honest string to return: `new Date('T12:00:00Z')` is an Invalid Date, and
+ * formatting one puts the literal words "Invalid Date" on the homepage. So the
+ * empty case returns an empty `latestDate`, and `ReleaseCadence` draws nothing
+ * for it — the same convention the app uses for a control whose state makes it
+ * meaningless.
  */
 export function fallbackReleaseCadence(now: Date = new Date()): ReleaseCadence {
+  if (!config.app.releaseDate) {
+    return { freshness: null, latestDate: '', total: null, since: null };
+  }
   const iso = `${config.app.releaseDate}T12:00:00Z`;
   return {
     freshness: formatFreshness(iso, now),
