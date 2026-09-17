@@ -4,7 +4,7 @@ export function Logo({ size = 36 }: { size?: number }) {
   return (
     <Image
       src="/icon-128x128.png"
-      alt="FinderGit"
+      alt="Lancetta"
       w={size}
       h={size}
       style={{ borderRadius: size > 48 ? 12 : 8 }}

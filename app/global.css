@@ -30,8 +30,14 @@
     line-height: var(--tw-leading, var(--x-text-sm--line-height)) !important;
   }
 
+  /*
+   * Nextra's own accent, which is independent of the Mantine theme: these three
+   * class names paint the active sidebar item and the "On This Page" marker.
+   * Left at the template's blue they render FinderGit's brand inside Lancetta's
+   * docs, which is the kind of inherited detail a build cannot catch.
+   */
   .x\:bg-primary-100 {
-    background-color: var(--mantine-color-blue-6) !important;
+    background-color: var(--mantine-color-lancetta-6) !important;
   }
 
   .x\:text-primary-800 {
@@ -42,7 +48,7 @@
     li {
       a.x\:text-primary-600 {
         position: relative;
-        color: var(--mantine-color-blue-6) !important;
+        color: var(--mantine-color-lancetta-6) !important;
       }
 
       a.x\:text-primary-600::before {
@@ -50,7 +56,7 @@
         display: block;
         width: 2px;
         height: 100%;
-        background: var(--mantine-color-blue-6);
+        background: var(--mantine-color-lancetta-6);
         position: absolute;
         left: -8px;
         top: 0;

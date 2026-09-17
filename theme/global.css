@@ -2,29 +2,42 @@
   --marquee-fade-edge-color: var(--mantine-color-gray-1);
 
   /*
-   * ── FinderGit homepage design tokens ──
-   * Git-state semantic colours are the only saturated colours on the page
-   * besides the brand accent, so colour carries meaning at a glance:
-   * clean / changes / ahead — plus the brand accent and the "needs attention"
-   * signal. Referenced everywhere (hero dashboard mock, repo list, feature
-   * grid) instead of ad-hoc per-spot colours. Dark overrides below keep
-   * contrast in both schemes.
+   * ── Lancetta design tokens ──
+   *
+   * Two families, and they must not be confused:
+   *
+   * `--lan-accent` is the BRAND — the icon's third bar, the one hue the app
+   * spends on no agent.
+   *
+   * `--lan-codex` / `--lan-claude` are SEMANTIC. They are the app's own tints
+   * (`CodexSource.tintHex`, `ClaudeSource.tintHex`), so a teal number on this
+   * page is the same teal as the teal number in the screenshot beside it.
+   * The app's values read 2.3:1 and 2.7:1 on white, which is unreadable as
+   * text, so light mode gets a darkened cut at the same hue (4.5:1) and dark
+   * mode gets the app's value unchanged.
+   *
+   * `--lan-alarm` is a bucket that REFUSED, `--lan-stale` a reading that has
+   * gone past its own cadence. Both are states the app draws, not decoration.
    */
-  --fg-accent: var(--mantine-color-findergit-6);
-  --fg-clean: var(--mantine-color-teal-7);
-  --fg-changes: var(--mantine-color-orange-6);
-  --fg-ahead: var(--mantine-color-blue-6);
-  --fg-attention: var(--mantine-color-orange-7);
+  --lan-accent: var(--mantine-color-lancetta-6);
+  --lan-codex: #008672;
+  --lan-claude: #bc5b00;
+  --lan-alarm: var(--mantine-color-red-7);
+  --lan-stale: var(--mantine-color-gray-6);
+
+  /* The plate the icon sits on — the one band colour that is not a Mantine token. */
+  --lan-plate: #0a1524;
+  --lan-plate-wash: #1b3e70;
 
   @mixin dark {
     --marquee-fade-edge-color: var(--mantine-color-dark-9);
     --mantine-color-body: var(--mantine-color-dark-9);
 
-    --fg-accent: var(--mantine-color-findergit-4);
-    --fg-clean: var(--mantine-color-teal-4);
-    --fg-changes: var(--mantine-color-orange-4);
-    --fg-ahead: var(--mantine-color-blue-4);
-    --fg-attention: var(--mantine-color-orange-5);
+    --lan-accent: var(--mantine-color-lancetta-4);
+    --lan-codex: #2fbfa8;
+    --lan-claude: #e8833a;
+    --lan-alarm: var(--mantine-color-red-4);
+    --lan-stale: var(--mantine-color-gray-5);
   }
 }
 

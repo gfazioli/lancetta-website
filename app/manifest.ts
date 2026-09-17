@@ -9,13 +9,13 @@ import config from '@/config';
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'FinderGit — Native macOS File Browser with Git Intelligence',
-    short_name: 'FinderGit',
+    name: 'Lancetta — Menu-Bar Quota Monitor for Coding Agents',
+    short_name: 'Lancetta',
     description: config.metadata.description,
     start_url: '/',
     display: 'standalone',
-    theme_color: '#228be6',
-    background_color: '#111111',
+    theme_color: '#7a5bea',
+    background_color: '#0a1524',
     // `any` only: the android-chrome icons have no maskable safe-zone
     // padding, so declaring them `maskable` would crop the corners on
     // shaped Android launchers. A dedicated padded asset can add maskable
