@@ -7,8 +7,10 @@ import { Accordion, Anchor, Text } from '@mantine/core';
  * Every answer here is a claim someone can check, so each one has to be true
  * of the build that is actually shipping. Two rules when editing:
  *
- *  - Do not describe the process reaper, notifications or auto-updates in the
- *    present tense until they ship. They are v0.2, v0.3 and v0.4.
+ *  - Do not describe a feature in the present tense until it ships. As of
+ *    2026-09-17 the reaper, the window and the updater all HAVE shipped, and
+ *    only the notifications (v0.3) have not. This list goes stale silently:
+ *    check the app's own CLAUDE.md and git log, not this comment.
  *  - `faqItems` is paired with the FAQPage JSON-LD in StructuredData.tsx.
  *    Change one and change the other, or the rich result quotes an answer
  *    that is no longer on the page.
@@ -54,7 +56,7 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
     value: 'surfaces',
     question: 'Is Lancetta only in the menu bar?',
     answer:
-      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the daily token chart, both agents in detail, and the background processes the agents have left running. Lancetta still puts no icon in the Dock: closing the window quits nothing, and the menu-bar item is always the way back. On a MacBook Pro the reading also sits under the notch.',
+      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the daily token chart, both agents in detail, and the background processes the agents have left running. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch.',
   },
   {
     value: 'memory',

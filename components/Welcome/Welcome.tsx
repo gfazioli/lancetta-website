@@ -343,7 +343,7 @@ const roadmap = [
   {
     version: 'v0.1',
     title: 'The quota, and the memory back',
-    body: 'Both agents, both windows, the notch island, the window with the daily token chart — and the reclaim that lists what it will stop before stopping it. The memory half was planned as v0.2 and landed here.',
+    body: 'Both agents, both windows, the notch island, the window with the daily token chart, the reclaim that lists what it will stop before stopping it, open at login and the updater. The memory half was planned as v0.2 and landed here.',
     state: 'building',
   },
   {
@@ -355,7 +355,7 @@ const roadmap = [
   {
     version: 'v0.4',
     title: 'Everyone else’s Mac',
-    body: 'Signed, notarized, downloadable, and updating itself. The version where the app stops assuming one machine.',
+    body: 'Signed, notarized and downloadable — and therefore a release feed the updater already in the app can finally reach. The version where it stops assuming one machine.',
     state: 'planned',
   },
   {

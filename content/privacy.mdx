@@ -27,7 +27,11 @@ Your own preferences — the refresh interval, the colours and order you gave th
 
 ## What it sends
 
-Nothing. There is no analytics call, no crash reporter, no update ping in v0.1. When automatic updates arrive in v0.4 they will fetch a signed feed, and that fetch will be the only outbound request the app ever makes.
+There is no analytics call and no crash reporter. Lancetta has never had either and will not get one.
+
+**The one outbound request the app can make is the update check**, and it fetches a signed release feed — nothing else, and nothing about you. Both automatic forms of it are **off until you turn them on** in [Settings → Updates](/docs/settings#updates): a silent check when the app starts, and the update framework's own schedule. **Check for Updates Now…** makes the same request when you ask for it.
+
+That is the whole list. There is no account, no server, and nothing that reports what you did.
 
 ## Why reading costs nothing
 

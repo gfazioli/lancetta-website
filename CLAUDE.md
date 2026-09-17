@@ -41,6 +41,29 @@ for here: the app moves and nothing on this site fails when it does. The gate is
 reading `../Lancetta/CLAUDE.md` and `git log` in the app repo before believing
 any page, not running `yarn test`.
 
+**It went stale again the same afternoon, an hour after that sweep**, which is
+the part worth internalising: the app grew a bundle, a login item, a Dock-icon
+setting and a working Sparkle updater while the docs describing it were being
+written. Three claims that had just been *verified* went false — including
+`privacy.mdx`'s "no update ping in v0.1", the one claim on this site where being
+wrong matters most. So the check is not a milestone, it is what you do every
+time you touch a page.
+
+## The appcast is a contract with the app, and nothing enforces it
+
+`public/appcast.xml` is the feed the shipped app polls. Read out of the built
+bundle's `Info.plist` on 2026-09-17: `SUFeedURL` is
+`https://lancetta.app/appcast.xml` and `SUPublicEDKey` is
+`XA74hqgQzZxonNOoQ8CnS8h71nDQf83Y1LAKxBEjUlI=` (the private half lives in the
+Keychain under the account `Lancetta`).
+
+So **that path is load-bearing**: renaming the file, moving it out of `public/`,
+or letting a rewrite intercept it breaks updates for every copy already
+installed, and nothing here would fail. The file is deliberately an empty
+channel rather than absent — a 404 and an empty feed are different failures and
+only one of them is the one we want. `release.sh` prepends an `<item>` per
+release.
+
 ## Claims, and where each one comes from
 
 Every number on this site was measured, and the measurements live in
