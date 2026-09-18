@@ -56,9 +56,7 @@ describe('fetchReleaseCadence', () => {
     // branch of the ternary — the empty one, i.e. only while the app was unreleased.
     // It went red the day `config.app.releaseDate` was first written, which is the
     // day it first measured anything.
-    expect(cadence.latestDate).toEqual(
-      config.app.releaseDate ? expect.stringContaining('20') : ''
-    );
+    expect(cadence.latestDate).toEqual(config.app.releaseDate ? expect.stringContaining('20') : '');
   });
 
   it('stops at the cap instead of walking the API forever', async () => {
