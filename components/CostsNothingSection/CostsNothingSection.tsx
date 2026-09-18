@@ -29,7 +29,7 @@ const rows = [
 
 export function CostsNothingSection() {
   return (
-    <Box pos="relative" py={88} className={classes.band}>
+    <Box id="costs-nothing" pos="relative" py={88} className={classes.band}>
       <Scene lazy>
         <Scene.Glow color="violet" size={520} blur={160} opacity={0.22} top="20%" left="12%" />
         <Scene.Glow color="teal" size={420} blur={140} opacity={0.16} top="70%" left="82%" />

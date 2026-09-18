@@ -2,17 +2,8 @@
 
 import type { CSSProperties } from 'react';
 import { IconClockExclamation, IconSwitch3, IconWand } from '@tabler/icons-react';
-import {
-  Box,
-  Container,
-  Group,
-  Paper,
-  SimpleGrid,
-  Stack,
-  Text,
-  ThemeIcon,
-  Title,
-} from '@mantine/core';
+import { Box, Container, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core';
+import { SectionHeading } from '../SectionHeading/SectionHeading';
 import classes from './ProblemSection.module.css';
 
 /*
@@ -62,24 +53,11 @@ export function ProblemSection() {
   return (
     <Box py={80} className={classes.sectionBand}>
       <Container size="lg">
-        <Stack align="center" gap="md" mb={48}>
-          <Text
-            size="sm"
-            fw={700}
-            tt="uppercase"
-            style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
-          >
-            The problem
-          </Text>
-          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
-            The number was wrong. It looked right.
-          </Title>
-          <Text c="dimmed" ta="center" size="lg" maw={660}>
-            A quota readout is the one kind of number nobody double-checks — you glance at it and
-            carry on. Three separate defects stacked up in one afternoon, and every one of them
-            produced a figure you would have believed.
-          </Text>
-        </Stack>
+        <SectionHeading
+          eyebrow="The problem"
+          title="The number was wrong. It looked right."
+          lead="A quota readout is the one kind of number nobody double-checks — you glance at it and carry on. Three separate defects stacked up in one afternoon, and every one of them produced a figure you would have believed."
+        />
 
         <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="lg">
           {problems.map((item) => (

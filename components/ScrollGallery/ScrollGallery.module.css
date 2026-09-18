@@ -1,13 +1,16 @@
 /*
  * The track is what gives the reader something to scroll THROUGH: one viewport
  * of height per frame, plus the stage's own height so the last frame gets a
- * full stretch of travel before the page moves on. The stage sticks under the
- * site navbar — Nextra exposes its height as a custom property, and the
- * fallback is its default of 4rem — and is exactly the viewport left below it,
- * so a frame is never cropped by the bar it sits under.
+ * full stretch of travel before the page moves on. The stage sticks under
+ * whatever is stuck above the content: on the home page that is `--lan-bars`
+ * (the navbar, wherever Nextra sticks it, plus the product bar — see
+ * Welcome.module.css), and anywhere else the navbar alone, whose height Nextra
+ * exposes as a custom property with a default of 4rem. The stage is exactly
+ * the viewport left below that, so a frame is never cropped by the bars it
+ * sits under.
  */
 .track {
-  --gallery-top: var(--nextra-navbar-height, 4rem);
+  --gallery-top: var(--lan-bars, var(--nextra-navbar-height, 4rem));
 
   position: relative;
   height: calc(var(--frames) * 90vh + (100svh - var(--gallery-top)));

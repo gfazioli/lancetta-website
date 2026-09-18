@@ -301,6 +301,27 @@ failed to bind, and `curl` answered 200 from the stale server — so a removed
 string was still on the page. Kill the port, restart, and confirm which build
 answers before believing anything it says.
 
+Three more, all measured on 2026-09-18 and all the instrument's:
+
+- **Its animation clock does not turn.** A CSS animation reads `playState:
+  running` with `currentTime: 0` for ever, so anything that starts at opacity 0
+  photographs as absent — the hero's two screenshots did, while the DOM had
+  them laid out to the pixel. The animation was then removed for the page's own
+  sake (the product is the LCP), not to please the tool; do not remove an
+  animation because a shot is blank, read `getAnimations()` first.
+- **A smooth scroll never arrives, and a `scroll` event is never delivered.**
+  `html { scroll-behavior: smooth }` makes `scrollTo(0, y)` an animation, which
+  leaves `scrollY` at 0; and the event a browser fires from its rendering loop
+  does not come either, so the pinned gallery sat on frame 0 at scrollY 3000
+  and the product bar on "Overview" while a replica of the bar's arithmetic,
+  run in the page, picked the right section. `page.sh eval <path> <js>
+  [scrollY] [w] [h]` therefore scrolls with `behavior: 'instant'` and
+  dispatches the event by hand: what it verifies is the listeners' arithmetic
+  and the DOM they leave, which is the half that is ours.
+- **`page.sh serve` "hung" twice while the server was up.** `nohup` detaches
+  stdin only when stdin is a terminal; from an agent's shell it is a pipe, and
+  `next start` held it open. The `</dev/null` in `serve` is that fix.
+
 ## The one job, and the gallery that shows it
 
 The copy is built around **one job**: how much of each agent's quota is left,
@@ -323,6 +344,52 @@ fallback.
 
 Three frames, not four: the light-mode menu is the dark one's content again and
 made a weak step. It stays in the docs.
+
+## The header is two bars, and the home page starts at the left
+
+The global navigation (`app/_meta.tsx`) is about the product, in the order a
+visitor asks: Features (an anchor on the home page), How it works (the one docs
+page that explains the reading), Docs, Roadmap, then Support and About. Under
+it, on the home page only, `components/ProductNav` is the product bar Apple's
+pages carry: the name, the sections of this page, the one action. Its
+`productSections` list is the contract with the page — `Welcome.test.tsx`
+renders the home and checks every id exists, because a bar link to a missing
+anchor scrolls nowhere and nothing reports it.
+
+Three custom properties hold the two bars and the page together, and each one
+exists because a number typed twice drifted once:
+
+- `--lan-subnav-height` — the product bar's height, set inline on the `.home`
+  wrapper in `Welcome.tsx`.
+- `--lan-navbar-offset` — where Nextra's navbar sticks, published on the root by
+  `ProductNav.tsx` from the navbar's computed `top`. **Nextra's banner is sticky
+  below 48rem and static above it**, so the navbar sticks at 0 on a desktop and
+  at the banner's height on a phone. And Nextra measures that height with a
+  ResizeObserver that writes `--nextra-banner-height` to the root's style
+  *after* the effect that first reads it, which is why the read is repeated from
+  a MutationObserver on the root's style attribute; without it the bar measured
+  `0px` and sat at 64px, straight across a navbar stuck at 60px.
+- `--lan-nav-top` and `--lan-bars` — the sums, computed once on `.home` in
+  `Welcome.module.css`. The pinned gallery's `--gallery-top`, the hero's height
+  and every anchor's `scroll-margin-top` read `--lan-bars`; anywhere else the
+  gallery falls back to the navbar alone.
+
+The hero is copy on the left and the product on the right, and the product is
+two objects in a fixed relation: the **menu in front**, because the menu is the
+app, and the **Overview window behind**, because there is one when you want
+more. The island has its own frame in the gallery; three objects would be a
+collage. Two decisions that look like taste and are not: there is **no entrance
+animation** on those images (they are the LCP, and anything that starts at
+opacity 0 is invisible wherever animation time does not advance), and the
+cluster's bleed stops **24px inside the viewport** — an object clipped by 8%
+reads as a mistake, and the window's right edge carries its numbers. The
+headline is sized in `cqw` off its own column so "Every agent's quota." stays
+one line at every width.
+
+`components/SectionHeading` is left by default — title left, lead right,
+bottom-aligned — and `center` for the statement bands. The "In detail" band
+shows the Limits pane, not the menu a third time: it is the one surface with
+"seen 1s ago" and "live" side by side, which is what the band is about.
 
 ## The release-notes page has THREE states, and the middle one was missing
 
