@@ -121,7 +121,7 @@ export function SolutionSection() {
                     color={panel.shipped ? 'teal' : 'grape'}
                     leftSection={panel.shipped ? <IconCheck size={12} /> : <IconClock size={12} />}
                   >
-                    {panel.shipped ? 'In v0.1' : 'Next, in v0.2'}
+                    {panel.shipped ? 'Shipped' : 'Next'}
                   </Badge>
                 </Group>
 

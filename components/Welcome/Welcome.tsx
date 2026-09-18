@@ -341,10 +341,10 @@ const features: Feature[] = [
 /** The versions, and what each one is for. Mirrors `content/roadmap.mdx`. */
 const roadmap = [
   {
-    version: 'v0.1',
+    version: 'v0.2',
     title: 'The quota, and the memory back',
-    body: 'Both agents, both windows, the notch island, the window with the daily token chart, the reclaim that lists what it will stop before stopping it, open at login and the updater. The memory half was planned as v0.2 and landed here.',
-    state: 'building',
+    body: 'Both agents, both windows, the notch island, the window with the daily token chart, the reclaim that lists what it will stop before stopping it, open at login and the updater. Signed, notarized and downloadable: the memory half planned for later landed here too, which is why the first release is v0.2.',
+    state: 'shipped',
   },
   {
     version: 'v0.3',
@@ -355,7 +355,7 @@ const roadmap = [
   {
     version: 'v0.4',
     title: 'Everyone else’s Mac',
-    body: 'Signed, notarized and downloadable — and therefore a release feed the updater already in the app can finally reach. The version where it stops assuming one machine.',
+    body: 'The discovery UI, the Sources pane, and a consenting status-line wiring step with an undo. The version where it stops assuming one machine — the signing and the feed it needed arrived early, in v0.2.',
     state: 'planned',
   },
   {
@@ -681,8 +681,13 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                   <Text fw={900} fz={20} style={{ color: 'var(--lan-accent)' }}>
                     {step.version}
                   </Text>
-                  {step.state === 'building' && (
+                  {step.state === 'shipped' && (
                     <Badge size="xs" variant="light" color="teal" radius="sm">
+                      Shipped
+                    </Badge>
+                  )}
+                  {step.state === 'building' && (
+                    <Badge size="xs" variant="light" color="grape" radius="sm">
                       Now
                     </Badge>
                   )}

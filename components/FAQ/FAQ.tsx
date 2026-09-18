@@ -97,19 +97,23 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
   },
   {
     value: 'when',
-    question: 'When can I download it?',
+    question: 'Where do I download it?',
     answer: (
       <>
-        Not yet — v0.1 is still being built, and this site goes up before the first release rather
-        than after it. The{' '}
+        <Anchor href="/download" size="sm">
+          The download button
+        </Anchor>{' '}
+        takes you straight to the latest DMG. It is signed with an Apple Developer ID and
+        notarized by Apple, so it opens without the detour Gatekeeper puts unsigned apps
+        through, and it updates itself from then on. The{' '}
         <Anchor href="/docs/roadmap" size="sm">
           roadmap
         </Anchor>{' '}
-        says what is in each version, and the{' '}
+        says what is in each version, and every build is on the{' '}
         <Anchor href="https://github.com/gfazioli/lancetta-website/releases" size="sm">
           releases page
-        </Anchor>{' '}
-        is where the first build will appear.
+        </Anchor>
+        .
       </>
     ),
   },

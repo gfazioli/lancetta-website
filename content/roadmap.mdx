@@ -6,9 +6,9 @@ description: "What is in each version of Lancetta, in the order the work is bein
 
 Nothing here is a promise with a date on it. It is the order the work is being done in, and — more usefully — **what each step has to do before it counts as finished**.
 
-## v0.1 — the quota, and rather more than the quota
+## v0.2 — the quota, and rather more than the quota
 
-*In progress.*
+*Shipped 2026-09-18 — the first release.*
 
 The point of this version was narrow and concrete: stop reading a quota number off a terminal status line. That cannot be done with one agent, because the status line shows both — so both quota cards ship together or the first version does not achieve the one thing it exists for.
 
@@ -24,7 +24,7 @@ The point of this version was narrow and concrete: stop reading a quota number o
 
 **Two things arrived early and are in this version rather than the next two.**
 
-**The memory half** — the reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it, in the menu and in the window. It was planned as v0.2 and is built. It reproduces the twelve-of-fourteen result with zero live trees touched, and it is driven against decoy processes in an automated self-test rather than against the machine it is running on. See [The memory half](/docs/memory).
+**The memory half** — the reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it, in the menu and in the window. It was planned for a later version and is built. It reproduces the twelve-of-fourteen result with zero live trees touched, and it is driven against decoy processes in an automated self-test rather than against the machine it is running on. See [The memory half](/docs/memory).
 
 **The window** — Overview, Usage, Limits and Processes, with the daily token series drawn as a chart. The series was planned as half of v0.5 and turned out to be free: Codex already keeps it and gives it away. See [The Window](/docs/the-window).
 
@@ -38,11 +38,13 @@ A percentage on an icon is passive: it rewards looking. The value is in the two 
 
 **Advice** — nothing changed, but the shape of the next hour did. *"The 5-hour window resets in 12 minutes and you are at 33% — the remaining 67% goes with it."*
 
-The advice half ships only if the reset observations collected from v0.1 onward come back as a step function. If they come back as a slope, that feature is deleted rather than softened.
+The advice half ships only if the reset observations collected from v0.2 onward come back as a step function. If they come back as a slope, that feature is deleted rather than softened.
 
 ## v0.4 — everyone else's Mac
 
-Signed, notarized and downloadable — and therefore, at last, actually updating itself: the updater is already in the app, and what it is missing is a release feed with something in it. Plus the discovery UI, the Sources pane, and a consenting status-line wiring step with an undo. This is the version where the app stops assuming one machine, and it is a bigger step than it looks.
+The discovery UI, the Sources pane, and a consenting status-line wiring step with an undo. This is the version where the app stops assuming one machine, and it is a bigger step than it looks.
+
+Half of what this entry used to describe arrived early: v0.2 ships signed, notarized and downloadable, so the updater already in the app has a feed with something in it.
 
 ## v0.5 — reset credits
 

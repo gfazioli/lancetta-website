@@ -86,17 +86,23 @@ export default {
     defaultLanguage: 'en',
   },
   app: {
-    // v0.1.0 is not released yet: the menu, Settings, About and the update
-    // check are built; the process reaper, notifications and the updater are
-    // not. Nothing on this site may describe those as shipped.
-    version: '0.1.0',
-    released: false,
-    releaseDate: '',
-    // Read off the app's own Package.swift (`platforms: [.macOS(.v15)]`).
-    // When the first build exists, take it from the .app's
-    // LSMinimumSystemVersion instead — a build setting is not what the
-    // product declares.
+    // Every field here is written by the app's `scripts/release.sh`, which reads them
+    // off the BUILT .app rather than off a build setting — what the product declares
+    // about itself cannot disagree with what runs. Do not hand-edit them: a
+    // hand-kept copy of a value the pipeline owns is the copy that drifts, and
+    // netfox.app shipped exactly that (a minMacOS nobody could see, wrong for a
+    // whole release, published to search engines as the supported OS).
+    //
+    // `released` gates the Download tab, the hero button and the JSON-LD download
+    // claim. It went true with the first release, v0.2.0 on 2026-09-18 — v0.2 and
+    // not v0.1 because the memory half planned for later landed in the same build.
+    version: '0.2.0',
+    released: true,
+    releaseDate: '2026-09-18',
     minMacOS: '15.0',
+    // The FALLBACK for `/download`, which normally resolves the newest release's
+    // .dmg from the GitHub API. A failure there lands the reader on the releases
+    // page rather than on nothing.
     downloadUrl: 'https://github.com/gfazioli/lancetta-website/releases/latest',
   },
 } as const;

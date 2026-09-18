@@ -2,10 +2,11 @@ import { Group } from '@mantine/core';
 import { IconCoffee, IconHeartFilled } from '@tabler/icons-react';
 
 /*
- * No `download` page entry while `config.app.released` is false — a top-level
- * Download tab pointing at an empty Releases page is a promise the site cannot
- * keep. Restore it (and `/download`, and the footer highlight) in the same
- * commit that flips `released` to true.
+ * The `download` tab appeared with the first release (v0.2.0, 2026-09-18). It points
+ * at `/download`, which resolves the newest release's .dmg from the GitHub API at
+ * request time — so the tab carries no version and cannot go stale. It was absent
+ * while `config.app.released` was false, because a Download tab over an empty
+ * Releases page is a promise the site cannot keep.
  */
 export default {
   index: {
@@ -14,6 +15,11 @@ export default {
   docs: {
     type: 'page',
     title: 'Documentation',
+  },
+  download: {
+    type: 'page',
+    title: 'Download',
+    href: '/download',
   },
   roadmap: {
     type: 'page',

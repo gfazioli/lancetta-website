@@ -12,5 +12,6 @@
             failures, and only one of them is the one we want. `release.sh`
             prepends an <item> per release.
         -->
+        <!-- release.sh inserts new <item> entries right below this marker -->
     </channel>
 </rss>
