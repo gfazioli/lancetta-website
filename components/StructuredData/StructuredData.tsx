@@ -158,7 +158,7 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
   {
     question: 'Where do I download it?',
     answer:
-      'The download button takes you straight to the latest DMG. It is signed with an Apple Developer ID and notarized by Apple, so it opens without the detour Gatekeeper puts unsigned apps through, and it updates itself from then on. The roadmap says what is in each version, and every build is on the releases page.',
+      'The download button takes you straight to the latest DMG. It is signed with an Apple Developer ID and notarized by Apple, so it opens without the detour Gatekeeper puts unsigned apps through, and it updates itself from then on. What’s next says what has shipped and what is being built, and every build is on the releases page.',
   },
 ];
 

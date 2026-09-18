@@ -106,11 +106,11 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
         </Anchor>{' '}
         takes you straight to the latest DMG. It is signed with an Apple Developer ID and notarized
         by Apple, so it opens without the detour Gatekeeper puts unsigned apps through, and it
-        updates itself from then on. The{' '}
+        updates itself from then on.{' '}
         <Anchor href="/docs/roadmap" size="sm">
-          roadmap
+          What’s next
         </Anchor>{' '}
-        says what is in each version, and every build is on the{' '}
+        says what has shipped and what is being built, and every build is on the{' '}
         <Anchor href="https://github.com/gfazioli/lancetta-website/releases" size="sm">
           releases page
         </Anchor>

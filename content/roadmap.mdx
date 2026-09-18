@@ -1,44 +1,10 @@
 ---
-description: "What Lancetta already does, and what it goes after next — with what each step has to prove before it counts as done."
+description: "What Lancetta goes after next, and what each step has to prove before it counts as done — then what has already shipped."
 ---
 
-# Roadmap
+# What’s next
 
-Nothing here is a promise. The versions that have shipped are named, because they exist and you can download them; what comes after is **not numbered and not dated**, because the order changes as the work teaches you things (two of the entries below were built early, and one was deleted by a measurement).
-
-What is worth publishing is the other half: **what each step has to do before it counts as finished**.
-
-## v0.2 — the quota, and rather more than the quota
-
-*Shipped 2026-09-18 — the first release.*
-
-The point of this version was narrow and concrete: stop reading a quota number off a terminal status line. That cannot be done with one agent, because the status line shows both — so both quota cards ship together or the first version does not achieve the one thing it exists for.
-
-- Codex quota, with binary discovery that works from a Finder launch (where a GUI app inherits almost no `PATH`)
-- Claude Code quota, from the status-line payload, with the card honest about its age when nothing has rendered
-- The menu-bar item: alarm first, percentage second, age visible when a source falls behind, and configurable per agent
-- Per-agent identity — a colour and the vendor's own mark, carried by the agent rather than hardcoded in the menu, so a third agent is one new file
-- The order the agents take, set once and obeyed by every surface
-- The island under the notch
-- Settings, About, and a Check-for-Updates that says what state the build is in
-
-**Done when** it runs launched from the Finder — not from a terminal that has a `PATH` — both cards agree with what each tool reports directly, and a working day passes without anyone looking at the status line.
-
-**Two things arrived early and are in this version rather than the next two.**
-
-**The processes they leave behind** — the reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it, in the menu and in the window. It was planned for a later version and is built. It reproduces the twelve-of-fourteen result with zero live trees touched, and it is driven against decoy processes in an automated self-test rather than against the machine it is running on. See [The processes they leave behind](/docs/memory).
-
-**The window** — Overview, Usage, Limits and Processes, with the daily token series drawn as a chart. The series was planned for much later and turned out to be free: Codex already keeps it and gives it away. See [The Window](/docs/the-window).
-
-And with them, three things that came along with turning Lancetta into a real application bundle rather than a bare executable: **open at login**, a switch to **keep the icon in the Dock**, and the **updater** itself — the framework, the three controls and the feed address. What is not there yet is anything at the other end of that feed, which is the next entry.
-
-## v0.3 — Claude from the account
-
-*Shipped 2026-09-18.*
-
-The Claude card used to ask for a line in your status-line script, and the first install on a second Mac showed what that looks like to anyone else: a card pointing at instructions that lived on this site. Now it is one click and one macOS dialog. Lancetta asks your Claude account how much is left, with the sign-in Claude Code already keeps on your Mac — the question Claude Code's own `/usage` asks, no model in the loop — so Claude refreshes on demand the way Codex does. The status-line route stays for anyone who would rather not hand the app a keychain item. [Getting Started](/docs/getting-started#claude-code) says exactly what the click does and does not do.
-
-Two smaller things rode along: **What's New** under Help, with the release's own notes inside the app; and the app icon in the format macOS 26 introduced, so the Dock stops drawing a white plate around it.
+Nothing here is a promise, and nothing ahead is numbered or dated: the order changes as the work teaches you things (two of the entries on this page were built early, and one was deleted by a measurement). What is worth publishing is the other half: **what each step has to do before it counts as finished**. The versions that have shipped are at the end of the page, named, because they exist and you can download them.
 
 ## It speaks first
 
@@ -65,3 +31,39 @@ Redeeming a Codex reset credit from the menu, with every safety rule an irrevers
 ## Not planned
 
 **Asking a model how much quota is left.** It is the easiest source to write and it costs tokens on every poll. It is the one route this app will never take — see [How it reads each agent](/docs/how-it-reads).
+
+---
+
+## Already shipped
+
+### v0.3 — Claude from the account
+
+*Shipped 2026-09-18.*
+
+The Claude card used to ask for a line in your status-line script, and the first install on a second Mac showed what that looks like to anyone else: a card pointing at instructions that lived on this site. Now it is one click and one macOS dialog. Lancetta asks your Claude account how much is left, with the sign-in Claude Code already keeps on your Mac — the question Claude Code's own `/usage` asks, no model in the loop — so Claude refreshes on demand the way Codex does. The status-line route stays for anyone who would rather not hand the app a keychain item. [Getting Started](/docs/getting-started#claude-code) says exactly what the click does and does not do.
+
+Two smaller things rode along: **What's New** under Help, with the release's own notes inside the app; and the app icon in the format macOS 26 introduced, so the Dock stops drawing a white plate around it.
+
+### v0.2 — the quota, and rather more than the quota
+
+*Shipped 2026-09-18 — the first release.*
+
+The point of this version was narrow and concrete: stop reading a quota number off a terminal status line. That cannot be done with one agent, because the status line shows both — so both quota cards ship together or the first version does not achieve the one thing it exists for.
+
+- Codex quota, with binary discovery that works from a Finder launch (where a GUI app inherits almost no `PATH`)
+- Claude Code quota, from the status-line payload, with the card honest about its age when nothing has rendered
+- The menu-bar item: alarm first, percentage second, age visible when a source falls behind, and configurable per agent
+- Per-agent identity — a colour and the vendor's own mark, carried by the agent rather than hardcoded in the menu, so a third agent is one new file
+- The order the agents take, set once and obeyed by every surface
+- The island under the notch
+- Settings, About, and a Check-for-Updates that says what state the build is in
+
+**Done when** it runs launched from the Finder — not from a terminal that has a `PATH` — both cards agree with what each tool reports directly, and a working day passes without anyone looking at the status line.
+
+**Two things arrived early and are in this version rather than the next two.**
+
+**The processes they leave behind** — the reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it, in the menu and in the window. It was planned for a later version and is built. It reproduces the twelve-of-fourteen result with zero live trees touched, and it is driven against decoy processes in an automated self-test rather than against the machine it is running on. See [The processes they leave behind](/docs/memory).
+
+**The window** — Overview, Usage, Limits and Processes, with the daily token series drawn as a chart. The series was planned for much later and turned out to be free: Codex already keeps it and gives it away. See [The Window](/docs/the-window).
+
+And with them, three things that came along with turning Lancetta into a real application bundle rather than a bare executable: **open at login**, a switch to **keep the icon in the Dock**, and the **updater** itself — the framework, the three controls and the feed address. The feed has had something at the other end since the day this shipped.

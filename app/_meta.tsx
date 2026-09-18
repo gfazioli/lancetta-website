@@ -36,7 +36,7 @@ export default {
   },
   roadmap: {
     type: 'page',
-    title: 'Roadmap',
+    title: 'What’s next',
     href: '/docs/roadmap',
   },
   support: {

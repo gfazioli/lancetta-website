@@ -3,7 +3,7 @@ export const highlights = [
     key: 'roadmap',
     // No Download entry until there is something to download: a link that
     // resolves to an empty Releases page is worse than no link.
-    title: 'Roadmap',
+    title: 'What’s next',
     href: '/docs/roadmap',
   },
   {
