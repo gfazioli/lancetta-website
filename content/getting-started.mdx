@@ -27,28 +27,15 @@ That question costs no tokens. It is an account read, not a model turn; see [How
 
 ## Claude Code
 
-One click. Open the menu and, under Claude, choose **Connect Claude Code’** (it is also in Settings — Agents — Claude). Lancetta reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left — the question Claude Code's own `/usage` asks. macOS shows its own dialog the first time, naming the item it is about to hand over; choose **Allow**, or **Always Allow** if you would rather not see it again.
+One click. Open the menu and, under Claude, choose **Connect Claude Code…** (it is also in Settings › Agents › Claude). Lancetta reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left — the question Claude Code's own `/usage` asks. macOS shows its own dialog the first time, naming the item it is about to hand over; choose **Allow**, or **Always Allow** if you would rather not see it again.
 
 What that click does, and does not do:
 
 - **It reads the sign-in; it never renews it.** Claude Code renews its own sign-in whenever you use it. If it has expired, the card says so and waits.
 - **One request, to Anthropic, the same one Claude Code makes.** Nothing else is sent, and no model is involved, so nothing is billed.
-- **Disconnect**, in Settings — Agents — Claude, stops it. The keychain permission you granted stays yours to revoke in Keychain Access.
+- **Disconnect**, in Settings › Agents › Claude, stops it. The keychain permission you granted stays yours to revoke in Keychain Access.
 
-If you would rather not hand Lancetta a keychain item, the older route still works and connects nothing: a line in your status-line script writes the numbers to a file, and Lancetta reads the file.
-
-```sh
-# in your status-line script, immediately after you read stdin:
-mkdir -p ~/.cache/claude-statusline
-printf '%s' "$input" | /usr/bin/jq -c \
-  '{rate_limits, observed_at: (now | todate)}' \
-  > ~/.cache/claude-statusline/claude-limits.json
-```
-
-Two things about that route, because Lancetta shows both rather than hiding them:
-
-- **The card is only as fresh as your last rendered session.** If nothing has rendered a status line for two hours, the reading is two hours old, and the menu says so.
-- **The file is a shared slot.** Every Claude Code session that renders writes it, so two sessions can disagree. Lancetta prefers a complete older reading over a fresher partial one.
+If you would rather not hand Lancetta a keychain item, there is an older route that connects nothing: a line in your status-line script writes the numbers to a file, and Lancetta reads the file. It is spelled out in [How it reads each agent](/docs/how-it-reads#the-other-route), with its two limits.
 
 ## Read the menu
 
