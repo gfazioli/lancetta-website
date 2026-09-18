@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.2.1 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.2.1</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>A universal build. <strong>If you are on an Intel Mac, 0.2.0 would not open for you</strong> — this one does.</p>
+<h2>What changed</h2>
+<ul>
+<li><strong>Universal binary.</strong> 0.2.0 shipped with only the Apple silicon slice, while this site advertised Universal and macOS 15 still runs on Intel Macs from 2019–2020. 0.2.1 carries <code class="notranslate">x86_64</code> and <code class="notranslate">arm64</code>, both declaring macOS 15.0 as their floor.</li>
+<li>Nothing else. Same app, same features as 0.2.0 — see <a href="https://lancetta.app/release-notes/0.2.0.html" rel="nofollow">the 0.2.0 notes</a> for what it does.</li>
+</ul>
+<p>If you are on Apple silicon and already running 0.2.0, there is nothing here you need; the updater will offer it anyway, and taking it costs you a restart of the app.</p>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.2.1.dmg</code></li>
+<li>Open it and drag Lancetta into Applications</li>
+<li>Launch it normally — signed with an Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later, Apple silicon or Intel.</p>
+</body>
+</html>
