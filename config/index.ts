@@ -37,7 +37,8 @@ export default {
       type: 'website',
     },
     other: {
-      'msapplication-TileColor': '#7a5bea',
+      // lancetta-6, the brand accent — see theme.ts for where it comes from.
+      'msapplication-TileColor': '#824bfc',
     },
     twitter: {
       card: 'summary_large_image',

@@ -340,22 +340,24 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       {/* ─── Hero ─── */}
       <Box component="section" id="overview" pos="relative" className={classes.hero}>
         {/*
-          The Scene wash is the icon's own light: a violet/indigo mesh with
-          the Codex teal as the far stop, plus two glows in the same family.
-          The glows sit behind the product, on the right, so the light on the
-          page comes from where the screenshots are.
+          The Scene wash is the icon's own light. The plate is azure at its
+          top edge and violet at its far corner with a magenta rim beyond it,
+          and that is the mesh; the glows sit behind the product, on the
+          right, so the light on the page comes from where the screenshots
+          are — cyan over the window, magenta under the menu, as on the icon.
         */}
         <Scene lazy>
           <Scene.Mesh
             stops={[
-              { color: 'violet', position: '20% 25%', spread: 55 },
-              { color: 'teal', position: '80% 70%', spread: 55 },
-              { color: 'indigo', position: '50% 50%', spread: 70 },
+              { color: '#0D7DFA', position: '14% 18%', spread: 55 },
+              { color: '#672AFA', position: '82% 72%', spread: 55 },
+              { color: '#B117C5', position: '104% 30%', spread: 42 },
             ]}
-            opacity={0.22}
+            opacity={0.2}
           />
-          <Scene.Glow color="violet" size={560} blur={140} opacity={0.4} top="8%" left="58%" />
-          <Scene.Glow color="teal" size={460} blur={120} opacity={0.28} top="68%" left="88%" />
+          <Scene.Glow color="#13D1FB" size={560} blur={150} opacity={0.32} top="4%" left="60%" />
+          <Scene.Glow color="#B117C5" size={440} blur={140} opacity={0.22} top="68%" left="90%" />
+          <Scene.Glow color="#0546BF" size={480} blur={140} opacity={0.26} top="58%" left="-10%" />
           <Scene.DotGrid color="gray" opacity={0.14} spacing={32} />
           <Scene.Noise opacity={0.022} />
         </Scene>
@@ -388,7 +390,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                     duration={1.5}
                     animation="scale"
                     animateProps={{ scaleAmount: 2 }}
-                    gradient={{ from: 'violet', to: 'teal' }}
+                    gradient={{ from: '#0D7DFA', to: '#672AFA' }}
                   >
                     Costs nothing.
                   </TextAnimate>
@@ -560,7 +562,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       <BuiltForMacSection />
 
       {/* ─── In detail: the reading, and its age ─── */}
-      <Box py={96} style={{ backgroundColor: 'var(--lan-plate)' }}>
+      <Box py={96} className={classes.plateBand}>
         <Container size="lg">
           {/*
             The Limits pane rather than the menu a third time: it is the one
@@ -662,11 +664,12 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       </Container>
 
       {/* ─── Get Started CTA ─── */}
-      <Box pos="relative" py={80} className={classes.ctaBand}>
+      <Box pos="relative" py={80} className={classes.plateBand}>
         <Scene lazy>
           <Scene.StarField count={{ base: 60, md: 120 }} twinkle opacity={0.7} />
           <Scene.ShootingStar count={2} minInterval={5} maxInterval={12} opacity={0.5} />
-          <Scene.Glow color="violet" size={500} blur={170} opacity={0.22} top="30%" left="50%" />
+          <Scene.Glow color="#672AFA" size={500} blur={170} opacity={0.24} top="30%" left="50%" />
+          <Scene.Glow color="#13D1FB" size={360} blur={150} opacity={0.14} top="80%" left="8%" />
         </Scene>
         <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
           <Stack align="center" gap="lg">

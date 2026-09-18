@@ -30,25 +30,24 @@ export function BuiltForMacSection() {
   return (
     <Box pos="relative" py={80} style={{ overflow: 'hidden' }}>
       {/*
-        Aurora + Mesh in the icon's own family — the blue-to-violet rim, with
-        the teal of the Codex bar as the third stop. Same Sequoia/Tahoe
-        atmosphere the sibling sites use, tuned to this palette rather than
-        FinderGit's blue/cyan.
+        Aurora + Mesh in the icon's own light: the rim's cyan and violet with
+        the plate's azure underneath. Same Sequoia/Tahoe atmosphere the sibling
+        sites use, cut on this icon rather than on FinderGit's blue/cyan.
       */}
       <Scene lazy>
         <Scene.Mesh
           stops={[
-            { color: 'violet', position: '15% 25%', spread: 60 },
-            { color: 'teal', position: '85% 70%', spread: 58 },
-            { color: 'indigo', position: '50% 55%', spread: 75 },
+            { color: '#0546BF', position: '15% 25%', spread: 60 },
+            { color: '#672AFA', position: '85% 70%', spread: 58 },
+            { color: '#0D7DFA', position: '50% 55%', spread: 75 },
           ]}
-          opacity={0.18}
+          opacity={0.16}
         />
         <Scene.Aurora
-          colors={['violet', 'indigo', 'teal']}
+          colors={['#13D1FB', '#0D7DFA', '#672AFA']}
           bands={3}
           position="top"
-          opacity={0.22}
+          opacity={0.2}
         />
         <Scene.Noise opacity={0.018} />
       </Scene>

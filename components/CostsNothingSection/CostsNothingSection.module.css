@@ -1,17 +1,24 @@
 /*
- * The plate the app icon sits on, used once, as the ground for the one claim
- * this product is built around. Light mode gets a violet wash rather than the
- * near-black, so the band reads as atmosphere on white instead of a slab.
+ * The plate the app icon sits on, as the ground for the one claim this product
+ * is built around: azure at the top edge, the navy core, violet at the far
+ * corner — the icon's own gradient, at band size. Light mode gets a wash of
+ * the same azure rather than the plate, so the band reads as atmosphere on
+ * the light page instead of a slab.
  */
 .band {
   overflow: hidden;
   background: light-dark(
     radial-gradient(
       120% 90% at 50% -20%,
-      color-mix(in srgb, var(--mantine-color-lancetta-2) 55%, transparent),
+      color-mix(in srgb, var(--lan-azure) 20%, transparent),
       transparent 68%
     ),
-    linear-gradient(160deg, var(--lan-plate-wash) -40%, var(--lan-plate) 45%, #17122b 120%)
+    linear-gradient(
+      160deg,
+      var(--lan-plate-wash) -40%,
+      var(--lan-plate) 45%,
+      var(--lan-plate-edge) 120%
+    )
   );
 }
 

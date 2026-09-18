@@ -19,14 +19,15 @@ import classes from './SolutionSection.module.css';
 export function SolutionSection() {
   return (
     <Box pos="relative" py={88} style={{ overflow: 'hidden' }}>
+      {/* The plate's light: azure from the top-left, magenta from the bottom-right. */}
       <Scene lazy>
         <Scene.Mesh
           stops={[
-            { color: 'violet', position: '18% 22%', spread: 58 },
-            { color: 'teal', position: '82% 72%', spread: 55 },
-            { color: 'indigo', position: '50% 50%', spread: 72 },
+            { color: '#0546BF', position: '18% 22%', spread: 58 },
+            { color: '#B117C5', position: '84% 74%', spread: 50 },
+            { color: '#672AFA', position: '50% 50%', spread: 72 },
           ]}
-          opacity={0.16}
+          opacity={0.14}
         />
         <Scene.Noise opacity={0.018} />
       </Scene>

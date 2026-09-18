@@ -13,8 +13,9 @@
     scroll-behavior: smooth;
   }
 
+  /* Nextra paints its own chrome on this: the same page colour as the body. */
   :root {
-    --x-color-nextra-bg: var(--mantine-color-gray-1);
+    --x-color-nextra-bg: var(--lan-body);
 
     &:where(.dark) {
       --x-color-nextra-bg: var(--mantine-color-dark-9);

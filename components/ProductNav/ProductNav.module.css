@@ -12,11 +12,7 @@
   z-index: 10;
   height: var(--lan-subnav-height, rem(48px));
   border-bottom: 1px solid light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 8%));
-  background-color: color-mix(
-    in srgb,
-    light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-9)) 78%,
-    transparent
-  );
+  background-color: color-mix(in srgb, var(--lan-body) 78%, transparent);
   backdrop-filter: saturate(180%) blur(20px);
   -webkit-backdrop-filter: saturate(180%) blur(20px);
 }

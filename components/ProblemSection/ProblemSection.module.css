@@ -54,8 +54,8 @@
   background: radial-gradient(
     100% 70% at 50% -10%,
     light-dark(
-      color-mix(in srgb, var(--mantine-color-lancetta-3) 28%, transparent),
-      color-mix(in srgb, var(--mantine-color-lancetta-9) 30%, transparent)
+      color-mix(in srgb, var(--lan-azure) 16%, transparent),
+      color-mix(in srgb, var(--lan-plate-wash) 42%, transparent)
     ),
     transparent 62%
   );

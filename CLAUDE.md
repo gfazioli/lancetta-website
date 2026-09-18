@@ -137,6 +137,28 @@ plan names and percentages are illustration. Prose quotes the table above.
 **sampled from the app icon, not picked**, and the brand accent is deliberately
 the icon's *third* bar.
 
+**The masters are `logo.png` and `logo-flat.png` in the Brand folder of the
+user's Drive** (`…/GoogleDrive-…/Il mio Drive/Brand/Lancetta/`, 2026-09-18),
+not the app repo's `Brand/` — that one still held the previous artwork when
+this site switched (user, 2026-09-18: *"il logo che ti avevo dato è
+sbagliato"*), so the window screenshots carry the old icon in their sidebar
+until the app catches up and they are re-shot. Every `public/icon-*.png`,
+`android-chrome-*` and `apple-touch-icon.png` is a `sips` resize of `logo.png`;
+the favicons are resizes of `logo-flat.png`.
+
+Read the icon top-down. The first probe read the bitmap bottom-up and had
+every bar upside down, which is why `theme.ts` names where on the icon each
+value came from. What the icon actually is: azure along the top edge, a
+near-black navy core behind the bars, deep violet at the bottom-right, and a
+rim that runs cyan (top-left) through violet to magenta (bottom-right). Those
+six are the page tokens (`--lan-plate`, `--lan-plate-wash`, `--lan-plate-edge`,
+`--lan-azure`, `--lan-cyan`, `--lan-violet`, `--lan-magenta`), every Scene mesh
+and glow takes its colours from them as hexes, the two plate bands (in-detail
+and the closing CTA) share `.plateBand` with its 2px neon rim, and the **dark
+scheme's greys are the plate's navy** — `theme.colors.dark` is cut on its hue
+with the chroma held low, because a neutral grey beside this icon reads as a
+different product. Contrasts are in the comments beside each ladder.
+
 Inside the app, teal means **Codex** and orange means **Claude Code**
 (`CodexSource.tintHex`, `ClaudeSource.tintHex`). Those two hues are semantic on
 this site too — `--lan-codex` and `--lan-claude` in `theme/global.css`, with a
