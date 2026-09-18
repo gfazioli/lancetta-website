@@ -32,7 +32,7 @@
 #
 #   scripts/page.sh serve [port]        build nothing, just serve .next on a port
 #   scripts/page.sh shot  <path> <out.png> [w] [h] [scrollY] [light]
-#   scripts/page.sh eval  <path> <js>   run JS in the page and print the result
+#   scripts/page.sh eval  <path> <js> [scrollY] [w] [h]   run JS in the page (scrolled first) and print the result
 #   scripts/page.sh stop  [port]
 #
 # `<path>` is a site path (`/`, `/docs/the-window`), not a URL.
@@ -55,7 +55,11 @@ serve() {
     local port="${1:-$PORT_DEFAULT}"
     local old; old=$(serving_pid "$port")
     [ -n "$old" ] && { echo "  killing $old, which already held :$port"; kill $old; sleep 1; }
-    ( cd "$ROOT" && nohup ./node_modules/.bin/next start -p "$port" >/tmp/lancetta-page-$port.log 2>&1 & )
+    # `</dev/null` is load-bearing: nohup only detaches stdin when stdin is a
+    # terminal, and from an agent's shell it is a pipe — `next start` then
+    # holds that pipe open and the calling tool waits on it for ever, twice
+    # measured as a "hung" serve while the server was up and answering.
+    ( cd "$ROOT" && nohup ./node_modules/.bin/next start -p "$port" </dev/null >/tmp/lancetta-page-$port.log 2>&1 & )
     local n=0 pid=""
     while [ -z "$pid" ] && [ "$n" -lt 30 ]; do sleep 0.5; pid=$(serving_pid "$port"); n=$((n + 1)); done
     [ -n "$pid" ] || { echo "nothing came up on :$port — see /tmp/lancetta-page-$port.log"; exit 1; }
@@ -77,10 +81,14 @@ case "${1:-}" in
             "${4:-1440}" "${5:-1000}" "${6:-0}" "${7:-dark}"
         ;;
     eval)
-        path="${2:?usage: page.sh eval <path> <js>}"
+        path="${2:?usage: page.sh eval <path> <js> [scrollY] [w] [h]}"
         js="${3:?}"
         [ -n "$(serving_pid)" ] || serve
-        "$(build_tool pageeval)" "http://localhost:$PORT_DEFAULT$path" "$js"
+        # Scrolled first when asked: the pinned gallery's frame and the product
+        # bar's current link are scroll-driven state, and this view's snapshots
+        # paint behind its DOM, so they are read from the DOM, not from a shot.
+        # The viewport matters too — the banner wraps to two lines on a phone.
+        "$(build_tool pageeval)" "http://localhost:$PORT_DEFAULT$path" "$js" "${4:-0}" "${5:-1280}" "${6:-1100}"
         ;;
     *) sed -n '2,40p' "$0"; exit 2 ;;
 esac
