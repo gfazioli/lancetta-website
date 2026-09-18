@@ -49,6 +49,15 @@
 /* A container, so the headline can size itself to the column it sits in. */
 .heroCopy {
   container-type: inline-size;
+
+  /*
+   * One column below md, and the copy centres over the product the way a
+   * product page does once the two columns become one: left-aligned text
+   * over a centred screenshot reads as two layouts on one screen.
+   */
+  @media (max-width: $mantine-breakpoint-md) {
+    text-align: center;
+  }
 }
 
 .heroBrand {
@@ -56,6 +65,10 @@
   align-items: center;
   gap: rem(10px);
   margin-bottom: rem(28px);
+
+  @media (max-width: $mantine-breakpoint-md) {
+    justify-content: center;
+  }
 }
 
 .heroIcon {
@@ -83,6 +96,10 @@
   line-height: 1.02;
   letter-spacing: -0.035em;
   text-align: left;
+
+  @media (max-width: $mantine-breakpoint-md) {
+    text-align: center;
+  }
 }
 
 .titleLine {
@@ -92,6 +109,30 @@
 .lead {
   max-width: rem(520px);
   margin-top: rem(24px);
+
+  @media (max-width: $mantine-breakpoint-md) {
+    margin-inline: auto;
+  }
+}
+
+/*
+ * The action row and the lines under it follow the copy: left beside the
+ * product, centred under it. Two classes deep on purpose: Mantine sets the
+ * Group's justify and the Stack's align from a class of its own, and a
+ * single class here would win or lose on stylesheet order.
+ */
+.heroCopy .actions {
+  @media (max-width: $mantine-breakpoint-md) {
+    justify-content: center;
+  }
+}
+
+.heroCopy .meta {
+  align-items: flex-start;
+
+  @media (max-width: $mantine-breakpoint-md) {
+    align-items: center;
+  }
 }
 
 /*
@@ -116,6 +157,7 @@
     --bleed: 0px;
 
     max-width: rem(720px);
+    justify-self: center;
   }
 
   @media (max-width: $mantine-breakpoint-sm) {
@@ -156,6 +198,7 @@
     position: static;
     width: 100%;
     max-width: rem(420px);
+    margin-inline: auto;
   }
 }
 
