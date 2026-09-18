@@ -6,7 +6,7 @@ description: "Lancetta's Settings: the refresh interval, counting down what is l
 
 ⌘, from the menu, or **Settings…**. Six panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
 
-![Lancetta's Settings, on the General pane: the refresh interval, counting down what is left, and the rotation interval for the menu bar](/screenshot-settings-general.png)
+![Lancetta's Settings, on the General pane: the refresh interval, counting down what is left, the three startup switches, and the rotation interval for the menu bar](/screenshot-settings-general.png)
 
 ## General
 
@@ -20,21 +20,29 @@ Whichever you pick, the bars are filled with **the number that is shown**, and e
 
 **Open Lancetta at login** — off by default. It binds to macOS's own login-item status rather than to a copy of it, so the switch reflects what the system actually has registered.
 
+**Show the support window at launch** — off by default. Opens About + Support when Lancetta starts. Netfox ships the same switch on; here it is off, because this app opens at login, and a window at every login is the thing a menu-bar app exists to avoid.
+
 **Show the icon in the Dock** — off by default, which means Lancetta is an accessory app with nothing in the Dock. Note what that setting does *not* control: a Dock icon appears while [the window](/docs/the-window) is open whatever this is set to, because a window needs its app to be a normal one to have its own menu bar and to come forward when asked. This switch decides whether the icon stays there the rest of the time.
 
 **Rotate agents every** — with more than one agent in the menu bar they take turns, cross-fading. The item holds a fixed width at the widest of them so its neighbours never shift. With one agent in the bar there is nothing to rotate, and the control is disabled rather than silently doing nothing.
 
 ## Appearance
 
+![Lancetta's Settings, on the Appearance pane: one switch, Use the agents' own logos](/screenshot-settings-appearance.png)
+
 **Marks** — the agents' own artwork, or neutral system symbols. The marks are drawn from vector path data rather than bundled as images, so they stay sharp at any row height.
 
 ## Notch
+
+![Lancetta's Settings, on the Notch pane: one switch, Show the reading under the notch](/screenshot-settings-notch.png)
 
 One switch, and the pane only exists on a Mac that has a notch. Hidden rather than shown dead: a pane whose feature can never run reads as broken. See [The Notch](/docs/the-notch).
 
 ## Agents
 
 A list with a page per agent, the way System Settings does accounts and devices.
+
+![Lancetta's Settings, on the Agents pane: Claude and Codex as two rows, each with a grip to drag it and a chevron to open it](/screenshot-settings-agents.png)
 
 **The list is where the order is set** — drag a row and everything follows it: the menu, the window, the island, and the turn each agent takes in the menu bar. There is one sort, in one place, so no surface can have an order of its own. Before this existed Codex was always first, for no better reason than being first in an array; an order nobody chose is still an order somebody has to live with.
 
@@ -49,6 +57,12 @@ A row opens on a click anywhere, and drags from anywhere. The grip on the left s
 - **How it is wired** — which route that agent's numbers arrive by, so a card that is not updating tells you where to look.
 - **Account** (Claude only) — **Connect** reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left; macOS asks once whether to allow it. **Disconnect** stops it. What that click does and does not do is spelled out in [Getting Started](/docs/getting-started#claude-code).
 
+![Claude's page in Lancetta's Settings: colour, Watch this agent, Show in the menu bar, the three bar fields, and the Account section reading the quota from the Claude account, with a Disconnect button](/screenshot-settings-agent-claude.png)
+
+The same page for Codex, where the line under the name says which executable it reads:
+
+![Codex's page in Lancetta's Settings: the wiring line reads /opt/homebrew/bin/codex app-server on demand, then colour, Watch this agent, Show in the menu bar and the three bar fields](/screenshot-settings-agent-codex.png)
+
 Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
 
 Visibility is stored as the set of agents you have **hidden**, rather than the set you have shown. An agent added in a later version is therefore absent from that set and is visible by default; stored the other way round, every new agent would ship invisible and read as broken until somebody found the setting. The same rule applies to the order: an agent the stored order has never heard of lands last, never nowhere.
@@ -56,6 +70,8 @@ Visibility is stored as the set of agents you have **hidden**, rather than the s
 ## Updates
 
 Three controls and the build you are running:
+
+![Lancetta's Settings, on the Updates pane: Check for updates on launch, Automatically check for updates, the Check for Updates Now button, and the build stamp beside it](/screenshot-settings-updates.png)
 
 - **Check for updates on launch** — off by default. A silent check when Lancetta starts, which speaks up only if there is something to say.
 - **Automatically check for updates** — hands the schedule to the update framework, which then checks on its own cadence.
@@ -66,6 +82,8 @@ Three controls and the build you are running:
 ## About
 
 Version, build date, the sponsor link, and the trademark notice. It is reached from the header at the top of the sidebar, and also has its own window under **About Lancetta** in the menu.
+
+![Lancetta's Settings, on the About pane: the icon, the version, the one-line description, the links, and the sponsors block](/screenshot-settings-about.png)
 
 ## The marks, and the trademark notice
 

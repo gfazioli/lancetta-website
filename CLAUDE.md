@@ -218,15 +218,23 @@ see.
 window and Settings, and a hover on the notch for the island.
 
 Published today: the menu in both appearances, the island collapsed and open,
-the window's Overview, Usage and Limits panes, and Settings → General.
+the window's Overview, Usage and Limits panes, and every Settings pane: General,
+Appearance, Notch, Agents, both agent pages, Updates and About. The Settings set
+was reshot on 2026-09-18 from the INSTALLED 0.3.1 with
+`../Lancetta/scripts/settings-shots.sh`, one launch per pane through the
+`LANCETTA_OPEN` hatch, because the dev bundle is ad-hoc signed and would ask for
+the keychain item again while the shipped build already holds the grant.
 
 **Two surfaces may not be published, and both for the same reason.** The
 **Processes pane** lists each tree by the directory it was started for, and an
 **agent's page in Settings** carries the absolute path that agent is read from.
 On a developer's Mac both contain the home directory, and therefore the user's
 name, and often the names of their employer's repositories. Check what is in the
-frame before publishing, every time — a proper pipeline with fixture values
-belongs with v0.4, alongside the rest of *Distribution*.
+frame before publishing, every time — a proper pipeline with fixture values is
+still to come. Both agent pages went out on 2026-09-18 after that read: Codex's
+line names `/opt/homebrew/bin/codex` and nothing under the home directory, and
+Claude's names no path at all on the account route. On a Mac where `codex` lives
+under `~`, the Codex page is not publishable.
 
 **`APP_LANG=en_GB` is not optional.** The app ships no localised strings and
 still renders dates and numbers through the system locale, so captured on an
