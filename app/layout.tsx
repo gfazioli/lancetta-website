@@ -66,8 +66,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   the <a>) trip React 19's unique-key warning.
                 */}
                 <span>
-                  Lancetta v{config.app.version} is being built in the open —{' '}
-                  <a href="/docs/roadmap">see what is in it</a>
+                  {/* Template literals, not JSX text: see the hero's meta line for why. */}
+                  {config.app.released
+                    ? `Lancetta v${config.app.version} is out — `
+                    : `Lancetta v${config.app.version} is being built in the open — `}
+                  <a href={config.app.released ? '/docs/release-notes' : '/docs/roadmap'}>
+                    {config.app.released ? 'see what is new' : 'see what is in it'}
+                  </a>
                 </span>
               </Banner>
             }

@@ -103,9 +103,9 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
         <Anchor href="/download" size="sm">
           The download button
         </Anchor>{' '}
-        takes you straight to the latest DMG. It is signed with an Apple Developer ID and
-        notarized by Apple, so it opens without the detour Gatekeeper puts unsigned apps
-        through, and it updates itself from then on. The{' '}
+        takes you straight to the latest DMG. It is signed with an Apple Developer ID and notarized
+        by Apple, so it opens without the detour Gatekeeper puts unsigned apps through, and it
+        updates itself from then on. The{' '}
         <Anchor href="/docs/roadmap" size="sm">
           roadmap
         </Anchor>{' '}
