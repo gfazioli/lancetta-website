@@ -300,18 +300,24 @@ const roadmap = [
   },
   {
     version: 'v0.3',
+    title: 'Claude from the account',
+    body: 'One click and one macOS dialog instead of a line in a status-line script: Lancetta asks your Claude account, with the sign-in Claude Code keeps, so Claude refreshes on demand like Codex. What’s New under Help, and the icon in the format macOS 26 introduced.',
+    state: 'shipped',
+  },
+  {
+    version: 'v0.4',
     title: 'It speaks first',
     body: 'A window that refused, a threshold crossed, a source gone quiet — and quota about to evaporate unused.',
     state: 'planned',
   },
   {
-    version: 'v0.4',
+    version: 'v0.5',
     title: 'Everyone else’s Mac',
     body: 'The discovery UI and the Sources pane. The version where it stops assuming one machine — the signing and the feed it needed arrived early, in v0.2, and the Claude step became one click and a macOS dialog rather than a script.',
     state: 'planned',
   },
   {
-    version: 'v0.5',
+    version: 'v0.6',
     title: 'Reset credits',
     body: 'Redeeming a Codex reset credit from the menu, with every safety rule an irreversible action needs.',
     state: 'planned',

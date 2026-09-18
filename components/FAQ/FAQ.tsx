@@ -9,7 +9,7 @@ import { Accordion, Anchor, Text } from '@mantine/core';
  *
  *  - Do not describe a feature in the present tense until it ships. As of
  *    2026-09-17 the reaper, the window and the updater all HAVE shipped, and
- *    only the notifications (v0.3) have not. This list goes stale silently:
+ *    only the notifications (v0.4 since the 2026-09-18 renumbering) have not. This list goes stale silently:
  *    check the app's own CLAUDE.md and git log, not this comment.
  *  - `faqItems` is paired with the FAQPage JSON-LD in StructuredData.tsx.
  *    Change one and change the other, or the rich result quotes an answer
