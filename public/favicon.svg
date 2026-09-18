@@ -1,27 +1,26 @@
 <!--
-  THE TAB MARK — the app icon's FLAT variant, redrawn as vector and full bleed.
+  THE TAB MARK — the app icon's FLAT variant, redrawn as vector.
 
-  Why a variant at all: the main icon does not survive 16px, and it was
+  Why a variant at all: the gradient icon does not survive 16px, and that was
   measured rather than judged by eye. Its bars cover 27% of the tile and its
   plate another 25%, so three bars share 66 pixels; its gradients and rim glow
   then smear what is left into mud. The flat variant has no gradient and no
   glow, so each bar stays one solid colour all the way down to 2px wide.
 
-  Why full bleed: the master carries about 10% transparent margin on every
-  side, which is the convention for an APP icon and is dead area in a favicon.
-  Dropping it takes the bars from 21% of the tile to 35% — measured, same
-  script — with no change to the drawing itself.
+  Full bleed, because the artwork is: the 2026-09-18 masters touch all four
+  edges (only the corners are transparent), which is also what Netfox and
+  FinderGit ship — their icons measure 256 of 256 px at every alpha threshold.
 
-  Geometry is normalised to the plate of `Lancetta/Brand/app-icon-flat-1024.png`
-  (plate 1000x986 px at x=127, y=137; corner radius 234 px = 23.4% of width;
-  bars at 233/510/791 with a common baseline at y=951). Fills are sampled off
-  that same file, not picked.
+  Geometry and fills are MEASURED off `Lancetta/Brand/app-icon-flat-1024.png`
+  with `Lancetta/scripts/icons.swift` (colorbox for each bar, radius for the
+  corner), then scaled to this viewBox. Nothing here was picked by hand, and
+  `scripts/icons.sh` regenerates every raster beside it from the same master.
 
   `public/brand-mark.svg` is the gradient icon, for anywhere it is drawn large.
 -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" role="img" aria-label="Lancetta">
-  <rect x="0" y="0" width="16" height="16" rx="3.75" fill="#122440"/>
-  <rect x="1.70"  y="5.27" width="3.68" height="7.95"  rx="1.84" fill="#FF960F"/>
-  <rect x="6.13"  y="2.56" width="3.74" height="10.68" rx="1.87" fill="#00EDC6"/>
-  <rect x="10.62" y="5.24" width="3.66" height="7.98"  rx="1.83" fill="#AC71FB"/>
+  <rect x="0" y="0" width="16" height="16" rx="3.55" fill="#08306F"/>
+  <rect x="1.51"  y="5.65" width="3.81" height="7.96"  rx="1.91" fill="#FB8E00"/>
+  <rect x="6.04"  y="2.4" width="3.9" height="11.25" rx="1.95" fill="#08F5C3"/>
+  <rect x="10.68" y="5.21" width="3.85" height="8.41"  rx="1.93" fill="#9253F9"/>
 </svg>

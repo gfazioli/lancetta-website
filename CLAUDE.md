@@ -9,7 +9,7 @@ macOS menu-bar monitor for coding agents.
 
 **This is NOT a macOS application.** It is a Next.js project deployed on Vercel.
 
-- **Live URL**: https://lancetta.app *(not deployed yet)*
+- **Live URL**: https://lancetta.app *(live; `/download` redirects to the newest DMG)*
 - **App repository** (private, Swift): https://github.com/gfazioli/Lancetta
 - **Website repository** (this): https://github.com/gfazioli/lancetta-website
 
@@ -20,14 +20,21 @@ fix that lands in one is a candidate for the other three.
 ## The thing to get right before anything else
 
 **Nothing on this site may describe as shipped something the app does not do.**
-`config.app.released` is `false` and `config.app.version` is `0.1.0`, which is
-*in progress*, not released. Several surfaces key off `released`: the hero CTA
-and badge, the release strip, the closing CTA, and whether the JSON-LD carries a
-`downloadUrl` and a `dateModified`. There is no `download` entry in
-`app/_meta.tsx` and no Download link in the footer, because a Download tab that
-lands on an empty Releases page is a promise the site cannot keep.
 
-Flip all of it in **one** commit when the first build ships.
+The app SHIPPED on 2026-09-18: `config.app.released` is `true`, and every field
+under `config.app` — version, releaseDate, minMacOS — is now written by
+`../Lancetta/scripts/release.sh` off the BUILT binary. **Do not hand-edit them.**
+A hand-kept copy of a value the pipeline owns is the copy that drifts, and
+netfox.app shipped exactly that.
+
+The flip took more than the flag: `released` gates only the hero CTA and badge,
+the release strip, the closing CTA and the JSON-LD's `downloadUrl` /
+`dateModified`. Everything else was PROSE, and it was spread across files nobody
+re-reads — an FAQ answer ("Not yet — v0.1 is still being built") which also
+lives mirrored in `StructuredData.tsx`, a roadmap entry in two places (the MDX
+page and the homepage strip mirror each other), a badge naming a version, the
+`download` tab withheld from `app/_meta.tsx`, and a callout on Getting Started.
+So when the app's state changes: **grep for the claim, not for the key.**
 
 The same rule inside the page: a feature card carries a `Next` badge **and** the
 future tense for anything the build does not do. A badge without the future
@@ -146,19 +153,29 @@ a light and a dark tab plate, it is mud.
 
 `public/favicon.svg` is therefore the icon's **flat** variant — no gradient, no
 glow, so each bar stays one solid colour down to 2px — redrawn as vector from
-`../Lancetta/Brand/app-icon-flat-1024.png` and **full bleed**, because the
-master's ~10% transparent margin is an app-icon convention and dead area in a
-tab. That alone took the bars from 21% of the tile to 35%.
+`../Lancetta/Brand/app-icon-flat-1024.png`.
 
-`favicon-16x16.png`, `favicon-32x32.png` and `favicon.ico` are rendered from
-that SVG, so all four routes draw the same mark. `apple-touch-icon.png` and
-everything from 64px up stay the gradient icon, which reads at those sizes and
-is the app's own face.
+**Every icon in `public/` is GENERATED — do not edit one by hand.**
+`../Lancetta/scripts/icons.sh` writes all of them from the two masters in
+`../Lancetta/Brand/`, then compresses them with ImageOptim's own `oxipng` and
+`zopflipng` (real CLI binaries inside the app bundle's framework, so nothing has
+to drive a GUI). It covers `icon-*.png`, `apple-touch-icon.png`,
+`favicon-16x16.png`, `favicon-32x32.png` and `favicon.ico`; the two SVGs are
+hand-written but their geometry and fills are MEASURED off the masters with
+`../Lancetta/scripts/icons.swift`, and each colour carries the point it was
+sampled at.
 
-If you change any of it, look at it: `scripts/` has no favicon tool, so it is a
-throwaway that magnifies the shipped PNGs with NEAREST-NEIGHBOUR onto both tab
-plates. A favicon judged from the 1024px master is judged from a picture nobody
-will ever see.
+**The artwork changed on 2026-09-18 and is now FULL BLEED** — the squircle
+touches all four edges, only the corners are transparent. The previous masters
+carried a ~10% margin, which this file used to describe as the app-icon
+convention to be dropped for the tab. Measured instead of assumed: Netfox's and
+FinderGit's shipped icons are also full bleed (256 of 256 px at every alpha
+threshold), so the whole family is, and the macOS icon needs no inset either.
+
+If you change any of it, look at it: `icons.swift zoom <png> <factor> <plate>`
+magnifies the shipped PNG with NEAREST NEIGHBOUR onto a tab-coloured plate. A
+favicon judged from the 1024px master is judged from a picture nobody will ever
+see.
 
 ## Content guidelines
 

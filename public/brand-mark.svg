@@ -1,30 +1,42 @@
+<!--
+  THE GRADIENT APP ICON as vector, for anywhere it is drawn large (the header
+  logo). `favicon.svg` is the flat variant, which exists because this one turns
+  to mud at 16px.
+
+  Every colour is SAMPLED off `Lancetta/Brand/app-icon-1024.png` with
+  `Lancetta/scripts/icons.swift sample`, at the point named beside it, and the
+  geometry comes from the same measurement as the tab mark. A glowing 3D plate
+  cannot be reproduced exactly by four rectangles; what this keeps is the
+  structure the eye reads at 32-64px — a dark centre, a lit rim that runs blue
+  to violet, and three bars that each hold one hue.
+-->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Lancetta">
   <defs>
-    <linearGradient id="lan-plate" x1="0" y1="0" x2="1" y2="1">
-      <stop offset="0" stop-color="#1B3E70"/>
-      <stop offset="0.45" stop-color="#0A1524"/>
-      <stop offset="1" stop-color="#271F42"/>
-    </linearGradient>
-    <linearGradient id="lan-rim" x1="0.1" y1="0" x2="0.9" y2="1">
-      <stop offset="0" stop-color="#4FC3FD"/>
-      <stop offset="0.5" stop-color="#2A6BD8"/>
-      <stop offset="1" stop-color="#7351EA"/>
-    </linearGradient>
-    <linearGradient id="lan-codex" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#86F3D9"/>
-      <stop offset="1" stop-color="#00A6D2"/>
+    <radialGradient id="lan-plate" cx="0.5" cy="0.46" r="0.78">
+      <stop offset="0" stop-color="#0E0E17"/>      <!-- (440,700), between the bars -->
+      <stop offset="0.55" stop-color="#101C4A"/>
+      <stop offset="1" stop-color="#16379B"/>      <!-- (60,500) left edge -->
+    </radialGradient>
+    <linearGradient id="lan-rim" x1="0.05" y1="0" x2="0.95" y2="1">
+      <stop offset="0" stop-color="#1FB3FB"/>      <!-- (627,4) top edge -->
+      <stop offset="0.45" stop-color="#0B74F7"/>   <!-- (627,60) -->
+      <stop offset="1" stop-color="#451A7F"/>      <!-- (1195,900) lower right -->
     </linearGradient>
     <linearGradient id="lan-claude" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#FFCB60"/>
-      <stop offset="1" stop-color="#F05F3C"/>
+      <stop offset="0" stop-color="#FFC239"/>      <!-- (270,470) -->
+      <stop offset="1" stop-color="#EB2522"/>      <!-- (270,1030) -->
+    </linearGradient>
+    <linearGradient id="lan-codex" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#89F8D9"/>      <!-- (627,220) -->
+      <stop offset="1" stop-color="#018BF5"/>      <!-- (627,1000) -->
     </linearGradient>
     <linearGradient id="lan-third" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#CE9AFD"/>
-      <stop offset="1" stop-color="#7350F9"/>
+      <stop offset="0" stop-color="#C980F9"/>      <!-- (985,440) -->
+      <stop offset="1" stop-color="#6F2AFC"/>      <!-- (985,1020) -->
     </linearGradient>
   </defs>
-  <rect x="0.9" y="0.9" width="62.2" height="62.2" rx="14.2" fill="url(#lan-plate)" stroke="url(#lan-rim)" stroke-width="1.8"/>
-  <rect x="7.5"  y="22.9" width="14.2" height="29.0" rx="7.1"  fill="url(#lan-claude)"/>
-  <rect x="24.2" y="12.1" width="15.3" height="39.8" rx="7.65" fill="url(#lan-codex)"/>
-  <rect x="42.3" y="20.6" width="14.4" height="31.3" rx="7.2"  fill="url(#lan-third)"/>
+  <rect x="0.8" y="0.8" width="62.4" height="62.4" rx="13.39" fill="url(#lan-plate)" stroke="url(#lan-rim)" stroke-width="1.6"/>
+  <rect x="6.02"  y="22.61" width="15.26" height="31.85" rx="7.63" fill="url(#lan-claude)"/>
+  <rect x="24.14" y="9.59" width="15.62" height="45.01" rx="7.81" fill="url(#lan-codex)"/>
+  <rect x="42.72" y="20.82" width="15.41" height="33.63" rx="7.71" fill="url(#lan-third)"/>
 </svg>
