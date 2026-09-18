@@ -48,9 +48,17 @@ describe('fetchReleaseCadence', () => {
     const cadence = await fetchReleaseCadence(NOW);
     expect(cadence.total).toBeNull();
     expect(cadence.since).toBeNull();
-    // The config date stands in — which before the first release is empty, and
-    // the strip then draws nothing at all rather than an invented date.
-    expect(cadence.latestDate).toBe(config.app.releaseDate ? expect.stringContaining('20') : '');
+    // The config date stands in — which before the first release was empty, and
+    // the strip then drew nothing at all rather than an invented date.
+    //
+    // `toEqual`, not `toBe`: an asymmetric matcher is never Object.is-equal to a
+    // string, so the `toBe` this used to carry could only ever pass down the OTHER
+    // branch of the ternary — the empty one, i.e. only while the app was unreleased.
+    // It went red the day `config.app.releaseDate` was first written, which is the
+    // day it first measured anything.
+    expect(cadence.latestDate).toEqual(
+      config.app.releaseDate ? expect.stringContaining('20') : ''
+    );
   });
 
   it('stops at the cap instead of walking the API forever', async () => {
