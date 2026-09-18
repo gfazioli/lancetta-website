@@ -408,7 +408,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                 in your Mac&apos;s menu bar, without spending a token to find out.
               </Text>
 
-              <Group mt="xl" gap="sm">
+              <Group mt="xl" gap="sm" className={classes.actions}>
                 {released ? (
                   <Button
                     href="/download"
@@ -439,11 +439,11 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                   variant="subtle"
                   size="lg"
                 >
-                  {released ? 'See the roadmap' : 'Follow the build'}
+                  {released ? 'What’s next' : 'Follow the build'}
                 </Button>
               </Group>
 
-              <Stack gap="sm" align="flex-start" mt="md">
+              <Stack gap="sm" mt="md" className={classes.meta}>
                 <Text c="dimmed" size="sm">
                   {/*
                     One interpolated template literal rather than JSX text. In a
@@ -624,11 +624,11 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         </Container>
       </Box>
 
-      {/* ─── Roadmap ─── */}
+      {/* ─── What’s next ─── */}
       <Container id="roadmap" size="lg" py={80}>
         <SectionHeading
           eyebrow="Where it is going"
-          title="What comes next"
+          title="What’s next"
           lead="No dates, and no version numbers on work that has not started — the order changes as the work teaches you things. What each step has to prove before it counts as finished is the part worth publishing."
         />
 
@@ -693,7 +693,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
             <Text c="dimmed" ta="center" size="lg" maw={520}>
               {released
                 ? 'Put both agents in your menu bar and stop reading a number you have to squint at a terminal for.'
-                : 'The first build is not out yet. The roadmap says what is in it, and the releases page is where it will appear.'}
+                : 'The first build is not out yet. What’s next says what is in it, and the releases page is where it will appear.'}
             </Text>
 
             <Button
@@ -705,7 +705,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
               px={48}
               mt="md"
             >
-              {released ? 'Download for macOS' : 'Read the roadmap'}
+              {released ? 'Download for macOS' : 'Read what’s next'}
             </Button>
             <Text c="dimmed" size="sm">
               {`Free · macOS ${config.app.minMacOS} Sequoia or later`}
