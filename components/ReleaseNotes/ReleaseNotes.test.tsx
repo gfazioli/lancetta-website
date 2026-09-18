@@ -1,4 +1,5 @@
 import { render, screen } from '@/test-utils';
+import config from '@/config';
 import { ReleaseNotes } from './ReleaseNotes';
 import { useReleaseNotes } from './use-release-notes';
 
@@ -28,8 +29,10 @@ describe('ReleaseNotes', () => {
     mocked.mockReturnValue({ data: [], error: null, isLoading: false, ready: true });
     render(<ReleaseNotes />);
     expect(screen.queryByText('Loading releases...')).not.toBeInTheDocument();
-    // Before the first release the honest state is "not yet", named as such.
-    expect(screen.getByText(/nothing released yet/i)).toBeInTheDocument();
+    // The empty screen has two honest wordings: "not yet" before the first
+    // release, "no notes yet" after it. Keyed off the config, like the screen.
+    const empty = config.app.released ? /no release notes yet/i : /nothing released yet/i;
+    expect(screen.getByText(empty)).toBeInTheDocument();
   });
 
   it('reports an error rather than a skeleton', () => {
