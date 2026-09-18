@@ -12,7 +12,7 @@ description: "Lancetta's Settings: the refresh interval, counting down what is l
 
 **Refresh every** — 15 seconds to 5 minutes, 45 by default. This is a **CPU budget, not a quota one**, and the difference is the whole point: reading a quota spends no tokens, so there is no cost pressure to poll slowly. What there is, is a process to spawn. See [How it reads each agent](/docs/how-it-reads).
 
-It applies to Claude too once it is connected. Through the status-line file instead, the Claude reading arrives when a session renders one, whatever the interval.
+It applies to Claude too once it is connected, with a floor: the account is asked at most once a minute whatever you set here, and Refresh now asks straight away. Through the status-line file instead, the Claude reading arrives when a session renders one, whatever the interval.
 
 **Count down what is left** — off, the number is what has been *used* and rises from 0. On, a fresh window reads 100% and falls as tokens go, which is how Codex's own status line puts it.
 
