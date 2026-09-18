@@ -39,11 +39,13 @@ import config from '@/config';
 import { BuiltForMacSection } from '../BuiltForMacSection/BuiltForMacSection';
 import { CostsNothingSection } from '../CostsNothingSection/CostsNothingSection';
 import { ProblemSection } from '../ProblemSection/ProblemSection';
+import { ProductNav } from '../ProductNav/ProductNav';
 import { ReleaseCadence } from '../ReleaseCadence/ReleaseCadence';
 import {
   fallbackReleaseCadence,
   type ReleaseCadence as Cadence,
 } from '../ReleaseCadence/release-cadence';
+import { SectionHeading } from '../SectionHeading/SectionHeading';
 import { ShareButtons } from '../ShareButtons/ShareButtons';
 import { type GalleryShot, ScrollGallery } from '../ScrollGallery/ScrollGallery';
 import { SolutionSection } from '../SolutionSection/SolutionSection';
@@ -142,6 +144,28 @@ function ZoomableScreenshot({
     </>
   );
 }
+
+/*
+ * The strip under the hero: what it is, what it does, what it costs. Three
+ * sentences, because that is what a product bar promising "what it is / what
+ * it does / features" has to answer before the page asks for a scroll. The
+ * third one is the founding constraint and the one measured claim on the
+ * page; its own section further down carries the numbers.
+ */
+const glance = [
+  {
+    label: 'What it is',
+    body: 'A native macOS menu-bar app that watches Codex and Claude Code.',
+  },
+  {
+    label: 'What it does',
+    body: 'Shows how much of each agent’s quota is left, and when it comes back. Both windows, both agents, one glance.',
+  },
+  {
+    label: 'What it costs',
+    body: 'Nothing. The app is free, and reading a quota spends none of it: no model is asked, no token is used.',
+  },
+];
 
 /*
  * The three surfaces, in the order a reader meets them, for the scroll-driven
@@ -303,13 +327,23 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
   const released = config.app.released;
 
   return (
-    <>
+    /*
+     * `--lan-subnav-height` is the product bar's height, declared once here
+     * and inherited by everything laid out against it: the bar itself, the
+     * pinned gallery's stage, and the scroll margin of every anchor the bar
+     * links to. The bar is sticky under Nextra's navbar, so two bars sit above
+     * the content on this page and only this page.
+     */
+    <div className={classes.home} style={{ '--lan-subnav-height': '48px' } as CSSProperties}>
+      <ProductNav />
+
       {/* ─── Hero ─── */}
-      <Box pos="relative" style={{ overflow: 'hidden' }}>
+      <Box component="section" id="overview" pos="relative" className={classes.hero}>
         {/*
           The Scene wash is the icon's own light: a violet/indigo mesh with
           the Codex teal as the far stop, plus two glows in the same family.
-          Enough opacity to read on a white page without going garish on dark.
+          The glows sit behind the product, on the right, so the light on the
+          page comes from where the screenshots are.
         */}
         <Scene lazy>
           <Scene.Mesh
@@ -320,120 +354,141 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
             ]}
             opacity={0.22}
           />
-          <Scene.Glow color="violet" size={560} blur={140} opacity={0.4} top="5%" left="-10%" />
-          <Scene.Glow color="teal" size={460} blur={120} opacity={0.28} top="65%" left="85%" />
+          <Scene.Glow color="violet" size={560} blur={140} opacity={0.4} top="8%" left="58%" />
+          <Scene.Glow color="teal" size={460} blur={120} opacity={0.28} top="68%" left="88%" />
           <Scene.DotGrid color="gray" opacity={0.14} spacing={32} />
           <Scene.Noise opacity={0.022} />
         </Scene>
 
-        <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
-          <Stack align="center" gap="xl" py={80}>
-            <Badge
-              size="lg"
-              variant="filled"
-              color="lancetta"
-              style={{ boxShadow: '0 8px 22px -8px rgba(90, 60, 200, 0.5)' }}
-            >
-              {released ? `Free for macOS ${config.app.minMacOS}+` : 'In the workshop — v0.1'}
-            </Badge>
+        <Container size="lg" w="100%" pos="relative" style={{ zIndex: 1 }}>
+          <div className={classes.heroGrid}>
+            <div className={classes.heroCopy}>
+              {/* The product's name and category, before the claim: what it is. */}
+              <div className={classes.heroBrand}>
+                <Image src="/icon-512x512.png" alt="" w={40} h={40} className={classes.heroIcon} />
+                <Text component="span" fw={600} fz="md">
+                  Lancetta
+                </Text>
+                <Text component="span" fz="md" className={classes.heroTagline}>
+                  · Menu-bar quota monitor for coding agents
+                </Text>
+              </div>
 
-            <Image
-              src="/icon-512x512.png"
-              alt="Lancetta"
-              w={{ base: 120, sm: 160, md: 200 }}
-              h={{ base: 120, sm: 160, md: 200 }}
-              style={{
-                filter:
-                  'drop-shadow(0 18px 26px rgba(90, 60, 200, 0.35)) drop-shadow(0 6px 10px rgba(0, 0, 0, 0.2))',
-              }}
-            />
+              <Title className={classes.title}>
+                <span className={classes.titleLine}>Every agent&apos;s quota.</span>
+                <span className={classes.titleLine}>One glance.</span>
+                <span className={classes.titleLine}>
+                  <TextAnimate
+                    animate="in"
+                    by="character"
+                    inherit
+                    variant="gradient"
+                    component="span"
+                    segmentDelay={0.12}
+                    duration={1.5}
+                    animation="scale"
+                    animateProps={{ scaleAmount: 2 }}
+                    gradient={{ from: 'violet', to: 'teal' }}
+                  >
+                    Costs nothing.
+                  </TextAnimate>
+                </span>
+              </Title>
 
-            <Title maw="90vw" mx="auto" className={classes.title} ta="center">
-              Every agent&apos;s quota. One glance.{' '}
-              <TextAnimate
-                animate="in"
-                by="character"
-                inherit
-                variant="gradient"
-                component="span"
-                segmentDelay={0.12}
-                duration={1.5}
-                animation="scale"
-                animateProps={{ scaleAmount: 2 }}
-                gradient={{ from: 'violet', to: 'teal' }}
-              >
-                Costs nothing.
-              </TextAnimate>
-            </Title>
-
-            <Text c="dimmed" ta="center" size="xl" maw={660} mx="auto">
-              Lancetta is a native macOS menu-bar monitor for Codex and Claude Code. Both quota
-              windows, the plan each account is on, and how old every reading is — without spending
-              a single token to find out.
-            </Text>
-
-            <Group justify="center" mt="md">
-              {released ? (
-                <Button
-                  href="/download"
-                  component="a"
-                  leftSection={<IconGauge size={20} />}
-                  size="xl"
-                  radius="xl"
-                  px={40}
-                >
-                  Download for macOS
-                </Button>
-              ) : (
-                <Button
-                  href="/docs"
-                  component="a"
-                  leftSection={<IconBook2 size={20} />}
-                  size="xl"
-                  radius="xl"
-                  px={40}
-                >
-                  See what it does
-                </Button>
-              )}
-              <Button
-                href="/docs/roadmap"
-                component="a"
-                rightSection={<IconArrowRight size={18} />}
-                variant="subtle"
-                size="xl"
-              >
-                {released ? 'See the roadmap' : 'Follow the build'}
-              </Button>
-            </Group>
-
-            <Stack gap="sm" align="center" mt={8}>
-              <Text c="dimmed" ta="center" size="sm">
-                {/*
-                  One interpolated template literal rather than JSX text. In a
-                  text chunk spanning more than one source line, the space
-                  between an interpolation and a following HTML entity is
-                  dropped — both sibling sites shipped "v0.28.0· macOS 15+"
-                  that way for months. An explicit {' '} does not survive
-                  oxfmt, which removes it and rejoins the lines; a string is
-                  out of reach of both the formatter and the JSX rules.
-                */}
-                {released
-                  ? `Free · v${config.app.version} · macOS ${config.app.minMacOS}+ · Universal · Signed & notarized`
-                  : `Free · v${config.app.version} in progress · macOS ${config.app.minMacOS}+ · No account, no server, no telemetry`}
+              <Text c="dimmed" fz={{ base: 'lg', md: 'xl' }} lh={1.5} className={classes.lead}>
+                Both windows for both agents, when each one resets, and how old every reading is —
+                in your Mac&apos;s menu bar, without spending a token to find out.
               </Text>
-              {released && <ReleaseCadence cadence={cadence} />}
-            </Stack>
 
-            <Group justify="center" mt="sm">
-              <ShareButtons />
-            </Group>
-          </Stack>
+              <Group mt="xl" gap="sm">
+                {released ? (
+                  <Button
+                    href="/download"
+                    component="a"
+                    leftSection={<IconGauge size={20} />}
+                    size="lg"
+                    radius="xl"
+                    px={28}
+                  >
+                    Download for macOS
+                  </Button>
+                ) : (
+                  <Button
+                    href="/docs"
+                    component="a"
+                    leftSection={<IconBook2 size={20} />}
+                    size="lg"
+                    radius="xl"
+                    px={28}
+                  >
+                    See what it does
+                  </Button>
+                )}
+                <Button
+                  href="/docs/roadmap"
+                  component="a"
+                  rightSection={<IconArrowRight size={18} />}
+                  variant="subtle"
+                  size="lg"
+                >
+                  {released ? 'See the roadmap' : 'Follow the build'}
+                </Button>
+              </Group>
+
+              <Stack gap="sm" align="flex-start" mt="md">
+                <Text c="dimmed" size="sm">
+                  {/*
+                    One interpolated template literal rather than JSX text. In a
+                    text chunk spanning more than one source line, the space
+                    between an interpolation and a following HTML entity is
+                    dropped — both sibling sites shipped "v0.28.0· macOS 15+"
+                    that way for months. An explicit {' '} does not survive
+                    oxfmt, which removes it and rejoins the lines; a string is
+                    out of reach of both the formatter and the JSX rules.
+                  */}
+                  {released
+                    ? `Free · v${config.app.version} · macOS ${config.app.minMacOS}+ · Universal · Signed & notarized`
+                    : `Free · v${config.app.version} in progress · macOS ${config.app.minMacOS}+ · No account, no server, no telemetry`}
+                </Text>
+                {released && <ReleaseCadence cadence={cadence} />}
+              </Stack>
+            </div>
+
+            {/*
+              The product, photographed: the menu in front, because the menu
+              IS the app, and the window behind it, because there is one when
+              you want more. The island gets its own frame in the gallery
+              below; three objects here would be a collage, not a product.
+            */}
+            <div className={classes.cluster}>
+              <Image
+                src="/screenshot-window-overview.png"
+                alt="The Lancetta window behind the menu: the daily token chart for Codex, and both agents’ quota bars underneath"
+                className={classes.clusterWindow}
+              />
+              <Image
+                src="/screenshot-menu-dark.png"
+                alt="The Lancetta menu: Claude Code and Codex, each with a 5-hour and a 7-day quota window and the time it resets"
+                className={classes.clusterMenu}
+                fetchPriority="high"
+              />
+            </div>
+          </div>
+
+          <dl className={classes.glance}>
+            {glance.map((item) => (
+              <div key={item.label} className={classes.glanceItem}>
+                <dt className={classes.glanceLabel}>{item.label}</dt>
+                <dd className={classes.glanceBody}>{item.body}</dd>
+              </div>
+            ))}
+          </dl>
         </Container>
       </Box>
 
       {/* ─── Where you read it: pinned, and driven by the scroll ─── */}
       <ScrollGallery
+        id="where"
         shots={galleryShots}
         eyebrow="Where you read it"
         title="One reading. Three places."
@@ -446,25 +501,13 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       <SolutionSection />
 
       {/* ─── Features ─── */}
-      <Box py={80} className={classes.sectionBand}>
+      <Box id="features" py={80} className={classes.sectionBand}>
         <Container size="lg">
-          <Stack align="center" gap="md" mb={48}>
-            <Text
-              size="sm"
-              fw={700}
-              tt="uppercase"
-              style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
-            >
-              What is in it
-            </Text>
-            <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
-              An instrument, not a dashboard
-            </Title>
-            <Text c="dimmed" ta="center" size="lg" maw={620}>
-              It has one job: tell you where you stand, honestly, without being asked and without
-              costing anything to ask.
-            </Text>
-          </Stack>
+          <SectionHeading
+            eyebrow="What is in it"
+            title="An instrument, not a dashboard"
+            lead="It has one job: tell you where you stand, honestly, without being asked and without costing anything to ask."
+          />
 
           {/*
             Three across, not four: there are nine cards, and 9 in a 4-column
@@ -516,32 +559,27 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       {/* ─── Built for macOS ─── */}
       <BuiltForMacSection />
 
-      {/* ─── In action ─── */}
+      {/* ─── In detail: the reading, and its age ─── */}
       <Box py={96} style={{ backgroundColor: 'var(--lan-plate)' }}>
         <Container size="lg">
-          <Stack align="center" gap="md" mb={64}>
-            <Text
-              size="sm"
-              fw={700}
-              tt="uppercase"
-              style={{ letterSpacing: 3, color: 'var(--mantine-color-lancetta-4)' }}
-            >
-              In action
-            </Text>
-            <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900} c="white">
-              One click from the menu bar
-            </Title>
-            <Text c="gray.4" ta="center" size="lg" maw={620}>
-              Two agents, four windows, and the reset time for each. Nothing to open, nothing to
-              arrange, nothing to close again.
-            </Text>
-          </Stack>
+          {/*
+            The Limits pane rather than the menu a third time: it is the one
+            surface that puts "seen 1s ago" and "live" side by side, which is
+            what this band is about.
+          */}
+          <SectionHeading
+            tone="onDark"
+            eyebrow="In detail"
+            title="Live, or seen a moment ago"
+            lead="Two agents, four windows, the reset time for each — and beside every reading, when it was last true."
+            mb={64}
+          />
 
           <Grid gap={{ base: 40, md: 56 }} align="center">
             <Grid.Col span={{ base: 12, md: 7 }}>
               <ZoomableScreenshot
-                src="/screenshot-menu-dark.png"
-                alt="The Lancetta status menu with both agents, their quota bars and their reset times"
+                src="/screenshot-window-limits.png"
+                alt="The Limits pane of the Lancetta window: Claude Code seen a second ago and Codex live, each with its 5-hour and 7-day bar and the time it resets"
                 shadowOpacity={0.7}
               />
             </Grid.Col>
@@ -556,7 +594,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                 <Text c="gray.4" size="md" lh={1.65}>
                   Codex can be asked a question and will answer, so its numbers refresh on demand.
                   Claude Code cannot — its quota exists only in what it hands its own status line,
-                  so it arrives when a session renders one. The menu says which of the two you are
+                  so it arrives when a session renders one. The window says which of the two you are
                   looking at, and how long ago it was true.
                 </Text>
                 <Button
@@ -579,24 +617,12 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       </Box>
 
       {/* ─── Roadmap ─── */}
-      <Container size="lg" py={80}>
-        <Stack align="center" gap="md" mb={48}>
-          <Text
-            size="sm"
-            fw={700}
-            tt="uppercase"
-            style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
-          >
-            Where it is going
-          </Text>
-          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
-            Four versions, in order
-          </Title>
-          <Text c="dimmed" ta="center" size="lg" maw={620}>
-            Nothing here is a promise with a date on it. It is the order the work is being done in,
-            and what each step has to do before it counts as done.
-          </Text>
-        </Stack>
+      <Container id="roadmap" size="lg" py={80}>
+        <SectionHeading
+          eyebrow="Where it is going"
+          title="Four versions, in order"
+          lead="Nothing here is a promise with a date on it. It is the order the work is being done in, and what each step has to do before it counts as done."
+        />
 
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
           {roadmap.map((step) => (
@@ -675,29 +701,21 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
             <Text c="dimmed" size="sm">
               {`Free · macOS ${config.app.minMacOS} Sequoia or later`}
             </Text>
+            {/* Sharing belongs at the end of the pitch, not at the top of it. */}
+            <Group justify="center" mt="sm">
+              <ShareButtons />
+            </Group>
           </Stack>
         </Container>
       </Box>
 
       {/* ─── FAQ ─── */}
-      <Container size="lg">
-        <Stack align="center" gap="md" my={64}>
-          <Text
-            size="sm"
-            fw={700}
-            tt="uppercase"
-            style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
-          >
-            FAQ
-          </Text>
-          <Title order={2} ta="center">
-            Frequently Asked Questions
-          </Title>
-          <Box w="100%" maw={700} mt="md">
-            <FAQ />
-          </Box>
-        </Stack>
+      <Container id="faq" size="lg" py={64}>
+        <SectionHeading align="center" eyebrow="FAQ" title="Frequently asked questions" mb={24} />
+        <Box w="100%" maw={700} mx="auto">
+          <FAQ />
+        </Box>
       </Container>
-    </>
+    </div>
   );
 }

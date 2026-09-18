@@ -45,10 +45,13 @@ export function ScrollGallery({
   shots,
   eyebrow,
   title,
+  id,
 }: {
   shots: GalleryShot[];
   eyebrow: string;
   title: string;
+  /** The anchor the product bar links to. */
+  id?: string;
 }) {
   const reduced = useReducedMotion();
   const narrow = useMediaQuery('(max-width: 48em)');
@@ -131,7 +134,7 @@ export function ScrollGallery({
 
   if (!pinned) {
     return (
-      <Box component="section" py={64} aria-label={title}>
+      <Box component="section" id={id} py={64} aria-label={title}>
         <Container size="lg">
           {header}
           <Stack gap={56}>
@@ -155,7 +158,7 @@ export function ScrollGallery({
   }
 
   return (
-    <Box component="section" aria-label={title} pt={64}>
+    <Box component="section" id={id} aria-label={title} pt={64}>
       <Container size="lg">{header}</Container>
       <div
         ref={trackRef}

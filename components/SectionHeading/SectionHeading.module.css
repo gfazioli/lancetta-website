@@ -1,0 +1,24 @@
+/*
+ * Title left, lead right, the two bottom-aligned so the lead's last line sits
+ * level with the title's. On a narrow screen they stack in reading order.
+ */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  gap: rem(40px);
+  align-items: end;
+
+  @media (max-width: $mantine-breakpoint-md) {
+    grid-template-columns: 1fr;
+    gap: rem(16px);
+  }
+}
+
+.title {
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+
+.lead {
+  max-width: rem(460px);
+}
