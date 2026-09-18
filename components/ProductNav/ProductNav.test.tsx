@@ -1,4 +1,5 @@
 import { render, screen } from '@/test-utils';
+import config from '@/config';
 import { ProductNav, productSections } from './ProductNav';
 
 describe('ProductNav', () => {
@@ -17,8 +18,13 @@ describe('ProductNav', () => {
     expect(links[1]).not.toHaveAttribute('aria-current');
   });
 
-  it('carries the one action, which is the docs while nothing is released', () => {
+  it('carries the one action: the download once released, the docs before that', () => {
     render(<ProductNav />);
-    expect(screen.getByRole('link', { name: 'Read the docs' })).toHaveAttribute('href', '/docs');
+    // Keyed off the config rather than hardcoded, so the day `released` flips
+    // this test says what the bar says, instead of failing on a true page.
+    const [name, href] = config.app.released
+      ? ['Download', '/download']
+      : ['Read the docs', '/docs'];
+    expect(screen.getByRole('link', { name })).toHaveAttribute('href', href);
   });
 });
