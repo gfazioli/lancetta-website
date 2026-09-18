@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.3.1 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.3.1</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>A patch for the Claude card: it keeps its numbers when the account asks for a pause.</p>
+<h2>What changed</h2>
+<ul>
+<li><strong>The Claude card holds its last reading through a rate limit.</strong> 0.3.0 could show <em>Claude’s account answered HTTP 429</em> over a working account — the numbers thrown away, a retry on the next tick. Now the last good reading stays on the card, with its age shown once it is more than a minute and a half old, and Lancetta waits the time the account asked for before reading again (two minutes doubling to fifteen when it did not say).</li>
+<li><strong>The account is asked at most once a minute</strong>, whatever the refresh interval says. <strong>Refresh now</strong> still asks straight away.</li>
+<li><strong>Refresh now and Disconnect no longer wait on the keychain dialog.</strong> While macOS was asking whether Lancetta may read Claude Code’s sign-in, both stood still until the dialog was answered. And if you answer <em>Deny</em>, Lancetta does not ask again on its own: only Connect or Refresh now does.</li>
+<li>The sentences in the menu no longer light up under the pointer as if they were buttons, the window stops calling a held reading <em>live</em>, and the description of the refresh interval in Settings stopped saying Claude is read from a file.</li>
+</ul>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.3.1.dmg</code></li>
+<li>Open it and drag Lancetta into Applications</li>
+<li>Launch it normally — signed with an Apple Developer ID and notarized by Apple</li>
+</ol>
+<p>Already on 0.3.0? The updater offers this one.</p>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later, Apple silicon or Intel.</p>
+</body>
+</html>
