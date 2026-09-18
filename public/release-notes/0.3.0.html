@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.3.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.3.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Claude’s quota from your account, with one click instead of a script — and two smaller things that came along.</p>
+<h2>What changed</h2>
+<ul>
+<li><strong>Claude Code, connected with one click.</strong> Lancetta now asks your Claude account how much is left, with the sign-in Claude Code already keeps on your Mac — the same question Claude Code’s own <code class="notranslate">/usage</code> asks, with no model in the loop, so nothing is billed. Choose <strong>Connect Claude Code’</strong> in the menu, or under Settings — Agents — Claude; macOS asks once whether to allow it. From then on Claude refreshes on demand the way Codex does, and the card shows your plan. The sign-in is only read, never renewed: if it has expired, the card says so, and Claude Code renews it the next time you use it. The status-line route from 0.2 still works for anyone who would rather not hand the app a keychain item — nothing asks for it any more.</li>
+<li><strong>What’s New, under Help.</strong> Each release’s own notes, inside the app.</li>
+<li><strong>The icon on macOS 26 and later.</strong> The Dock was drawing a white frame around it: those versions put any icon in the old format on a plate of their own. The app now ships the format they expect. Nothing changes on macOS 15.</li>
+</ul>
+<p>One sentence in About changes with the first item: one request now leaves your Mac, to Anthropic, carrying Claude Code’s own sign-in — and Disconnect stops it. <a href="https://lancetta.app/docs/privacy" rel="nofollow">The privacy page</a> says the same.</p>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.3.0.dmg</code></li>
+<li>Open it and drag Lancetta into Applications</li>
+<li>Launch it normally — signed with an Apple Developer ID and notarized by Apple</li>
+</ol>
+<p>Already on 0.2.x? The updater offers this one.</p>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later, Apple silicon or Intel.</p>
+</body>
+</html>

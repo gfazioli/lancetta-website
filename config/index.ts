@@ -97,7 +97,7 @@ export default {
     // `released` gates the Download tab, the hero button and the JSON-LD download
     // claim. It went true with the first release, v0.2.0 on 2026-09-18 — v0.2 and
     // not v0.1 because the memory half planned for later landed in the same build.
-    version: '0.2.2',
+    version: '0.3.0',
     released: true,
     releaseDate: '2026-09-18',
     minMacOS: '15.0',
