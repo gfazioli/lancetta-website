@@ -137,14 +137,13 @@ plan names and percentages are illustration. Prose quotes the table above.
 **sampled from the app icon, not picked**, and the brand accent is deliberately
 the icon's *third* bar.
 
-**The masters are `logo.png` and `logo-flat.png` in the Brand folder of the
-user's Drive** (`…/GoogleDrive-…/Il mio Drive/Brand/Lancetta/`, 2026-09-18),
-not the app repo's `Brand/` — that one still held the previous artwork when
-this site switched (user, 2026-09-18: *"il logo che ti avevo dato è
-sbagliato"*), so the window screenshots carry the old icon in their sidebar
-until the app catches up and they are re-shot. Every `public/icon-*.png`,
-`android-chrome-*` and `apple-touch-icon.png` is a `sips` resize of `logo.png`;
-the favicons are resizes of `logo-flat.png`.
+**The masters came from the Brand folder of the user's Drive**
+(`…/Il mio Drive/Brand/Lancetta/logo.png` and `logo-flat.png`, 2026-09-18;
+user: *"il logo che ti avevo dato è sbagliato"*) and now live in
+`../Lancetta/Brand/`, where `../Lancetta/scripts/icons.sh` generates every icon
+in `public/` from them (the favicon section below has the details). The window
+screenshots still carry the previous icon in their sidebar until they are
+re-shot.
 
 Read the icon top-down. The first probe read the bitmap bottom-up and had
 every bar upside down, which is why `theme.ts` names where on the icon each
