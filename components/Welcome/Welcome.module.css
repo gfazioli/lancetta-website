@@ -59,7 +59,7 @@
 }
 
 .heroIcon {
-  filter: drop-shadow(0 6px 12px rgb(90 60 200 / 35%));
+  filter: drop-shadow(0 6px 12px color-mix(in srgb, var(--lan-azure) 40%, transparent));
 }
 
 .heroTagline {
@@ -277,8 +277,8 @@
   background: radial-gradient(
     100% 70% at 50% -10%,
     light-dark(
-      color-mix(in srgb, var(--mantine-color-lancetta-3) 28%, transparent),
-      color-mix(in srgb, var(--mantine-color-lancetta-9) 30%, transparent)
+      color-mix(in srgb, var(--lan-azure) 16%, transparent),
+      color-mix(in srgb, var(--lan-plate-wash) 42%, transparent)
     ),
     transparent 62%
   );
@@ -304,7 +304,7 @@
     135deg,
     var(--mantine-color-lancetta-7) 0%,
     var(--mantine-color-lancetta-5) 55%,
-    var(--mantine-color-teal-5) 100%
+    var(--lan-cyan) 100%
   );
   transform: rotate(8deg);
   transform-origin: center;
@@ -318,14 +318,14 @@
     transform: rotate(8deg) scale(1);
     box-shadow:
       0 4px 14px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 60%, transparent),
-      0 0 0 0 color-mix(in srgb, var(--mantine-color-teal-5) 55%, transparent);
+      0 0 0 0 color-mix(in srgb, var(--lan-cyan) 55%, transparent);
   }
 
   50% {
     transform: rotate(8deg) scale(1.09);
     box-shadow:
       0 7px 20px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 78%, transparent),
-      0 0 0 7px color-mix(in srgb, var(--mantine-color-teal-5) 0%, transparent);
+      0 0 0 7px color-mix(in srgb, var(--lan-cyan) 0%, transparent);
   }
 }
 
@@ -377,7 +377,31 @@
  * above it carry dark macOS chrome, and the StarField needs a dark ground to
  * exist at all. Its copy is forced light for the same reason.
  */
-.ctaBand {
+/*
+ * The plate, at band size: azure along the top, the navy core, violet at the
+ * far corner — the icon's own gradient — under a 2px neon rim that runs cyan
+ * to magenta the way the icon's does. Two bands sit on it, the in-detail one
+ * and the closing CTA (which adds its stars), and both force their copy
+ * light, because the plate is dark in both schemes.
+ */
+.plateBand {
+  position: relative;
   overflow: hidden;
-  background: linear-gradient(200deg, #17122b -20%, var(--lan-plate) 55%, #0d1a2e 120%);
+  background: linear-gradient(
+    165deg,
+    var(--lan-plate-wash) -30%,
+    var(--lan-plate) 42%,
+    var(--lan-plate-edge) 110%
+  );
+}
+
+.plateBand::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: rem(2px);
+  background: linear-gradient(90deg, var(--lan-cyan), var(--lan-violet) 55%, var(--lan-magenta));
+  opacity: 0.9;
 }

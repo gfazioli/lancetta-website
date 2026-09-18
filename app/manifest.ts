@@ -14,8 +14,8 @@ export default function manifest(): MetadataRoute.Manifest {
     description: config.metadata.description,
     start_url: '/',
     display: 'standalone',
-    theme_color: '#7a5bea',
-    background_color: '#0a1524',
+    theme_color: '#824bfc',
+    background_color: '#070e24',
     // `any` only: the android-chrome icons have no maskable safe-zone
     // padding, so declaring them `maskable` would crop the corners on
     // shaped Android launchers. A dedicated padded asset can add maskable

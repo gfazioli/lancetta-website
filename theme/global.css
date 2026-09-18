@@ -1,5 +1,5 @@
 * {
-  --marquee-fade-edge-color: var(--mantine-color-gray-1);
+  --marquee-fade-edge-color: var(--lan-body);
 
   /*
    * ── Lancetta design tokens ──
@@ -13,8 +13,8 @@
    * (`CodexSource.tintHex`, `ClaudeSource.tintHex`), so a teal number on this
    * page is the same teal as the teal number in the screenshot beside it.
    * The app's values read 2.3:1 and 2.7:1 on white, which is unreadable as
-   * text, so light mode gets a darkened cut at the same hue (4.5:1) and dark
-   * mode gets the app's value unchanged.
+   * text, so light mode gets a darkened cut at the same hue (4.2:1 on the
+   * light body) and dark mode gets the app's value unchanged.
    *
    * `--lan-alarm` is a bucket that REFUSED, `--lan-stale` a reading that has
    * gone past its own cadence. Both are states the app draws, not decoration.
@@ -25,12 +25,31 @@
   --lan-alarm: var(--mantine-color-red-7);
   --lan-stale: var(--mantine-color-gray-6);
 
-  /* The plate the icon sits on — the one band colour that is not a Mantine token. */
-  --lan-plate: #0a1524;
-  --lan-plate-wash: #1b3e70;
+  /*
+   * ── The icon's own light ──
+   *
+   * Sampled off the 1254px master (see theme.ts for the probe and the map).
+   * The plate is azure along its top edge, near-black navy behind the bars and
+   * deep violet at the bottom-right; the rim runs cyan at the top-left through
+   * violet to magenta at the bottom-right. Every band and glow on the site is
+   * built from these six, so the page is lit the way the icon is.
+   */
+  --lan-plate: #070e24;
+  --lan-plate-wash: #0546bf;
+  --lan-plate-edge: #1c0f50;
+  --lan-azure: #0d7dfa;
+  --lan-cyan: #13d1fb;
+  --lan-violet: #672afa;
+  --lan-magenta: #b117c5;
+
+  /*
+   * The page itself. Light is an off-white with a breath of the plate's blue
+   * in it rather than a neutral grey; dark is the plate's navy, which is what
+   * the `dark` ladder in theme.ts is cut on, so cards and borders follow.
+   */
+  --lan-body: #f4f6fc;
 
   @mixin dark {
-    --marquee-fade-edge-color: var(--mantine-color-dark-9);
     --mantine-color-body: var(--mantine-color-dark-9);
 
     --lan-accent: var(--mantine-color-lancetta-4);
@@ -38,15 +57,12 @@
     --lan-claude: #e8833a;
     --lan-alarm: var(--mantine-color-red-4);
     --lan-stale: var(--mantine-color-gray-5);
+    --lan-body: var(--mantine-color-dark-9);
   }
 }
 
 body {
-  background-color: var(--mantine-color-gray-1);
-
-  @mixin dark {
-    background-color: var(--mantine-color-dark-9);
-  }
+  background-color: var(--lan-body);
 }
 
 .mantine-Button-root {
@@ -60,7 +76,7 @@ body {
 
 /*
  * Raise Nextra's desktop-nav cutoff from 768px (md) to 1200px (lg).
- * Between 768 and 1200 the 5 top-level nav items + search + controls
+ * Between 768 and 1200 the 6 top-level nav items + search + controls
  * don't fit, so we force the hamburger menu to appear earlier.
  */
 @media (max-width: 1199.98px) {

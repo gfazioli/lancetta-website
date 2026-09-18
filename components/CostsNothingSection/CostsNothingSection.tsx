@@ -30,9 +30,10 @@ const rows = [
 export function CostsNothingSection() {
   return (
     <Box id="costs-nothing" pos="relative" py={88} className={classes.band}>
+      {/* The rim's two ends: cyan from the top-left, magenta from the bottom-right. */}
       <Scene lazy>
-        <Scene.Glow color="violet" size={520} blur={160} opacity={0.22} top="20%" left="12%" />
-        <Scene.Glow color="teal" size={420} blur={140} opacity={0.16} top="70%" left="82%" />
+        <Scene.Glow color="#13D1FB" size={520} blur={160} opacity={0.18} top="20%" left="12%" />
+        <Scene.Glow color="#B117C5" size={420} blur={140} opacity={0.16} top="70%" left="82%" />
         <Scene.Noise opacity={0.02} />
       </Scene>
 

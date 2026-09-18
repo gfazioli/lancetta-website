@@ -106,7 +106,7 @@ If `yarn <cmd>` answers `command not found: next` / `oxfmt`, the Yarn PATH shim 
 
 ### Brand
 
-The palette is the app icon's, **sampled rather than picked** — the three bars were measured off the 1254px master (a common baseline at y=907; widths 213 / 229 / 216) and `public/brand-mark.svg` redraws them from those numbers.
+The palette is the app icon's, **sampled rather than picked** — the bars, the plate and its neon rim were read off the 1254px master with a CoreGraphics probe, and `theme.ts` carries the map. The plate's azure, navy and violet and the rim's cyan and magenta are the page-level tokens in `theme/global.css`; every band and glow on the site is built from them, and the dark scheme's greys are cut on the plate's navy rather than on a neutral.
 
 The brand accent is deliberately the icon's **third** bar. The other two hues already mean *which agent* inside the app — teal is Codex, orange is Claude Code — so the site keeps those semantic and takes its accent from the one the app spends on no agent. An accent borrowed from an agent hue would disagree with every screenshot on the page.
 
