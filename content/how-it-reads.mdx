@@ -20,17 +20,19 @@ Measured on 2026-09-17: twelve account reads on one connection, and the lifetime
 
 The positive control is the half that makes that zero mean something: the same counter moved by **+29,188,602** across a day of ordinary use. A counter that cannot move looks exactly like a counter that did not.
 
-Claude Code's route is free by construction, which is stronger than measured — Lancetta makes no request at all.
+Claude Code's route is the same shape: an account read, made with the sign-in Claude Code keeps on your Mac. It is the request Claude Code's own `/usage` makes, and no model is in the loop.
 
 **What is not allowed in, and would look perfectly reasonable:** asking an agent. A prompt along the lines of *"how much quota is left?"* is a model turn and costs tokens on every poll. It is the easiest route to build and the one Lancetta will never take.
 
-## 2. Codex can be asked. Claude can only be waited for.
+## 2. Both can be asked — and Claude Code itself still cannot
 
-They are not symmetrical, and the app says so rather than pretending otherwise.
+They look symmetrical from the menu now, and the reason they can is worth knowing.
 
-**Codex** answers an account question directly. So it refreshes on the interval you set and again on **Refresh now**, and the reading is as current as the last poll.
+**Codex** answers an account question directly, over its own local interface. So it refreshes on the interval you set and again on **Refresh now**, and the reading is as current as the last poll.
 
-**Claude Code** has no equivalent. There is no usage subcommand, its hooks carry no rate-limit block, and its metrics export carries no quota figure. The numbers exist in exactly one place: the payload it hands to your status-line command. That means the reading arrives when a session renders one — so **Refresh now** cannot make it newer, and Lancetta's Claude card shows its age instead of a refresh button that would do nothing.
+**Claude Code** has no equivalent question of its own: no usage subcommand, no rate-limit block in its hooks, no quota figure in its metrics export. But its *account* does. The numbers Claude Code shows under `/usage` come from one account read, and Lancetta makes the same one, with the sign-in Claude Code keeps on your Mac. So Claude refreshes on the same interval and on **Refresh now** — once you have connected it, which is one click and one macOS dialog. [Getting Started](/docs/getting-started#claude-code) says exactly what that click does and does not do.
+
+Until then, or if you would rather not hand the app a keychain item, the older route still works: a line in your status-line script writes the numbers to a file, and Lancetta reads the file. That reading is only as fresh as your last rendered session, and the card says so instead of pretending to be live.
 
 ## The history, and why the chart is Codex's alone
 

@@ -9,9 +9,9 @@ Lancetta has no account, no server and no telemetry. **Nothing you do in it leav
 ## What it reads
 
 - **Codex** — an account read, on your machine, over the agent's own local interface. It returns your rate-limit percentages, reset times and plan, and — separately, when the window is open — your token totals per day. It does not return, and Lancetta does not read, the contents of any session.
-- **Claude Code** — one file on your disk, written by your own status-line command, holding the rate-limit block and the time it was observed. Lancetta does not read your transcripts, your prompts or your projects.
+- **Claude Code** — once you connect it, the sign-in Claude Code keeps in your keychain, read and never renewed (the refresh token beside it is never read at all), and with it one account read: your rate-limit percentages and reset times. Or, if you set that up instead, one file on your disk written by your own status-line command. Lancetta does not read your transcripts, your prompts or your projects.
 - **Your plan** — read from the account metadata the agent already keeps locally.
-- **The process table** — the same list `ps` gives you, to find the background trees the agents have left running. It reads their command lines, which is where the working directory each one was started for lives. That directory is shown to you in the window; it is never sent anywhere, because nothing is ever sent anywhere.
+- **The process table** — the same list `ps` gives you, to find the background trees the agents have left running. It reads their command lines, which is where the working directory each one was started for lives. That directory is shown to you in the window; it is never sent anywhere.
 
 ## What it does
 
@@ -29,7 +29,7 @@ Your own preferences — the refresh interval, the colours and order you gave th
 
 There is no analytics call and no crash reporter. Lancetta has never had either and will not get one.
 
-**The one outbound request the app can make is the update check**, and it fetches a signed release feed — nothing else, and nothing about you. Both automatic forms of it are **off until you turn them on** in [Settings → Updates](/docs/settings#updates): a silent check when the app starts, and the update framework's own schedule. **Check for Updates Now…** makes the same request when you ask for it.
+Two requests, and both are named here. **The Claude account read**, once you connect it: the same request Claude Code's own `/usage` makes, to Anthropic, carrying the sign-in Claude Code keeps — and nothing else. It stops the moment you disconnect. **The update check**, which fetches a signed release feed — nothing else, and nothing about you. Both automatic forms of it are **off until you turn them on** in [Settings → Updates](/docs/settings#updates): a silent check when the app starts, and the update framework's own schedule. **Check for Updates Now…** makes the same request when you ask for it.
 
 That is the whole list. There is no account, no server, and nothing that reports what you did.
 

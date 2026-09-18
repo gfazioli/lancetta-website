@@ -32,7 +32,7 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
     value: 'tokens',
     question: 'Does Lancetta spend tokens to read my quota?',
     answer:
-      'No, and that is the constraint the whole app is built around. Codex answers an account question directly — measured over twelve reads, the lifetime token counter did not move by one. Claude Code’s numbers arrive in a payload it already produces for its own status line, so there is no request to bill. Asking a model how much quota is left would cost tokens on every poll, and it is the one route Lancetta will never take.',
+      'No, and that is the constraint the whole app is built around. Codex answers an account question directly — measured over twelve reads, the lifetime token counter did not move by one. Claude’s numbers come from one account read, made with the sign-in Claude Code keeps on your Mac — the same request Claude Code’s own /usage makes, with no model in the loop. Asking a model how much quota is left would cost tokens on every poll, and it is the one route Lancetta will never take.',
   },
   {
     value: 'agents',
@@ -42,9 +42,9 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
   },
   {
     value: 'refresh',
-    question: 'Why can I refresh Codex on demand but not Claude?',
+    question: 'Can I refresh Claude on demand, like Codex?',
     answer:
-      'Because they are not symmetrical. Codex can be asked a question and will answer. Claude Code has no equivalent — its quota numbers exist only in what it hands its own status line, so they arrive when a session renders one. Lancetta says which of the two you are looking at rather than pretending they behave the same.',
+      'Yes, once it is connected: one click in the menu, and macOS asks once whether Lancetta may read the sign-in Claude Code keeps. From then on Claude answers an account read the way Codex does, on the same interval and on Refresh now. Through the status-line file instead, the numbers arrive when a session renders one, and the card shows how old they are rather than pretending to be live.',
   },
   {
     value: 'stale',

@@ -307,7 +307,7 @@ const roadmap = [
   {
     version: 'v0.4',
     title: 'Everyone else’s Mac',
-    body: 'The discovery UI, the Sources pane, and a consenting status-line wiring step with an undo. The version where it stops assuming one machine — the signing and the feed it needed arrived early, in v0.2.',
+    body: 'The discovery UI and the Sources pane. The version where it stops assuming one machine — the signing and the feed it needed arrived early, in v0.2, and the Claude step became one click and a macOS dialog rather than a script.',
     state: 'planned',
   },
   {
@@ -594,10 +594,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                   The reading, and how old it is
                 </Title>
                 <Text c="gray.4" size="md" lh={1.65}>
-                  Codex can be asked a question and will answer, so its numbers refresh on demand.
-                  Claude Code cannot — its quota exists only in what it hands its own status line,
-                  so it arrives when a session renders one. The window says which of the two you are
-                  looking at, and how long ago it was true.
+                  Both agents answer an account read — Codex over its own local interface, Claude with the sign-in Claude Code keeps on your Mac — so both refresh on demand once connected. Every reading carries the time it was taken, and the window says how long ago that was.
                 </Text>
                 <Button
                   component={Link}
