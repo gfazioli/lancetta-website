@@ -43,7 +43,7 @@ The percentage beside the total compares those days with **the same length of ti
 One card per agent, and this is where the asymmetry between the two is on screen rather than in a footnote:
 
 - **Codex** is marked **live** — it can be asked, so the reading is as current as the last poll.
-- **Claude Code** is marked **seen *n* ago** — it cannot be asked, so the card shows its age instead of pretending to a freshness it does not have.
+- **Claude** is marked **seen *n* ago** whenever its reading is not fresh: through the status-line file always, because that reading cannot be asked for; through the account only while the account is asking for a pause and the card is holding the last reading it got. Either way the card shows the age instead of pretending to a freshness it does not have.
 
 Under that, both windows: the percentage, the bar, and when it rolls over. A window with no reading shows `—`, never `0%`. See [How it reads each agent](/docs/how-it-reads).
 
