@@ -600,7 +600,10 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                   The reading, and how old it is
                 </Title>
                 <Text c="gray.4" size="md" lh={1.65}>
-                  Both agents answer an account read — Codex over its own local interface, Claude with the sign-in Claude Code keeps on your Mac — so both refresh on demand once connected. Every reading carries the time it was taken, and the window says how long ago that was.
+                  Both agents answer an account read — Codex over its own local interface, Claude
+                  with the sign-in Claude Code keeps on your Mac — so both refresh on demand once
+                  connected. Every reading carries the time it was taken, and the window says how
+                  long ago that was.
                 </Text>
                 <Button
                   component={Link}
