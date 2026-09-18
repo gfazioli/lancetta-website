@@ -14,7 +14,8 @@ import { Badge, Box, Container, Group, Stack, Text, Title } from '@mantine/core'
 
 /*
  * Only things v0.1 actually is. `Notifications` was here and had to go: it is
- * v0.4, and a pill is a claim exactly as much as a sentence is.
+ * still ahead ("It speaks first"), and a pill is a claim exactly as much as
+ * a sentence is.
  */
 const techPills = [
   { label: 'SwiftUI', icon: IconCode },

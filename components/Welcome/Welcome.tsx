@@ -285,7 +285,7 @@ const features: Feature[] = [
     description:
       'Two moments worth interrupting for: a window about to refuse you, and a window about to reset with most of it unspent. Lancetta will speak first for both.',
     color: 'pink',
-    href: '/docs/roadmap#v030',
+    href: '/docs/roadmap#it-speaks-first',
     badge: 'Next',
   },
 ];
@@ -305,19 +305,19 @@ const roadmap = [
     state: 'shipped',
   },
   {
-    version: 'v0.4',
+    version: 'Next',
     title: 'It speaks first',
     body: 'A window that refused, a threshold crossed, a source gone quiet — and quota about to evaporate unused.',
     state: 'planned',
   },
   {
-    version: 'v0.5',
+    version: 'Then',
     title: 'Everyone else’s Mac',
     body: 'The discovery UI and the Sources pane. The version where it stops assuming one machine — the signing and the feed it needed arrived early, in v0.2, and the Claude step became one click and a macOS dialog rather than a script.',
     state: 'planned',
   },
   {
-    version: 'v0.6',
+    version: 'Later',
     title: 'Reset credits',
     body: 'Redeeming a Codex reset credit from the menu, with every safety rule an irreversible action needs.',
     state: 'planned',
@@ -625,8 +625,8 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       <Container id="roadmap" size="lg" py={80}>
         <SectionHeading
           eyebrow="Where it is going"
-          title="Four versions, in order"
-          lead="Nothing here is a promise with a date on it. It is the order the work is being done in, and what each step has to do before it counts as done."
+          title="What comes next"
+          lead="No dates, and no version numbers on work that has not started — the order changes as the work teaches you things. What each step has to prove before it counts as finished is the part worth publishing."
         />
 
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
