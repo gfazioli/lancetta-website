@@ -20,7 +20,7 @@
   ·
   <a href="https://lancetta.app/docs">Documentation</a>
   ·
-  <a href="https://lancetta.app/docs/roadmap">Roadmap</a>
+  <a href="https://lancetta.app/docs/roadmap">What's next</a>
 </p>
 
 <p align="center">

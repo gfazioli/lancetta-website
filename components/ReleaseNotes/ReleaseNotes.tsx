@@ -40,8 +40,8 @@ export function NoReleasesYet() {
       ) : (
         <Text size="sm">
           Lancetta v{config.app.version} is still being built. The{' '}
-          <Anchor href="/docs/roadmap">roadmap</Anchor> says what is in it, and the first release
-          will appear here, fetched from GitHub, the day it ships.
+          <Anchor href="/docs/roadmap">What’s next</Anchor> page says what is in it, and the first
+          release will appear here, fetched from GitHub, the day it ships.
         </Text>
       )}
     </Alert>

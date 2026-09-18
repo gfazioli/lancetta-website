@@ -47,7 +47,7 @@ export default {
   settings: nav(IconSettings, 'Settings'),
   privacy: nav(IconLock, 'Privacy'),
   '---resources': { type: 'separator', title: 'Resources' },
-  roadmap: nav(IconMap2, 'Roadmap', 'grape'),
+  roadmap: nav(IconMap2, 'What’s next', 'grape'),
   faq: nav(IconHelpCircle, 'FAQ', 'lancetta'),
   'release-notes': '',
 };

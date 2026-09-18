@@ -17,7 +17,7 @@ export const productSections = [
   { id: 'where', label: 'Where you read it' },
   { id: 'features', label: 'Features' },
   { id: 'costs-nothing', label: 'Costs nothing' },
-  { id: 'roadmap', label: 'Roadmap' },
+  { id: 'roadmap', label: 'What’s next' },
   { id: 'faq', label: 'FAQ' },
 ] as const;
 
