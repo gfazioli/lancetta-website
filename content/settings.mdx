@@ -12,7 +12,7 @@ description: "Lancetta's Settings: the refresh interval, counting down what is l
 
 **Refresh every** — 15 seconds to 5 minutes, 45 by default. This is a **CPU budget, not a quota one**, and the difference is the whole point: reading a quota spends no tokens, so there is no cost pressure to poll slowly. What there is, is a process to spawn. See [How it reads each agent](/docs/how-it-reads).
 
-It has no effect on Claude Code either way, whose reading arrives when a session renders its status line.
+It applies to Claude too once it is connected. Through the status-line file instead, the Claude reading arrives when a session renders one, whatever the interval.
 
 **Count down what is left** — off, the number is what has been *used* and rises from 0. On, a fresh window reads 100% and falls as tokens go, which is how Codex's own status line puts it.
 
@@ -47,6 +47,7 @@ A row opens on a click anywhere, and drags from anywhere. The grip on the left s
 - **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width.
 - **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
 - **How it is wired** — which route that agent's numbers arrive by, so a card that is not updating tells you where to look.
+- **Account** (Claude only) — **Connect** reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left; macOS asks once whether to allow it. **Disconnect** stops it. What that click does and does not do is spelled out in [Getting Started](/docs/getting-started#claude-code).
 
 Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
 
