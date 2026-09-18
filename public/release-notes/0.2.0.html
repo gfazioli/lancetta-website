@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.2.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.2.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>The first release. Lancetta is a menu-bar monitor for the coding agents you already run — it shows what is left of your Codex and Claude quota without spending a single token to find out.</p>
+<h2>What it does</h2>
+<ul>
+<li><strong>Both agents, side by side.</strong> Codex's 5-hour and weekly windows read straight from the CLI; Claude's come from the status-line payload it already writes. Neither route asks a model anything: a quota read that costs tokens is the one thing this app will never do.</li>
+<li><strong>A meter that does not lie.</strong> An unknown is never drawn as <code class="notranslate">0%</code>, and a reading that has gone stale says how old it is instead of pretending to be current — the defect this whole project started from.</li>
+<li><strong>The island under the notch.</strong> Hover the notch for the same numbers, in a shape that grows out of it rather than floating near it. On a Mac without a notch, nothing appears.</li>
+<li><strong>A window with the history.</strong> Overview, Usage, Limits and Processes — including a daily token chart with both agents on it, drawn from Codex's own buckets and from Claude's local transcripts. Neither costs a request.</li>
+<li><strong>Reclaim orphaned processes.</strong> Agent trees outlive their sessions. Lancetta counts them, adds up what they hold, and lists exactly what it will stop <em>before</em> stopping it.</li>
+<li><strong>Yours to arrange.</strong> A colour and the vendor's own mark per agent, the order they appear in, which windows to watch, and a switch that counts down what is left instead of up what is used.</li>
+<li><strong>A good citizen of the menu bar.</strong> Open at login, an optional Dock icon, and updates it checks for itself from here on.</li>
+</ul>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.2.0.dmg</code></li>
+<li>Open it and drag Lancetta into Applications</li>
+<li>Launch it normally — it is signed with an Apple Developer ID and notarized by Apple, so there is no Gatekeeper detour</li>
+</ol>
+<p>It lives in the menu bar and, at rest, puts nothing in the Dock.</p>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later. Apple silicon or Intel is irrelevant to it; what matters is having Codex or Claude Code installed — and if you have neither, it says so in a sentence that tells you what would change that, rather than showing an error.</p>
+<h2>Why v0.2 and not v0.1</h2>
+<p>The roadmap's v0.1 was the quota. The memory half — the process reaper — was planned for later and arrived in the same build, along with the window and the token chart. The version number follows what shipped.</p>
+</body>
+</html>
