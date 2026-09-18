@@ -34,6 +34,25 @@ They look symmetrical from the menu now, and the reason they can is worth knowin
 
 Until then, or if you would rather not hand the app a keychain item, the older route still works: a line in your status-line script writes the numbers to a file, and Lancetta reads the file. That reading is only as fresh as your last rendered session, and the card says so instead of pretending to be live.
 
+## The other route
+
+Before 0.3 the only way in was a file: Claude Code hands its status-line command a payload that carries the same two windows, and one line in that script writes them where Lancetta can read them. It still works, and it is the route for anyone who would rather not hand the app a keychain item.
+
+```sh
+# in your status-line script, immediately after you read stdin:
+mkdir -p ~/.cache/claude-statusline
+printf '%s' "$input" | /usr/bin/jq -c \
+  '{rate_limits, observed_at: (now | todate)}' \
+  > ~/.cache/claude-statusline/claude-limits.json
+```
+
+Two things about it, because Lancetta shows both rather than hiding them:
+
+- **The card is only as fresh as your last rendered session.** If nothing has rendered a status line for two hours, the reading is two hours old, and the menu says so.
+- **The file is a shared slot.** Every Claude Code session that renders writes it, so two sessions can disagree. Lancetta prefers a complete older reading over a fresher partial one.
+
+With the account connected, the file is not read at all.
+
 ## The history, and why the chart is Codex's alone
 
 Alongside the rate limits, Codex keeps **the whole token history** and gives it away on the same free route: a lifetime total, the best single day, the streaks, and one bucket per day that was used. Measured on 2026-09-17: 46 buckets across a 163-day span, and the buckets **sum to the lifetime total exactly** — so it is the complete series rather than a window onto it.
