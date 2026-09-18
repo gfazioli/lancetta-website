@@ -1,0 +1,61 @@
+---
+title: Troubleshooting
+description: Every code Lancetta can show when an agent cannot be read, what it likely means, and what to do.
+---
+
+# Troubleshooting
+
+When Lancetta cannot read an agent, the card says so in one sentence. A situation that
+is not a fault, such as Codex not being installed or Claude Code not signed in, is
+described calmly with what would change it. A fault is drawn red, and **Why, and what to
+do…** opens a window that names the code, the likely cause and the fix beside the raw
+evidence, with **Copy report** for a bug.
+
+Every code is below. The table is generated from the app's own list, so it cannot drift
+from what the window says.
+
+{/* catalogue:start */}
+
+| Code | What went wrong | Likely cause | What to do |
+|---|---|---|---|
+| CODEX-1 | Codex isn't installed on this Mac | Lancetta looks for the codex command in the usual places and asks your shell for it, and found nothing. | Install the Codex CLI (npm install -g @openai/codex, or Homebrew), open a new terminal so your shell knows it, then choose Refresh now. Settings > Agents > Codex shows the path Lancetta found. |
+| CODEX-2 | The codex command could not be started | The codex command was found but macOS refused to run it, or it exited before answering: a broken install, a file that is not executable, or a Codex that needs a first run. | Run codex --version in a terminal. If that fails, reinstall Codex; if it works, compare the path which codex prints with the one Settings > Agents > Codex shows, and remove the stale copy. |
+| CODEX-3 | Codex did not answer in time | codex app-server started but no reply arrived within the timeout. Usually a slow or offline network on Codex's side, or a Codex that is waiting for something on its own first run. | Choose Refresh now. If it keeps happening, run codex app-server in a terminal once and see what it prints, and check the network. |
+| CODEX-4 | This Codex CLI speaks an older protocol | Lancetta asked in the shape the current Codex CLI understands and this one refused the request or does not know the method. Codex CLI 0.153 or later speaks the shape Lancetta uses; Lancetta retries older versions without parameters, so this usually means an even older Codex. | Update the Codex CLI (npm update -g @openai/codex, or brew upgrade), then choose Refresh now. Copy the report if it persists on a current Codex. |
+| CODEX-5 | Codex answered with an error | codex app-server answered the request with an error of its own. The detail below is that error, verbatim. | Read the detail: a sign-in error means running codex once and logging in; anything else, copy the report and open an issue with it. |
+| CODEX-6 | Codex answered in a shape Lancetta doesn't know | The reply arrived but the fields Lancetta reads were not there. A Codex newer or older than the one Lancetta was written against, or a reply that was not the rate-limits reading at all. | Update Lancetta and the Codex CLI to their current versions, then Refresh now. If it persists, copy the report and open an issue. |
+| CLAUDE-1 | Claude isn't connected yet | The Claude card reads the account only once you connect it: Lancetta never touches Claude Code's sign-in until asked. | Choose Connect Claude Code... in the menu. macOS asks once whether Lancetta may read the sign-in; answer Always Allow. |
+| CLAUDE-2 | Waiting for Claude's account | The first read is in flight, or the last one is inside the one-minute floor and nothing is held yet. | Nothing: the next read fills the card. Refresh now steps over the floor. |
+| CLAUDE-3 | Claude Code isn't signed in on this Mac | There is no Claude Code sign-in in the keychain: Claude Code has never logged in on this Mac, or it logged out. | Run claude once in a terminal and log in, then choose Refresh now. |
+| CLAUDE-4 | macOS didn't let Lancetta read Claude Code's sign-in | The sign-in exists and macOS did not hand it over: the keychain dialog was dismissed, or Lancetta was denied. | Choose Connect Claude Code... to be asked again, and answer Always Allow. If the dialog never appears, quit Lancetta and open it again. |
+| CLAUDE-5 | Claude Code's sign-in isn't in the shape Lancetta knows | The keychain item is there but it is not the JSON Claude Code writes, or it holds no access token. | Sign in to Claude Code again: claude auth login rewrites the item in the shape Lancetta reads. |
+| CLAUDE-6 | Claude Code's sign-in has expired | The access token's own expiry has passed. Lancetta reads the sign-in and never renews it; Claude Code does that itself when it is used. | Use Claude Code once; it renews the sign-in and Lancetta picks it up on the next read. |
+| CLAUDE-7 | Claude's account no longer accepts the sign-in | The account answered 401 or 403: the token is no longer honoured, typically after a logout elsewhere or a revoked session. | Use Claude Code once so it signs in again, then choose Refresh now. If Claude Code itself asks you to log in, do that. |
+| CLAUDE-8 | Claude's account answered with an error | The account answered an HTTP status Lancetta did not expect. The detail below carries the status. | Wait a minute and choose Refresh now. If the same status keeps coming back, copy the report and open an issue. |
+| CLAUDE-9 | Claude's account asked for a pause | The account answered 429: too many reads in a short time, often from two copies of Lancetta or a busy Claude Code session. It clears by itself. | Nothing: Lancetta backs off and reads again by itself. If you run two copies of Lancetta, quit one. |
+| CLAUDE-10 | Claude's account couldn't be reached | The request never got an answer: no network, a captive portal, a proxy, or the endpoint down. | Check the network, then choose Refresh now. If a proxy or firewall is in the way, allow api.anthropic.com. |
+| CLAUDE-11 | The status-line feed couldn't be read | The file the status-line route writes was not there or was not the JSON Lancetta expects. | Connect the account in Settings > Agents > Claude, so the card reads it instead of the file, or use Claude Code once so its status line writes the file again. The same pane shows the path. |
+| APP-1 | Something Lancetta didn't expect | An error Lancetta's code did not foresee. The detail below is its own description. | Copy the report and open an issue; the detail is what the developer needs. |
+{/* catalogue:end */}
+
+## The report
+
+**Copy report** in the window puts on the clipboard the Lancetta and macOS versions, the
+Codex CLI it found and the app-server version that answered, one line per agent with its
+reading or its code and evidence, and the command that shows Lancetta's own log:
+
+```sh
+/usr/bin/log show --predicate 'subsystem == "app.lancetta"' --last 1h
+```
+
+Every read is logged there with its outcome, and an answer from Codex or from Claude's
+account with how long it took. Paste the report into an issue as it is; it carries no
+token and no account identifier.
+
+## An older Codex CLI
+
+Lancetta asks `codex app-server` for the account's rate limits in the shape Codex CLI
+0.153 and later understand. An older Codex refuses that request with a JSON-RPC error;
+Lancetta retries once in the older shape and remembers the answer for the rest of the
+session. If the window still shows **CODEX-4**, the Codex CLI is older than the retry can
+reach: update it and choose **Refresh now**.

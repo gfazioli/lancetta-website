@@ -12,6 +12,7 @@ import {
   IconSettings,
   IconLock,
   IconHelpCircle,
+  IconAlertTriangle,
 } from '@tabler/icons-react';
 
 // Sidebar entry with a leading icon. The icon inherits `currentColor`, so it
@@ -46,6 +47,7 @@ export default {
   '---reference': { type: 'separator', title: 'Reference' },
   settings: nav(IconSettings, 'Settings'),
   privacy: nav(IconLock, 'Privacy'),
+  troubleshooting: nav(IconAlertTriangle, 'Troubleshooting', 'red'),
   '---resources': { type: 'separator', title: 'Resources' },
   roadmap: nav(IconMap2, 'What’s next', 'grape'),
   faq: nav(IconHelpCircle, 'FAQ', 'lancetta'),
