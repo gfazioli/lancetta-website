@@ -397,7 +397,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                   <Text fw={800} fz={{ base: 26, md: 34 }} lh={1.15} mt={6}>
                     {frame.title}
                   </Text>
-                  <Text c="dimmed" fz="lg" lh={1.6} mt={10} maw={620}>
+                  <Text c="dimmed" fz="lg" lh={1.6} mt={10} maw={620} mx="auto">
                     {frame.body}
                   </Text>
                   <Link href={frame.href} className={classes.frameLink}>

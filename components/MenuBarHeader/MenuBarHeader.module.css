@@ -5,17 +5,22 @@
  * them, and it takes no pointer events — only the bar does — or it would
  * swallow clicks across the whole top of the page.
  */
+/*
+ * The dock is the full-width strip the bar hangs in, and it paints NOTHING.
+ * It used to carry a short fade of the page colour so content dissolved as it
+ * passed the bar's rounded corners, and the cost was a visible band: the hero's
+ * wash is cyan on the left and violet on the right, and `--lan-body` laid over
+ * it reads as a lighter strip with a hard edge across the top of the page. A
+ * seam at the top of every page to soften one transition is the wrong trade.
+ *
+ * It takes no pointer events either — only the bar does — or it would swallow
+ * clicks across the whole top of the page.
+ */
 .dock {
   position: sticky;
   top: 0;
   z-index: 40;
   pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    var(--lan-body) 0%,
-    color-mix(in srgb, var(--lan-body) 80%, transparent) 62%,
-    transparent 100%
-  );
   padding-bottom: rem(14px);
 }
 
@@ -25,8 +30,18 @@
  * is the one dark object on a light page, on purpose: it is standing in for
  * the macOS menu bar, which is where the product lives.
  */
+/*
+ * Three columns, not a flex row: `minmax(0, 1fr) auto minmax(0, 1fr)` puts the
+ * reading on the bar's centre line whatever the two sides weigh, which is what
+ * makes the menu drop from it dead centre. Measured at 1440: the left group
+ * (mark + menus) is 460px and the right (search + action) 368, against 498 of
+ * column each, so it fits with room — and the menus had to move to the LEFT
+ * for that, beside the mark. Right of a centred item there is 498px, and menus
+ * plus search plus action is 708.
+ */
 .bar {
-  display: flex;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
   align-items: center;
   gap: rem(14px);
   width: min(rem(1180px), calc(100% - rem(32px)));
@@ -64,6 +79,14 @@
   }
 }
 
+/* The left column: the mark, then the menus, the way macOS reads. */
+.left {
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: rem(14px);
+}
+
 .brand {
   display: flex;
   flex-shrink: 0;
@@ -89,14 +112,19 @@
  * the mark on the left, the way a menu bar reads; the status items follow
  * them. They hide below md, where the hamburger takes over.
  */
+/*
+ * Hidden until 75em, where the hamburger takes over. Not `md`: between 768 and
+ * ~1100 the left column is narrower than the menus need, and the bar's own
+ * template is what says so. The site already drew this line — the old global
+ * stylesheet forced Nextra's hamburger below 1200 for the same reason.
+ */
 .menus {
-  display: flex;
+  display: none;
   align-items: center;
   gap: rem(2px);
-  margin-inline-start: auto;
 
-  @media (max-width: $mantine-breakpoint-md) {
-    display: none;
+  @media (min-width: 75em) {
+    display: flex;
   }
 }
 
@@ -129,12 +157,13 @@
   background-color: rgb(255 255 255 / 14%);
 }
 
+/* The right column: the search and the one action, pushed to the end. */
 .status {
   display: flex;
-  flex-shrink: 0;
+  min-width: 0;
   align-items: center;
+  justify-content: flex-end;
   gap: rem(10px);
-  margin-inline-start: rem(4px);
 }
 
 /*
@@ -145,9 +174,8 @@
   --nextra-search-width: 0;
 
   display: flex;
+  min-width: 0;
   align-items: center;
-  padding-inline-start: rem(10px);
-  border-inline-start: 1px solid var(--lan-bar-line);
 
   @media (max-width: 64em) {
     display: none;
@@ -263,7 +291,7 @@
   background-color: rgb(255 255 255 / 10%);
 }
 
-@media (max-width: $mantine-breakpoint-md) {
+@media (max-width: 74.99em) {
   .burger {
     display: inline-flex;
   }

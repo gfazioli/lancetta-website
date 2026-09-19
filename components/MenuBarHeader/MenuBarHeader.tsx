@@ -103,23 +103,34 @@ export function MenuBarHeader() {
         data-ready={ready}
         aria-label="Lancetta"
       >
-        <Link href="/" className={classes.brand} aria-label="Lancetta, home">
-          <Logo size={20} />
-          <span className={classes.brandName}>Lancetta</span>
-        </Link>
+        <div className={classes.left}>
+          <Link href="/" className={classes.brand} aria-label="Lancetta, home">
+            <Logo size={20} />
+            <span className={classes.brandName}>Lancetta</span>
+          </Link>
 
-        <nav className={classes.menus} aria-label="Sections">
-          {menus.map((menu) => (
-            <Link
-              key={menu.href}
-              href={menu.href}
-              className={classes.menu}
-              aria-current={menu.id && active === menu.id ? 'location' : undefined}
-            >
-              {menu.label}
-            </Link>
-          ))}
-        </nav>
+          <nav className={classes.menus} aria-label="Sections">
+            {menus.map((menu) => (
+              <Link
+                key={menu.href}
+                href={menu.href}
+                className={classes.menu}
+                aria-current={menu.id && active === menu.id ? 'location' : undefined}
+              >
+                {menu.label}
+              </Link>
+            ))}
+          </nav>
+        </div>
+
+        {/*
+          THE CENTRE COLUMN, and the position is load-bearing rather than
+          taste: the hero's first frame is this menu dropping open under the
+          bar, so it hangs from the bar's centre line. It is also where the
+          notch sits on the Mac this app was drawn for — which is what the
+          second frame is about.
+        */}
+        <MenuBarReading />
 
         <div className={classes.status}>
           <div className={classes.search}>
@@ -128,14 +139,6 @@ export function MenuBarHeader() {
           <Link href={released ? '/download' : '/docs'} className={classes.cta}>
             {released ? 'Download' : 'Read the docs'}
           </Link>
-          {/*
-            LAST, and the order is load-bearing rather than taste: the hero's
-            first frame is the menu dropping out of this item, and the two
-            right edges line up only while nothing sits to the right of it.
-            It is also where macOS puts it — status items are the right end
-            of the bar.
-          */}
-          <MenuBarReading />
           {/*
             Nextra's own hamburger lived in the navbar this component replaced.
             `setMenu` is the store it wrote, so the sidebar that opens is

@@ -418,11 +418,12 @@ Four things in it are not taste, and three of them were measured with a DOM
 probe after a capture looked wrong:
 
 - **The stage is as wide as the bar** (`min(1180px, 100% - 32px)`), not
-  Mantine's container. The menu drops from the bar's rightmost status item, and
-  the two right edges have to land on the same pixel — they do, at 1296 on a
-  1440 viewport. That is also why the reading is the LAST thing in the bar:
-  anything to the right of it breaks the alignment, and macOS puts status items
-  at the right end anyway.
+  Mantine's container, and the reading, the menu that drops from it and the
+  headline under them are all on the CENTRE line — measured together at 720 on
+  a 1440 viewport. Centred rather than right-aligned since 2026-09-19 (user:
+  *"il menu simulato di lancetta dovrebbe stare al centro"*), which is also
+  where the notch is on the Mac this app was drawn for. Neither one knows the
+  other's number: both are centred, so they stay aligned at every width.
 - **The copy row is the ACTIVE block's height** (`--copy-h`, measured in
   `HeroStage.tsx` and published on the stage's inner grid), not the tallest
   block's. With `auto` the row was the headline's 435px on every frame and the
@@ -455,13 +456,27 @@ are simply missing: the **search** (`<Search />` from `nextra/components`) and
 the **hamburger** that opens the sidebar on a phone (`setMenu` from
 `nextra-theme-docs`, the same store Nextra's own button writes).
 
-It is a macOS menu bar, not a web navbar: the mark and the name on the left, the
-menus beside them, the status items on the right, and the rightmost of those is
-Lancetta's own, rebuilt in `MenuBarReading`. Attached to the top edge, narrower
-than the page, rounded at the two BOTTOM corners. **There is no `<Banner>` any
-more**: a strip above the bar pushes it off the top edge, which is the one thing
-the design depends on. What it announced (the current version) is in the hero's
-meta line and on the releases page.
+It is a macOS menu bar, not a web navbar. **Three grid columns**
+(`minmax(0, 1fr) auto minmax(0, 1fr)`), not a flex row, because the middle one
+has to be on the bar's centre line whatever the two sides weigh: the mark and
+the menus on the left, **Lancetta's own reading in the centre** (rebuilt in
+`MenuBarReading`), the search and the one action on the right. Measured at 1440:
+the left group is 460px and the right 368, against 498 of column each. The menus
+had to move to the LEFT for that — right of a centred item there is 498px, and
+menus plus search plus action is 708 — and beside the mark is where macOS puts
+an app's menus anyway. They hide below 75em, not `md`: between 768 and ~1100 the
+left column is narrower than they need.
+
+Attached to the top edge, narrower than the page, rounded at the two BOTTOM
+corners. **The dock it hangs in paints nothing.** It used to carry a short fade
+of the page colour so content dissolved past the bar's corners, and the cost was
+a visible band with a hard edge across the top of every page: the hero's wash is
+cyan on one side and violet on the other, and `--lan-body` laid over it is not
+the same colour. A seam everywhere to soften one transition is the wrong trade.
+
+**There is no `<Banner>` any more**: a strip above the bar pushes it off the top
+edge, which is the one thing the design depends on. What it announced (the
+current version) is in the hero's meta line and on the releases page.
 
 - `--lan-bar-height` is the bar's height, declared once in `app/global.css`,
   and `--nextra-navbar-height` is set FROM it — Nextra lays its sidebar, its
