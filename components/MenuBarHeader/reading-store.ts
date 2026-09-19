@@ -13,13 +13,28 @@ import { useSyncExternalStore } from 'react';
  * should write it — a second writer and the bar starts flickering between
  * two stories.
  */
-export interface MenuBarReadingState {
-  /** Which agent the bar is quoting. Decides the mark and the tint. */
+
+/**
+ * One agent's turn in the bar. The app's `BarCell`: the mark, the percent of
+ * the 5-hour window and when it resets. The bar holds one per agent and shows
+ * them in turn — see `MenuBarReading.tsx`.
+ */
+export interface AgentReading {
+  /** Which agent this cell is quoting. Decides the mark and the tint. */
   agent: 'claude' | 'codex';
   /** Percent of the 5-hour window used, as the app draws it. */
   percent: number;
   /** How long until that window resets, already formatted. */
   resets: string;
+}
+
+export interface MenuBarReadingState {
+  /**
+   * One cell per agent, in the order the app puts them in the bar. A single
+   * cell is a bar with nothing to rotate, which is a state the app has too
+   * (one agent configured) and which the rotator handles by standing still.
+   */
+  cells: AgentReading[];
   /** True while the hero is showing the menu open under the bar. */
   open: boolean;
 }
@@ -31,26 +46,32 @@ export interface MenuBarReadingState {
  * so this is the value both render.
  */
 export const initialReading: MenuBarReadingState = {
-  agent: 'claude',
-  percent: 20,
-  resets: '1h44m',
+  cells: [
+    { agent: 'claude', percent: 20, resets: '1h44m' },
+    { agent: 'codex', percent: 5, resets: '3h23m' },
+  ],
   open: false,
 };
 
 let state: MenuBarReadingState = initialReading;
 const listeners = new Set<() => void>();
 
+function sameCells(a: AgentReading[], b: AgentReading[]): boolean {
+  return (
+    a.length === b.length &&
+    a.every(
+      (cell, i) =>
+        cell.agent === b[i].agent && cell.percent === b[i].percent && cell.resets === b[i].resets
+    )
+  );
+}
+
 export function setMenuBarReading(next: Partial<MenuBarReadingState>): void {
   const merged = { ...state, ...next };
   // Same story, same object: a new identity every scroll frame would tear
   // `useSyncExternalStore` out of its own memoisation and re-render the bar
   // sixty times a second for nothing.
-  if (
-    merged.agent === state.agent &&
-    merged.percent === state.percent &&
-    merged.resets === state.resets &&
-    merged.open === state.open
-  ) {
+  if (merged.open === state.open && sameCells(merged.cells, state.cells)) {
     return;
   }
   state = merged;

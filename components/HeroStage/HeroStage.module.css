@@ -17,6 +17,13 @@
 .heroPlain {
   margin-top: calc(-1 * var(--lan-bar-height, rem(46px)));
   padding-top: var(--lan-bar-height, rem(46px));
+  /*
+   * No feather at the TOP: this edge is the top of the page, so there is
+   * nothing above it to meet. Feathering it would only open the page on a
+   * washed-out band under the bar. The bottom edge is a real join — see
+   * `.lan-feather` in `app/global.css`.
+   */
+  --lan-feather-top: 0;
 }
 
 .hero {

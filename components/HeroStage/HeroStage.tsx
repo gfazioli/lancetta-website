@@ -54,6 +54,20 @@ interface Frame {
   reading: MenuBarReadingState;
 }
 
+/*
+ * The window's three panes are ONE session, so they quote one reading. The
+ * Limits pane is the only one that draws a reset time, so it supplies both
+ * agents' for all three: the Overview pane's Quota Used card shows Claude's
+ * 20% and crops Codex's row, and the Usage pane carries no quota at all.
+ */
+const windowSession: MenuBarReadingState = {
+  cells: [
+    { agent: 'claude', percent: 20, resets: '1h42m' },
+    { agent: 'codex', percent: 5, resets: '3h21m' },
+  ],
+  open: false,
+};
+
 /**
  * The frames after the hero's own. Frame 0 is the headline and lives in the
  * markup below, because it carries the page's `h1` and the two buttons — it
@@ -69,7 +83,13 @@ const frames: Frame[] = [
     body: 'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. Point at it and it opens.',
     href: '/docs/the-notch',
     linkLabel: 'How the island works',
-    reading: { agent: 'codex', percent: 28, resets: '2h23m', open: false },
+    reading: {
+      cells: [
+        { agent: 'claude', percent: 12, resets: '1h55m' },
+        { agent: 'codex', percent: 28, resets: '2h23m' },
+      ],
+      open: false,
+    },
   },
   {
     src: '/screenshot-window-overview.png',
@@ -80,7 +100,7 @@ const frames: Frame[] = [
     body: 'Command-O for the rest: daily tokens over weeks, each agent in detail, and the background processes the agents have left running.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
-    reading: { agent: 'claude', percent: 20, resets: '1h44m', open: false },
+    reading: windowSession,
   },
   {
     src: '/screenshot-window-usage.png',
@@ -91,12 +111,7 @@ const frames: Frame[] = [
     body: 'The same chart over 7, 30 or 90 days, with the lifetime total, the best single day and the streaks under it. It is Codex’s history and the page says so: Claude Code publishes no counterpart at all.',
     href: '/docs/the-window#usage',
     linkLabel: 'What the chart can and cannot say',
-    /*
-     * The Usage pane carries no quota reading of its own, so the bar keeps the
-     * session's Codex figure from the Limits pane rather than inventing one.
-     * Codex because the chart is Codex's: Claude Code publishes no history.
-     */
-    reading: { agent: 'codex', percent: 5, resets: '3h21m', open: false },
+    reading: windowSession,
   },
   {
     src: '/screenshot-window-limits.png',
@@ -107,33 +122,57 @@ const frames: Frame[] = [
     body: 'Two agents, four windows, the reset time for each — and beside every reading, when it was last true. A number with no timestamp is a number you cannot trust.',
     href: '/docs/how-it-reads',
     linkLabel: 'How it reads each agent',
-    reading: { agent: 'codex', percent: 5, resets: '3h21m', open: false },
+    reading: windowSession,
   },
 ];
 
 /*
- * Every frame's reading is READ OFF the screenshot it sits beside: the menu
- * shows Claude's 5-hour window at 20% with 1h44m to go, the island shows Codex
- * at 28% with 2h23m, the window's Quota Used shows Claude at 20%, and the
- * Limits pane shows Codex at 5% with 3h21m. The Usage pane shows no quota at
- * all, so it keeps the Limits pane's Codex figure rather than inventing one.
- * The bar is meant to be the same app as the picture under it — a percentage
- * in the bar that the screenshot beside it contradicts is a small lie the eye
- * catches.
+ * Every frame's reading is READ OFF the screenshot it sits beside, for BOTH
+ * agents, because the bar shows them in turn: the menu holds Claude at 20%
+ * with 1h44m and Codex at 5% with 3h23m, the island Claude at 12% with 1h55m
+ * and Codex at 28% with 2h23m, and the window's three panes the one session
+ * above. The bar is meant to be the same app as the picture under it — a
+ * percentage in the bar that the screenshot beside it contradicts is a small
+ * lie the eye catches, and it now has four seconds to catch it in.
  *
  * They are ILLUSTRATION, not claims: these are one developer's numbers on one
  * afternoon. Every figure the prose states comes from the measurement table in
  * CLAUDE.md instead.
  */
 const heroReading: MenuBarReadingState = {
-  agent: 'claude',
-  percent: 20,
-  resets: '1h44m',
+  cells: [
+    { agent: 'claude', percent: 20, resets: '1h44m' },
+    { agent: 'codex', percent: 5, resets: '3h23m' },
+  ],
   open: true,
 };
 
 /** Every frame's reading, hero first, indexed the way `active` is. */
 const readings: MenuBarReadingState[] = [heroReading, ...frames.map((frame) => frame.reading)];
+
+/**
+ * A copy block's content height: the span of its CHILDREN, not its own height.
+ * Three of the five blocks are `position: absolute; inset: 0`, so their height
+ * IS the box they are being measured to fit — `scrollHeight` answered 435px
+ * for every frame, which is the number this exists to replace.
+ *
+ * `offsetTop`/`offsetHeight`, not `getBoundingClientRect()`: the rect is the
+ * TRANSFORMED box, and a block that is not the active one carries a
+ * `translateY`. A translate happens to cancel out of a span, but the hero
+ * already paid for trusting that once — the artifact's `scale(0.97)` shaved
+ * 3% off the row on every visit — so this measures the layout directly. The
+ * children are positioned against the block itself, which is the offsetParent
+ * either way round (`absolute`, or `relative` for the one left in flow).
+ */
+function copyHeight(block: HTMLElement): number {
+  const kids = block.children;
+  if (!kids.length) {
+    return 0;
+  }
+  const first = kids[0] as HTMLElement;
+  const last = kids[kids.length - 1] as HTMLElement;
+  return last.offsetTop + last.offsetHeight - first.offsetTop;
+}
 
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
@@ -231,22 +270,29 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
       }
 
       const item = inner.querySelector<HTMLElement>('[data-copy-active="true"]');
-      const kids = item?.children;
-      if (!kids?.length) {
+      if (!item) {
         return;
       }
       /*
-       * The CHILDREN's span, not the block's own height. Three of the four
-       * blocks are `position: absolute; inset: 0`, so their height IS the box
-       * they are being measured to fit — `scrollHeight` answered 435px for
-       * every frame, which is the number this is meant to replace. They are
-       * bottom-aligned in a flex column, so the distance from the first
-       * child's top to the last child's bottom is the content height
-       * whatever size the box happens to be mid-transition.
+       * The three CENTRED frames share one copy row, and it is the tallest of
+       * them.
+       *
+       * A centred artifact has no height of its own: it fills the row, and the
+       * row is whatever the copy leaves. So one copy block a line taller than
+       * its neighbour drew a visibly smaller window — and those three frames
+       * are three panes of ONE window, side by side in the reader's memory,
+       * which is exactly where a few per cent of scale reads as a mistake.
+       * Reserving the tallest for all three makes the artifact row identical by
+       * construction, and stops the copy itself shuffling as they cross-fade.
+       *
+       * The two frames that hang from the bar keep their own height: they are
+       * sized by `--art-h` above, not by what is left over.
        */
-      const top = kids[0].getBoundingClientRect().top;
-      const bottom = kids[kids.length - 1].getBoundingClientRect().bottom;
-      inner.style.setProperty('--copy-h', `${Math.ceil(bottom - top)}px`);
+      const blocks =
+        item.dataset.copyAnchor === 'centre'
+          ? Array.from(inner.querySelectorAll<HTMLElement>('[data-copy-anchor="centre"]'))
+          : [item];
+      inner.style.setProperty('--copy-h', `${Math.ceil(Math.max(...blocks.map(copyHeight)))}px`);
     };
     apply();
     window.addEventListener('resize', apply);
@@ -365,7 +411,11 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
    */
   if (!pinned) {
     return (
-      <section id="overview" className={classes.heroPlain} aria-label="Lancetta, at a glance">
+      <section
+        id="overview"
+        className={`lan-feather ${classes.heroPlain}`}
+        aria-label="Lancetta, at a glance"
+      >
         {wash}
         <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
           <div className={classes.plainCopy}>{headline}</div>
@@ -400,7 +450,11 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
   }
 
   return (
-    <section id="overview" className={classes.hero} aria-label="Lancetta, at a glance">
+    <section
+      id="overview"
+      className={`lan-feather ${classes.hero}`}
+      aria-label="Lancetta, at a glance"
+    >
       {wash}
       <div
         ref={trackRef}
@@ -443,6 +497,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                 className={classes.copyItem}
                 data-active={active === 0}
                 data-copy-active={active === 0}
+                data-copy-anchor="menu"
               >
                 {headline}
               </div>
@@ -452,6 +507,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                   className={classes.copyItem}
                   data-active={active === i + 1}
                   data-copy-active={active === i + 1}
+                  data-copy-anchor={frame.anchor}
                   aria-hidden={active !== i + 1}
                 >
                   <Text className={classes.eyebrow}>{frame.eyebrow}</Text>
@@ -475,12 +531,8 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
               that air a job instead of leaving it as a hole.
             */}
             <div className={classes.dots} aria-hidden>
-              {readings.map((reading, i) => (
-                <span
-                  key={`${reading.agent}-${i}`}
-                  className={classes.dot}
-                  data-active={i === active}
-                />
+              {[HERO_SHOT.src, ...frames.map((frame) => frame.src)].map((src, i) => (
+                <span key={src} className={classes.dot} data-active={i === active} />
               ))}
             </div>
           </Container>
