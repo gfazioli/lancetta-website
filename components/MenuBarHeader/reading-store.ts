@@ -24,10 +24,16 @@ export interface MenuBarReadingState {
   open: boolean;
 }
 
+/**
+ * What the bar shows before the hero has said anything, and on every page that
+ * is not the home page. It matches the hero's first frame, which matches the
+ * menu screenshot in it: the server and the first client paint have to agree,
+ * so this is the value both render.
+ */
 export const initialReading: MenuBarReadingState = {
   agent: 'claude',
-  percent: 9,
-  resets: '4h03m',
+  percent: 20,
+  resets: '1h44m',
   open: false,
 };
 

@@ -69,7 +69,7 @@ const frames: Frame[] = [
     body: 'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. Point at it and it opens.',
     href: '/docs/the-notch',
     linkLabel: 'How the island works',
-    reading: { agent: 'codex', percent: 28, resets: '4h30m', open: false },
+    reading: { agent: 'codex', percent: 28, resets: '2h23m', open: false },
   },
   {
     src: '/screenshot-window-overview.png',
@@ -80,7 +80,7 @@ const frames: Frame[] = [
     body: 'Command-O for the rest: daily tokens over weeks, each agent in detail, and the background processes the agents have left running.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
-    reading: { agent: 'claude', percent: 45, resets: '2h11m', open: false },
+    reading: { agent: 'claude', percent: 20, resets: '1h44m', open: false },
   },
   {
     src: '/screenshot-window-limits.png',
@@ -91,14 +91,26 @@ const frames: Frame[] = [
     body: 'Two agents, four windows, the reset time for each — and beside every reading, when it was last true. A number with no timestamp is a number you cannot trust.',
     href: '/docs/how-it-reads',
     linkLabel: 'How it reads each agent',
-    reading: { agent: 'codex', percent: 76, resets: '3h58m', open: false },
+    reading: { agent: 'codex', percent: 5, resets: '3h21m', open: false },
   },
 ];
 
+/*
+ * Every frame's reading is READ OFF the screenshot it sits beside: the menu
+ * shows Claude's 5-hour window at 20% with 1h44m to go, the island shows
+ * Codex at 28% with 2h23m, the window's Quota Used shows Claude at 20%, and
+ * the Limits pane shows Codex at 5% with 3h21m. The bar is meant to be the
+ * same app as the picture under it — a percentage in the bar that the
+ * screenshot beside it contradicts is a small lie the eye catches.
+ *
+ * They are ILLUSTRATION, not claims: these are one developer's numbers on one
+ * afternoon. Every figure the prose states comes from the measurement table in
+ * CLAUDE.md instead.
+ */
 const heroReading: MenuBarReadingState = {
   agent: 'claude',
-  percent: 9,
-  resets: '4h03m',
+  percent: 20,
+  resets: '1h44m',
   open: true,
 };
 
