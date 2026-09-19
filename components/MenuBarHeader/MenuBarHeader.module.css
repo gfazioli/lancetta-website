@@ -191,9 +191,15 @@
 
 /* Lancetta's own status item, rebuilt: see MenuBarReading.tsx. */
 .reading {
-  display: inline-flex;
+  /*
+   * A GRID with every cell in the same track, not a row of them: the box is
+   * then as wide as the widest agent and the groups either side of it never
+   * shift when the turn changes. It is `pin()` in `StatusItemRotator.swift`,
+   * which holds the status item at the widest cell for the same reason —
+   * done here by the layout, so there is no measured string to keep in step.
+   */
+  display: inline-grid;
   align-items: center;
-  gap: rem(5px);
   padding: rem(3px) rem(8px);
   border-radius: rem(7px);
   background-color: rgb(255 255 255 / 7%);
@@ -204,8 +210,34 @@
   letter-spacing: rem(-0.1px);
   white-space: nowrap;
   transition:
+    opacity 160ms ease,
     background-color 220ms ease,
     box-shadow 220ms ease;
+}
+
+/*
+ * The turn changes as a cross-fade with nothing ever overlapping: the whole
+ * item goes to zero, the shown cell swaps underneath, and it comes back. Two
+ * readings dissolving through each other would be legible as neither.
+ */
+.reading[data-dim='true'] {
+  opacity: 0;
+}
+
+.readingCell {
+  grid-area: 1 / 1;
+  display: inline-flex;
+  align-items: center;
+  gap: rem(5px);
+  /*
+   * `visibility`, not `display: none`: the hidden cells still occupy the grid
+   * track, which is what makes the box as wide as the widest of them.
+   */
+  visibility: hidden;
+}
+
+.readingCell[data-shown='true'] {
+  visibility: visible;
 }
 
 /*
@@ -223,7 +255,7 @@
   transition: color 260ms ease;
 }
 
-.reading[data-agent='codex'] .readingMark {
+.readingCell[data-agent='codex'] .readingMark {
   color: var(--lan-codex-lit);
 }
 
