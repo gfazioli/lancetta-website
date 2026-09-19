@@ -245,6 +245,25 @@ was reshot on 2026-09-18 from the INSTALLED 0.3.1 with
 `LANCETTA_OPEN` hatch, because the dev bundle is ad-hoc signed and would ask for
 the keychain item again while the shipped build already holds the grant.
 
+**A capture with a BAKED SHADOW is a smudge on a light page, and the site is
+light.** The app's captures are taken against a dark desktop, where a soft
+shadow around the object is what makes it sit on something. Measured on the
+island capture of 2026-09-19: the band under it rendered `#D1D7EA` against a
+`#F0F1FD` page, and it was the first thing the eye went to. Worse, the page's
+own `drop-shadow` follows the PNG's alpha, so it was cast from the SHADOW's
+silhouette rather than the object's and spread it further.
+
+`scripts/deshadow.swift` strips one: it measures the alpha rather than guessing
+(in that file the shadow's peak was 0.400 against the object's 1.000, with 105
+pixels of antialiased rim in between out of 200k sampled), drops everything
+under the cutoff, rescales the rest so the rim stays smooth, and crops to the
+solid bounding box — which is not optional, because `object-fit: contain` fits
+the whole canvas and 112px of now-transparent margin on three sides would
+shrink the object inside its own box. Checked the same day: the menu carries
+2px of margin and the two window captures none, so the island was the only one.
+Every artifact now takes its depth from `HeroStage.module.css` and from nowhere
+else.
+
 **Two surfaces may not be published, and both for the same reason.** The
 **Processes pane** lists each tree by the directory it was started for, and an
 **agent's page in Settings** carries the absolute path that agent is read from.

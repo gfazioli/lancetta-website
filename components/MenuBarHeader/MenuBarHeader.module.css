@@ -13,6 +13,14 @@
  * it reads as a lighter strip with a hard edge across the top of the page. A
  * seam at the top of every page to soften one transition is the wrong trade.
  *
+ * It has NO padding either, and that matters more than it looks: a sticky
+ * element still occupies its space in the flow, so every pixel of dock height
+ * is a strip of page above the content — plain `--lan-body`, with none of the
+ * hero's wash behind it. 60px of dock read as a white band across the top of
+ * the page with a hard edge under it, which is what the fade was blamed for
+ * first. The bar's own 46px are still in the flow; the hero cancels them with
+ * a negative top margin so its wash runs from y=0, behind the bar.
+ *
  * It takes no pointer events either — only the bar does — or it would swallow
  * clicks across the whole top of the page.
  */
@@ -21,7 +29,6 @@
   top: 0;
   z-index: 40;
   pointer-events: none;
-  padding-bottom: rem(14px);
 }
 
 /*
