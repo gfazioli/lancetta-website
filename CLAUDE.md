@@ -120,8 +120,18 @@ plan names and percentages are illustration. Prose quotes the table above.
 - **App Router** (`app/`) with Nextra integration; `contentDirBasePath: '/docs'`,
   so every MDX file in `content/` is served under `/docs`.
 - `content/_meta.tsx` controls the sidebar order and labels.
-- `app/layout.tsx` wraps everything in `MantineProvider` + Nextra's `Layout`;
-  dark-mode sync is `MantineNextraThemeObserver`.
+- `app/layout.tsx` wraps everything in `MantineProvider` + Nextra's `Layout`.
+  **The site is LIGHT-ONLY** (2026-09-19, user: *"elimina il toggle dark/light e
+  lascia solo la modalità chiara"*): Mantine is `forceColorScheme="light"`,
+  Nextra takes `darkMode={false}` and
+  `nextThemes={{ defaultTheme: 'light', forcedTheme: 'light' }}`, and
+  `html { color-scheme: light }` in `theme/global.css` is what keeps every
+  `light-dark()` still in a module resolving to its light branch. The three
+  components that existed to switch and sync schemes — `ColorSchemeControl`,
+  `ColorSchemeToggle`, `MantineNextraThemeObserver` — are gone. `forceColorScheme`
+  on `ColorSchemeScript` matters as much as the provider: without it a visitor
+  who toggled the old switch is left on `dark` out of their own local storage,
+  against stylesheets that no longer carry one.
 - Everything site-specific lives in `config/index.ts`. Components read it rather
   than hardcoding — a value typed into a component is a value that drifts.
 
@@ -152,11 +162,21 @@ near-black navy core behind the bars, deep violet at the bottom-right, and a
 rim that runs cyan (top-left) through violet to magenta (bottom-right). Those
 six are the page tokens (`--lan-plate`, `--lan-plate-wash`, `--lan-plate-edge`,
 `--lan-azure`, `--lan-cyan`, `--lan-violet`, `--lan-magenta`), every Scene mesh
-and glow takes its colours from them as hexes, the two plate bands (in-detail
-and the closing CTA) share `.plateBand` with its 2px neon rim, and the **dark
-scheme's greys are the plate's navy** — `theme.colors.dark` is cut on its hue
-with the chroma held low, because a neutral grey beside this icon reads as a
-different product. Contrasts are in the comments beside each ladder.
+and glow takes its colours from them as hexes, and the **greys are the plate's
+navy diluted** — `theme.colors.gray` is cut on its hue with the chroma held
+low, because a neutral grey beside this icon reads as a different product.
+Mantine's own gray-6, which is what `c="dimmed"` resolves to, measures 4.0:1 on
+this body and fails AA; the ladder's is 4.55:1. Contrasts are in the comments
+beside each ladder, and `theme.black` is the plate's navy at text weight rather
+than `#000`.
+
+**There is no `.plateBand` any more.** The two dark slabs (the in-detail band
+and the closing CTA) read as holes on a light-only page: the in-detail band's
+content became the hero's fourth frame, and the CTA is `.auroraBand` — the
+same three lights on the page's own white, under the same 2px neon rim. The one
+dark object on the site is the menu bar in the header, and it is dark because it
+is chrome: it stands in for the macOS menu bar, which is where the product
+lives. Nothing else pretends to be.
 
 Inside the app, teal means **Codex** and orange means **Claude Code**
 (`CodexSource.tintHex`, `ClaudeSource.tintHex`). Those two hues are semantic on
@@ -293,6 +313,28 @@ the product" look identical in a picture.
 
 ## Seeing the page, and the one thing a headless render cannot show
 
+**Two tools, and which one to reach for is decided by what you are looking at.**
+
+- `scripts/page.sh` (WKWebView) for a claim about ONE rendered state: it is
+  Safari's engine, so it is the truth about how the site looks to a Mac, and
+  its `eval` is how a listener's arithmetic gets checked. Its limits are in its
+  own header, and two of them rule it out below.
+- `scripts/shot.mjs` (Chrome DevTools) for anything that MOVES, which since
+  2026-09-19 is the whole top of the home page. `node scripts/shot.mjs <url>
+  <prefix> --at 0,0.1,0.17,0.24` writes one VIEWPORT capture per fraction of
+  the scrollable height and prints the pixel it landed on. The pinned hero is
+  four states of one 100vh box, so a full-page capture of it is one tall band
+  containing the LAST frame and nothing else — and `page.sh` cannot drive it at
+  all, because a `scroll` event is never delivered there and its animation
+  clock never turns. Cross-ported from `findergit-website/scripts/shot.mjs`,
+  which is where the three reasons not to use `chrome --headless --screenshot`
+  are written down.
+
+Both are committed rather than recreated per session, for the reason `page.sh`
+gives in its own header: this workspace has already paid twice for a technique
+stored as "recreate it".
+
+
 Grepping the served HTML proves the markup and is structurally blind to
 opacity, z-index, transforms and font size — which is how a hero headline once
 shipped invisible on the sibling site with `curl` reporting it present. So a
@@ -351,7 +393,7 @@ Three more, all measured on 2026-09-18 and all the instrument's:
   stdin only when stdin is a terminal; from an agent's shell it is a pipe, and
   `next start` held it open. The `</dev/null` in `serve` is that fix.
 
-## The one job, and the gallery that shows it
+## The one job, and the hero that demonstrates it
 
 The copy is built around **one job**: how much of each agent's quota is left,
 and when it comes back. The reaper is a feature card and a footnote, never a
@@ -360,65 +402,84 @@ and that layout said the app does two things (user, 2026-09-17: *"l'app alla
 fine deve svolgere 'un solo compito' bene"*). If a new feature is big, it still
 goes under that job, not beside it.
 
-`components/ScrollGallery` is the pinned, scroll-driven gallery under the hero,
-in the shape Apple's product pages use: a tall track, a viewport-high stage
-stuck under the navbar, and the frame a pure function of how far the stage has
-travelled through the track (`frameIndex`, tested). **Nothing intercepts the
-wheel** — that is what makes it work the same with a trackpad, a mouse, the
-keyboard and VoiceOver. Phones and `prefers-reduced-motion` get the same frames
-as a plain stack. The frame is measured between the stage's box and the track's
-box, never against the viewport, so the navbar's height never enters the
-arithmetic; the CSS sticks the stage under `--nextra-navbar-height` with a 4rem
-fallback.
+**`components/HeroStage` is the whole top of the page**, and it replaced both
+the static hero and the `ScrollGallery` that used to sit under it (2026-09-19).
+It is the same mechanism the gallery was — a tall track, a viewport-high stage
+stuck under the bar, and the frame a pure function of how far the stage has
+travelled through the track (`frameIndex`, tested, now in
+`HeroStage/frame-index.ts`) — with the hero's own headline as frame 0 and the
+three surfaces after it. **Nothing intercepts the wheel**, which is what makes
+it behave the same with a trackpad, a mouse, the keyboard and VoiceOver. Phones
+and `prefers-reduced-motion` get the same frames as a plain stack. The frame is
+measured between the stage's box and the track's box, never against the
+viewport, so the bar's height never enters the arithmetic.
 
-Three frames, not four: the light-mode menu is the dark one's content again and
-made a weak step. It stays in the docs.
+Four things in it are not taste, and three of them were measured with a DOM
+probe after a capture looked wrong:
 
-## The header is two bars, and the home page starts at the left
+- **The stage is as wide as the bar** (`min(1180px, 100% - 32px)`), not
+  Mantine's container. The menu drops from the bar's rightmost status item, and
+  the two right edges have to land on the same pixel — they do, at 1296 on a
+  1440 viewport. That is also why the reading is the LAST thing in the bar:
+  anything to the right of it breaks the alignment, and macOS puts status items
+  at the right end anyway.
+- **The copy row is the ACTIVE block's height** (`--copy-h`, measured in
+  `HeroStage.tsx` and published on the stage's inner grid), not the tallest
+  block's. With `auto` the row was the headline's 435px on every frame and the
+  three short blocks left a 250px hole above their own first line. The
+  measurement is the CHILDREN's span, not `scrollHeight`: three of the four
+  blocks are `position: absolute; inset: 0`, so their own height IS the box
+  being measured, and `scrollHeight` answered 435 for all four.
+- **The first copy block stays in flow**, the rest are absolute over it. That is
+  what gives the box a height without JS, and the headline is the one frame
+  that must not be cut — it was, at the bottom of the viewport, until this.
+- **The artifacts hang from the bar** (`object-position: top`). `contain`
+  letterboxes, and a letterbox above the island is 70px of air between the notch
+  and the bar it is supposed to be cut out of.
 
-The global navigation (`app/_meta.tsx`) is about the product, in the order a
-visitor asks: Features (an anchor on the home page), How it works (the one docs
-page that explains the reading), Docs, Roadmap, then Support and About. Under
-it, on the home page only, `components/ProductNav` is the product bar Apple's
-pages carry: the name, the sections of this page, the one action. Its
-`productSections` list is the contract with the page — `Welcome.test.tsx`
-renders the home and checks every id exists, because a bar link to a missing
-anchor scrolls nowhere and nothing reports it.
+The stage also drives the header: each frame writes
+`MenuBarHeader/reading-store.ts`, so the status item in the bar changes agent,
+percentage and reset time as the reader scrolls, and holds itself highlighted
+while frame 0 has the menu open under it. A module-level store with
+`useSyncExternalStore` rather than a context, because Nextra's `Layout` renders
+its `navbar` slot as a SIBLING of `children`: no provider in the page can reach
+the bar.
 
-Three custom properties hold the two bars and the page together, and each one
-exists because a number typed twice drifted once:
+## The header is ONE bar, and it is a picture of the menu bar
 
-- `--lan-subnav-height` — the product bar's height, set inline on the `.home`
-  wrapper in `Welcome.tsx`.
-- `--lan-navbar-offset` — where Nextra's navbar sticks, published on the root by
-  `ProductNav.tsx` from the navbar's computed `top`. **Nextra's banner is sticky
-  below 48rem and static above it**, so the navbar sticks at 0 on a desktop and
-  at the banner's height on a phone. And Nextra measures that height with a
-  ResizeObserver that writes `--nextra-banner-height` to the root's style
-  *after* the effect that first reads it, which is why the read is repeated from
-  a MutationObserver on the root's style attribute; without it the bar measured
-  `0px` and sat at 64px, straight across a navbar stuck at 60px.
-- `--lan-nav-top` and `--lan-bars` — the sums, computed once on `.home` in
-  `Welcome.module.css`. The pinned gallery's `--gallery-top`, the hero's height
-  and every anchor's `scroll-margin-top` read `--lan-bars`; anywhere else the
-  gallery falls back to the navbar alone.
+`components/MenuBarHeader` **replaces Nextra's navbar** — `app/layout.tsx`
+passes it into the `navbar` slot, and Nextra renders whatever is in that slot
+in place of its own `<Navbar>`. So the default header is gone rather than
+hidden, and two things that bar used to carry have to be carried here or they
+are simply missing: the **search** (`<Search />` from `nextra/components`) and
+the **hamburger** that opens the sidebar on a phone (`setMenu` from
+`nextra-theme-docs`, the same store Nextra's own button writes).
 
-The hero is copy on the left and the product on the right, and the product is
-two objects in a fixed relation: the **menu in front**, because the menu is the
-app, and the **Overview window behind**, because there is one when you want
-more. The island has its own frame in the gallery; three objects would be a
-collage. Two decisions that look like taste and are not: there is **no entrance
-animation** on those images (they are the LCP, and anything that starts at
-opacity 0 is invisible wherever animation time does not advance), and the
-cluster's bleed stops **24px inside the viewport** — an object clipped by 8%
-reads as a mistake, and the window's right edge carries its numbers. The
-headline is sized in `cqw` off its own column so "Every agent's quota." stays
-one line at every width.
+It is a macOS menu bar, not a web navbar: the mark and the name on the left, the
+menus beside them, the status items on the right, and the rightmost of those is
+Lancetta's own, rebuilt in `MenuBarReading`. Attached to the top edge, narrower
+than the page, rounded at the two BOTTOM corners. **There is no `<Banner>` any
+more**: a strip above the bar pushes it off the top edge, which is the one thing
+the design depends on. What it announced (the current version) is in the hero's
+meta line and on the releases page.
+
+- `--lan-bar-height` is the bar's height, declared once in `app/global.css`,
+  and `--nextra-navbar-height` is set FROM it — Nextra lays its sidebar, its
+  TOC and every sticky heading out against that property, and the bar those
+  offsets are measured from is now ours.
+- `productSections` (`MenuBarHeader/sections.ts`) is still the contract with the
+  page: `Welcome.test.tsx` renders the home and checks every id exists, because
+  a bar link to a missing anchor scrolls nowhere and nothing reports it. The bar
+  shows a SUBSET — six menus in a bar this size stop reading as menus — and
+  the hrefs are absolute (`/#features`), because this bar is on every page and a
+  bare fragment from inside the docs scrolls nowhere.
+- The agent marks in the reading (`AgentMark.tsx`) are **stylisations, not the
+  vendors' artwork**: the app renders the real vector data, and a website should
+  not ship someone else's logo file to decorate a mock-up of its own chrome.
 
 `components/SectionHeading` is left by default — title left, lead right,
-bottom-aligned — and `center` for the statement bands. The "In detail" band
-shows the Limits pane, not the menu a third time: it is the one surface with
-"seen 1s ago" and "live" side by side, which is what the band is about.
+bottom-aligned — and `center` for the statement bands. Its `tone="onDark"` has
+no caller since the plate bands went; leave it until something needs it again.
 
 ## The release-notes page has THREE states, and the middle one was missing
 
