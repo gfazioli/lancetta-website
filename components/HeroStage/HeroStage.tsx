@@ -213,8 +213,18 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
        */
       const art = inner.querySelector<HTMLImageElement>('[data-art-active="true"] img');
       if (art?.naturalHeight) {
-        const box = art.getBoundingClientRect();
-        const content = Math.min(box.height, box.width * (art.naturalHeight / art.naturalWidth));
+        /*
+         * `offsetWidth`/`offsetHeight`, not `getBoundingClientRect()`. The rect
+         * is the TRANSFORMED box, and the artifact arrives on a 620ms
+         * `scale(0.97)`: measured mid-animation the row came out 3% short (482
+         * against 497) every time the reader came back to the top, so the copy
+         * crept upwards on each visit. The offset pair is the layout size and
+         * ignores transforms.
+         */
+        const content = Math.min(
+          art.offsetHeight,
+          art.offsetWidth * (art.naturalHeight / art.naturalWidth)
+        );
         inner.style.setProperty('--art-h', `${Math.ceil(content)}px`);
       } else {
         inner.style.removeProperty('--art-h');
