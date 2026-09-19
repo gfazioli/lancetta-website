@@ -101,6 +101,49 @@
     background-color: rgb(255 255 255 / 8%);
     color: rgb(255 255 255 / 70%);
   }
+
+  /*
+   * A full-bleed section wash, feathered back to the page colour at its own
+   * top and bottom edge.
+   *
+   * Every band on the home page paints its own atmosphere, and each one was at
+   * full strength exactly where its section began — a radial anchored at
+   * `50% -10%` is near-opaque along the top edge, and the section above it is
+   * plain body colour. So each join was a hard horizontal line across the
+   * page, and there are six of them down one scroll. A line across the page is
+   * what a rule IS, so the reader reads them as rules: the page looked ruled
+   * into strips rather than continuous, which is what "make it uniform" was
+   * about.
+   *
+   * This restores the page colour exactly at the boundary and dissolves it
+   * inward, so two bands meet through a stretch of page rather than at an
+   * edge. Nothing about any wash changes — only where it is allowed to be at
+   * full strength.
+   *
+   * An overlay rather than a `mask-image` on the section, because half these
+   * washes are painted by <Scene>, whose layers are CHILDREN of the section:
+   * masking the section would mask its copy too. `z-index: 0` puts it above
+   * the wash (`auto`) and below the content, which every one of these sections
+   * already pins at `zIndex: 1`.
+   *
+   * A length rather than a percentage: the stops of a `to bottom` gradient are
+   * relative to the box, and the hero's box is the whole scroll track — 14%
+   * of it is 640px, which would dissolve the hero rather than its edge.
+   */
+  .lan-feather {
+    position: relative;
+  }
+
+  .lan-feather::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    background:
+      linear-gradient(to bottom, var(--lan-body) 0, transparent var(--lan-feather-top, 110px)),
+      linear-gradient(to top, var(--lan-body) 0, transparent var(--lan-feather-bottom, 110px));
+    pointer-events: none;
+  }
 }
 
 @layer components, mantine, nextra, overwrite;

@@ -29,7 +29,7 @@ const techPills = [
 
 export function BuiltForMacSection() {
   return (
-    <Box pos="relative" py={80} style={{ overflow: 'hidden' }}>
+    <Box pos="relative" py={80} className="lan-feather" style={{ overflow: 'hidden' }}>
       {/*
         Aurora + Mesh in the icon's own light: the rim's cyan and violet with
         the plate's azure underneath. Same Sequoia/Tahoe atmosphere the sibling

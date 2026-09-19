@@ -18,7 +18,7 @@ import classes from './SolutionSection.module.css';
  */
 export function SolutionSection() {
   return (
-    <Box pos="relative" py={88} style={{ overflow: 'hidden' }}>
+    <Box pos="relative" py={88} className="lan-feather" style={{ overflow: 'hidden' }}>
       {/* The plate's light: azure from the top-left, magenta from the bottom-right. */}
       <Scene lazy>
         <Scene.Mesh
