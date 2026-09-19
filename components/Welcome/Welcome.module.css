@@ -13,14 +13,19 @@
   scroll-margin-top: calc(var(--lan-bars) + rem(14px));
 }
 
-/* What it is, what it does, what it costs: a hairline and three columns. */
+/*
+ * What it is, what it does, what it costs: three columns, and no rule above
+ * them. The hairline was drawn when the strip had to be told apart from the
+ * hero; it sits exactly where the hero's wash used to stop dead, so the two
+ * read as one heavy seam. The wash now dissolves into the page there, and the
+ * air is the separation.
+ */
 .glance {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: rem(40px);
   margin: rem(24px) 0 rem(8px);
   padding-top: rem(28px);
-  border-top: 1px solid var(--lan-line);
 
   @media (max-width: $mantine-breakpoint-sm) {
     grid-template-columns: 1fr;
@@ -250,13 +255,10 @@
     );
 }
 
-.auroraBand::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  right: 0;
-  left: 0;
-  height: rem(2px);
-  background: linear-gradient(90deg, var(--lan-cyan), var(--lan-violet) 55%, var(--lan-magenta));
-  opacity: 0.85;
-}
+/*
+ * The 2px neon rim the icon carries used to sit along this band's top edge.
+ * It is a good mark and a bad rule: a saturated line across the full width of
+ * the page is the strongest divider on the site, drawn at exactly the join the
+ * feather exists to dissolve. The band keeps the icon's three lights; it stops
+ * announcing itself with a rule.
+ */

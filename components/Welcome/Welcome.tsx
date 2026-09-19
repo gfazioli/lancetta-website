@@ -226,7 +226,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       <SolutionSection />
 
       {/* Features */}
-      <Box id="features" py={80} className={classes.sectionBand}>
+      <Box id="features" py={80} className={`lan-feather ${classes.sectionBand}`}>
         <Container size="lg">
           <SectionHeading
             eyebrow="What is in it"
@@ -330,7 +330,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       </Container>
 
       {/* Get Started CTA */}
-      <Box pos="relative" py={88} className={classes.auroraBand}>
+      <Box pos="relative" py={88} className={`lan-feather ${classes.auroraBand}`}>
         <Scene lazy>
           <Scene.Glow color="#824BFC" size={520} blur={170} opacity={0.16} top="26%" left="50%" />
           <Scene.Glow color="#13D1FB" size={380} blur={150} opacity={0.12} top="74%" left="10%" />

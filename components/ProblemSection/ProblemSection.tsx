@@ -51,7 +51,7 @@ const readings = [
 
 export function ProblemSection() {
   return (
-    <Box py={80} className={classes.sectionBand}>
+    <Box py={80} className={`lan-feather ${classes.sectionBand}`}>
       <Container size="lg">
         <SectionHeading
           eyebrow="The problem"

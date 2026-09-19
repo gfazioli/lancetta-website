@@ -29,7 +29,7 @@ const rows = [
 
 export function CostsNothingSection() {
   return (
-    <Box id="costs-nothing" pos="relative" py={88} className={classes.band}>
+    <Box id="costs-nothing" pos="relative" py={88} className={`lan-feather ${classes.band}`}>
       {/* The rim's two ends: cyan from the top-left, magenta from the bottom-right. */}
       <Scene lazy>
         <Scene.Glow color="#13D1FB" size={520} blur={160} opacity={0.18} top="20%" left="12%" />
