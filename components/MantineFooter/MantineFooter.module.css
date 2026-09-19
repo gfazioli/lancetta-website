@@ -1,11 +1,17 @@
+/*
+ * One hairline, and nothing else. The inset shadow that used to be here was a
+ * 32px black blur along the top edge: on the dark site it read as depth, on a
+ * light page it is a grey band, and it sat under a Divider that had a 20px
+ * black glow of its own.
+ */
 .contentFooter {
-  padding-top: 32px;
-  background: var(--mantine-color-body);
-  box-shadow: inset 0px 4px 32px 0px #00000032;
+  padding-top: 48px;
+  border-top: 1px solid var(--lan-line);
+  background: var(--lan-surface);
 }
 
 .footer {
-  padding-bottom: 32px;
+  padding-bottom: 40px;
 }
 
 .title {
@@ -16,16 +22,6 @@
 .columnAnchor {
   font-size: 12.8px !important;
   font-weight: 500 !important;
-}
-
-.lastDivider {
-  @mixin light {
-    box-shadow: 0 0px 20px 2px rgb(0, 0, 0, 0.2);
-  }
-
-  @mixin dark {
-    box-shadow: 0 3px 8px 2px rgb(0, 0, 0, 0.5);
-  }
 }
 
 .sponsorsSection {
