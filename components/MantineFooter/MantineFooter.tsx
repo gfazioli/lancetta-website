@@ -67,8 +67,15 @@ export const MantineFooter = () => {
             <Stack gap="xs">
               <Logo size={48} />
               <Text fz={13} mr={64}>
-                Lancetta is a native macOS app that combines file browsing with Git intelligence.
-                Built with SwiftUI by{' '}
+                {/*
+                  This line described FINDERGIT until 2026-09-19 ("combines file
+                  browsing with Git intelligence"), inherited verbatim when this
+                  site was bootstrapped from that one. It is the class of defect
+                  a build cannot catch: the things that break in a cloned site
+                  are the ones naming the sibling.
+                */}
+                Lancetta is a native macOS menu-bar monitor for coding agents. It shows how much of
+                each agent{'\u2019'}s quota is left, and when it comes back. Built with SwiftUI by{' '}
                 <Anchor fz={13} href="https://gfazioli.github.io/">
                   Undolog
                 </Anchor>
