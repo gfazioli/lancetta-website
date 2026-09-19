@@ -77,10 +77,19 @@
     color: var(--lan-ink);
   }
 
+  /*
+   * 30px in a 46px bar, so there are 8px of bar above and below it. Nextra's
+   * own input is 41px tall, which inside this bar leaves 2.5px a side and
+   * reads as an input that has burst its container.
+   */
   .lan-menubar .nextra-search input {
+    height: 30px;
+    padding-block: 0;
     border-color: rgb(255 255 255 / 14%);
+    border-radius: 8px;
     background-color: rgb(255 255 255 / 7%);
     color: #fff;
+    font-size: 13px;
   }
 
   .lan-menubar .nextra-search input::placeholder {

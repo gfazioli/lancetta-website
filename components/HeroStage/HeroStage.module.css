@@ -5,6 +5,20 @@
  * `--lan-bar-height` — the menu bar the stage hangs from — so a frame is
  * never cropped by the one thing above it.
  */
+/*
+ * Pulled up UNDER the bar. The dock is sticky, so its 46px sit in the flow and
+ * the page would open with a band of plain body colour above the wash — the
+ * one thing on this page that has a hard horizontal edge. The negative margin
+ * puts the section's top at y=0 and the wash behind the bar; `sticky` clamps
+ * the stage to `top: var(--lan-bar-height)` immediately, so nothing under the
+ * bar is ever content the reader needed.
+ */
+.hero,
+.heroPlain {
+  margin-top: calc(-1 * var(--lan-bar-height, rem(46px)));
+  padding-top: var(--lan-bar-height, rem(46px));
+}
+
 .hero {
   position: relative;
   /* The wash is painted by Scene, which lays itself out against this box. */
@@ -19,6 +33,7 @@
 .stage {
   position: sticky;
   top: var(--lan-bar-height, rem(46px));
+  z-index: 1;
   display: flex;
   align-items: stretch;
   height: calc(100svh - var(--lan-bar-height, rem(46px)));
@@ -50,7 +65,12 @@
   width: min(rem(1180px), calc(100% - rem(32px)));
   max-width: none;
   margin-inline: auto;
-  padding-block: rem(10px) rem(34px);
+  /*
+   * 2px, not 10: the first frame is a menu dropping out of the bar, and a
+   * macOS menu opens against it. The old 10 plus the dock's 14 read as the
+   * menu floating loose under the header.
+   */
+  padding-block: rem(2px) rem(34px);
   padding-inline: rem(14px);
 }
 
@@ -140,12 +160,18 @@
   max-height: 100%;
   object-fit: contain;
   /*
-   * `drop-shadow`, not `box-shadow`: it follows the PNG's alpha, so the shadow
-   * traces the menu's rounded corners rather than the square <img> box. Softer
-   * than the dark site's was — a 55% black shadow on an off-white page reads
-   * as dirt, not as depth.
+   * ONE shadow, and it is this one. `drop-shadow` follows the PNG's alpha, so
+   * on a capture carrying a baked shadow of its own it is cast from the
+   * SHADOW's silhouette rather than the object's, and spreads into a grey
+   * smudge — measured on the island, #D1D7EA under it against a #F0F1FD page.
+   * Three of the four captures had no baked shadow (2px of margin or none);
+   * the island's was stripped with `scripts/deshadow.swift`, so now every
+   * artifact gets its depth from here and from nowhere else.
+   *
+   * Softer than the dark site's was: a 55% black shadow on an off-white page
+   * reads as dirt, not as depth.
    */
-  filter: drop-shadow(0 26px 54px rgb(20 27 51 / 22%)) drop-shadow(0 4px 10px rgb(20 27 51 / 10%));
+  filter: drop-shadow(0 20px 40px rgb(20 27 51 / 16%)) drop-shadow(0 3px 8px rgb(20 27 51 / 8%));
 }
 
 /*
