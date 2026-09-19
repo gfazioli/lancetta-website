@@ -60,7 +60,13 @@ const VerticalLinks = ({ list }: { list: VerticalLink[] }) => {
 export const MantineFooter = () => {
   return (
     <div className={classes.contentFooter}>
-      <Divider my="md" className={classes.lastDivider} />
+      {/*
+        One rule per boundary. This used to open with an inset shadow on the
+        container AND a Divider AND that Divider's own 20px black glow — three
+        treatments for one edge, which is what made the top of the footer read
+        as a grey band rather than as a line. The border is on
+        `.contentFooter` now.
+      */}
       <Container className={classes.footer} size="lg">
         <Grid grow>
           <Grid.Col span={{ base: 12, sm: 4 }}>
@@ -128,7 +134,7 @@ export const MantineFooter = () => {
           </Grid.Col>
         </Grid>
 
-        <Divider my="xl" className={classes.lastDivider} />
+        <Divider my={44} />
 
         {/* Sponsors wall */}
         <Stack gap="md" align="center" id="sponsors" className={classes.sponsorsSection}>
@@ -225,7 +231,7 @@ export const MantineFooter = () => {
           <ShareButtons />
         </Stack>
 
-        <Divider my={16} className={classes.lastDivider} />
+        <Divider mt={40} mb={20} />
 
         <Group justify="center">
           <Group justify="center">
@@ -235,7 +241,9 @@ export const MantineFooter = () => {
                 Undolog
               </Anchor>
             </Text>
-            <Divider orientation="vertical" />
+            <Text fz={12} inline c="dimmed">
+              {'·'}
+            </Text>
             <Text fz={12} inline>
               <Group gap={4} component="span">
                 Hosted on{' '}
@@ -246,7 +254,9 @@ export const MantineFooter = () => {
                 </Anchor>
               </Group>
             </Text>
-            <Divider orientation="vertical" />
+            <Text fz={12} inline c="dimmed">
+              {'·'}
+            </Text>
             <Text fz={12} inline>
               <Group gap={4} component="span" justify="flex-start">
                 Built with{' '}
