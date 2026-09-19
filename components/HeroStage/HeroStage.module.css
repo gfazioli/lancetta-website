@@ -46,11 +46,21 @@
  * is exactly enough to read as a misalignment rather than as a drop.
  */
 .inner {
+  position: relative;
   display: grid;
   /*
    * The product on top, the copy at the bottom. `minmax(0, 1fr)` rather than
    * `1fr`: without the zero minimum a tall screenshot refuses to shrink and
    * pushes the copy off the bottom of the stage on a short viewport.
+   *
+   * `--art-h` is the two TOP-ANCHORED frames' own content height, published by
+   * HeroStage.tsx. Without it the artifact row was everything the copy did not
+   * want, and the island — which is short and wide — sat 296pt above its own
+   * caption with nothing in between. With it the two rows are content-sized,
+   * `align-content: start` hangs them off the bar and the slack falls to the
+   * bottom of the stage, where it is air rather than a hole. The centred
+   * frames (the two windows) publish nothing and keep the `1fr`: they are
+   * vertically centred and have no join to protect.
    */
   /*
    * The copy row is the ACTIVE block's own height (`--copy-h`, measured and
@@ -60,7 +70,9 @@
    * the fallback: with no JS the row is the headline's, which is the frame
    * that must not be cut.
    */
-  grid-template-rows: minmax(0, 1fr) var(--copy-h, auto);
+  grid-template-rows: var(--art-h, minmax(0, 1fr)) var(--copy-h, auto);
+  align-content: start;
+  row-gap: clamp(rem(14px), 3vh, rem(44px));
   transition: grid-template-rows 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
   width: min(rem(1180px), calc(100% - rem(32px)));
   max-width: none;
@@ -128,7 +140,15 @@
  * keeps because a dropdown does open a hair below the bar.
  */
 .artifact[data-anchor='notch'] {
-  inset: rem(-2px) 0 0;
+  /*
+   * `-5px` is the stage's 2px of padding plus 3 more, so the tab's own
+   * antialiased top rows are clipped by the stage's `overflow: hidden` rather
+   * than drawn as a pale hairline between two near-black objects. The crop
+   * leaves no transparent margin now (`deshadow.swift ... 0`), and the rounded
+   * corners of the tab lose about 7 source pixels, which is the point: a notch
+   * is cut out of the bar, not resting against it.
+   */
+  inset: rem(-5px) 0 0;
   justify-content: center;
   align-items: flex-start;
   transform: translateY(rem(-18px)) scale(0.98);
@@ -170,9 +190,10 @@
    * on a capture carrying a baked shadow of its own it is cast from the
    * SHADOW's silhouette rather than the object's, and spreads into a grey
    * smudge — measured on the island, #D1D7EA under it against a #F0F1FD page.
-   * Three of the four captures had no baked shadow (2px of margin or none);
-   * the island's was stripped with `scripts/deshadow.swift`, so now every
-   * artifact gets its depth from here and from nowhere else.
+   * The other captures had no baked shadow (2px of margin or none); the
+   * island's was replaced with a cleanly-keyed one, cropped by
+   * `scripts/deshadow.swift`, so now every artifact gets its depth from here
+   * and from nowhere else.
    *
    * Softer than the dark site's was: a 55% black shadow on an off-white page
    * reads as dirt, not as depth.
@@ -187,18 +208,35 @@
  * screen and overflows on a small one. The max-width is the cap that stops
  * the menu from crossing the page on a very short, very wide window.
  */
+/*
+ * The two that hang from the bar are sized off the VIEWPORT's height, not off
+ * the container's width and not at `height: 100%`.
+ *
+ * `100%` is the row's height, and the row is now `--art-h`, which is measured
+ * FROM this box: a circle. A percentage of the container width is not circular
+ * but ignores the viewport's height, and the copy under them is the part that
+ * runs out of room on a laptop.
+ *
+ * So each one asks for a share of the viewport and then gives way to the copy
+ * it carries: `min(<share>, 100svh - the bar - the copy's own reserve)`. The
+ * reserves are what the two blocks measure at their widest, plus air — the
+ * headline with two buttons and the release strip under it is 435px, the
+ * island's caption 199. On a 1440x900 laptop that makes the menu 354 and the
+ * island 234; on a 1440x1100 screen 506 and 286. The menu stays the bigger of
+ * the two at every height, which is what it is in the app.
+ */
 .artifact[data-anchor='menu'] .shot {
   width: auto;
   max-width: 46%;
-  height: 100%;
+  height: min(46svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(500px)));
   /* Same reason as the island: it drops FROM the bar, so it starts at the top. */
   object-position: top center;
 }
 
 .artifact[data-anchor='notch'] .shot {
   width: auto;
-  max-width: 88%;
-  height: 100%;
+  max-width: 70%;
+  height: min(26svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(290px)));
   /*
    * `contain` letterboxes, and a letterbox above the island is 70px of air
    * between the notch and the bar it is supposed to be cut out of. The box is
@@ -333,7 +371,7 @@
 /* Where the reader is in the sequence. Decoration, hence `aria-hidden`. */
 .dots {
   position: absolute;
-  bottom: rem(-16px);
+  bottom: rem(18px);
   left: 50%;
   display: flex;
   gap: rem(8px);
