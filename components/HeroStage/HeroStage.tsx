@@ -62,8 +62,8 @@ interface Frame {
  */
 const windowSession: MenuBarReadingState = {
   cells: [
-    { agent: 'claude', percent: 20, resets: '1h42m' },
-    { agent: 'codex', percent: 5, resets: '3h21m' },
+    { agent: 'claude', percent: 16, resets: '25m' },
+    { agent: 'codex', percent: 28, resets: '53m' },
   ],
   open: false,
 };
@@ -93,7 +93,7 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-overview.png',
-    alt: 'The Lancetta window: the daily token chart for Codex, and both agents’ quota bars underneath',
+    alt: 'The Lancetta window: the daily token series for both agents side by side, and both agents’ quota bars underneath',
     anchor: 'centre',
     eyebrow: 'When a glance is not enough',
     title: 'The window.',
@@ -104,11 +104,11 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-usage.png',
-    alt: 'The Usage pane: thirty days of Codex tokens, with the lifetime total, the best day and the streaks underneath',
+    alt: 'The Usage pane: thirty days of tokens for both agents side by side, with the lifetime total, the best day and the streaks underneath',
     anchor: 'centre',
     eyebrow: 'Where the tokens went',
     title: 'The history.',
-    body: 'The same chart over 7, 30 or 90 days, with the lifetime total, the best single day and the streaks under it. It is Codex’s history and the page says so: Claude Code publishes no counterpart at all.',
+    body: 'The same chart over 7, 30 or 90 days, with the lifetime total and the streaks under it. Codex publishes its own history; Claude’s is rebuilt from the transcripts on your Mac.',
     href: '/docs/the-window#usage',
     linkLabel: 'What the chart can and cannot say',
     reading: windowSession,

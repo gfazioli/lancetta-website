@@ -8,7 +8,7 @@ The menu answers *how much is left*. The window answers everything that does not
 
 **Open Lancetta…** (⌘O) from the menu bar.
 
-![Lancetta's Overview pane: the daily token chart for Codex, and the quota bars for both agents](/screenshot-window-overview.png)
+![Lancetta's Overview pane: the daily token series for both agents side by side, and the quota bars for both agents](/screenshot-window-overview.png)
 
 It is a normal window and it closes like one. Closing it quits nothing — the menu-bar item is always the way back.
 
@@ -18,19 +18,19 @@ It is a normal window and it closes like one. Closing it quits nothing — the m
 
 Three cards, in the order you would ask the questions in:
 
-- **Total Usage** — tokens over the last seven days, one bar per day.
+- **Total Usage** — tokens over the last seven days, one bar per agent per day, with a chooser for either agent alone or both.
 - **Quota Used** — both agents, one bar each, with a chooser for the 5-hour or the 7-day window. The title follows the setting that decides what the bars are filled with, so it reads *Quota Left* when you are counting down.
 - **Processes** — how many background trees are running, what they are holding, and how many of them nothing will ever close.
 
 ## Usage
 
-![The Usage pane: thirty days of Codex tokens, with the lifetime total, the best day and the streaks underneath](/screenshot-window-usage.png)
+![The Usage pane: thirty days of tokens for both agents side by side, with the lifetime total, the best day and the streaks underneath](/screenshot-window-usage.png)
 
 The same chart over **7, 30 or 90 days**, and the totals underneath: lifetime tokens, the best single day, how many days have been recorded at all, the current and longest streaks, and the longest single turn.
 
 Two things about this chart are worth knowing, because both would otherwise read as bugs.
 
-**It is Codex's chart, and it says so.** Codex keeps the whole token history and gives it away free — one bucket per day used, and the buckets sum to the lifetime figure exactly, so it is the complete series rather than a window onto it. **Claude Code has no counterpart at all**: its payload carries two percentages and two reset instants and nothing else. A chart that pooled the two would be drawing one agent's data under both their names.
+**The two series do not come from the same place, and the caption says so.** Codex keeps the whole token history and gives it away free — one bucket per day used, and the buckets sum to the lifetime figure exactly, so it is the complete series rather than a window onto it. **Claude Code publishes no counterpart at all**: its payload carries two percentages and two reset instants and nothing else. So Claude's column is rebuilt from Claude Code's own transcripts on your Mac, which is honest about two limits the caption states — sessions on another machine are not in it, and cache reads are left out, because they re-send the same context every turn and would be 98% of the total.
 
 **The last column is still growing.** Codex publishes a day's tokens with a lag of hours, not of a day — on the afternoon this was measured the newest bucket was still yesterday's, and by the evening today's had appeared. So the caption under the chart says which of those two states you are looking at, rather than asserting one of them. A day with no usage is drawn as a gap, never as a zero: the series only contains days that were used, and inventing the quiet ones would compress months into weeks.
 

@@ -141,7 +141,7 @@ const features: Feature[] = [
     icon: IconChartHistogram,
     title: 'Where the tokens went',
     description:
-      'A window with the daily token series over 7, 30 or 90 days, both agents in detail, and the processes still running. It is Codex’s history, and the chart says so — Claude Code publishes none.',
+      'A window with the daily token series over 7, 30 or 90 days, both agents in detail, and the processes still running. Codex publishes its own history; Claude’s is rebuilt from the transcripts on your Mac, and the chart says which is which.',
     color: 'cyan',
     href: '/docs/the-window',
   },
