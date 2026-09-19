@@ -5,6 +5,7 @@
  *
  *   node scripts/shot.mjs <url> <out-prefix> [--width 1440] [--height 900]
  *                                            [--at 0,0.25,0.6] [--find "text"]
+ *                                            [--eval "<expression>"]
  *
  * With no `--at` it writes ONE full-page `<prefix>.png`. With `--at` it writes
  * one VIEWPORT capture per fraction of the scrollable height:
@@ -31,6 +32,16 @@
  * - The Scene backgrounds are `lazy` and paint on intersection. A capture
  *   straight after load shows blank bands; this scrolls the page once so every
  *   observer fires, then goes where it was asked to.
+ *
+ * `--eval` reads the page at each `--at` position instead of, or as well as,
+ * photographing it — the geometry a capture cannot give you as a number. Use
+ * THIS rather than `scripts/pageeval.swift` whenever a transition is involved:
+ * that one is a WKWebView whose animation clock never advances, so a property
+ * under `transition:` is frozen at the value it had when the transition began.
+ * It answered `grid-template-rows: 354px 435px` for the hero on 2026-09-19
+ * while the element's own inline `--copy-h` said 199px, and three frames
+ * measured identical because all three were frozen at the same start — a
+ * check that cannot tell the fix from the bug it was testing.
  *
  * Chrome runs with a throwaway profile under /tmp: it never touches the user's
  * own session or storage.
@@ -60,6 +71,7 @@ if (!url || !prefix) {
 const width = Number(flag('--width') ?? 1440);
 const height = Number(flag('--height') ?? 900);
 const find = flag('--find');
+const evaluate = flag('--eval');
 const at = flag('--at')
   ?.split(',')
   .map((value) => Number(value.trim()))
@@ -237,6 +249,15 @@ try {
       const [y, max] = where.result.value;
       const file = await capture(`${prefix}-at-${fraction}.png`);
       console.log(`${file}  ${width}x${height}  y=${y}/${max}`);
+      if (evaluate) {
+        const read = await send(
+          'Runtime.evaluate',
+          // \`awaitPromise\`, so an expression can wait for a transition to land.
+          { expression: evaluate, awaitPromise: true, returnByValue: true },
+          sessionId
+        );
+        console.log(`  eval: ${JSON.stringify(read.result.value ?? read.result.description)}`);
+      }
     }
   } else {
     const { contentSize } = await send('Page.getLayoutMetrics', {}, sessionId);
