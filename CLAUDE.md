@@ -580,6 +580,41 @@ releases…"* forever on the day it went live. `ReleaseNotes.test.tsx` drives al
 three screens through a mocked hook — a test that only ever fed it releases
 would have passed on the broken code.
 
+**A release body is MARKDOWN, and compiling it as MDX cost the page a second
+time.** Lancetta 0.3.3 quotes an agent's raw error object in a bullet —
+`{ code = "-32600"; message = "Invalid request" }` — and in MDX a brace opens a
+JavaScript expression, so the body did not parse: *Could not parse expression
+with acorn*. Measured 2026-09-19 with the same compiler the page uses: as `mdx`
+that body throws while 0.3.2 and 0.3.1 compile, as `md` all three pass, together
+with a body carrying `<br/>`, an autolink and `Array<String>` in prose. Nothing
+in a release note is ever meant as JSX, so `mdxOptions: { format: 'md' }` is the
+correct reading of the input rather than a workaround. Smartypants still runs,
+which is why the rendered text reads `{ code = “-32600” }` with curly quotes —
+grep the page for `code =`, not for the straight-quoted original.
+
+**And these bodies are the least trusted input on the site.** They are written
+by hand on GitHub AFTER the site is built, so no build, no test and no lint ever
+sees them, and until this fix a single one that would not parse rejected the
+`Promise.all` in `useReleaseNotes`, left `ready` false for ever, and hid every
+OTHER release behind the skeleton. Each body now compiles on its own, a failure
+costs only its own formatting (the release is shown as plain text), and
+`setReady` sits in a `finally`: the skeleton is not a state this page may end
+in. `compileReleaseBodies` takes the compiler as an argument precisely so the
+failing branch is testable without asking jsdom to load nextra's compiler.
+
+**The sibling sites carry the un-fixed shape.** Checked the same day:
+`findergit-website`, `netfox-website` and `vicenda-website` all compile as MDX
+with no `catch`. None of their current release bodies breaks — which is exactly
+what an armed mine looks like. The first release note quoting a JSON object, a
+shell brace expansion or an HTML tag takes those pages down the same way.
+
+**The token is not the suspect, whatever the symptom suggests.** The page fetches
+`/api/github-releases`, and an empty page reads like a missing credential;
+`GITHUB_TOKEN` only widens the GitHub rate limit (60/hr per IP to 5000/hr) and
+feeds the build-time TOC. Settle it before touching Vercel: `curl` the endpoint
+with a browser User-Agent — it answered `200` with three complete releases while
+the page was blank.
+
 ## Tooling
 
 oxfmt (`.oxfmtrc.json`), oxlint + stylelint, TypeScript 6, **Yarn 4**. Do not

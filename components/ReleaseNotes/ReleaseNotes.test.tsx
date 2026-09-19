@@ -35,6 +35,26 @@ describe('ReleaseNotes', () => {
     expect(screen.getByText(empty)).toBeInTheDocument();
   });
 
+  it('shows a release whose body would not compile, as plain text', () => {
+    mocked.mockReturnValue({
+      data: [
+        {
+          id: 1,
+          tag_name: 'v0.3.3',
+          displayDate: 'September 18, 2026',
+          body: null,
+          rawBody: 'quoting { code = "-32600" } verbatim',
+        } as any,
+      ],
+      error: null,
+      isLoading: false,
+      ready: true,
+    });
+    render(<ReleaseNotes />);
+    expect(screen.getByText(/quoting \{ code = "-32600" \} verbatim/)).toBeInTheDocument();
+    expect(screen.queryByText('Loading releases...')).not.toBeInTheDocument();
+  });
+
   it('reports an error rather than a skeleton', () => {
     mocked.mockReturnValue({ data: [], error: 'boom', isLoading: false, ready: false });
     render(<ReleaseNotes />);
