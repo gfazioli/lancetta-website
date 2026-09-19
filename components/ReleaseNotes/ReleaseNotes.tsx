@@ -96,7 +96,16 @@ export function ReleaseNotes() {
             <Text size="sm" fw={800} mb={16}>
               {release.displayDate}
             </Text>
-            <MDXRemote compiledSource={release.body} components={components} />
+            {release.body ? (
+              <MDXRemote compiledSource={release.body} components={components} />
+            ) : (
+              // A body that would not compile is shown as it was written, rather
+              // than dropped or swallowed. See `compileReleaseBodies`: before
+              // this, one such body hid every release behind the skeleton.
+              <Text size="sm" style={{ whiteSpace: 'pre-wrap' }}>
+                {release.rawBody}
+              </Text>
+            )}
           </Timeline.Item>
         ))}
       </Timeline>

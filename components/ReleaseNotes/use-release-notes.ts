@@ -47,13 +47,64 @@ export interface Release {
   assets: any[];
   tarball_url: string;
   zipball_url: string;
-  body: string;
+  /**
+   * The compiled source for `MDXRemote`, or `null` when this one body could not
+   * be compiled. Never a reason to drop the release: `rawBody` still holds it.
+   */
+  body: string | null;
+  /** The body exactly as GitHub published it, for the plain-text fallback. */
+  rawBody?: string;
 }
 
 export interface TOC {
   value: string;
   depth: string;
   id: string;
+}
+
+/**
+ * A release body is MARKDOWN, not MDX, and compiling it as MDX is what took this
+ * page down on 2026-09-19: Lancetta 0.3.3 quotes an agent's raw error object,
+ * `{ code = "-32600"; message = "Invalid request" }`, and in MDX a brace opens a
+ * JavaScript expression -- `Could not parse expression with acorn`. Measured with
+ * this same compiler: as `mdx` that body throws while 0.3.2 and 0.3.1 compile, and
+ * as `md` all three pass, along with a body carrying `<br/>`, an autolink and
+ * `Array<String>` in prose. Nothing in these notes is ever meant as JSX, so the
+ * format is not a workaround, it is the correct reading of the input.
+ */
+const MARKDOWN: Parameters<typeof compileMdx>[1] = { mdxOptions: { format: 'md' } };
+
+/**
+ * Compile every body, and let one bad body cost only its own formatting.
+ *
+ * The compiler is injected so a test can drive the failing branch without asking
+ * jsdom to load nextra's compiler. The `try` is the whole point: these bodies are
+ * written on GitHub, after the site is built and by hand, so they are the least
+ * trusted input on the site -- and until today a single one of them that would
+ * not parse rejected the `Promise.all`, left the hook's `ready` false for ever,
+ * and hid the OTHER releases behind a skeleton that never resolved.
+ */
+export async function compileReleaseBodies(
+  releases: Release[],
+  compile: typeof compileMdx = compileMdx
+): Promise<Release[]> {
+  return Promise.all(
+    releases.map(async (release) => {
+      const rawBody = release.body ?? '';
+      const common = {
+        ...release,
+        rawBody,
+        displayDate: formatReleaseDate(release.published_at, release.created_at),
+      };
+      try {
+        return { ...common, body: await compile(rawBody, MARKDOWN) };
+      } catch {
+        // Shown as plain text rather than dropped. A release nobody can read is
+        // still better than a release nobody is told about.
+        return { ...common, body: null };
+      }
+    })
+  );
 }
 
 export function useReleaseNotes() {
@@ -86,15 +137,13 @@ export function useReleaseNotes() {
       }
 
       const fetchReleases = async () => {
-        const releases = await Promise.all(
-          (data.releases ?? []).map(async (release) => ({
-            ...release,
-            displayDate: formatReleaseDate(release.published_at, release.created_at),
-            body: await compileMdx(release.body),
-          }))
-        );
-        setCompiledReleases(releases);
-        setReady(true);
+        try {
+          setCompiledReleases(await compileReleaseBodies(data.releases ?? []));
+        } finally {
+          // In a `finally` on purpose. The skeleton is not a state this page may
+          // end in: whatever happened above, the reader gets an answer.
+          setReady(true);
+        }
       };
       fetchReleases();
     }
