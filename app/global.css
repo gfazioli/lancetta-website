@@ -1,41 +1,32 @@
 @import 'nextra-theme-docs/dist/style.css' layer(nextra);
 
 /**
- * Custom styles
- *
- * You can add your own custom styles here. This file will be imported after the theme styles.
- * This is a great place to add your own utility classes or override styles.
- *
- * In this case we're going to fix a glitch with the text size in the code blocks. 
+ * Custom styles, layered after the theme's.
  */
 @layer overwrite {
   html {
     scroll-behavior: smooth;
   }
 
-  /* Nextra paints its own chrome on this: the same page colour as the body. */
+  /*
+   * The bar's height, in ONE place. Nextra lays its sidebar, its table of
+   * contents and every sticky heading out against `--nextra-navbar-height`,
+   * and the bar those offsets are measured from is now ours — so the value
+   * is ours too, and `--lan-bar-height` is the name the site's own components
+   * read it by.
+   */
   :root {
+    --lan-bar-height: 46px;
+    --nextra-navbar-height: var(--lan-bar-height);
     --x-color-nextra-bg: var(--lan-body);
-
-    &:where(.dark) {
-      --x-color-nextra-bg: var(--mantine-color-dark-9);
-    }
-  }
-
-  :where(.dark) {
-    --x-color-neutral-800: var(--mantine-color-dark-6);
-  }
-
-  .x\:text-sm {
-    font-size: var(--x-text-sm) !important;
-    line-height: var(--tw-leading, var(--x-text-sm--line-height)) !important;
   }
 
   /*
-   * Nextra's own accent, which is independent of the Mantine theme: these three
+   * Nextra's own accent, which is independent of the Mantine theme: these
    * class names paint the active sidebar item and the "On This Page" marker.
-   * Left at the template's blue they render FinderGit's brand inside Lancetta's
-   * docs, which is the kind of inherited detail a build cannot catch.
+   * Left at the template's blue they render FinderGit's brand inside
+   * Lancetta's docs, which is the kind of inherited detail a build cannot
+   * catch.
    */
   .x\:bg-primary-100 {
     background-color: var(--mantine-color-lancetta-6) !important;
@@ -49,7 +40,7 @@
     li {
       a.x\:text-primary-600 {
         position: relative;
-        color: var(--mantine-color-lancetta-6) !important;
+        color: var(--mantine-color-lancetta-7) !important;
       }
 
       a.x\:text-primary-600::before {
@@ -64,6 +55,42 @@
         z-index: 10;
       }
     }
+  }
+
+  .x\:text-sm {
+    font-size: var(--x-text-sm) !important;
+    line-height: var(--tw-leading, var(--x-text-sm--line-height)) !important;
+  }
+
+  /*
+   * The search box lives in the dark bar now, so its own chrome has to stop
+   * being a light input on a light page. Scoped to the bar — the same
+   * component renders in Nextra's mobile sidebar, where the page colour is
+   * right.
+   */
+  .lan-menubar .nextra-search {
+    color: rgb(255 255 255 / 92%);
+  }
+
+  /* The results are a light card: they keep the page's ink, not the bar's. */
+  .lan-menubar .nextra-search-results {
+    color: var(--lan-ink);
+  }
+
+  .lan-menubar .nextra-search input {
+    border-color: rgb(255 255 255 / 14%);
+    background-color: rgb(255 255 255 / 7%);
+    color: #fff;
+  }
+
+  .lan-menubar .nextra-search input::placeholder {
+    color: rgb(255 255 255 / 45%);
+  }
+
+  .lan-menubar .nextra-search kbd {
+    border-color: rgb(255 255 255 / 16%);
+    background-color: rgb(255 255 255 / 8%);
+    color: rgb(255 255 255 / 70%);
   }
 }
 

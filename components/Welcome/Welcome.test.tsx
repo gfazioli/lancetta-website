@@ -1,5 +1,5 @@
 import { render, screen } from '@/test-utils';
-import { productSections } from '../ProductNav/ProductNav';
+import { productSections } from '../MenuBarHeader/sections';
 import { Welcome } from './Welcome';
 
 describe('Welcome component', () => {
@@ -23,9 +23,11 @@ describe('Welcome component', () => {
     }
   });
 
-  it('renders an anchor for every section the product bar links to', () => {
+  it('renders an anchor for every section the menu bar can link to', () => {
     // A bar link to an id nobody renders scrolls nowhere, and nothing reports
-    // it: the list and the page are kept honest against each other here.
+    // it: the list and the page are kept honest against each other here. The
+    // header shows a subset; this asserts the whole contract, so an id can be
+    // promoted into the bar without first discovering it does not exist.
     const { container } = render(<Welcome />);
     for (const section of productSections) {
       expect(container.querySelector(`#${section.id}`)).not.toBeNull();

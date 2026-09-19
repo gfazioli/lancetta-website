@@ -1,0 +1,284 @@
+/*
+ * The dock is the full-width strip the bar hangs in; the bar is the object.
+ * The dock carries a short fade of the page colour so content scrolling up
+ * past the bar's rounded corners dissolves instead of sliding out from under
+ * them, and it takes no pointer events — only the bar does — or it would
+ * swallow clicks across the whole top of the page.
+ */
+.dock {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  pointer-events: none;
+  background: linear-gradient(
+    to bottom,
+    var(--lan-body) 0%,
+    color-mix(in srgb, var(--lan-body) 80%, transparent) 62%,
+    transparent 100%
+  );
+  padding-bottom: rem(14px);
+}
+
+/*
+ * The bar: attached to the top edge, narrower than the page, rounded at the
+ * two BOTTOM corners only, so it reads as something the page hangs from. It
+ * is the one dark object on a light page, on purpose: it is standing in for
+ * the macOS menu bar, which is where the product lives.
+ */
+.bar {
+  display: flex;
+  align-items: center;
+  gap: rem(14px);
+  width: min(rem(1180px), calc(100% - rem(32px)));
+  height: var(--lan-bar-height, rem(46px));
+  margin-inline: auto;
+  padding-inline: rem(14px);
+  border-radius: 0 0 rem(16px) rem(16px);
+  background: linear-gradient(180deg, #131931 0%, var(--lan-bar) 100%);
+  box-shadow:
+    0 1px 0 rgb(255 255 255 / 6%) inset,
+    0 18px 40px -22px rgb(10 14 32 / 70%),
+    0 2px 10px -4px rgb(10 14 32 / 35%);
+  color: rgb(255 255 255 / 92%);
+  pointer-events: auto;
+
+  /* Point (a): the bar arrives with the hero rather than being there first. */
+  opacity: 0;
+  transform: translateY(rem(-10px));
+  transition:
+    opacity 520ms ease,
+    transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.bar[data-ready='true'] {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: $mantine-breakpoint-sm) {
+  .bar {
+    width: 100%;
+    gap: rem(8px);
+    padding-inline: rem(10px);
+    border-radius: 0;
+  }
+}
+
+.brand {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: rem(8px);
+  padding-inline: rem(4px);
+  color: inherit;
+  text-decoration: none;
+}
+
+.brandName {
+  font-size: rem(14px);
+  font-weight: 700;
+  letter-spacing: rem(-0.1px);
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    display: none;
+  }
+}
+
+/*
+ * The menus. `margin-inline-start: auto` is what puts them on the RIGHT with
+ * the mark on the left, the way a menu bar reads; the status items follow
+ * them. They hide below md, where the hamburger takes over.
+ */
+.menus {
+  display: flex;
+  align-items: center;
+  gap: rem(2px);
+  margin-inline-start: auto;
+
+  @media (max-width: $mantine-breakpoint-md) {
+    display: none;
+  }
+}
+
+/*
+ * A menu-bar item, down to the highlight: no underline, a rounded rect that
+ * appears under the pointer, and the same rect held open for the section the
+ * reader is in.
+ */
+.menu {
+  display: inline-block;
+  padding: rem(5px) rem(10px);
+  border-radius: rem(7px);
+  color: rgb(255 255 255 / 72%);
+  font-size: rem(13px);
+  font-weight: 500;
+  white-space: nowrap;
+  text-decoration: none;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease;
+}
+
+.menu:hover {
+  color: #fff;
+  background-color: rgb(255 255 255 / 10%);
+}
+
+.menu[aria-current='location'] {
+  color: #fff;
+  background-color: rgb(255 255 255 / 14%);
+}
+
+.status {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: rem(10px);
+  margin-inline-start: rem(4px);
+}
+
+/*
+ * A hairline before the status items, the way macOS separates the menus from
+ * the status area. Drawn on the search box's start edge so it moves with it.
+ */
+.search {
+  --nextra-search-width: 0;
+
+  display: flex;
+  align-items: center;
+  padding-inline-start: rem(10px);
+  border-inline-start: 1px solid var(--lan-bar-line);
+
+  @media (max-width: 64em) {
+    display: none;
+  }
+}
+
+/* Lancetta's own status item, rebuilt: see MenuBarReading.tsx. */
+.reading {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(5px);
+  padding: rem(3px) rem(8px);
+  border-radius: rem(7px);
+  background-color: rgb(255 255 255 / 7%);
+  color: #fff;
+  font-size: rem(12.5px);
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: rem(-0.1px);
+  white-space: nowrap;
+  transition:
+    background-color 220ms ease,
+    box-shadow 220ms ease;
+}
+
+/*
+ * macOS holds a status item highlighted for as long as its menu is open, and
+ * the hero's first frame IS that menu — so the bar says so.
+ */
+.reading[data-open='true'] {
+  background-color: rgb(255 255 255 / 16%);
+  box-shadow: 0 0 0 1px rgb(255 255 255 / 12%);
+}
+
+.readingMark {
+  display: inline-flex;
+  color: var(--lan-claude-lit);
+  transition: color 260ms ease;
+}
+
+.reading[data-agent='codex'] .readingMark {
+  color: var(--lan-codex-lit);
+}
+
+.readingDot {
+  color: rgb(255 255 255 / 45%);
+}
+
+.readingReset {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(3px);
+  color: rgb(255 255 255 / 78%);
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .readingDot,
+  .readingReset {
+    display: none;
+  }
+}
+
+/*
+ * The one action. A filled pill rather than a menu, because it is the thing
+ * the bar is for — and the accent is the icon's third bar, the hue the app
+ * spends on no agent.
+ */
+.cta {
+  display: inline-flex;
+  align-items: center;
+  height: rem(28px);
+  padding-inline: rem(14px);
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--mantine-color-lancetta-5), var(--lan-violet));
+  color: #fff;
+  font-size: rem(13px);
+  font-weight: 600;
+  white-space: nowrap;
+  text-decoration: none;
+  box-shadow: 0 6px 16px -8px color-mix(in srgb, var(--lan-violet) 90%, transparent);
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.cta:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 10px 22px -10px color-mix(in srgb, var(--lan-violet) 95%, transparent);
+}
+
+@media (max-width: $mantine-breakpoint-xs) {
+  .cta {
+    display: none;
+  }
+}
+
+.burger {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(30px);
+  height: rem(30px);
+  padding: 0;
+  border: none;
+  border-radius: rem(7px);
+  background-color: transparent;
+  color: inherit;
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.burger:hover {
+  background-color: rgb(255 255 255 / 10%);
+}
+
+@media (max-width: $mantine-breakpoint-md) {
+  .burger {
+    display: inline-flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bar,
+  .menu,
+  .reading,
+  .cta {
+    transition: none;
+  }
+
+  .bar {
+    opacity: 1;
+    transform: none;
+  }
+}

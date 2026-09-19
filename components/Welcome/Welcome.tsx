@@ -1,19 +1,16 @@
 'use client';
 
-import { type CSSProperties, useState } from 'react';
+import type { CSSProperties } from 'react';
 import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
-import { TextAnimate } from '@gfazioli/mantine-text-animate';
 import {
   IconAlertTriangle,
-  IconArrowRight,
   IconBellRinging,
   IconBook2,
   IconChartHistogram,
   IconClockHour4,
   IconCreditCardOff,
   IconGauge,
-  IconHistory,
   IconLayoutNavbar,
   IconPalette,
   IconTrash,
@@ -23,134 +20,35 @@ import {
   Box,
   Button,
   Container,
-  Grid,
   Group,
-  Image,
-  Modal,
   Paper,
   SimpleGrid,
   Stack,
   Text,
   ThemeIcon,
   Title,
-  UnstyledButton,
 } from '@mantine/core';
 import config from '@/config';
 import { BuiltForMacSection } from '../BuiltForMacSection/BuiltForMacSection';
 import { CostsNothingSection } from '../CostsNothingSection/CostsNothingSection';
+import { FAQ } from '../FAQ/FAQ';
+import { HeroStage } from '../HeroStage/HeroStage';
 import { ProblemSection } from '../ProblemSection/ProblemSection';
-import { ProductNav } from '../ProductNav/ProductNav';
-import { ReleaseCadence } from '../ReleaseCadence/ReleaseCadence';
 import {
   fallbackReleaseCadence,
   type ReleaseCadence as Cadence,
 } from '../ReleaseCadence/release-cadence';
 import { SectionHeading } from '../SectionHeading/SectionHeading';
 import { ShareButtons } from '../ShareButtons/ShareButtons';
-import { type GalleryShot, ScrollGallery } from '../ScrollGallery/ScrollGallery';
 import { SolutionSection } from '../SolutionSection/SolutionSection';
-import { FAQ } from '../FAQ/FAQ';
 import classes from './Welcome.module.css';
-
-/**
- * Fullscreen image lightbox: a transparent fullScreen Modal that centres the
- * image at its natural size, capped to the viewport. Clicking anywhere closes
- * it, so the whole backdrop is the dismiss target.
- */
-function FullscreenImageModal({
-  opened,
-  onClose,
-  src,
-  alt,
-}: {
-  opened: boolean;
-  onClose: () => void;
-  src: string;
-  alt: string;
-}) {
-  return (
-    <Modal
-      opened={opened}
-      onClose={onClose}
-      fullScreen
-      withCloseButton={false}
-      padding={0}
-      styles={{
-        content: { backgroundColor: 'transparent', boxShadow: 'none' },
-        body: { height: '100%' },
-        overlay: { backgroundColor: 'rgba(0, 0, 0, 0.82)' },
-      }}
-    >
-      <UnstyledButton
-        onClick={onClose}
-        aria-label="Close enlarged screenshot"
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          width: '100%',
-          height: '100%',
-          cursor: 'zoom-out',
-        }}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          style={{ maxWidth: '94vw', maxHeight: '92vh', width: 'auto', height: 'auto' }}
-        />
-      </UnstyledButton>
-    </Modal>
-  );
-}
-
-/** A screenshot that opens full size on click, with a soft alpha-following drop. */
-function ZoomableScreenshot({
-  src,
-  alt,
-  maw,
-  shadowOpacity = 0.55,
-}: {
-  src: string;
-  alt: string;
-  maw?: number;
-  shadowOpacity?: number;
-}) {
-  const [opened, setOpened] = useState(false);
-
-  return (
-    <>
-      <UnstyledButton
-        onClick={() => setOpened(true)}
-        aria-label={`Open enlarged screenshot: ${alt}`}
-        style={{ display: 'block', width: '100%', cursor: 'zoom-in' }}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          display="block"
-          mx="auto"
-          style={{
-            width: '100%',
-            maxWidth: maw,
-            height: 'auto',
-            // `drop-shadow` (not box-shadow) follows the PNG's alpha channel,
-            // so the shadow traces the menu's rounded corners rather than the
-            // square <img> bounding box.
-            filter: `drop-shadow(0 30px 60px rgba(0, 0, 0, ${shadowOpacity}))`,
-          }}
-        />
-      </UnstyledButton>
-      <FullscreenImageModal opened={opened} onClose={() => setOpened(false)} src={src} alt={alt} />
-    </>
-  );
-}
 
 /*
  * The strip under the hero: what it is, what it does, what it costs. Three
- * sentences, because that is what a product bar promising "what it is / what
- * it does / features" has to answer before the page asks for a scroll. The
- * third one is the founding constraint and the one measured claim on the
- * page; its own section further down carries the numbers.
+ * sentences, because that is what a page promising "what it is / what it does
+ * / features" has to answer as soon as the hero releases its pin. The third
+ * one is the founding constraint and the one measured claim on the page; its
+ * own section further down carries the numbers.
  */
 const glance = [
   {
@@ -167,38 +65,6 @@ const glance = [
   },
 ];
 
-/*
- * The three surfaces, in the order a reader meets them, for the scroll-driven
- * gallery under the hero. It replaced a timer-and-dots carousel: the frame is
- * now a function of how far the reader has scrolled, which is what the user
- * asked for and what Apple's product pages do. Three frames, not four — the
- * light-mode menu is the same content as the dark one and made a weak step;
- * it still lives in the docs.
- */
-const galleryShots: GalleryShot[] = [
-  {
-    src: '/screenshot-menu-dark.png',
-    alt: 'The Lancetta menu: Claude Code and Codex, each with a 5-hour and a 7-day quota window and the time it resets',
-    title: 'The menu.',
-    caption:
-      'Both windows for both agents, the plan each account is on, and when every window resets. The number and the bar say the same thing, so a glance is enough.',
-  },
-  {
-    src: '/screenshot-notch-open.png',
-    alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, and both windows as bars',
-    title: 'The island.',
-    caption:
-      'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. Point at it and it opens.',
-  },
-  {
-    src: '/screenshot-window-overview.png',
-    alt: 'The Lancetta window: the daily token chart for Codex, and both agents’ quota bars underneath',
-    title: 'The window.',
-    caption:
-      '⌘O for the rest: daily tokens over weeks, each agent in detail, and the background processes the agents have left running.',
-  },
-];
-
 interface Feature {
   icon: typeof IconGauge;
   title: string;
@@ -211,8 +77,8 @@ interface Feature {
 /*
  * `badge: 'Next'` means the feature is NOT in the build being described. Keep
  * the description in the future tense to match, and remove both together when
- * it ships — a card that says "will" with no badge reads as a missing feature,
- * and a card with no "will" and a badge reads as a lie.
+ * it ships — a card that says "will" with no badge reads as a missing
+ * feature, and a card with no "will" and a badge reads as a lie.
  */
 const features: Feature[] = [
   {
@@ -333,182 +199,33 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
   const released = config.app.released;
 
   return (
-    /*
-     * `--lan-subnav-height` is the product bar's height, declared once here
-     * and inherited by everything laid out against it: the bar itself, the
-     * pinned gallery's stage, and the scroll margin of every anchor the bar
-     * links to. The bar is sticky under Nextra's navbar, so two bars sit above
-     * the content on this page and only this page.
-     */
-    <div className={classes.home} style={{ '--lan-subnav-height': '48px' } as CSSProperties}>
-      <ProductNav />
+    <div className={classes.home}>
+      {/*
+        The hero is the product demonstrated: a pinned stage hanging off the
+        menu bar in the header, one frame per surface, the copy at the bottom.
+        See HeroStage.tsx — it also drives the reading in the bar, so the
+        thing at the top of the page does what the page is describing.
+      */}
+      <HeroStage cadence={cadence} />
 
-      {/* ─── Hero ─── */}
-      <Box component="section" id="overview" pos="relative" className={classes.hero}>
-        {/*
-          The Scene wash is the icon's own light. The plate is azure at its
-          top edge and violet at its far corner with a magenta rim beyond it,
-          and that is the mesh; the glows sit behind the product, on the
-          right, so the light on the page comes from where the screenshots
-          are — cyan over the window, magenta under the menu, as on the icon.
-        */}
-        <Scene lazy>
-          <Scene.Mesh
-            stops={[
-              { color: '#0D7DFA', position: '14% 18%', spread: 55 },
-              { color: '#672AFA', position: '82% 72%', spread: 55 },
-              { color: '#B117C5', position: '104% 30%', spread: 42 },
-            ]}
-            opacity={0.2}
-          />
-          <Scene.Glow color="#13D1FB" size={560} blur={150} opacity={0.32} top="4%" left="60%" />
-          <Scene.Glow color="#B117C5" size={440} blur={140} opacity={0.22} top="68%" left="90%" />
-          <Scene.Glow color="#0546BF" size={480} blur={140} opacity={0.26} top="58%" left="-10%" />
-          <Scene.DotGrid color="gray" opacity={0.14} spacing={32} />
-          <Scene.Noise opacity={0.022} />
-        </Scene>
-
-        <Container size="lg" w="100%" pos="relative" style={{ zIndex: 1 }}>
-          <div className={classes.heroGrid}>
-            <div className={classes.heroCopy}>
-              {/* The product's name and category, before the claim: what it is. */}
-              <div className={classes.heroBrand}>
-                <Image src="/icon-512x512.png" alt="" w={40} h={40} className={classes.heroIcon} />
-                <Text component="span" fw={600} fz="md">
-                  Lancetta
-                </Text>
-                <Text component="span" fz="md" className={classes.heroTagline}>
-                  · Menu-bar quota monitor for coding agents
-                </Text>
-              </div>
-
-              <Title className={classes.title}>
-                <span className={classes.titleLine}>Every agent&apos;s quota.</span>
-                <span className={classes.titleLine}>One glance.</span>
-                <span className={classes.titleLine}>
-                  <TextAnimate
-                    animate="in"
-                    by="character"
-                    inherit
-                    variant="gradient"
-                    component="span"
-                    segmentDelay={0.12}
-                    duration={1.5}
-                    animation="scale"
-                    animateProps={{ scaleAmount: 2 }}
-                    gradient={{ from: '#0D7DFA', to: '#672AFA' }}
-                  >
-                    Costs nothing.
-                  </TextAnimate>
-                </span>
-              </Title>
-
-              <Text c="dimmed" fz={{ base: 'lg', md: 'xl' }} lh={1.5} className={classes.lead}>
-                Both windows for both agents, when each one resets, and how old every reading is —
-                in your Mac&apos;s menu bar, without spending a token to find out.
-              </Text>
-
-              <Group mt="xl" gap="sm" className={classes.actions}>
-                {released ? (
-                  <Button
-                    href="/download"
-                    component="a"
-                    leftSection={<IconGauge size={20} />}
-                    size="lg"
-                    radius="xl"
-                    px={28}
-                  >
-                    Download for macOS
-                  </Button>
-                ) : (
-                  <Button
-                    href="/docs"
-                    component="a"
-                    leftSection={<IconBook2 size={20} />}
-                    size="lg"
-                    radius="xl"
-                    px={28}
-                  >
-                    See what it does
-                  </Button>
-                )}
-                <Button
-                  href="/docs/roadmap"
-                  component="a"
-                  rightSection={<IconArrowRight size={18} />}
-                  variant="subtle"
-                  size="lg"
-                >
-                  {released ? 'What’s next' : 'Follow the build'}
-                </Button>
-              </Group>
-
-              <Stack gap="sm" mt="md" className={classes.meta}>
-                <Text c="dimmed" size="sm">
-                  {/*
-                    One interpolated template literal rather than JSX text. In a
-                    text chunk spanning more than one source line, the space
-                    between an interpolation and a following HTML entity is
-                    dropped — both sibling sites shipped "v0.28.0· macOS 15+"
-                    that way for months. An explicit {' '} does not survive
-                    oxfmt, which removes it and rejoins the lines; a string is
-                    out of reach of both the formatter and the JSX rules.
-                  */}
-                  {released
-                    ? `Free · v${config.app.version} · macOS ${config.app.minMacOS}+ · Universal · Signed & notarized`
-                    : `Free · v${config.app.version} in progress · macOS ${config.app.minMacOS}+ · No account, no server, no telemetry`}
-                </Text>
-                {released && <ReleaseCadence cadence={cadence} />}
-              </Stack>
+      <Container size="lg">
+        <dl className={classes.glance}>
+          {glance.map((item) => (
+            <div key={item.label} className={classes.glanceItem}>
+              <dt className={classes.glanceLabel}>{item.label}</dt>
+              <dd className={classes.glanceBody}>{item.body}</dd>
             </div>
+          ))}
+        </dl>
+      </Container>
 
-            {/*
-              The product, photographed: the menu in front, because the menu
-              IS the app, and the window behind it, because there is one when
-              you want more. The island gets its own frame in the gallery
-              below; three objects here would be a collage, not a product.
-            */}
-            <div className={classes.cluster}>
-              <Image
-                src="/screenshot-window-overview.png"
-                alt="The Lancetta window behind the menu: the daily token chart for Codex, and both agents’ quota bars underneath"
-                className={classes.clusterWindow}
-              />
-              <Image
-                src="/screenshot-menu-dark.png"
-                alt="The Lancetta menu: Claude Code and Codex, each with a 5-hour and a 7-day quota window and the time it resets"
-                className={classes.clusterMenu}
-                fetchPriority="high"
-              />
-            </div>
-          </div>
-
-          <dl className={classes.glance}>
-            {glance.map((item) => (
-              <div key={item.label} className={classes.glanceItem}>
-                <dt className={classes.glanceLabel}>{item.label}</dt>
-                <dd className={classes.glanceBody}>{item.body}</dd>
-              </div>
-            ))}
-          </dl>
-        </Container>
-      </Box>
-
-      {/* ─── Where you read it: pinned, and driven by the scroll ─── */}
-      <ScrollGallery
-        id="where"
-        shots={galleryShots}
-        eyebrow="Where you read it"
-        title="One reading. Three places."
-      />
-
-      {/* ─── The Problem ─── */}
+      {/* The Problem */}
       <ProblemSection />
 
-      {/* ─── One job ─── */}
+      {/* One job */}
       <SolutionSection />
 
-      {/* ─── Features ─── */}
+      {/* Features */}
       <Box id="features" py={80} className={classes.sectionBand}>
         <Container size="lg">
           <SectionHeading
@@ -530,7 +247,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                 p="lg"
                 className={`${classes.featureCard} ${classes.cardLink}`}
                 style={
-                  { '--card-color': `var(--mantine-color-${feature.color}-5)` } as CSSProperties
+                  { '--card-color': `var(--mantine-color-${feature.color}-6)` } as CSSProperties
                 }
               >
                 {feature.badge && (
@@ -561,70 +278,13 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         </Container>
       </Box>
 
-      {/* ─── The founding constraint ─── */}
+      {/* The founding constraint */}
       <CostsNothingSection />
 
-      {/* ─── Built for macOS ─── */}
+      {/* Built for macOS */}
       <BuiltForMacSection />
 
-      {/* ─── In detail: the reading, and its age ─── */}
-      <Box py={96} className={classes.plateBand}>
-        <Container size="lg">
-          {/*
-            The Limits pane rather than the menu a third time: it is the one
-            surface that puts "seen 1s ago" and "live" side by side, which is
-            what this band is about.
-          */}
-          <SectionHeading
-            tone="onDark"
-            eyebrow="In detail"
-            title="Live, or seen a moment ago"
-            lead="Two agents, four windows, the reset time for each — and beside every reading, when it was last true."
-            mb={64}
-          />
-
-          <Grid gap={{ base: 40, md: 56 }} align="center">
-            <Grid.Col span={{ base: 12, md: 7 }}>
-              <ZoomableScreenshot
-                src="/screenshot-window-limits.png"
-                alt="The Limits pane of the Lancetta window: Claude Code seen a second ago and Codex live, each with its 5-hour and 7-day bar and the time it resets"
-                shadowOpacity={0.7}
-              />
-            </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 5 }}>
-              <Stack gap="md">
-                <ThemeIcon size={44} radius="md" variant="light" color="violet">
-                  <IconHistory size={24} />
-                </ThemeIcon>
-                <Title order={3} fz={{ base: 24, sm: 30 }} fw={800} lh={1.15} c="white">
-                  The reading, and how old it is
-                </Title>
-                <Text c="gray.4" size="md" lh={1.65}>
-                  Both agents answer an account read — Codex over its own local interface, Claude
-                  with the sign-in Claude Code keeps on your Mac — so both refresh on demand once
-                  connected. Every reading carries the time it was taken, and the window says how
-                  long ago that was.
-                </Text>
-                <Button
-                  component={Link}
-                  href="/docs/how-it-reads"
-                  variant="subtle"
-                  color="gray"
-                  size="compact-md"
-                  rightSection={<IconArrowRight size={16} />}
-                  w="fit-content"
-                  px={0}
-                  c="white"
-                >
-                  How it reads each agent
-                </Button>
-              </Stack>
-            </Grid.Col>
-          </Grid>
-        </Container>
-      </Box>
-
-      {/* ─── What’s next ─── */}
+      {/* What’s next */}
       <Container id="roadmap" size="lg" py={80}>
         <SectionHeading
           eyebrow="Where it is going"
@@ -643,7 +303,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
             >
               <Stack gap={8}>
                 <Group gap="xs">
-                  <Text fw={900} fz={20} style={{ color: 'var(--lan-accent)' }}>
+                  <Text fw={900} fz={20} style={{ color: 'var(--lan-accent-ink)' }}>
                     {step.version}
                   </Text>
                   {step.state === 'shipped' && (
@@ -669,13 +329,12 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         </SimpleGrid>
       </Container>
 
-      {/* ─── Get Started CTA ─── */}
-      <Box pos="relative" py={80} className={classes.plateBand}>
+      {/* Get Started CTA */}
+      <Box pos="relative" py={88} className={classes.auroraBand}>
         <Scene lazy>
-          <Scene.StarField count={{ base: 60, md: 120 }} twinkle opacity={0.7} />
-          <Scene.ShootingStar count={2} minInterval={5} maxInterval={12} opacity={0.5} />
-          <Scene.Glow color="#672AFA" size={500} blur={170} opacity={0.24} top="30%" left="50%" />
-          <Scene.Glow color="#13D1FB" size={360} blur={150} opacity={0.14} top="80%" left="8%" />
+          <Scene.Glow color="#824BFC" size={520} blur={170} opacity={0.16} top="26%" left="50%" />
+          <Scene.Glow color="#13D1FB" size={380} blur={150} opacity={0.12} top="74%" left="10%" />
+          <Scene.Glow color="#B117C5" size={360} blur={150} opacity={0.1} top="40%" left="88%" />
         </Scene>
         <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
           <Stack align="center" gap="lg">
@@ -683,11 +342,11 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
               size="sm"
               fw={700}
               tt="uppercase"
-              style={{ letterSpacing: 3, color: 'var(--mantine-color-lancetta-4)' }}
+              style={{ letterSpacing: 3, color: 'var(--lan-accent-ink)' }}
             >
               {released ? 'Get started' : 'Not yet'}
             </Text>
-            <Title order={2} ta="center" fz={{ base: 36, sm: 48 }} fw={900} c="white">
+            <Title order={2} ta="center" fz={{ base: 36, sm: 48 }} fw={900}>
               Know where you stand.
             </Title>
             <Text c="dimmed" ta="center" size="lg" maw={520}>
@@ -718,8 +377,8 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         </Container>
       </Box>
 
-      {/* ─── FAQ ─── */}
-      <Container id="faq" size="lg" py={64}>
+      {/* FAQ */}
+      <Container id="faq" size="lg" py={72}>
         <SectionHeading align="center" eyebrow="FAQ" title="Frequently asked questions" mb={24} />
         <Box w="100%" maw={700} mx="auto">
           <FAQ />

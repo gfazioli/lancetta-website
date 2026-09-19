@@ -13,21 +13,28 @@ import { createTheme } from '@mantine/core';
  * pass read it bottom-up and had every bar upside down, which is why each
  * value below names where on the icon it came from:
  *
- *   orange  #FCBE34 (top) → #FC7524 → #F23328 (foot)
- *   teal    #84F9D7 (top) → #0ED5D4 → #0292F1 (foot)
- *   violet  #CC84FA (top) → #9248FA → #672AFA (foot)
- *   plate   #0546BF (top edge) · #070E24 (core, between the bars) · #1C0F50 (bottom-right)
- *   rim     #13D1FB (top-left) · #683DFB (top-right) · #B117C5 (bottom-right)
+ *   orange  #FCBE34 (top) —> #FC7524 —> #F23328 (foot)
+ *   teal    #84F9D7 (top) —> #0ED5D4 —> #0292F1 (foot)
+ *   violet  #CC84FA (top) —> #9248FA —> #672AFA (foot)
+ *   plate   #0546BF (top edge) - #070E24 (core, between the bars) - #1C0F50 (bottom-right)
+ *   rim     #13D1FB (top-left) - #683DFB (top-right) - #B117C5 (bottom-right)
  *
  * Two of the three bar hues are already SPOKEN FOR inside the app: teal is
  * Codex (`CodexSource.tintHex = 0x2FBFA8`) and orange is Claude
  * (`ClaudeSource.tintHex = 0xE8833A`). Colour there means *which agent*, so
  * the site keeps them for exactly that and takes its brand accent from the
- * third bar — the one the app spends on no agent. A site accent borrowed from
- * an agent hue would disagree with every screenshot on the page.
+ * third bar — the one the app spends on no agent.
+ *
+ * THE SITE IS LIGHT-ONLY (2026-09-19). There is no scheme switch and no dark
+ * ladder any more: the icon is a dark object, and the page around it is the
+ * light it is lit by. What used to be the `dark` ladder is gone; the greys
+ * below are a LIGHT ladder cut on the plate's own hue, so a dimmed line on
+ * this page is the plate's navy diluted rather than a neutral grey, which
+ * beside this icon reads as a different product.
  *
  * The page-level tokens cut from the plate and the rim (`--lan-plate`,
- * `--lan-azure`, `--lan-cyan`, `--lan-magenta`, …) live in `theme/global.css`.
+ * `--lan-azure`, `--lan-cyan`, `--lan-magenta`, ...) live in
+ * `theme/global.css`.
  */
 
 /** The agent tints, copied from the app's own sources so the two never drift. */
@@ -38,7 +45,7 @@ export const AGENT_TINT = {
   unknown: '#8E8E93',
 } as const;
 
-/** The three bar gradients in the icon, top → foot, sampled off the master. */
+/** The three bar gradients in the icon, top to foot, sampled off the master. */
 export const ICON_BARS = {
   claude: ['#FCBE34', '#F23328'],
   codex: ['#84F9D7', '#0292F1'],
@@ -60,17 +67,23 @@ export const ICON_PLATE = {
 
 export const theme = createTheme({
   primaryColor: 'lancetta',
+  /**
+   * Not `#000`: the page's ink is the plate's navy at text weight, so a
+   * heading and the icon beside it belong to one family. 16.2:1 on the body.
+   */
+  black: '#141B33',
+  white: '#FFFFFF',
   colors: {
     /**
      * THE ICON'S THIRD BAR, laddered — not eyeballed.
      *
      * The bar runs `#9248FA` to `#672AFA`; its midpoint sits at OKLCH hue
-     * 291°, and the ladder steps that hue down a lightness scale with the
-     * chroma tapering at the pale end, so the tints stay violet instead of
-     * going to pastel mud. Shade 6 is `#824BFC`: white on it measures 4.82:1,
-     * which clears AA for normal text — Mantine's own blue-6 is 3.1:1, and
-     * the bar's own midpoint 4.64:1. Shade 4 (`#B096FF`, 7.9:1 on dark-9) is
-     * the dark-scheme accent.
+     * 291 degrees, and the ladder steps that hue down a lightness scale with
+     * the chroma tapering at the pale end, so the tints stay violet instead
+     * of going to pastel mud. Shade 6 is `#824BFC`: white on it measures
+     * 4.82:1 and it measures 4.57:1 on the body, both of which clear AA for
+     * normal text. Shade 7 (`#7132E5`, 6.06:1) is the accent where the
+     * accent is TYPE rather than a fill.
      */
     lancetta: [
       '#F6F5FF',
@@ -85,26 +98,26 @@ export const theme = createTheme({
       '#4D09A7',
     ],
     /**
-     * THE PLATE'S NAVY, as the dark scheme's greys.
+     * THE PLATE'S NAVY, diluted into a LIGHT grey ladder.
      *
-     * Mantine's default dark ladder is neutral, and a neutral grey beside
-     * this icon reads as a different product. This one is cut on the plate's
-     * hue (OKLCH 263°, from `#132856`) with the chroma held low — 0.05 at the
-     * dark end, against the plate core's own 0.047 — so it reads as depth
-     * rather than as blue. Contrast, measured: text (dark-0) 16.1:1 and dimmed
-     * text (dark-2) 6.5:1 on the dark-9 body, 5.4:1 on a dark-7 card.
+     * Cut on the plate's hue with the chroma held low, so it reads as cool
+     * depth rather than as blue. Contrast, measured against the `#FAF8FF`
+     * body: gray-6 (Mantine's dimmed in a light scheme) 4.55:1, gray-7
+     * 5.9:1, gray-8 9.2:1. The default Mantine gray-6 lands at 4.0:1 here,
+     * which is why this ladder exists at all: every dimmed line on the page
+     * reads that token.
      */
-    dark: [
-      '#E6EAF0',
-      '#CCD1DC',
-      '#8B96AA',
-      '#596680',
-      '#3D4C68',
-      '#2A3956',
-      '#1D2B47',
-      '#132039',
-      '#0A152C',
-      '#040C20',
+    gray: [
+      '#F7F7FC',
+      '#EFEFF7',
+      '#E1E3F0',
+      '#CDD0E3',
+      '#AFB4CD',
+      '#8B91B1',
+      '#6A7191',
+      '#525978',
+      '#3A415C',
+      '#262C42',
     ],
   },
   headings: {
