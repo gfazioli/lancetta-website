@@ -172,7 +172,7 @@ than `#000`.
 
 **There is no `.plateBand` any more.** The two dark slabs (the in-detail band
 and the closing CTA) read as holes on a light-only page: the in-detail band's
-content became the hero's fourth frame, and the CTA is `.auroraBand` — the
+content became one of the hero's frames, and the CTA is `.auroraBand` — the
 same three lights on the page's own white, under the same 2px neon rim. The one
 dark object on the site is the menu bar in the header, and it is dark because it
 is chrome: it stands in for the macOS menu bar, which is where the product
@@ -266,8 +266,13 @@ else.
 
 **The island was then replaced with a cleanly-keyed version** (same day, from
 the user), whose margins are genuinely transparent — max alpha 0.004 down the
-side band — so only the CROP applied: 1780x883 to 1651x727. The crop is the
-half that keeps mattering. `object-fit: contain` fits the whole canvas, so
+side band — so only the CROP applied: 1780x883 to 1645x721, with margin ZERO.
+Any margin at all is a pale hairline between two near-black objects: 3px of it
+showed as a gap between the tab and the bar, and the fix is both the tight crop
+and a `-5px` inset, so the tab's own antialiased rows are clipped by the
+stage's `overflow: hidden` rather than drawn. Measured at the seam afterwards,
+row by row: `#0B1328` (bar) straight to `#0A1727` (island), no light row. The
+crop is the half that keeps mattering. `object-fit: contain` fits the whole canvas, so
 transparent margin is empty box: it shrinks the object and, for the island,
 lifts it off the bar it is supposed to be cut out of. The tab must also stay
 the image's horizontal centre (measured: 825.0 of 825.0), because the bar's
@@ -436,7 +441,9 @@ It is the same mechanism the gallery was — a tall track, a viewport-high stage
 stuck under the bar, and the frame a pure function of how far the stage has
 travelled through the track (`frameIndex`, tested, now in
 `HeroStage/frame-index.ts`) — with the hero's own headline as frame 0 and the
-three surfaces after it. **Nothing intercepts the wheel**, which is what makes
+four surfaces after it: the island, the window's Overview, its Usage chart and
+its Limits pane. Adding one is a row in the `frames` array, and its `reading`
+is read OFF its own screenshot (see the comment above `heroReading`). **Nothing intercepts the wheel**, which is what makes
 it behave the same with a trackpad, a mouse, the keyboard and VoiceOver. Phones
 and `prefers-reduced-motion` get the same frames as a plain stack. The frame is
 measured between the stage's box and the track's box, never against the
@@ -465,6 +472,15 @@ probe after a capture looked wrong:
 - **The artifacts hang from the bar** (`object-position: top`). `contain`
   letterboxes, and a letterbox above the island is 70px of air between the notch
   and the bar it is supposed to be cut out of.
+- **The two top-anchored frames size their own row** (`--art-h`), and are
+  themselves sized in `svh`. The row used to be everything the copy did not
+  want, which left the island — short and wide — 296pt above its own caption
+  with nothing in between; it is 41 now. `svh` rather than `height: 100%`
+  because the row IS `--art-h` and that is a circle, and rather than a
+  percentage of the container because the copy under them is what runs out of
+  room on a laptop, which only the viewport's height knows about. The dots
+  moved to the bottom of the stage: the slack now falls there, and an indicator
+  pinned to it gives that air a job.
 
 The stage also drives the header: each frame writes
 `MenuBarHeader/reading-store.ts`, so the status item in the bar changes agent,

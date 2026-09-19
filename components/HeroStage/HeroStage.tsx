@@ -83,6 +83,22 @@ const frames: Frame[] = [
     reading: { agent: 'claude', percent: 20, resets: '1h44m', open: false },
   },
   {
+    src: '/screenshot-window-usage.png',
+    alt: 'The Usage pane: thirty days of Codex tokens, with the lifetime total, the best day and the streaks underneath',
+    anchor: 'centre',
+    eyebrow: 'Where the tokens went',
+    title: 'The history.',
+    body: 'The same chart over 7, 30 or 90 days, with the lifetime total, the best single day and the streaks under it. It is Codex’s history and the page says so: Claude Code publishes no counterpart at all.',
+    href: '/docs/the-window#usage',
+    linkLabel: 'What the chart can and cannot say',
+    /*
+     * The Usage pane carries no quota reading of its own, so the bar keeps the
+     * session's Codex figure from the Limits pane rather than inventing one.
+     * Codex because the chart is Codex's: Claude Code publishes no history.
+     */
+    reading: { agent: 'codex', percent: 5, resets: '3h21m', open: false },
+  },
+  {
     src: '/screenshot-window-limits.png',
     alt: 'The Limits pane of the Lancetta window: Claude Code seen a second ago and Codex live, each with its 5-hour and 7-day bar and the time it resets',
     anchor: 'centre',
@@ -97,11 +113,13 @@ const frames: Frame[] = [
 
 /*
  * Every frame's reading is READ OFF the screenshot it sits beside: the menu
- * shows Claude's 5-hour window at 20% with 1h44m to go, the island shows
- * Codex at 28% with 2h23m, the window's Quota Used shows Claude at 20%, and
- * the Limits pane shows Codex at 5% with 3h21m. The bar is meant to be the
- * same app as the picture under it — a percentage in the bar that the
- * screenshot beside it contradicts is a small lie the eye catches.
+ * shows Claude's 5-hour window at 20% with 1h44m to go, the island shows Codex
+ * at 28% with 2h23m, the window's Quota Used shows Claude at 20%, and the
+ * Limits pane shows Codex at 5% with 3h21m. The Usage pane shows no quota at
+ * all, so it keeps the Limits pane's Codex figure rather than inventing one.
+ * The bar is meant to be the same app as the picture under it — a percentage
+ * in the bar that the screenshot beside it contradicts is a small lie the eye
+ * catches.
  *
  * They are ILLUSTRATION, not claims: these are one developer's numbers on one
  * afternoon. Every figure the prose states comes from the measurement table in
@@ -187,6 +205,21 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
       return undefined;
     }
     const apply = () => {
+      /*
+       * The artifact row, for the two frames that hang from the bar. It is the
+       * image's CONTENT height, not its box's: `object-fit: contain` letterboxes
+       * whenever `max-width` bites, and the box would then reserve room for
+       * emptiness. The centred frames publish nothing and keep their `1fr`.
+       */
+      const art = inner.querySelector<HTMLImageElement>('[data-art-active="true"] img');
+      if (art?.naturalHeight) {
+        const box = art.getBoundingClientRect();
+        const content = Math.min(box.height, box.width * (art.naturalHeight / art.naturalWidth));
+        inner.style.setProperty('--art-h', `${Math.ceil(content)}px`);
+      } else {
+        inner.style.removeProperty('--art-h');
+      }
+
       const item = inner.querySelector<HTMLElement>('[data-copy-active="true"]');
       const kids = item?.children;
       if (!kids?.length) {
@@ -368,7 +401,12 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
         <div ref={stageRef} className={classes.stage} data-ready={ready}>
           <Container ref={innerRef} size="lg" className={classes.inner}>
             <div className={classes.artifacts}>
-              <div className={classes.artifact} data-anchor="menu" data-active={active === 0}>
+              <div
+                className={classes.artifact}
+                data-anchor="menu"
+                data-active={active === 0}
+                data-art-active={active === 0}
+              >
                 <Image
                   src={HERO_SHOT.src}
                   alt={HERO_SHOT.alt}
@@ -382,6 +420,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                   className={classes.artifact}
                   data-anchor={frame.anchor}
                   data-active={active === i + 1}
+                  data-art-active={active === i + 1 && frame.anchor !== 'centre'}
                   aria-hidden={active !== i + 1}
                 >
                   <Image src={frame.src} alt={frame.alt} className={classes.shot} />
@@ -417,16 +456,22 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                   </Link>
                 </div>
               ))}
+            </div>
 
-              <div className={classes.dots} aria-hidden>
-                {readings.map((reading, i) => (
-                  <span
-                    key={`${reading.agent}-${i}`}
-                    className={classes.dot}
-                    data-active={i === active}
-                  />
-                ))}
-              </div>
+            {/*
+              At the bottom of the STAGE, not under the copy. The two frames
+              that hang from the bar are content-sized, so their slack falls to
+              the bottom of the viewport, and an indicator pinned there gives
+              that air a job instead of leaving it as a hole.
+            */}
+            <div className={classes.dots} aria-hidden>
+              {readings.map((reading, i) => (
+                <span
+                  key={`${reading.agent}-${i}`}
+                  className={classes.dot}
+                  data-active={i === active}
+                />
+              ))}
             </div>
           </Container>
         </div>
