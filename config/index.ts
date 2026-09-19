@@ -57,7 +57,11 @@ export default {
   },
   head: {
     mantine: {
-      defaultColorScheme: 'dark',
+      // LIGHT ONLY (2026-09-19). There is no scheme switch on the site any
+      // more: Mantine is forced light in `app/layout.tsx` and Nextra's own
+      // switch is turned off there with `darkMode={false}`. This value is
+      // what the pre-hydration script writes, so it has to agree with both.
+      defaultColorScheme: 'light',
       nonce: '8IBTHwOdqNKAWeKl7plt8g==',
     },
   },

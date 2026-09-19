@@ -1,0 +1,333 @@
+/*
+ * The hero is a TRACK with a STAGE stuck inside it: one stretch of track per
+ * frame, plus the stage's own height so the last frame gets a full stretch of
+ * travel before the page moves on. Everything is laid out against
+ * `--lan-bar-height` — the menu bar the stage hangs from — so a frame is
+ * never cropped by the one thing above it.
+ */
+.hero {
+  position: relative;
+  /* The wash is painted by Scene, which lays itself out against this box. */
+  isolation: isolate;
+}
+
+.track {
+  position: relative;
+  height: calc(var(--frames) * 86vh + (100svh - var(--lan-bar-height, rem(46px))));
+}
+
+.stage {
+  position: sticky;
+  top: var(--lan-bar-height, rem(46px));
+  display: flex;
+  align-items: stretch;
+  height: calc(100svh - var(--lan-bar-height, rem(46px)));
+  overflow: hidden;
+}
+
+/*
+ * The same width as the bar above it, not Mantine's container: the menu drops
+ * from the bar's right end, and 36px of daylight between the two right edges
+ * is exactly enough to read as a misalignment rather than as a drop.
+ */
+.inner {
+  display: grid;
+  /*
+   * The product on top, the copy at the bottom. `minmax(0, 1fr)` rather than
+   * `1fr`: without the zero minimum a tall screenshot refuses to shrink and
+   * pushes the copy off the bottom of the stage on a short viewport.
+   */
+  /*
+   * The copy row is the ACTIVE block's own height (`--copy-h`, measured and
+   * published by HeroStage.tsx), not the tallest block's. With `auto` the row
+   * was the headline's 435px on every frame, so the three short blocks left a
+   * 250px hole between the product and their own first line. `auto` stays as
+   * the fallback: with no JS the row is the headline's, which is the frame
+   * that must not be cut.
+   */
+  grid-template-rows: minmax(0, 1fr) var(--copy-h, auto);
+  transition: grid-template-rows 420ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  width: min(rem(1180px), calc(100% - rem(32px)));
+  max-width: none;
+  margin-inline: auto;
+  padding-block: rem(10px) rem(34px);
+  padding-inline: rem(14px);
+}
+
+/* ---------------------------------------------------------------- artifacts */
+
+.artifacts {
+  position: relative;
+  min-height: 0;
+}
+
+/*
+ * Every artifact is in the DOM and they cross-fade in place, so nothing
+ * re-decodes an image mid-scroll. `data-anchor` is where on the stage the
+ * thing belongs, which is the whole point of the frame: the menu drops from
+ * the status item at the bar's right end, the island hangs from the middle of
+ * the bar the way a notch does, and the window is a window — it sits in the
+ * middle of the screen.
+ */
+.artifact {
+  position: absolute;
+  display: flex;
+  opacity: 0;
+  transition:
+    opacity 480ms ease,
+    transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+
+/*
+ * `inset` on all four sides, including the `left: 0` this used to leave out.
+ * An absolutely positioned box with no left is shrink-to-fit, so the menu's
+ * own `max-width: 46%` resolved against a width its own content had just
+ * decided: the menu measured 212px wide against an intrinsic 461 at that
+ * height. Measured, not spotted by eye.
+ */
+.artifact[data-anchor='menu'] {
+  inset: 0 0 rem(8px);
+  justify-content: flex-end;
+  align-items: flex-start;
+  /* It drops from the bar: the motion starts up and to the right of home. */
+  transform: translate(rem(10px), rem(-22px)) scale(0.97);
+  transform-origin: top right;
+}
+
+.artifact[data-anchor='notch'] {
+  inset: 0;
+  justify-content: center;
+  align-items: flex-start;
+  transform: translateY(rem(-18px)) scale(0.98);
+  transform-origin: top center;
+}
+
+.artifact[data-anchor='centre'] {
+  inset: 0;
+  justify-content: center;
+  align-items: center;
+  transform: translateY(rem(16px)) scale(0.985);
+}
+
+.artifact[data-active='true'] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/*
+ * The stage arrives with the page rather than being there first (point a of
+ * the brief). Only the entrance is gated: once `ready` is set the frames
+ * cross-fade on their own transitions.
+ */
+.stage[data-ready='false'] .artifact[data-active='true'],
+.stage[data-ready='false'] .copyItem[data-active='true'] {
+  opacity: 0;
+  transform: translateY(rem(16px));
+}
+
+.shot {
+  width: auto;
+  max-width: 100%;
+  height: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  /*
+   * `drop-shadow`, not `box-shadow`: it follows the PNG's alpha, so the shadow
+   * traces the menu's rounded corners rather than the square <img> box. Softer
+   * than the dark site's was — a 55% black shadow on an off-white page reads
+   * as dirt, not as depth.
+   */
+  filter: drop-shadow(0 26px 54px rgb(20 27 51 / 22%)) drop-shadow(0 4px 10px rgb(20 27 51 / 10%));
+}
+
+/*
+ * The menu and the island scale to the HEIGHT the stage has left rather than
+ * to a width: the copy under them is the tall part and what is left over
+ * changes with the viewport, so a width in pixels leaves a hole on a big
+ * screen and overflows on a small one. The max-width is the cap that stops
+ * the menu from crossing the page on a very short, very wide window.
+ */
+.artifact[data-anchor='menu'] .shot {
+  width: auto;
+  max-width: 46%;
+  height: 100%;
+  /* Same reason as the island: it drops FROM the bar, so it starts at the top. */
+  object-position: top right;
+}
+
+.artifact[data-anchor='notch'] .shot {
+  width: auto;
+  max-width: 82%;
+  height: 100%;
+  /*
+   * `contain` letterboxes, and a letterbox above the island is 70px of air
+   * between the notch and the bar it is supposed to be cut out of. The box is
+   * the full height because that is what caps the width; the CONTENT hangs
+   * from its top edge.
+   */
+  object-position: top center;
+}
+
+/* -------------------------------------------------------------------- copy */
+
+/*
+ * The copy sits at the BOTTOM of the stage and cross-fades like the artifacts.
+ * A fixed minimum height so the frames do not shuffle the page as they swap:
+ * the headline is four elements tall and the others are three.
+ */
+.copy {
+  position: relative;
+}
+
+/*
+ * Every copy block is in the same box and they cross-fade in place, so the
+ * FIRST one stays in flow and the rest are absolute over it. That is what
+ * gives the box a height: with all of them absolute it collapsed to a
+ * hand-picked `min-height`, and the headline — the tallest of them, and
+ * the only one with two buttons under it — overflowed it and was cut off
+ * by the stage's own `overflow: hidden` at the bottom of the viewport.
+ */
+.copyItem {
+  position: absolute;
+  inset: 0;
+  /*
+   * The copy sits at the BOTTOM of the stage, and the box is as tall as the
+   * headline — so the three shorter blocks are pushed down to the same
+   * edge rather than floating at the top of a box the headline sized.
+   */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  opacity: 0;
+  transform: translateY(rem(12px));
+  transition:
+    opacity 420ms ease,
+    transform 560ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  pointer-events: none;
+}
+
+.copyItem:first-child {
+  position: relative;
+  inset: auto;
+}
+
+.copyItem[data-active='true'] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/*
+ * Three lines, one thought each, and the size follows the VIEWPORT rather than
+ * a container query: the copy box is the full stage width here, so there is no
+ * narrow column for `cqw` to measure against.
+ */
+.title {
+  color: var(--lan-ink);
+  font-size: clamp(rem(30px), 4.2vw, rem(56px));
+  font-weight: 900;
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+}
+
+/*
+ * A laptop at 1440x800 leaves the stage 754px, and the headline block wants
+ * about 380 of it. Below that the product is the half worth protecting, so
+ * the type gives ground first.
+ */
+@media (max-height: 50em) {
+  .title {
+    font-size: clamp(rem(28px), 3.4vw, rem(44px));
+  }
+
+  .lead {
+    margin-top: rem(12px);
+  }
+}
+
+.titleLine {
+  display: block;
+}
+
+.lead {
+  max-width: rem(560px);
+  margin-top: rem(16px);
+}
+
+.meta {
+  align-items: flex-start;
+}
+
+.eyebrow {
+  color: var(--lan-accent-ink);
+  font-size: rem(13px);
+  font-weight: 700;
+  letter-spacing: rem(3px);
+  text-transform: uppercase;
+}
+
+.frameLink {
+  display: inline-block;
+  margin-top: rem(14px);
+  color: var(--lan-accent-ink);
+  font-size: rem(15px);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.frameLink:hover {
+  text-decoration: underline;
+}
+
+/* Where the reader is in the sequence. Decoration, hence `aria-hidden`. */
+.dots {
+  position: absolute;
+  bottom: rem(-16px);
+  left: 0;
+  display: flex;
+  gap: rem(8px);
+}
+
+.dot {
+  width: rem(8px);
+  height: rem(8px);
+  border-radius: 999px;
+  background-color: var(--mantine-color-gray-4);
+  transition:
+    width 250ms ease,
+    background-color 250ms ease;
+}
+
+.dot[data-active='true'] {
+  width: rem(24px);
+  background-color: var(--lan-accent);
+}
+
+/* ------------------------------------------------------------- the fallback */
+
+.heroPlain {
+  position: relative;
+  isolation: isolate;
+  padding-block: rem(40px) rem(72px);
+}
+
+.plainCopy {
+  margin-bottom: rem(40px);
+}
+
+.plainShot {
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 22px 44px rgb(20 27 51 / 20%));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .artifact,
+  .copyItem,
+  .dot,
+  .inner {
+    transition: none;
+  }
+}

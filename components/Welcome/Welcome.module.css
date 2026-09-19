@@ -1,205 +1,16 @@
 /*
- * The two edges everything on this page is laid out against. `--lan-nav-top`
- * is where Nextra's navbar sticks plus its height (`--lan-navbar-offset` is
- * published by ProductNav.tsx: 0 on a desktop, the banner's height on a phone,
- * where Nextra keeps the banner sticky). `--lan-bars` adds the product bar,
- * whose height Welcome.tsx sets inline on this same wrapper. The pinned
- * gallery's stage, the hero's height and every anchor's scroll margin read
- * these rather than adding the parts up again.
+ * The one edge the page is laid out against. The menu bar is the only thing
+ * stuck above the content now — the product bar that used to sit under it
+ * went when the hero became a stage hanging off the bar — so `--lan-bars`
+ * is just the bar's height, declared once in `app/global.css`.
  */
 .home {
-  --lan-nav-top: calc(var(--lan-navbar-offset, 0px) + var(--nextra-navbar-height, 4rem));
-  --lan-bars: calc(var(--lan-nav-top) + var(--lan-subnav-height, 0px));
+  --lan-bars: var(--lan-bar-height, rem(46px));
 }
 
-/* Every anchor on the home page scrolls to just below the two sticky bars. */
+/* Every anchor on the home page scrolls to just below the bar. */
 .home [id] {
-  scroll-margin-top: calc(var(--lan-bars) + rem(12px));
-}
-
-/*
- * ─── Hero ───
- *
- * Copy on the left, the product on the right, the way Apple lays a product
- * page out: the eye starts at the top-left, reads the name, the claim and the
- * one action, and lands on the screenshots. It fills the viewport left under
- * the two bars, and clips at the viewport's edge so the window can run past
- * the grid on wide screens.
- */
-.hero {
-  display: flex;
-  align-items: center;
-  min-height: calc(100svh - var(--lan-bars, var(--nextra-navbar-height, 4rem)));
-  padding-block: rem(56px);
-  overflow: hidden;
-}
-
-.heroGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
-  gap: rem(48px);
-  align-items: center;
-
-  @media (max-width: $mantine-breakpoint-md) {
-    grid-template-columns: 1fr;
-    gap: rem(40px);
-  }
-}
-
-/* A container, so the headline can size itself to the column it sits in. */
-.heroCopy {
-  container-type: inline-size;
-
-  /*
-   * One column below md, and the copy centres over the product the way a
-   * product page does once the two columns become one: left-aligned text
-   * over a centred screenshot reads as two layouts on one screen.
-   */
-  @media (max-width: $mantine-breakpoint-md) {
-    text-align: center;
-  }
-}
-
-.heroBrand {
-  display: flex;
-  align-items: center;
-  gap: rem(10px);
-  margin-bottom: rem(28px);
-
-  @media (max-width: $mantine-breakpoint-md) {
-    justify-content: center;
-  }
-}
-
-.heroIcon {
-  filter: drop-shadow(0 6px 12px color-mix(in srgb, var(--lan-azure) 40%, transparent));
-}
-
-.heroTagline {
-  color: var(--mantine-color-dimmed);
-
-  @media (max-width: $mantine-breakpoint-xs) {
-    display: none;
-  }
-}
-
-/*
- * Three lines, one thought each, and the size follows the column (`cqw`) so
- * "Every agent's quota." stays on one line from a phone up to the widest
- * desktop: it is the line that has to survive, and 8.8% of the column is
- * what fits it in this weight. The lower clamp is the phone.
- */
-.title {
-  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
-  font-size: clamp(rem(32px), 8.8cqw, rem(64px));
-  font-weight: 900;
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  text-align: left;
-
-  @media (max-width: $mantine-breakpoint-md) {
-    text-align: center;
-  }
-}
-
-.titleLine {
-  display: block;
-}
-
-.lead {
-  max-width: rem(520px);
-  margin-top: rem(24px);
-
-  @media (max-width: $mantine-breakpoint-md) {
-    margin-inline: auto;
-  }
-}
-
-/*
- * The action row and the lines under it follow the copy: left beside the
- * product, centred under it. Two classes deep on purpose: Mantine sets the
- * Group's justify and the Stack's align from a class of its own, and a
- * single class here would win or lose on stylesheet order.
- */
-.heroCopy .actions {
-  @media (max-width: $mantine-breakpoint-md) {
-    justify-content: center;
-  }
-}
-
-.heroCopy .meta {
-  align-items: flex-start;
-
-  @media (max-width: $mantine-breakpoint-md) {
-    align-items: center;
-  }
-}
-
-/*
- * The product cluster: the window behind, top-right, running past the grid's
- * edge into the viewport's margin; the menu in front, bottom-left, at its
- * natural size on a 1140px container so its type stays crisp. The bleed is
- * the room the viewport has beside the container, less 24px so the window's
- * right edge always lands INSIDE the viewport: an object clipped by 8% reads
- * as a mistake, not as a bleed, and the window's right edge carries its
- * numbers. Capped on very wide screens, and never negative — below the
- * container's width there is nothing to bleed into.
- */
-.cluster {
-  --bleed: max(0px, min(rem(240px), calc((100vw - rem(1140px)) / 2 - rem(8px))));
-
-  position: relative;
-  width: calc(100% + var(--bleed));
-  aspect-ratio: 1 / 0.84;
-  justify-self: start;
-
-  @media (max-width: $mantine-breakpoint-md) {
-    --bleed: 0px;
-
-    max-width: rem(720px);
-    justify-self: center;
-  }
-
-  @media (max-width: $mantine-breakpoint-sm) {
-    aspect-ratio: auto;
-  }
-}
-
-/*
- * No entrance animation on either image, on purpose. A product that starts at
- * opacity 0 is invisible wherever animation time does not advance — a paused
- * tab, a print, a headless render — and it is the largest thing on the page,
- * so it is also the LCP. Apple's heroes sit still; the movement is on scroll,
- * one section down.
- */
-.clusterWindow {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 90%;
-  height: auto;
-  filter: drop-shadow(0 32px 70px rgb(0 0 0 / 45%));
-
-  /* A phone gets the menu alone: two objects at that width are two thumbnails. */
-  @media (max-width: $mantine-breakpoint-sm) {
-    display: none;
-  }
-}
-
-.clusterMenu {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 60%;
-  height: auto;
-  filter: drop-shadow(0 30px 60px rgb(0 0 0 / 60%));
-
-  @media (max-width: $mantine-breakpoint-sm) {
-    position: static;
-    width: 100%;
-    max-width: rem(420px);
-    margin-inline: auto;
-  }
+  scroll-margin-top: calc(var(--lan-bars) + rem(14px));
 }
 
 /* What it is, what it does, what it costs: a hairline and three columns. */
@@ -207,9 +18,9 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: rem(40px);
-  margin: rem(64px) 0 0;
+  margin: rem(24px) 0 rem(8px);
   padding-top: rem(28px);
-  border-top: 1px solid light-dark(rgb(0 0 0 / 10%), rgb(255 255 255 / 10%));
+  border-top: 1px solid var(--lan-line);
 
   @media (max-width: $mantine-breakpoint-sm) {
     grid-template-columns: 1fr;
@@ -222,7 +33,7 @@
 }
 
 .glanceLabel {
-  color: var(--lan-accent);
+  color: var(--lan-accent-ink);
   font-size: rem(12px);
   font-weight: 700;
   letter-spacing: rem(2px);
@@ -231,7 +42,7 @@
 
 .glanceBody {
   margin: rem(8px) 0 0;
-  color: light-dark(var(--mantine-color-gray-8), var(--mantine-color-gray-3));
+  color: var(--mantine-color-gray-7);
   font-size: rem(15px);
   line-height: 1.55;
 }
@@ -240,23 +51,19 @@
  * Raycast-style feature card. The per-card accent comes from --card-color,
  * set inline from the feature's Mantine palette hex. A very low-alpha radial
  * tint of --card-color washes in from the top-left and fades to transparent
- * so each card carries its own hue. The base adapts per scheme via
- * light-dark(): a near-white surface on light mode (so the near-black title
- * token stays readable) and the original dark-7 surface on dark mode. The
- * border likewise switches from a faint black hairline (light) to the faint
- * white hairline (dark) so the card edge reads against either page colour.
+ * so each card carries its own hue on the white surface.
  */
 .featureCard {
   position: relative;
   border-radius: rem(16px);
-  border: 1px solid light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 6%));
+  border: 1px solid var(--lan-line);
   background:
     radial-gradient(
       120% 120% at 0% 0%,
-      color-mix(in srgb, var(--card-color) 8%, transparent) 0%,
+      color-mix(in srgb, var(--card-color) 9%, transparent) 0%,
       transparent 55%
     ),
-    light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+    var(--lan-surface);
   transition:
     transform 180ms ease,
     border-color 180ms ease,
@@ -270,22 +77,21 @@
   background:
     radial-gradient(
       120% 120% at 0% 0%,
-      color-mix(in srgb, var(--card-color) 14%, transparent) 0%,
+      color-mix(in srgb, var(--card-color) 15%, transparent) 0%,
       transparent 60%
     ),
-    light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+    var(--lan-surface);
   box-shadow:
-    0 12px 30px -12px color-mix(in srgb, var(--card-color) 45%, transparent),
+    0 14px 32px -14px color-mix(in srgb, var(--card-color) 42%, transparent),
     0 0 0 1px color-mix(in srgb, var(--card-color) 20%, transparent);
 }
 
 /*
- * Card-as-link reset + keyboard affordance. The card now renders as an
- * <a> (Next.js Link via Mantine's polymorphic component), so strip the
- * anchor's default underline/colour and inherit the card text colour, and
- * make the whole surface read as clickable. focus-visible mirrors the hover
- * treatment (tinted border + soft accent ring) so keyboard users get the
- * same affordance as the pointer hover.
+ * Card-as-link reset + keyboard affordance. The card renders as an <a>
+ * (Next.js Link via Mantine's polymorphic component), so strip the anchor's
+ * default underline/colour and inherit the card text colour, and make the
+ * whole surface read as clickable. focus-visible mirrors the hover treatment
+ * so keyboard users get the same affordance as the pointer hover.
  */
 .cardLink {
   display: block;
@@ -298,41 +104,44 @@
   outline: none;
   border-color: color-mix(in srgb, var(--card-color) 35%, transparent);
   box-shadow:
-    0 12px 30px -12px color-mix(in srgb, var(--card-color) 45%, transparent),
+    0 14px 32px -14px color-mix(in srgb, var(--card-color) 42%, transparent),
     0 0 0 3px color-mix(in srgb, var(--card-color) 45%, transparent);
 }
 
-/* Rounded tinted icon square with a faint matching glow + a crisp accent
- * hairline so the tile keeps a defined edge against any section background
- * (otherwise the light-variant fill melts into a flat dark band). */
+/*
+ * Rounded tinted icon square with a faint matching glow and a crisp accent
+ * hairline so the tile keeps a defined edge against the section wash.
+ */
 .featureIcon {
-  border: 1px solid color-mix(in srgb, var(--card-color) 32%, transparent);
-  box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--card-color) 55%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-color) 30%, transparent);
+  box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--card-color) 50%, transparent);
 }
 
 /*
- * Subtle section band: a soft violet wash from the top so the feature cards
- * and their icon tiles lift off the page instead of sitting on a flat fill.
- * Theme-aware via light-dark() and deliberately faint — atmosphere, not a
- * coloured block.
+ * A section wash rather than a band: the icon's cyan and violet, at a few
+ * percent, coming in from the top so the cards lift off the page instead of
+ * sitting on a flat fill. Atmosphere, not a coloured block.
  */
 .sectionBand {
-  background: radial-gradient(
-    100% 70% at 50% -10%,
-    light-dark(
-      color-mix(in srgb, var(--lan-azure) 16%, transparent),
-      color-mix(in srgb, var(--lan-plate-wash) 42%, transparent)
+  background:
+    radial-gradient(
+      90% 60% at 18% -8%,
+      color-mix(in srgb, var(--lan-cyan) 13%, transparent),
+      transparent 60%
     ),
-    transparent 62%
-  );
+    radial-gradient(
+      90% 60% at 82% -8%,
+      color-mix(in srgb, var(--lan-violet) 12%, transparent),
+      transparent 62%
+    );
 }
 
 /*
- * "NEW" sticker on a highlighted feature card. A hot red→pink→orange
- * gradient, tilted like a peel-off sticker, with a gentle breathing scale
- * and an expanding "ping" ring (the second box-shadow layer) so it pulls the
- * eye without being obnoxious. The CSS-module class sits outside Mantine's
- * @layer, so its background/transform win over the Badge's filled variant.
+ * "Next" sticker on a highlighted feature card. The icon's own rim, tilted
+ * like a peel-off sticker, with a gentle breathing scale and an expanding
+ * ring (the second box-shadow layer) so it pulls the eye without being
+ * obnoxious. The CSS-module class sits outside Mantine's @layer, so its
+ * background and transform win over the Badge's filled variant.
  */
 .newBadge {
   position: absolute;
@@ -360,28 +169,25 @@
   100% {
     transform: rotate(8deg) scale(1);
     box-shadow:
-      0 4px 14px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 60%, transparent),
+      0 4px 14px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 55%, transparent),
       0 0 0 0 color-mix(in srgb, var(--lan-cyan) 55%, transparent);
   }
 
   50% {
     transform: rotate(8deg) scale(1.09);
     box-shadow:
-      0 7px 20px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 78%, transparent),
+      0 7px 20px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 70%, transparent),
       0 0 0 7px color-mix(in srgb, var(--lan-cyan) 0%, transparent);
   }
 }
 
-/* Opt out of motion: keep the tilt + gradient + glow, drop the animation. */
+/* Opt out of motion: keep the tilt, the gradient and the glow, drop the run. */
 @media (prefers-reduced-motion: reduce) {
   .newBadge {
     animation: none;
-    box-shadow: 0 4px 14px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 60%, transparent);
+    box-shadow: 0 4px 14px -2px color-mix(in srgb, var(--mantine-color-lancetta-6) 55%, transparent);
   }
-}
 
-/* Respect users who opt out of motion: keep tint/border, drop the lift. */
-@media (prefers-reduced-motion: reduce) {
   .featureCard {
     transition:
       border-color 180ms ease,
@@ -401,14 +207,14 @@
  */
 .roadmapCard {
   height: 100%;
-  border: 1px solid light-dark(rgb(0 0 0 / 8%), rgb(255 255 255 / 6%));
-  background: light-dark(var(--mantine-color-white), var(--mantine-color-dark-7));
+  border: 1px solid var(--lan-line);
+  background: var(--lan-surface);
   transition: border-color 180ms ease;
 }
 
 .roadmapCard[data-state='building'] {
   border-color: color-mix(in srgb, var(--lan-accent) 45%, transparent);
-  box-shadow: 0 12px 30px -16px color-mix(in srgb, var(--lan-accent) 60%, transparent);
+  box-shadow: 0 12px 30px -16px color-mix(in srgb, var(--lan-accent) 45%, transparent);
 }
 
 .roadmapCard:hover {
@@ -416,29 +222,35 @@
 }
 
 /*
- * The closing band sits on the icon's plate in both schemes — the screenshots
- * above it carry dark macOS chrome, and the StarField needs a dark ground to
- * exist at all. Its copy is forced light for the same reason.
+ * The closing band. It used to be the icon's PLATE — a dark slab — and
+ * on a light-only page that reads as a hole rather than as depth. Same three
+ * lights, on the page's own white: cyan at the top-left through violet to
+ * magenta, under the 2px neon rim the icon carries. The one dark object on
+ * this site is the menu bar in the header, because that is chrome; nothing
+ * else pretends to be.
  */
-/*
- * The plate, at band size: azure along the top, the navy core, violet at the
- * far corner — the icon's own gradient — under a 2px neon rim that runs cyan
- * to magenta the way the icon's does. Two bands sit on it, the in-detail one
- * and the closing CTA (which adds its stars), and both force their copy
- * light, because the plate is dark in both schemes.
- */
-.plateBand {
+.auroraBand {
   position: relative;
   overflow: hidden;
-  background: linear-gradient(
-    165deg,
-    var(--lan-plate-wash) -30%,
-    var(--lan-plate) 42%,
-    var(--lan-plate-edge) 110%
-  );
+  background:
+    radial-gradient(
+      70% 120% at 12% 0%,
+      color-mix(in srgb, var(--lan-cyan) 16%, transparent),
+      transparent 62%
+    ),
+    radial-gradient(
+      80% 130% at 88% 20%,
+      color-mix(in srgb, var(--lan-magenta) 13%, transparent),
+      transparent 64%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--lan-violet) 8%, var(--lan-surface)),
+      var(--lan-body)
+    );
 }
 
-.plateBand::before {
+.auroraBand::before {
   content: '';
   position: absolute;
   top: 0;
@@ -446,5 +258,5 @@
   left: 0;
   height: rem(2px);
   background: linear-gradient(90deg, var(--lan-cyan), var(--lan-violet) 55%, var(--lan-magenta));
-  opacity: 0.9;
+  opacity: 0.85;
 }
