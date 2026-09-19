@@ -133,7 +133,7 @@ const features: Feature[] = [
     icon: IconTrash,
     title: 'Reclaim the memory',
     description:
-      'Agents leave a background tree behind for every folder they worked in. Lancetta lists the ones serving folders that no longer exist and frees them — showing you the list first, and never touching a live one.',
+      'Agents leave a background tree behind for every folder they worked in, and nothing ever reaps the ones whose folder is gone: 28 processes holding 2.68 GB on one Mac, 12 of 14 trees unreachable. Lancetta finds them and frees them — showing you the list first, and never touching a live one.',
     color: 'indigo',
     href: '/docs/memory',
   },

@@ -49,9 +49,13 @@ Under that, both windows: the percentage, the bar, and when it rolls over. A win
 
 ## Processes
 
+![The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total](/screenshot-window-processes.png)
+
 Every Codex background tree on the machine, with the directory it was started for, what it is holding, and whether anything can still reach it.
 
-A tree whose working directory no longer exists is marked as an orphan, and the **Reclaim…** button is only live when there is one. It lists what it will close before closing anything. The full story is on [The processes they leave behind](/docs/memory).
+A green tick is a tree something can still reach. An orange triangle is an **orphan** — its working directory is gone, so nothing will ever shut it down, and it will hold that memory until the Mac is restarted. The line above the list adds them up, and the **Reclaim…** button is only live when there is something to reclaim. It lists what it will close before closing anything. The full story is on [The processes they leave behind](/docs/memory).
+
+The pane counts a tree's whole descent rather than the three processes its own documentation describes: `invoice-parser` above has four children, and a real one was measured holding eleven.
 
 ## Why the window is dark
 

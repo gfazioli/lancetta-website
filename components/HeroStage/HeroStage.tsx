@@ -124,6 +124,17 @@ const frames: Frame[] = [
     linkLabel: 'How it reads each agent',
     reading: windowSession,
   },
+  {
+    src: '/screenshot-window-processes.png',
+    alt: 'The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total',
+    anchor: 'centre',
+    eyebrow: 'What they leave behind',
+    title: 'Nobody ever closes them.',
+    body: 'Every folder an agent works in leaves a background tree, and one whose folder is gone will never be shut down by anything. Lancetta lists them, and shows you that list before it closes a single one.',
+    href: '/docs/memory',
+    linkLabel: 'What accumulates, and why nothing reaps it',
+    reading: windowSession,
+  },
 ];
 
 /*
