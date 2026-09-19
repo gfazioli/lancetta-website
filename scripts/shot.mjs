@@ -179,8 +179,8 @@ try {
     {
       expression: `(async () => {
         const h = document.documentElement.scrollHeight;
-        for (let y = 0; y < h; y += 700) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 50)); }
-        window.scrollTo(0, 0);
+        for (let y = 0; y < h; y += 700) { window.scrollTo({ top: y, behavior: 'instant' }); await new Promise(r => setTimeout(r, 50)); }
+        window.scrollTo({ top: 0, behavior: 'instant' });
         await new Promise(r => setTimeout(r, 500));
         return h;
       })()`,
@@ -220,7 +220,12 @@ try {
           expression: `(async () => {
             const max = document.documentElement.scrollHeight - window.innerHeight;
             const y = Math.round(max * ${fraction});
-            window.scrollTo(0, y);
+            // 'instant', because this site sets html { scroll-behavior: smooth }
+            // and a smooth scroll is an ANIMATION: the capture then lands
+            // wherever it had got to after the wait, which depends on where it
+            // started. Two visits to the same fraction came out 78px apart and
+            // looked like the page had changed under the reader.
+            window.scrollTo({ top: y, behavior: 'instant' });
             await new Promise(r => setTimeout(r, 900));
             return [window.scrollY, max];
           })()`,
