@@ -264,6 +264,15 @@ shrink the object inside its own box. Checked the same day: the menu carries
 Every artifact now takes its depth from `HeroStage.module.css` and from nowhere
 else.
 
+**The island was then replaced with a cleanly-keyed version** (same day, from
+the user), whose margins are genuinely transparent — max alpha 0.004 down the
+side band — so only the CROP applied: 1780x883 to 1651x727. The crop is the
+half that keeps mattering. `object-fit: contain` fits the whole canvas, so
+transparent margin is empty box: it shrinks the object and, for the island,
+lifts it off the bar it is supposed to be cut out of. The tab must also stay
+the image's horizontal centre (measured: 825.0 of 825.0), because the bar's
+reading is on the page's centre line and the island hangs from it.
+
 **Two surfaces may not be published, and both for the same reason.** The
 **Processes pane** lists each tree by the directory it was started for, and an
 **agent's page in Settings** carries the absolute path that agent is read from.
