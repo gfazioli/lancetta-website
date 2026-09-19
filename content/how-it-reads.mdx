@@ -53,13 +53,13 @@ Two things about it, because Lancetta shows both rather than hiding them:
 
 With the account connected, the file is not read at all.
 
-## The history, and why the chart is Codex's alone
+## The history, and why the two series are not the same kind of number
 
 Alongside the rate limits, Codex keeps **the whole token history** and gives it away on the same free route: a lifetime total, the best single day, the streaks, and one bucket per day that was used. Measured on 2026-09-17: 46 buckets across a 163-day span, and the buckets **sum to the lifetime total exactly** — so it is the complete series rather than a window onto it.
 
-**Claude Code has no counterpart at all.** Its payload is two percentages and two reset instants. There is no history in it, anywhere.
+**Claude Code publishes no counterpart at all.** Its payload is two percentages and two reset instants. There is no history in it, anywhere.
 
-That is why [the window's chart](/docs/the-window#usage) says *tokens · Codex* on its face. A chart that pooled the two would be drawing one agent's data under both their names, and it would be wrong by exactly the amount Claude was used.
+So Claude's half of [the window's chart](/docs/the-window#usage) is not published, it is **reconstructed** — from Claude Code's own transcripts on this Mac, which carry a token count on every assistant message. That buys a real series and costs two things the caption states rather than hides: sessions run on another machine are not in it, and **cache reads are left out**, because they re-send the same context every turn and were 98% of one day's total (762 M of 774 M). Leaving them in would put Claude's line an order of magnitude above Codex's and mean nothing. The chart names each series, so neither is ever drawn under the other's name.
 
 Two properties of that series shape how it is drawn:
 

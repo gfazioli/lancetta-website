@@ -238,8 +238,37 @@ see.
 window and Settings, and a hover on the notch for the island.
 
 Published today: the menu in both appearances, the island collapsed and open,
-the window's Overview, Usage and Limits panes, and every Settings pane: General,
-Appearance, Notch, Agents, both agent pages, Updates and About. The Settings set
+the window's Overview, Usage, Limits and Processes panes, and every Settings
+pane: General, Appearance, Notch, Agents, both agent pages, Updates and About.
+
+**The four window panes are ONE SET, shot at ONE window size, in one run.** The
+hero shows them in the same box, one per frame, cross-fading in place, so a
+capture of a different size is drawn at a different scale -- and the reader sees
+the window change size as they scroll. It was reported twice. The three panes
+published before 2026-09-19 were 588 points tall and the app will not open below
+**628** any more, so they showed a window that can no longer exist; padding them
+onto a common canvas fixed the scale and left the windows visibly different
+heights, which is the same complaint. There is no fix but to re-shoot the set.
+`scripts/shot.mjs --eval` is how to check it: every centred frame's `img` must
+report the same `offsetWidth x offsetHeight`.
+
+Two things make that re-shoot safe to run unattended, and both are hatches in
+the app repo. `-claudeAccountConnected 0` in the ARGUMENT domain turns the
+account route off for that process alone, so no launch reads the keychain and no
+macOS dialog lands in front of the user -- the Claude card falls back to the
+status-line file, which is the route the published Limits capture already shows.
+And `LANCETTA_DEMO_TREES=1` draws an invented process table, because every row of
+the Processes pane is a working directory and on a real Mac those are the
+developer's own folders. Measured 2026-09-19: four launches, zero
+`displaying keychain prompt` lines.
+
+**Re-shooting is also when the page's CLAIMS get checked against the picture.**
+That set arrived showing both agents' token series where the copy said the chart
+was Codex's alone -- true when it was written, and false since the app learned to
+rebuild Claude's from its transcripts. Four carriers said it: the Usage frame in
+the hero, the "Where the tokens went" card, `the-window.mdx` and
+`how-it-reads.mdx`. A screenshot that contradicts the sentence beside it is the
+worst kind of stale copy, because the reader believes the picture. The Settings set
 was reshot on 2026-09-18 from the INSTALLED 0.3.1 with
 `../Lancetta/scripts/settings-shots.sh`, one launch per pane through the
 `LANCETTA_OPEN` hatch, because the dev bundle is ad-hoc signed and would ask for
