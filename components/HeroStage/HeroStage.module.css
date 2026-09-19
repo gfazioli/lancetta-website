@@ -86,13 +86,19 @@
  * decided: the menu measured 212px wide against an intrinsic 461 at that
  * height. Measured, not spotted by eye.
  */
+/*
+ * The menu drops from the status item in the bar, and that item is on the
+ * bar's CENTRE line — so this is centred too, and the two stay aligned at
+ * every width without either one knowing the other's number. It was anchored
+ * right while the reading was the bar's last item.
+ */
 .artifact[data-anchor='menu'] {
   inset: 0 0 rem(8px);
-  justify-content: flex-end;
+  justify-content: center;
   align-items: flex-start;
-  /* It drops from the bar: the motion starts up and to the right of home. */
-  transform: translate(rem(10px), rem(-22px)) scale(0.97);
-  transform-origin: top right;
+  /* It drops FROM the bar: the motion starts above home. */
+  transform: translateY(rem(-22px)) scale(0.97);
+  transform-origin: top center;
 }
 
 .artifact[data-anchor='notch'] {
@@ -154,7 +160,7 @@
   max-width: 46%;
   height: 100%;
   /* Same reason as the island: it drops FROM the bar, so it starts at the top. */
-  object-position: top right;
+  object-position: top center;
 }
 
 .artifact[data-anchor='notch'] .shot {
@@ -200,6 +206,13 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
+  /*
+   * Centred, under a product that hangs from the centre of the bar. Left-
+   * aligned copy under a centred object reads as two layouts on one screen,
+   * which is what this was until the reading moved to the middle.
+   */
+  align-items: center;
+  text-align: center;
   opacity: 0;
   transform: translateY(rem(12px));
   transition:
@@ -256,8 +269,12 @@
   margin-top: rem(16px);
 }
 
+.actions {
+  justify-content: center;
+}
+
 .meta {
-  align-items: flex-start;
+  align-items: center;
 }
 
 .eyebrow {
@@ -285,9 +302,10 @@
 .dots {
   position: absolute;
   bottom: rem(-16px);
-  left: 0;
+  left: 50%;
   display: flex;
   gap: rem(8px);
+  transform: translateX(-50%);
 }
 
 .dot {
@@ -313,8 +331,20 @@
   padding-block: rem(40px) rem(72px);
 }
 
+/*
+ * The stack centres too, so a reader who resizes past the pinned breakpoint
+ * does not watch the page change alignment. It is also what the old hero did
+ * below md, for the same reason: left-aligned copy over a centred screenshot
+ * reads as two layouts on one screen.
+ */
 .plainCopy {
   margin-bottom: rem(40px);
+  text-align: center;
+}
+
+.plainCopy .lead,
+.plainCopy .meta {
+  margin-inline: auto;
 }
 
 .plainShot {
