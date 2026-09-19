@@ -225,9 +225,24 @@
  * island 234; on a 1440x1100 screen 506 and 286. The menu stays the bigger of
  * the two at every height, which is what it is in the app.
  */
+/*
+ * `max-height: none` and no `max-width` are NOT tidying, they are the fix for a
+ * loop that shrank the menu a little on every re-measure — 414px on the first
+ * paint, 401 after scrolling away and back, and down again each time after
+ * that. The base `.shot` sets `max-height: 100%`, and 100% here is the row,
+ * and the row is `--art-h`, which is measured FROM this image: the comment two
+ * rules up says a percentage of the row is a circle, and this inherited one
+ * walked straight back into it.
+ *
+ * So these two carry NO percentage of their own box. The width follows the
+ * height through the intrinsic ratio and is capped only by the container, so
+ * the box is exactly the content and `--art-h` cannot disagree with it. The
+ * test is a round trip: capture at the top, scroll past the stage, come back,
+ * capture again, and the two have to be identical.
+ */
 .artifact[data-anchor='menu'] .shot {
   width: auto;
-  max-width: 46%;
+  max-height: none;
   height: min(46svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(500px)));
   /* Same reason as the island: it drops FROM the bar, so it starts at the top. */
   object-position: top center;
@@ -235,7 +250,7 @@
 
 .artifact[data-anchor='notch'] .shot {
   width: auto;
-  max-width: 70%;
+  max-height: none;
   height: min(26svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(290px)));
   /*
    * `contain` letterboxes, and a letterbox above the island is 70px of air
