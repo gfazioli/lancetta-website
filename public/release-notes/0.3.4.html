@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.3.4 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.3.4</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<h2>The password dialog is gone</h2>
+<p>Claude Code rewrites its keychain item every time it renews its own sign-in, and the rewrite clears the permission you gave Lancetta. Every background check after that was an authorisation failure — which macOS answers with a dialog asking for your <strong>login password</strong>, roughly once an hour, while you are doing something else. Measured on one Mac: six of them in three days, and four "Always Allow" grants wiped within the hour of being given.</p>
+<p>Lancetta now reads your sign-in <strong>without ever letting macOS put a dialog on screen</strong> when it polls. The read fails quietly instead, and the Claude card says the sign-in was renewed, with a Reconnect button beside it. macOS asks only when you ask it to.</p>
+<p>Verified by running the build for three polling cycles and counting: <strong>zero dialogs</strong>, three calm rows.</p>
+<h2>Two things that uncovered</h2>
+<ul>
+<li><strong>A renewed sign-in used to read as a failure.</strong> It came out as "the account couldn't be reached", in red, over an account that was perfectly reachable. It now has its own code — <strong>CLAUDE-12</strong> — and is drawn as a state you can fix in one click rather than as a fault.</li>
+<li>The Usage pane's empty-chart line could name a Codex failure while the Claude filter was on.</li>
+</ul>
+<h2>Underneath</h2>
+<p>Every line Lancetta records about a quota now says <strong>which copy of the app wrote it, and through which route</strong>. A Mac that briefly ran two copies used to produce a history that read like a quota draining away when it was simply two honest readings interleaved.</p>
+<p>Percentages are now rounded where they are recorded rather than where they are drawn: nine lines in one history file had been written purely because of floating-point noise — the app had recorded a change that never happened.</p>
+<h2>And the measurement the roadmap was waiting for</h2>
+<p>The advice on the roadmap was gated on one question, published in advance: across a reset boundary, does a quota window fall in one step, or drain back gradually? A slope meant deleting the feature rather than rewording it, because advice built on a slope tells you to spend quota that is not actually expiring.</p>
+<p><strong>It came back a step.</strong> 1,890 readings, both agents, both windows; across twenty-five windows the floor of the series never fell, and the sharpest boundary went from 100% to zero in forty-two seconds. So the advice can be built, and the work has started.</p>
+</body>
+</html>
