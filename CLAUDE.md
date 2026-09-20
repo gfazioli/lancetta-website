@@ -381,16 +381,23 @@ the product" look identical in a picture.
   Safari's engine, so it is the truth about how the site looks to a Mac, and
   its `eval` is how a listener's arithmetic gets checked. Its limits are in its
   own header, and two of them rule it out below.
-- `scripts/shot.mjs` (Chrome DevTools) for anything that MOVES, which since
-  2026-09-19 is the whole top of the home page. `node scripts/shot.mjs <url>
-  <prefix> --at 0,0.1,0.17,0.24` writes one VIEWPORT capture per fraction of
-  the scrollable height and prints the pixel it landed on. The pinned hero is
-  four states of one 100vh box, so a full-page capture of it is one tall band
-  containing the LAST frame and nothing else — and `page.sh` cannot drive it at
-  all, because a `scroll` event is never delivered there and its animation
-  clock never turns. Cross-ported from `findergit-website/scripts/shot.mjs`,
-  which is where the three reasons not to use `chrome --headless --screenshot`
-  are written down.
+- `scripts/shot.mjs` (Chrome DevTools) for anything that MOVES, and for
+  anything down the page. `node scripts/shot.mjs <url> <prefix> --at
+  0,0.06,0.12` writes one VIEWPORT capture per fraction of the scrollable
+  height and prints the pixel it landed on, which is how a section halfway
+  down gets photographed at all. `page.sh` cannot follow a page: a `scroll`
+  event is never delivered there and its animation clock never turns, so
+  **anything that starts at `opacity: 0` photographs as absent** — including a
+  CSS entrance that a real browser completes in half a second. Cross-ported
+  from `findergit-website/scripts/shot.mjs`, which is where the three reasons
+  not to use `chrome --headless --screenshot` are written down.
+
+  The `--at` mode was written for the pinned hero, which was four states of
+  one `100vh` box and photographed as a single tall band containing the last
+  frame. The hero is ordinary flow since 2026-09-20 and a full-page capture
+  works again — but `--at` is still the right tool for reading one screen at a
+  time, and `--eval` at each position is how a geometry claim about this page
+  gets a number instead of an opinion.
 
 Both are committed rather than recreated per session, for the reason `page.sh`
 gives in its own header: this workspace has already paid twice for a technique
@@ -455,69 +462,86 @@ Three more, all measured on 2026-09-18 and all the instrument's:
   stdin only when stdin is a terminal; from an agent's shell it is a pipe, and
   `next start` held it open. The `</dev/null` in `serve` is that fix.
 
-## The one job, and the hero that demonstrates it
+## The one job, and the order that argues for it
 
 The copy is built around **one job**: how much of each agent's quota is left,
-and when it comes back. The reaper is a feature card and a footnote, never a
-"second half" — the page used to have two panels, "Half one" and "Half two",
-and that layout said the app does two things (user, 2026-09-17: *"l'app alla
-fine deve svolgere 'un solo compito' bene"*). If a new feature is big, it still
-goes under that job, not beside it.
+and when it comes back (user, 2026-09-17: *"l'app alla fine deve svolgere 'un
+solo compito' bene"*). If a new feature is big, it still goes under that job,
+not beside it — the page once had two panels, "Half one" and "Half two", and
+that layout said the app does two things.
 
-**`components/HeroStage` is the whole top of the page**, and it replaced both
-the static hero and the `ScrollGallery` that used to sit under it (2026-09-19).
-It is the same mechanism the gallery was — a tall track, a viewport-high stage
-stuck under the bar, and the frame a pure function of how far the stage has
-travelled through the track (`frameIndex`, tested, now in
-`HeroStage/frame-index.ts`) — with the hero's own headline as frame 0 and the
-four surfaces after it: the island, the window's Overview, its Usage chart and
-its Limits pane. Adding one is a row in the `frames` array, and its `reading`
-is read OFF its own screenshot (see the comment above `heroReading`). **Nothing intercepts the wheel**, which is what makes
-it behave the same with a trackpad, a mouse, the keyboard and VoiceOver. Phones
-and `prefers-reduced-motion` get the same frames as a plain stack. The frame is
-measured between the stage's box and the track's box, never against the
-viewport, so the bar's height never enters the arithmetic.
+**What changed on 2026-09-20 is which part of that job leads.** This file used
+to say the reaper was "a feature card and a footnote, never a second half", and
+it is not a footnote any more (user: *"mettendo l'accento subito su cosa
+differenzia Lancetta dagli altri concorrenti - quindi suggerimenti e clean dei
+processi"*). The reasoning is in Lancetta#24 and it is about the field rather
+than about us: **CodexBar** has the quota ceiling and the token flow and keeps
+no series; **ccusage** has the flow and guesses the ceiling; **Quotio** routes
+around a limit instead of advising on it. Nobody else reaps the process trees,
+and nobody else keeps a series to advise from. Those two lead; the surfaces
+every monitor has — a menu, an island, a window, a chart — come after.
 
-Four things in it are not taste, and three of them were measured with a DOM
-probe after a capture looked wrong:
+It is still one job. The trees an agent leaves behind are the same story as its
+quota, one level down: both are the cost of running these things all day, and
+neither is visible until something tells you.
 
-- **The stage is as wide as the bar** (`min(1180px, 100% - 32px)`), not
-  Mantine's container, and the reading, the menu that drops from it and the
-  headline under them are all on the CENTRE line — measured together at 720 on
-  a 1440 viewport. Centred rather than right-aligned since 2026-09-19 (user:
-  *"il menu simulato di lancetta dovrebbe stare al centro"*), which is also
-  where the notch is on the Mac this app was drawn for. Neither one knows the
-  other's number: both are centred, so they stay aligned at every width.
-- **The copy row is the ACTIVE block's height** (`--copy-h`, measured in
-  `HeroStage.tsx` and published on the stage's inner grid), not the tallest
-  block's. With `auto` the row was the headline's 435px on every frame and the
-  three short blocks left a 250px hole above their own first line. The
-  measurement is the CHILDREN's span, not `scrollHeight`: three of the four
-  blocks are `position: absolute; inset: 0`, so their own height IS the box
-  being measured, and `scrollHeight` answered 435 for all four.
-- **The first copy block stays in flow**, the rest are absolute over it. That is
-  what gives the box a height without JS, and the headline is the one frame
-  that must not be cut — it was, at the bottom of the viewport, until this.
-- **The artifacts hang from the bar** (`object-position: top`). `contain`
-  letterboxes, and a letterbox above the island is 70px of air between the notch
-  and the bar it is supposed to be cut out of.
-- **The two top-anchored frames size their own row** (`--art-h`), and are
-  themselves sized in `svh`. The row used to be everything the copy did not
-  want, which left the island — short and wide — 296pt above its own caption
-  with nothing in between; it is 41 now. `svh` rather than `height: 100%`
-  because the row IS `--art-h` and that is a circle, and rather than a
-  percentage of the container because the copy under them is what runs out of
-  room on a laptop, which only the viewport's height knows about. The dots
-  moved to the bottom of the stage: the slack now falls there, and an indicator
-  pinned to it gives that air a job.
+**The order of `frames` in `HeroStage.tsx` is the argument, so changing it is an
+editorial act, not a layout one.** The reaper goes first of the two although the
+advice is the deeper moat, and for a reason that is not taste: the reaper ships
+and the advice does not yet. The pace line is merged on `main` AFTER the v0.3.4
+tag (`9e7caaf`, `82952ee`) and the alerts are PR #36, so that frame carries
+`next: true`, the `NEXT` badge and the future tense, and it is drawn as a
+bordered card rather than as a screenshot section — a page that dresses a
+promise exactly like a shipped feature has to be read carefully to be trusted.
+**When a release carries the pace, take `next` off it and revisit the order.**
 
-The stage also drives the header: each frame writes
-`MenuBarHeader/reading-store.ts`, so the status item in the bar changes agent,
-percentage and reset time as the reader scrolls, and holds itself highlighted
-while frame 0 has the menu open under it. A module-level store with
+### The hero is ordinary flow, and the scroll-jacking is gone
+
+**`components/HeroStage` is the whole top of the page**: a headline block, then
+one `<section>` per surface, laid out as a two-column grid that alternates
+sides. Adding one is a row in the `frames` array, and its `reading` is read OFF
+its own screenshot (see the comment above `heroReading`).
+
+It was a pinned stage from 2026-09-19 to 2026-09-20 — a tall track sized in
+`svh`, a viewport-high sticky stage, five absolutely-positioned artifacts
+cross-fading in one box, a copy row whose height JavaScript measured and
+published, and two reserves tuned to the pixel. **Do not reach for that again
+without reading what it cost**, because none of it was a bug in the
+implementation:
+
+- **It made the page's whole top depend on JavaScript.** The served markup was
+  the pinned desktop variant for every visitor, frozen on frame 0 with the
+  other five unreachable, and the stage held its content at `opacity: 0` until
+  an effect flipped `data-ready`. Reported from an iPad and an iPhone as "you
+  cannot see anything", and reproduced by rendering the served page with its
+  script tags stripped: a gradient wash with six dots on it.
+- **A stage that fills the viewport exactly reads as the whole page.** Readers
+  stopped on the first screen — *"the only problem is to not have at least a
+  scroll feedback ... The first time I opened this website I thought it was
+  just that, and quit"*. A scroll cue, a progress count and an idle animation
+  are all fixes for a problem the technique introduced; in flow, the next
+  section simply shows under the fold and none of them is needed.
+- **Every frame's geometry was a constant standing in for a measurement.** The
+  copy could only be held off the dots by an `svh` reserve on two frames and by
+  the container's padding on the other three — two different fixes for what
+  looked like one defect, each needing a per-frame sweep across six viewports
+  to trust.
+
+`frameIndex` and its test went with it.
+
+The header still follows the page: each section writes
+`MenuBarHeader/reading-store.ts` through an **IntersectionObserver** whose
+`rootMargin` collapses the root to a band around the viewport's middle line, so
+at most one section is intersecting and there is no tie to break. Nothing there
+decides what is VISIBLE — if the observer never runs, the page is the page and
+the bar keeps the reading it opened on. A module-level store with
 `useSyncExternalStore` rather than a context, because Nextra's `Layout` renders
 its `navbar` slot as a SIBLING of `children`: no provider in the page can reach
 the bar.
+
+One thing that survived the rewrite and is worth keeping: the **figures** under
+a frame's body (`28` / `2.68 GB` / `2.24 GB`) come from the measurement table
+above and from nowhere else. Nothing read off a screenshot may become one.
 
 ## The header is ONE bar, and it is a picture of the menu bar
 
