@@ -4,9 +4,9 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
 import { TextAnimate } from '@gfazioli/mantine-text-animate';
-import { IconArrowRight, IconBook2, IconGauge } from '@tabler/icons-react';
+import { IconArrowRight, IconBook2, IconChevronDown, IconGauge } from '@tabler/icons-react';
 import { Button, Container, Group, Image, Stack, Text, Title } from '@mantine/core';
-import { useMediaQuery, useReducedMotion } from '@mantine/hooks';
+import { useIsomorphicEffect } from '@mantine/hooks';
 import config from '@/config';
 import { type MenuBarReadingState, setMenuBarReading } from '../MenuBarHeader/reading-store';
 import { ReleaseCadence } from '../ReleaseCadence/ReleaseCadence';
@@ -191,23 +191,52 @@ const HERO_SHOT = {
 };
 
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
-  const reduced = useReducedMotion();
-  const narrow = useMediaQuery('(max-width: 62em)');
-  const pinned = !reduced && !narrow;
+  /*
+   * The STACK is what the server sends, and the stage is opted into after the
+   * first layout. Both halves of that matter.
+   *
+   * This used to be `useMediaQuery('(max-width: 62em)')`, which answers
+   * `undefined` until an effect has run — on the server and on the client's
+   * first render alike. So `!narrow` was true for everyone and the served
+   * markup was the pinned desktop stage, phones included: a track six screens
+   * tall with a sticky stage in it. A reader whose script never arrived got
+   * that, frozen on frame 0, with the other five frames unreachable and six
+   * screens of dead scroll under them.
+   *
+   * Reading `matchMedia` in a LAYOUT effect rather than an ordinary one is
+   * what keeps this from costing anything on a desktop: React commits it
+   * before the browser paints, so the stack is never on screen. The reduced-
+   * motion query is read in the same place for the same reason — resolved one
+   * effect later, it made a reader who asked for no motion watch the stage
+   * appear and then leave again.
+   */
+  const [pinned, setPinned] = useState(false);
   const released = config.app.released;
+
+  useIsomorphicEffect(() => {
+    const narrow = window.matchMedia('(max-width: 62em)');
+    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const sync = () => setPinned(!narrow.matches && !calm.matches);
+    sync();
+    narrow.addEventListener('change', sync);
+    calm.addEventListener('change', sync);
+    return () => {
+      narrow.removeEventListener('change', sync);
+      calm.removeEventListener('change', sync);
+    };
+  }, []);
 
   const trackRef = useRef<HTMLDivElement>(null);
   const stageRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [active, setActive] = useState(0);
-  const [ready, setReady] = useState(false);
 
-  // Point (a): the first frame FADES IN rather than being there already. One
-  // frame late on purpose — a value that is already final never animates.
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setReady(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
+  // Point (a): the first frame FADES IN rather than being there already. It is
+  // a CSS animation on the stage now (`stage-arrive` in the stylesheet), not a
+  // `data-ready` flag flipped from an effect — that version held the active
+  // artifact and the active copy at `opacity: 0` until JavaScript said
+  // otherwise, which made the markup we SERVE invisible. See the comment on
+  // `.stage`.
 
   useEffect(() => {
     if (!pinned) {
@@ -488,7 +517,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
         style={{ '--frames': readings.length } as React.CSSProperties}
         data-active={active}
       >
-        <div ref={stageRef} className={classes.stage} data-ready={ready}>
+        <div ref={stageRef} className={classes.stage}>
           <Container ref={innerRef} size="lg" className={classes.inner}>
             <div className={classes.artifacts}>
               <div
@@ -555,11 +584,28 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
               that hang from the bar are content-sized, so their slack falls to
               the bottom of the viewport, and an indicator pinned there gives
               that air a job instead of leaving it as a hole.
+
+              The cue above the dots is the page saying it is scrollable, which
+              it did not say before: readers stopped on the first screen and
+              one of them said so plainly — "the only problem is to not have at
+              least a scroll feedback ... The first time I opened this website
+              I thought it was just that, and quit". Both are decoration for a
+              screen reader (the frames are all in the DOM and reachable
+              without any of this), hence `aria-hidden`.
             */}
-            <div className={classes.dots} aria-hidden>
-              {[HERO_SHOT.src, ...frames.map((frame) => frame.src)].map((src, i) => (
-                <span key={src} className={classes.dot} data-active={i === active} />
-              ))}
+            <div className={classes.foot} aria-hidden>
+              <span className={classes.cue}>
+                <span className={classes.cueLabel}>Scroll</span>
+                <IconChevronDown size={15} className={classes.cueChevron} />
+              </span>
+              <span className={classes.dots}>
+                {[HERO_SHOT.src, ...frames.map((frame) => frame.src)].map((src, i) => (
+                  <span key={src} className={classes.dot} data-active={i === active} />
+                ))}
+                <span className={classes.count}>
+                  {active + 1}/{readings.length}
+                </span>
+              </span>
             </div>
           </Container>
         </div>

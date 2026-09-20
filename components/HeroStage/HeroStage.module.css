@@ -45,6 +45,14 @@
   align-items: stretch;
   height: calc(100svh - var(--lan-bar-height, rem(46px)));
   overflow: hidden;
+
+  /*
+   * The entrance. See `stage-arrive` below for why it is not an effect, and
+   * `forwards` rather than `both` — `both` would apply the `from` keyframe
+   * before the animation runs and strand the stage at `opacity: 0` on any
+   * engine that never starts it, which is the failure this replaced.
+   */
+  animation: stage-arrive 520ms ease forwards;
 }
 
 /*
@@ -89,7 +97,21 @@
    * macOS menu opens against it. The old 10 plus the dock's 14 read as the
    * menu floating loose under the header.
    */
-  padding-block: rem(2px) rem(34px);
+  /*
+   * The bottom padding holds the cluster off the copy on the three CENTRED
+   * frames, and only those: there the artifact row is `1fr`, so the rows fill
+   * this content box exactly and the padding is the gap. On the two frames
+   * whose rows are explicit (`--art-h`) the rows simply overflow the padding,
+   * which is why the menu frame measured a clean 25px of clearance while the
+   * window frames were drawing their link through the dots — the lever there
+   * is the artifact's `svh` reserve below, and these are two different fixes
+   * for what looks like one defect.
+   *
+   * 48 = the cluster's 12px offset, the 13 the dots and their count actually
+   * measure, and 23 of air. At 40 the measured gap was 11px, which is a link
+   * and a row of dots close enough to read as one object.
+   */
+  padding-block: rem(2px) rem(48px);
   padding-inline: rem(14px);
 }
 
@@ -177,13 +199,32 @@
 
 /*
  * The stage arrives with the page rather than being there first (point a of
- * the brief). Only the entrance is gated: once `ready` is set the frames
- * cross-fade on their own transitions.
+ * the brief) — as a CSS ANIMATION on the stage, not as a `data-ready` flag
+ * that JavaScript flips.
+ *
+ * What it used to be: the active artifact and the active copy block were held
+ * at `opacity: 0` until a `requestAnimationFrame` inside an effect set
+ * `data-ready="true"`. That makes the RESTING state of the markup we serve
+ * invisible, and the markup we serve is what a reader sees until the bundle
+ * has downloaded, parsed and hydrated. Measured 2026-09-20 by stripping the 19
+ * `<script>` tags out of the served page and rendering it in WebKit: a
+ * gradient wash with six dots on it and nothing else — which is exactly the
+ * "non si vede nulla" that came back from iPad and iPhone.
+ *
+ * An animation reaches its `to` state whether or not anything is listening, so
+ * the entrance survives and the resting state is the finished hero. It is on
+ * the STAGE and it is opacity only: a transform here would give the sticky
+ * element a new containing block, and the pinning is the one thing on this
+ * page that must not become clever.
  */
-.stage[data-ready='false'] .artifact[data-active='true'],
-.stage[data-ready='false'] .copyItem[data-active='true'] {
-  opacity: 0;
-  transform: translateY(rem(16px));
+@keyframes stage-arrive {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .shot {
@@ -250,7 +291,27 @@
 .artifact[data-anchor='menu'] .shot {
   width: auto;
   max-height: none;
-  height: min(46svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(500px)));
+  /*
+   * 580, not 500. The reserve is everything the stage owes the copy, and it is
+   * the ONLY thing holding the headline off the foot cluster — measured at
+   * 1440x900 rather than reasoned:
+   *
+   *     2   the stage's own top padding
+   *    27   the grid's row gap (3vh, clamped)
+   *   474   the copy block: headline, lead, two buttons, meta, release strip
+   *    40   the foot cluster: scroll cue over the dots
+   *    12   its offset from the stage's bottom edge
+   *   ---
+   *   555   the floor; 580 leaves room for a taller gap on a tall screen and
+   *         for a copy block that wraps one line further at another width.
+   *
+   * The 474 is 39 more than the 435 this file used to quote, because the
+   * headline's leading went from 1.03 to 1.1 and the release strip shipped
+   * after that number was taken. On a 1440x900 laptop the menu is 274px here,
+   * against 324 at the old reserve: the product gives up 15% so the page can
+   * say it is scrollable, which is the trade the feedback asked for.
+   */
+  height: min(46svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(580px)));
   /* Same reason as the island: it drops FROM the bar, so it starts at the top. */
   object-position: top center;
 }
@@ -258,7 +319,13 @@
 .artifact[data-anchor='notch'] .shot {
   width: auto;
   max-height: none;
-  height: min(26svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(290px)));
+  /*
+   * 340, not 290: the island's caption is short, so its reserve is the
+   * caption's 199 plus the same gap, cluster and offset as the menu's above —
+   * and the `26svh` cap binds on anything taller than about 520px anyway, so
+   * this only bites on a very short window.
+   */
+  height: min(26svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(340px)));
   /*
    * `contain` letterboxes, and a letterbox above the island is 70px of air
    * between the notch and the bar it is supposed to be cut out of. The box is
@@ -329,11 +396,19 @@
  * a container query: the copy box is the full stage width here, so there is no
  * narrow column for `cqw` to measure against.
  */
+/*
+ * `line-height: 1.03` on a 900-weight display face is 0.9px of leading at the
+ * 30px the phone gets — measured 2026-09-20, three line boxes 31px apart for a
+ * 30px font — so the descenders of "y", "g" and "q" run into the capitals of
+ * the line below and the block reads as one solid mass. 1.1 is still tight
+ * enough to hold three lines together as a unit and costs 6px on a phone, 12
+ * at the 56px cap, both of which the copy reserve above absorbs.
+ */
 .title {
   color: var(--lan-ink);
   font-size: clamp(rem(30px), 4.2vw, rem(56px));
   font-weight: 900;
-  line-height: 1.03;
+  line-height: 1.1;
   letter-spacing: -0.035em;
 }
 
@@ -349,6 +424,19 @@
 
   .lead {
     margin-top: rem(12px);
+  }
+
+  /*
+   * The reserve follows the copy, and below this breakpoint the copy is
+   * smaller — the title above drops from 56px to 44. A single constant tuned
+   * for a tall screen spends that saving on nothing: measured at 1440x800 the
+   * copy block is 431px against 474, and the 580px reserve left 68px of empty
+   * stage under the release strip while squeezing the menu to 174px, where
+   * its own text stops being legible. 535 is the same arithmetic as above
+   * (2 + 27 + 431 + 40 + 12 = 512) with the same margin on top.
+   */
+  .artifact[data-anchor='menu'] .shot {
+    height: min(46svh, calc(100svh - var(--lan-bar-height, rem(46px)) - rem(535px)));
   }
 }
 
@@ -390,14 +478,104 @@
   text-decoration: underline;
 }
 
-/* Where the reader is in the sequence. Decoration, hence `aria-hidden`. */
-.dots {
+/*
+ * The foot of the stage: that there is somewhere to go, and where in the
+ * sequence the reader is. Decoration, hence `aria-hidden`.
+ *
+ * Six 8px dots on the bottom edge were the whole of it, and they were not
+ * enough: readers opened the page, read one screen and left. The feedback was
+ * specific about the remedy — "the only problem is to not have at least a
+ * scroll feedback (like a rotating 3d object or a constant move, even if the
+ * scroll hasn't started). The first time I opened this website I thought it
+ * was just that, and quit" — so what was missing is motion BEFORE anything is
+ * scrolled, and a label saying what the motion is for.
+ */
+/*
+ * The cluster's own height is the DOTS' height and nothing else — the cue is
+ * lifted out of the flow and hung above them. That is not tidiness: on the
+ * three centred frames the artifact row is `1fr`, so the copy grows to the
+ * bottom of this box and every pixel the cluster occupies is a pixel the copy
+ * is already using. Measured before the lift: "What the window holds" was
+ * drawn straight through the dots on frames 3 to 6, while frame 0 — whose rows
+ * are explicit — measured a clean 25px and reported the whole thing fine.
+ */
+.foot {
   position: absolute;
-  bottom: rem(18px);
+  bottom: rem(12px);
   left: 50%;
   display: flex;
-  gap: rem(8px);
+  align-items: center;
   transform: translateX(-50%);
+}
+
+/*
+ * Only while the reader is still on the first frame. Once they have scrolled
+ * the invitation has been accepted, and a chevron that keeps asking is noise.
+ *
+ * Keyed off the TRACK's `data-active`, which the server renders as `0`: the
+ * cue is therefore on the page before any script runs, which is the same
+ * property the entrance animation above exists to protect. A cue that needed
+ * hydration would be missing in exactly the case that produced this feedback.
+ */
+/*
+ * No pill, no plate: the cluster sits in the slack at the bottom of the stage
+ * and every pixel of height it takes comes off the product's row, which is
+ * sized in `svh` and tuned to the pixel. Type and a chevron are 16px tall.
+ */
+.cue {
+  position: absolute;
+  bottom: calc(100% + rem(10px));
+  left: 50%;
+  display: inline-flex;
+  align-items: center;
+  gap: rem(6px);
+  color: var(--lan-accent-ink);
+  line-height: 1;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(-50%);
+  transition: opacity 320ms ease;
+  pointer-events: none;
+}
+
+.track[data-active='0'] .cue {
+  opacity: 1;
+}
+
+.cueLabel {
+  font-size: rem(12px);
+  font-weight: 700;
+  letter-spacing: rem(1.4px);
+  text-transform: uppercase;
+}
+
+/*
+ * The constant move the feedback asked for. It runs on its own clock rather
+ * than on the scroll, because the reader it is aimed at has not scrolled yet —
+ * that is the entire finding.
+ */
+.cueChevron {
+  animation: cue-beckon 1.8s ease-in-out 700ms infinite;
+}
+
+@keyframes cue-beckon {
+  0%,
+  60%,
+  100% {
+    opacity: 0.55;
+    transform: translateY(0);
+  }
+
+  30% {
+    opacity: 1;
+    transform: translateY(rem(4px));
+  }
+}
+
+.dots {
+  display: inline-flex;
+  align-items: center;
+  gap: rem(8px);
 }
 
 .dot {
@@ -415,12 +593,62 @@
   background-color: var(--lan-accent);
 }
 
+/* Six dots say "several"; the count says which of how many. */
+.count {
+  margin-left: rem(4px);
+  color: var(--mantine-color-gray-6);
+  font-size: rem(11px);
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+}
+
+/*
+ * The product itself breathes while the page waits, for the same reason the
+ * chevron does: the first screen is otherwise a still picture, and a still
+ * picture of an app is indistinguishable from a page that has finished. Only
+ * the first frame, only the menu, and only once the entrance has landed.
+ *
+ * On the IMAGE rather than on `.artifact`, which owns a transform of its own
+ * for the cross-fade — two animations on one property is the shorter of them
+ * winning silently.
+ */
+@media (prefers-reduced-motion: no-preference) {
+  .track[data-active='0'] .artifact[data-anchor='menu'][data-active='true'] .shot {
+    animation: shot-breathe 6s ease-in-out 1s infinite;
+  }
+}
+
+@keyframes shot-breathe {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(rem(-7px));
+  }
+}
+
 /* ------------------------------------------------------------- the fallback */
 
+/*
+ * The top padding CLEARS THE BAR and then adds its own air, and the sum is why
+ * it is written as one: `.hero, .heroPlain` above pulls the section up by the
+ * bar's height and pads it back down by the same amount, so the wash runs
+ * behind the bar while the content starts under it. This rule used to say
+ * `padding-block: rem(40px) rem(72px)`, which is the same specificity and
+ * further down the file — so it won, and 40 is less than the bar's 46.
+ *
+ * The headline's first line therefore started 6px ABOVE the bar's bottom edge
+ * and the bar, at `z-index: 40`, painted over it. Measured on a phone
+ * 2026-09-20: `barBottom: 46`, `firstLineTop: 40`. It is the "spacing problems
+ * with hero title" that came back with the rest of the feedback, and the
+ * arithmetic matches it exactly.
+ */
 .heroPlain {
   position: relative;
   isolation: isolate;
-  padding-block: rem(40px) rem(72px);
+  padding-block: calc(var(--lan-bar-height, rem(46px)) + rem(40px)) rem(72px);
 }
 
 /*
@@ -448,8 +676,20 @@
 @media (prefers-reduced-motion: reduce) {
   .artifact,
   .copyItem,
+  .cue,
   .dot,
   .inner {
     transition: none;
+  }
+
+  /*
+   * Both entrances stop being animations and become the state they were going
+   * to land on, which is visible — the whole point of moving them out of
+   * JavaScript. A reader who asked for no motion is not a reader who asked for
+   * no page.
+   */
+  .stage,
+  .cueChevron {
+    animation: none;
   }
 }
