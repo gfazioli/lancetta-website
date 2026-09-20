@@ -14,7 +14,11 @@ A percentage on an icon is passive: it rewards looking. The value is in the two 
 
 **Advice** — nothing changed, but the shape of the next hour did. *"The 5-hour window resets in 12 minutes and you are at 33% — the remaining 67% goes with it."*
 
-The advice half ships only if the reset observations collected from v0.2 onward come back as a step function. If they come back as a slope, that feature is deleted rather than softened.
+That sentence is only true if a window is a bucket that empties at an instant. If quota instead drains back gradually, the advice is wrong in the one direction that costs you money: it tells you to spend. So the advice half was made conditional on a measurement, with the rule fixed in advance — a step function and it ships, a slope and the feature is deleted rather than softened.
+
+**Measured on 20 September 2026, and it came back a step.** 1,890 readings collected since v0.2, both agents, both windows: across twenty-five windows the floor of the series never fell, and every boundary with something left to lose dropped in one step — the sharpest of them from 100% to zero in forty-two seconds. So the advice is a true sentence, and it is being built.
+
+Two things that measurement has not settled, and they are the reason nothing here is dated: one agent's weekly window was never seen to reset during the sample, and the other crossed exactly one boundary. Advice about a window whose reset nobody has watched is not advice.
 
 ## Everyone else's Mac
 
