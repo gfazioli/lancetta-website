@@ -512,10 +512,14 @@
  * Only while the reader is still on the first frame. Once they have scrolled
  * the invitation has been accepted, and a chevron that keeps asking is noise.
  *
- * Keyed off the TRACK's `data-active`, which the server renders as `0`: the
- * cue is therefore on the page before any script runs, which is the same
- * property the entrance animation above exists to protect. A cue that needed
- * hydration would be missing in exactly the case that produced this feedback.
+ * Keyed off the TRACK's `data-active` rather than off a piece of React state,
+ * so the whole thing is CSS once the stage exists.
+ *
+ * It does NOT reach a reader with no JavaScript, and that is correct rather
+ * than a gap: the cue lives in the pinned stage, and the stage is what the
+ * layout effect opts into. Without it the hero is the plain stack, where the
+ * content simply continues past the fold and nothing needs to say so. The
+ * cue exists for the one layout that fills the viewport exactly.
  */
 /*
  * No pill, no plate: the cluster sits in the slack at the bottom of the stage
