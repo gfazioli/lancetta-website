@@ -4,9 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
 import { TextAnimate } from '@gfazioli/mantine-text-animate';
-import { IconArrowRight, IconBook2, IconChevronDown, IconGauge } from '@tabler/icons-react';
+import { IconArrowRight, IconBook2, IconGauge } from '@tabler/icons-react';
 import { Button, Container, Group, Image, Stack, Text, Title } from '@mantine/core';
-import { useIsomorphicEffect } from '@mantine/hooks';
 import config from '@/config';
 import { type MenuBarReadingState, setMenuBarReading } from '../MenuBarHeader/reading-store';
 import { ReleaseCadence } from '../ReleaseCadence/ReleaseCadence';
@@ -14,51 +13,55 @@ import {
   fallbackReleaseCadence,
   type ReleaseCadence as Cadence,
 } from '../ReleaseCadence/release-cadence';
-import { frameIndex } from './frame-index';
 import classes from './HeroStage.module.css';
 
 /*
- * The hero is the product, demonstrated.
+ * The top of the page: the headline, and then one section per surface, in
+ * ordinary scrolling flow.
  *
- * The header above it is a macOS menu bar; this is what hangs off it. The
- * section is a tall TRACK with a viewport-high STAGE stuck under the bar:
- * scrolling into the track pins the stage, scrolling on advances the frame,
- * past the last frame the page resumes. Nothing intercepts the wheel — the
- * frame is a pure function of how far through the track the stage has
- * travelled, which is why it behaves identically with a trackpad, a mouse, the
- * keyboard and VoiceOver's scrolling. It is the same mechanism the gallery
- * further down the page used, lifted into the hero and given the bar to hang
- * from.
+ * It was a PINNED STAGE until 2026-09-20 — a tall track with a viewport-high
+ * stage stuck under the bar, the frame a pure function of how far the stage
+ * had travelled. It is gone, and the two reasons are worth keeping because
+ * they are what a scroll-driven hero costs rather than opinions about the
+ * technique:
  *
- * Each frame also writes the header's status item (`setMenuBarReading`), so
- * the thing at the top of the page is doing what the page is describing: the
- * first frame holds the menu open under it, the rest close it and move the
- * reading on.
+ * - it made the page's entire top depend on JavaScript. The served markup was
+ *   a track six screens tall frozen on frame 0, with the other five
+ *   unreachable, and the stage held its content at `opacity: 0` until an
+ *   effect said otherwise. Reported from an iPad and an iPhone as "you cannot
+ *   see anything", and reproduced by rendering the served page with its script
+ *   tags removed: a gradient wash and six dots.
+ * - a stage that fills the viewport exactly reads as the whole page. Readers
+ *   stopped on the first screen: "the only problem is to not have at least a
+ *   scroll feedback ... The first time I opened this website I thought it was
+ *   just that, and quit". Every fix for that is a fix for a problem the
+ *   technique introduced.
  *
- * Two audiences do not get the pinned version, and both get the same frames as
- * a plain stack: a phone, where a scroll-driven stage on a short viewport is
- * mostly a way to hide the copy, and a reader who has asked for reduced motion,
- * who has asked for exactly this not to happen.
+ * What survives is the thing that was actually good about it: the header's
+ * status item shows the same reading as the surface in front of you, so the
+ * bar at the top of the page is the app the page is describing. That is an
+ * IntersectionObserver now (below), not scroll arithmetic.
  */
 
 interface Frame {
   src: string;
   alt: string;
-  /** Where the artifact sits on the stage — see `HeroStage.module.css`. */
-  anchor: 'menu' | 'notch' | 'centre';
   eyebrow: string;
   title: string;
   body: string;
+  /** Measured evidence under the body. Two or three short rows, never prose. */
+  figures?: { value: string; label: string }[];
   href: string;
   linkLabel: string;
   reading: MenuBarReadingState;
+  /** Shipping later, and the section says so on its face. */
+  next?: boolean;
 }
 
 /*
  * The window's three panes are ONE session, so they quote one reading. The
  * Limits pane is the only one that draws a reset time, so it supplies both
- * agents' for all three: the Overview pane's Quota Used card shows Claude's
- * 20% and crops Codex's row, and the Usage pane carries no quota at all.
+ * agents' for all three.
  */
 const windowSession: MenuBarReadingState = {
   cells: [
@@ -69,15 +72,59 @@ const windowSession: MenuBarReadingState = {
 };
 
 /**
- * The frames after the hero's own. Frame 0 is the headline and lives in the
- * markup below, because it carries the page's `h1` and the two buttons — it
- * is not data, it is the page.
+ * THE ORDER IS THE ARGUMENT, and it changed on 2026-09-20 (user: *"mettendo
+ * l'accento subito su cosa differenzia Lancetta dagli altri concorrenti -
+ * quindi suggerimenti e clean dei processi"*).
+ *
+ * What the field has, measured and recorded in Lancetta#24: CodexBar has the
+ * quota ceiling and the token flow and keeps no series; ccusage has the flow
+ * and guesses the ceiling; Quotio routes around a limit rather than advising
+ * on it. Nobody else reaps the process trees, and nobody else keeps a series
+ * to advise from. So those two lead, and the surfaces that every monitor has
+ * — a menu, an island, a window, a chart — come after them.
+ *
+ * The reaper goes FIRST of the two although the advice is the deeper moat,
+ * for one reason that is not editorial: the reaper ships today and the advice
+ * does not. The pace line is merged on `main` and sits after the v0.3.4 tag
+ * (`9e7caaf`, `82952ee`), and the alerts are still PR #36. A page whose first
+ * claim below the fold is a promise is a weaker page than one whose first
+ * claim is a number. When a release carries the pace, this order is worth
+ * revisiting and `next` comes off that frame.
  */
 const frames: Frame[] = [
   {
+    src: '/screenshot-window-processes.png',
+    alt: 'The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total',
+    eyebrow: 'What nothing else reaps',
+    title: 'Nobody ever closes them.',
+    body: 'Every folder an agent works in leaves a background tree behind, and one whose folder is gone will never be shut down by anything — not by the agent, not by the terminal you closed, not by macOS. Lancetta is the only one of these monitors that finds them, and it shows you the list before it closes a single thing on it.',
+    figures: [
+      { value: '28', label: 'trees on one Mac' },
+      { value: '2.68 GB', label: 'held between them' },
+      { value: '2.24 GB', label: 'back after reaping' },
+    ],
+    href: '/docs/memory',
+    linkLabel: 'What accumulates, and why nothing reaps it',
+    reading: windowSession,
+  },
+  {
+    src: '',
+    alt: '',
+    eyebrow: 'Next',
+    title: 'The number you can already see is not the useful one.',
+    body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is whether this pace empties the window before it resets — and the moment you are no longer blocked, which is the one nobody can watch for, because being blocked is why they went somewhere else. Lancetta keeps a quota series, which is what an answer to either question needs; the field keeps the ceiling and the flow and no history at all.',
+    figures: [
+      { value: '7 days', label: 'the window that actually hurts' },
+      { value: 'since v0.2', label: 'the series it reads' },
+    ],
+    href: '/docs/roadmap',
+    linkLabel: 'Where this is in the roadmap',
+    reading: windowSession,
+    next: true,
+  },
+  {
     src: '/screenshot-notch-open.png',
     alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, and both windows as bars',
-    anchor: 'notch',
     eyebrow: 'Under the notch',
     title: 'The island.',
     body: 'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. Point at it and it opens.',
@@ -94,7 +141,6 @@ const frames: Frame[] = [
   {
     src: '/screenshot-window-overview.png',
     alt: 'The Lancetta window: the daily token series for both agents side by side, and both agents’ quota bars underneath',
-    anchor: 'centre',
     eyebrow: 'When a glance is not enough',
     title: 'The window.',
     body: 'Command-O for the rest: daily tokens over weeks, each agent in detail, and the background processes the agents have left running.',
@@ -105,7 +151,6 @@ const frames: Frame[] = [
   {
     src: '/screenshot-window-usage.png',
     alt: 'The Usage pane: thirty days of tokens for both agents side by side, with the lifetime total, the best day and the streaks underneath',
-    anchor: 'centre',
     eyebrow: 'Where the tokens went',
     title: 'The history.',
     body: 'The same chart over 7, 30 or 90 days, with the lifetime total and the streaks under it. Codex publishes its own history; Claude’s is rebuilt from the transcripts on your Mac.',
@@ -116,7 +161,6 @@ const frames: Frame[] = [
   {
     src: '/screenshot-window-limits.png',
     alt: 'The Limits pane of the Lancetta window: Claude Code seen a second ago and Codex live, each with its 5-hour and 7-day bar and the time it resets',
-    anchor: 'centre',
     eyebrow: 'In detail',
     title: 'Live, or seen a moment ago.',
     body: 'Two agents, four windows, the reset time for each — and beside every reading, when it was last true. A number with no timestamp is a number you cannot trust.',
@@ -124,31 +168,13 @@ const frames: Frame[] = [
     linkLabel: 'How it reads each agent',
     reading: windowSession,
   },
-  {
-    src: '/screenshot-window-processes.png',
-    alt: 'The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total',
-    anchor: 'centre',
-    eyebrow: 'What they leave behind',
-    title: 'Nobody ever closes them.',
-    body: 'Every folder an agent works in leaves a background tree, and one whose folder is gone will never be shut down by anything. Lancetta lists them, and shows you that list before it closes a single one.',
-    href: '/docs/memory',
-    linkLabel: 'What accumulates, and why nothing reaps it',
-    reading: windowSession,
-  },
 ];
 
 /*
- * Every frame's reading is READ OFF the screenshot it sits beside, for BOTH
- * agents, because the bar shows them in turn: the menu holds Claude at 20%
- * with 1h44m and Codex at 5% with 3h23m, the island Claude at 12% with 1h55m
- * and Codex at 28% with 2h23m, and the window's three panes the one session
- * above. The bar is meant to be the same app as the picture under it — a
- * percentage in the bar that the screenshot beside it contradicts is a small
- * lie the eye catches, and it now has four seconds to catch it in.
- *
- * They are ILLUSTRATION, not claims: these are one developer's numbers on one
- * afternoon. Every figure the prose states comes from the measurement table in
- * CLAUDE.md instead.
+ * The hero's own reading, read OFF the screenshot beside it for BOTH agents,
+ * because the bar shows them in turn. They are ILLUSTRATION, not claims: one
+ * developer's numbers on one afternoon. Every figure the prose states comes
+ * from the measurement table in CLAUDE.md instead.
  */
 const heroReading: MenuBarReadingState = {
   cells: [
@@ -158,289 +184,52 @@ const heroReading: MenuBarReadingState = {
   open: true,
 };
 
-/** Every frame's reading, hero first, indexed the way `active` is. */
-const readings: MenuBarReadingState[] = [heroReading, ...frames.map((frame) => frame.reading)];
-
-/**
- * A copy block's content height: the span of its CHILDREN, not its own height.
- * Three of the five blocks are `position: absolute; inset: 0`, so their height
- * IS the box they are being measured to fit — `scrollHeight` answered 435px
- * for every frame, which is the number this exists to replace.
- *
- * `offsetTop`/`offsetHeight`, not `getBoundingClientRect()`: the rect is the
- * TRANSFORMED box, and a block that is not the active one carries a
- * `translateY`. A translate happens to cancel out of a span, but the hero
- * already paid for trusting that once — the artifact's `scale(0.97)` shaved
- * 3% off the row on every visit — so this measures the layout directly. The
- * children are positioned against the block itself, which is the offsetParent
- * either way round (`absolute`, or `relative` for the one left in flow).
- */
-function copyHeight(block: HTMLElement): number {
-  const kids = block.children;
-  if (!kids.length) {
-    return 0;
-  }
-  const first = kids[0] as HTMLElement;
-  const last = kids[kids.length - 1] as HTMLElement;
-  return last.offsetTop + last.offsetHeight - first.offsetTop;
-}
-
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
   alt: 'The Lancetta menu: Claude Code and Codex, each with a 5-hour and a 7-day quota window and the time it resets',
 };
 
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
-  /*
-   * The STACK is what the server sends, and the stage is opted into after the
-   * first layout. Both halves of that matter.
-   *
-   * This used to be `useMediaQuery('(max-width: 62em)')`, which answers
-   * `undefined` until an effect has run — on the server and on the client's
-   * first render alike. So `!narrow` was true for everyone and the served
-   * markup was the pinned desktop stage, phones included: a track six screens
-   * tall with a sticky stage in it. A reader whose script never arrived got
-   * that, frozen on frame 0, with the other five frames unreachable and six
-   * screens of dead scroll under them.
-   *
-   * Reading `matchMedia` in a LAYOUT effect rather than an ordinary one is
-   * what keeps this from costing anything on a desktop: React commits it
-   * before the browser paints, so the stack is never on screen. The reduced-
-   * motion query is read in the same place for the same reason — resolved one
-   * effect later, it made a reader who asked for no motion watch the stage
-   * appear and then leave again.
-   */
-  const [pinned, setPinned] = useState(false);
   const released = config.app.released;
-
-  useIsomorphicEffect(() => {
-    const narrow = window.matchMedia('(max-width: 62em)');
-    const calm = window.matchMedia('(prefers-reduced-motion: reduce)');
-    const sync = () => setPinned(!narrow.matches && !calm.matches);
-    sync();
-    narrow.addEventListener('change', sync);
-    calm.addEventListener('change', sync);
-    return () => {
-      narrow.removeEventListener('change', sync);
-      calm.removeEventListener('change', sync);
-    };
-  }, []);
-
-  const trackRef = useRef<HTMLDivElement>(null);
-  const stageRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
+  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
   const [active, setActive] = useState(0);
 
-  // Point (a): the first frame FADES IN rather than being there already. It is
-  // a CSS animation on the stage now (`stage-arrive` in the stylesheet), not a
-  // `data-ready` flag flipped from an effect — that version held the active
-  // artifact and the active copy at `opacity: 0` until JavaScript said
-  // otherwise, which made the markup we SERVE invisible. See the comment on
-  // `.stage`.
-
-  useEffect(() => {
-    if (!pinned) {
-      // Unpinned, the stage is a stack and nothing drives the bar: leave the
-      // header showing the reading the page opens on.
-      setMenuBarReading(heroReading);
-      return undefined;
-    }
-    const measure = () => {
-      const track = trackRef.current;
-      const stage = stageRef.current;
-      if (!track || !stage) {
-        return;
-      }
-      const t = track.getBoundingClientRect();
-      const s = stage.getBoundingClientRect();
-      // How far the stuck stage has slid down inside the track: 0 at the top,
-      // `travel` when the track's bottom edge catches up with it. Measured
-      // between the two boxes rather than against the viewport, so the bar the
-      // stage sticks under never enters the arithmetic.
-      const travel = t.height - s.height;
-      if (travel <= 0) {
-        return;
-      }
-      setActive(frameIndex((s.top - t.top) / travel, readings.length));
-    };
-    measure();
-    window.addEventListener('scroll', measure, { passive: true });
-    window.addEventListener('resize', measure);
-    return () => {
-      window.removeEventListener('scroll', measure);
-      window.removeEventListener('resize', measure);
-    };
-  }, [pinned]);
-
   /*
-   * The stage gives the copy exactly the room the ACTIVE block needs, and the
-   * rest to the product. Measured from the DOM rather than declared, because
-   * the blocks differ by a factor of two and every one of those heights is a
-   * function of the viewport width, the font and the reader's own text size.
+   * The bar's status item follows whichever section is crossing the middle of
+   * the viewport. `rootMargin` collapses the root to a band around that middle
+   * line, so at most one section is intersecting and there is no tie to break
+   * — which is the whole reason this is an observer rather than a scroll
+   * handler doing arithmetic on six rectangles.
+   *
+   * Nothing here decides what is VISIBLE. That is the difference from the
+   * stage this replaced: if the observer never runs, the page is the page, and
+   * the bar simply keeps the reading it opened on.
    */
   useEffect(() => {
-    const inner = innerRef.current;
-    if (!inner || !pinned) {
+    const nodes = sectionsRef.current.filter((n): n is HTMLElement => n !== null);
+    if (!nodes.length || typeof IntersectionObserver === 'undefined') {
       return undefined;
     }
-    const apply = () => {
-      /*
-       * The artifact row, for the two frames that hang from the bar. It is the
-       * image's CONTENT height, not its box's: `object-fit: contain` letterboxes
-       * whenever `max-width` bites, and the box would then reserve room for
-       * emptiness. The centred frames publish nothing and keep their `1fr`.
-       */
-      const art = inner.querySelector<HTMLImageElement>('[data-art-active="true"] img');
-      if (art?.naturalHeight) {
-        /*
-         * `offsetWidth`/`offsetHeight`, not `getBoundingClientRect()`. The rect
-         * is the TRANSFORMED box, and the artifact arrives on a 620ms
-         * `scale(0.97)`: measured mid-animation the row came out 3% short (482
-         * against 497) every time the reader came back to the top, so the copy
-         * crept upwards on each visit. The offset pair is the layout size and
-         * ignores transforms.
-         */
-        const content = Math.min(
-          art.offsetHeight,
-          art.offsetWidth * (art.naturalHeight / art.naturalWidth)
-        );
-        inner.style.setProperty('--art-h', `${Math.ceil(content)}px`);
-      } else {
-        inner.style.removeProperty('--art-h');
-      }
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            const index = nodes.indexOf(entry.target as HTMLElement);
+            if (index >= 0) {
+              setActive(index);
+            }
+          }
+        }
+      },
+      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
+    );
+    nodes.forEach((node) => observer.observe(node));
+    return () => observer.disconnect();
+  }, []);
 
-      const item = inner.querySelector<HTMLElement>('[data-copy-active="true"]');
-      if (!item) {
-        return;
-      }
-      /*
-       * The three CENTRED frames share one copy row, and it is the tallest of
-       * them.
-       *
-       * A centred artifact has no height of its own: it fills the row, and the
-       * row is whatever the copy leaves. So one copy block a line taller than
-       * its neighbour drew a visibly smaller window — and those three frames
-       * are three panes of ONE window, side by side in the reader's memory,
-       * which is exactly where a few per cent of scale reads as a mistake.
-       * Reserving the tallest for all three makes the artifact row identical by
-       * construction, and stops the copy itself shuffling as they cross-fade.
-       *
-       * The two frames that hang from the bar keep their own height: they are
-       * sized by `--art-h` above, not by what is left over.
-       */
-      const blocks =
-        item.dataset.copyAnchor === 'centre'
-          ? Array.from(inner.querySelectorAll<HTMLElement>('[data-copy-anchor="centre"]'))
-          : [item];
-      inner.style.setProperty('--copy-h', `${Math.ceil(Math.max(...blocks.map(copyHeight)))}px`);
-    };
-    apply();
-    window.addEventListener('resize', apply);
-    return () => window.removeEventListener('resize', apply);
-  }, [active, pinned]);
-
-  // The header's status item follows the frame. Separate from the measurement
-  // so it runs once per CHANGE of frame rather than once per scroll event.
   useEffect(() => {
-    setMenuBarReading(readings[active] ?? heroReading);
+    setMenuBarReading(active === 0 ? heroReading : (frames[active - 1]?.reading ?? heroReading));
   }, [active]);
-
-  // THE THREE LINES MUST NOT WRAP AT 390px, and that is a hard constraint
-  // rather than a preference. Measured 2026-09-20: a headline whose lines wrapped
-  // took the h1 from 93px to 154px, and the pinned stage answered by rendering the
-  // whole copy block at opacity 0 on a phone -- a blank hero, which no markup check
-  // can see. Each line here is about as long as "Every agent's quota.", which is
-  // known to fit. Lengthen one and re-shoot at 390 before believing it.
-  const headline = (
-    <>
-      <Title className={classes.title}>
-        <span className={classes.titleLine}>Every agent’s quota.</span>
-        <span className={classes.titleLine}>Every number, dated.</span>
-        <span className={classes.titleLine}>
-          <TextAnimate
-            animate="in"
-            // By WORD, not by character. TextAnimate makes one element per
-            // segment, so per-character splitting lets the browser break a line
-            // anywhere, and a headline that wraps then breaks INSIDE a word:
-            // "And what they left runnin / g." at 390px. The three lines are
-            // now short enough not to wrap at all (see below), but this stays:
-            // it is the difference between a wrap and a broken word.
-            by="word"
-            inherit
-            variant="gradient"
-            component="span"
-            // Three words rather than fourteen characters, so the per-segment
-            // delay goes back up to keep the whole line under a second.
-            segmentDelay={0.2}
-            duration={1.5}
-            animation="scale"
-            animateProps={{ scaleAmount: 2 }}
-            gradient={{ from: '#0D7DFA', to: '#672AFA' }}
-          >
-            Every stray process.
-          </TextAnimate>
-        </span>
-      </Title>
-
-      <Text c="dimmed" fz={{ base: 'md', md: 'lg' }} lh={1.5} className={classes.lead}>
-        Codex and Claude Code, both windows each, with the age of every reading on its face — plus
-        the background process trees the agents leave behind and nothing ever reaps. Measured on one
-        Mac: 28 of them, holding 2.68 GB.
-      </Text>
-
-      <Group mt="lg" gap="sm" className={classes.actions}>
-        {released ? (
-          <Button
-            href="/download"
-            component="a"
-            leftSection={<IconGauge size={20} />}
-            size="md"
-            radius="xl"
-            px={26}
-          >
-            Download for macOS
-          </Button>
-        ) : (
-          <Button
-            href="/docs"
-            component="a"
-            leftSection={<IconBook2 size={20} />}
-            size="md"
-            radius="xl"
-            px={26}
-          >
-            See what it does
-          </Button>
-        )}
-        <Button
-          href="/docs/roadmap"
-          component="a"
-          rightSection={<IconArrowRight size={18} />}
-          variant="subtle"
-          size="md"
-        >
-          {released ? 'What’s next' : 'Follow the build'}
-        </Button>
-      </Group>
-
-      <Stack gap={6} mt="md" className={classes.meta}>
-        <Text c="dimmed" size="sm">
-          {/*
-            One interpolated template literal rather than JSX text. In a text
-            chunk spanning more than one source line, the space between an
-            interpolation and a following HTML entity is dropped — both
-            sibling sites shipped "v0.28.0- macOS 15+" that way for months. An
-            explicit space expression does not survive oxfmt, which removes it
-            and rejoins the lines; a string is out of reach of both.
-          */}
-          {released
-            ? `Free · v${config.app.version} · macOS ${config.app.minMacOS}+ · Universal · Signed & notarized`
-            : `Free · v${config.app.version} in progress · macOS ${config.app.minMacOS}+ · No account, no server, no telemetry`}
-        </Text>
-        {released && <ReleaseCadence cadence={cadence} />}
-      </Stack>
-    </>
-  );
 
   const wash = (
     <Scene lazy>
@@ -459,51 +248,6 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
     </Scene>
   );
 
-  /*
-   * The stacked fallback. Same frames, same order, captions under each — a
-   * phone has no room for a stage and a reader who asked for no motion asked
-   * for no stage.
-   */
-  if (!pinned) {
-    return (
-      <section
-        id="overview"
-        className={`lan-feather ${classes.heroPlain}`}
-        aria-label="Lancetta, at a glance"
-      >
-        {wash}
-        <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
-          <div className={classes.plainCopy}>{headline}</div>
-          <Image
-            src={HERO_SHOT.src}
-            alt={HERO_SHOT.alt}
-            className={classes.plainShot}
-            fetchPriority="high"
-          />
-          <Stack gap={56} mt={56}>
-            {frames.map((frame) => (
-              <Stack key={frame.src} gap="md">
-                <Image src={frame.src} alt={frame.alt} className={classes.plainShot} />
-                <Stack gap={6}>
-                  <Text className={classes.eyebrow}>{frame.eyebrow}</Text>
-                  <Text fw={800} fz={24}>
-                    {frame.title}
-                  </Text>
-                  <Text c="dimmed" lh={1.6}>
-                    {frame.body}
-                  </Text>
-                  <Link href={frame.href} className={classes.frameLink}>
-                    {frame.linkLabel}
-                  </Link>
-                </Stack>
-              </Stack>
-            ))}
-          </Stack>
-        </Container>
-      </section>
-    );
-  }
-
   return (
     <section
       id="overview"
@@ -511,105 +255,158 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
       aria-label="Lancetta, at a glance"
     >
       {wash}
-      <div
-        ref={trackRef}
-        className={classes.track}
-        style={{ '--frames': readings.length } as React.CSSProperties}
-        data-active={active}
-      >
-        <div ref={stageRef} className={classes.stage}>
-          <Container ref={innerRef} size="lg" className={classes.inner}>
-            <div className={classes.artifacts}>
-              <div
-                className={classes.artifact}
-                data-anchor="menu"
-                data-active={active === 0}
-                data-art-active={active === 0}
+
+      <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
+        <div
+          ref={(node) => {
+            sectionsRef.current[0] = node;
+          }}
+          className={classes.opening}
+        >
+          {/*
+            THE THREE LINES MUST NOT WRAP AT 390px, and that is a hard
+            constraint rather than a preference: each line is about as long as
+            "Every agent's quota.", which is known to fit. Lengthen one and
+            re-shoot at 390 before believing it.
+          */}
+          <Title className={classes.title}>
+            <span className={classes.titleLine}>Every agent’s quota.</span>
+            <span className={classes.titleLine}>Every number, dated.</span>
+            <span className={classes.titleLine}>
+              <TextAnimate
+                animate="in"
+                // By WORD, not by character: TextAnimate makes one element per
+                // segment, so per-character splitting lets the browser break a
+                // line anywhere, and a headline that wraps then breaks INSIDE
+                // a word ("And what they left runnin / g." at 390px).
+                by="word"
+                inherit
+                variant="gradient"
+                component="span"
+                segmentDelay={0.2}
+                duration={1.5}
+                animation="scale"
+                animateProps={{ scaleAmount: 2 }}
+                gradient={{ from: '#0D7DFA', to: '#672AFA' }}
               >
-                <Image
-                  src={HERO_SHOT.src}
-                  alt={HERO_SHOT.alt}
-                  className={classes.shot}
-                  fetchPriority="high"
-                />
-              </div>
-              {frames.map((frame, i) => (
-                <div
-                  key={frame.src}
-                  className={classes.artifact}
-                  data-anchor={frame.anchor}
-                  data-active={active === i + 1}
-                  data-art-active={active === i + 1 && frame.anchor !== 'centre'}
-                  aria-hidden={active !== i + 1}
-                >
+                Every stray process.
+              </TextAnimate>
+            </span>
+          </Title>
+
+          <Text c="dimmed" fz={{ base: 'md', md: 'lg' }} lh={1.5} className={classes.lead}>
+            Codex and Claude Code, both windows each, with the age of every reading on its face —
+            and the background process trees they leave behind, which nothing else on your Mac will
+            ever close.
+          </Text>
+
+          <Group mt="lg" gap="sm" className={classes.actions}>
+            {released ? (
+              <Button
+                href="/download"
+                component="a"
+                leftSection={<IconGauge size={20} />}
+                size="md"
+                radius="xl"
+                px={26}
+              >
+                Download for macOS
+              </Button>
+            ) : (
+              <Button
+                href="/docs"
+                component="a"
+                leftSection={<IconBook2 size={20} />}
+                size="md"
+                radius="xl"
+                px={26}
+              >
+                See what it does
+              </Button>
+            )}
+            <Button
+              href="/docs/roadmap"
+              component="a"
+              rightSection={<IconArrowRight size={18} />}
+              variant="subtle"
+              size="md"
+            >
+              {released ? 'What’s next' : 'Follow the build'}
+            </Button>
+          </Group>
+
+          <Stack gap={6} mt="md" className={classes.meta}>
+            <Text c="dimmed" size="sm">
+              {/*
+                One interpolated template literal rather than JSX text. In a
+                text chunk spanning more than one source line, the space
+                between an interpolation and a following HTML entity is
+                dropped — both sibling sites shipped "v0.28.0- macOS 15+" that
+                way for months. An explicit space expression does not survive
+                oxfmt; a string is out of reach of both.
+              */}
+              {released
+                ? `Free · v${config.app.version} · macOS ${config.app.minMacOS}+ · Universal · Signed & notarized`
+                : `Free · v${config.app.version} in progress · macOS ${config.app.minMacOS}+ · No account, no server, no telemetry`}
+            </Text>
+            {released && <ReleaseCadence cadence={cadence} />}
+          </Stack>
+        </div>
+
+        <Image
+          src={HERO_SHOT.src}
+          alt={HERO_SHOT.alt}
+          className={classes.openingShot}
+          fetchPriority="high"
+        />
+
+        <div className={classes.frames}>
+          {frames.map((frame, i) => (
+            <section
+              key={frame.title}
+              ref={(node) => {
+                sectionsRef.current[i + 1] = node;
+              }}
+              className={classes.frame}
+              data-textonly={!frame.src}
+              aria-label={frame.title}
+            >
+              {frame.src && (
+                <div className={classes.frameShot}>
                   <Image src={frame.src} alt={frame.alt} className={classes.shot} />
                 </div>
-              ))}
-            </div>
+              )}
 
-            <div className={classes.copy}>
-              <div
-                className={classes.copyItem}
-                data-active={active === 0}
-                data-copy-active={active === 0}
-                data-copy-anchor="menu"
-              >
-                {headline}
+              <div className={classes.frameCopy}>
+                <Text className={classes.eyebrow} data-next={frame.next}>
+                  {frame.eyebrow}
+                </Text>
+                <Text fw={800} fz={{ base: 26, md: 34 }} lh={1.15} mt={8}>
+                  {frame.title}
+                </Text>
+                <Text c="dimmed" fz="lg" lh={1.6} mt={12}>
+                  {frame.body}
+                </Text>
+
+                {frame.figures && (
+                  <div className={classes.figures}>
+                    {frame.figures.map((figure) => (
+                      <div key={figure.label} className={classes.figure}>
+                        <span className={classes.figureValue}>{figure.value}</span>
+                        <span className={classes.figureLabel}>{figure.label}</span>
+                      </div>
+                    ))}
+                  </div>
+                )}
+
+                <Link href={frame.href} className={classes.frameLink}>
+                  {frame.linkLabel}
+                </Link>
               </div>
-              {frames.map((frame, i) => (
-                <div
-                  key={frame.src}
-                  className={classes.copyItem}
-                  data-active={active === i + 1}
-                  data-copy-active={active === i + 1}
-                  data-copy-anchor={frame.anchor}
-                  aria-hidden={active !== i + 1}
-                >
-                  <Text className={classes.eyebrow}>{frame.eyebrow}</Text>
-                  <Text fw={800} fz={{ base: 26, md: 34 }} lh={1.15} mt={6}>
-                    {frame.title}
-                  </Text>
-                  <Text c="dimmed" fz="lg" lh={1.6} mt={10} maw={620} mx="auto">
-                    {frame.body}
-                  </Text>
-                  <Link href={frame.href} className={classes.frameLink}>
-                    {frame.linkLabel}
-                  </Link>
-                </div>
-              ))}
-            </div>
-
-            {/*
-              At the bottom of the STAGE, not under the copy. The two frames
-              that hang from the bar are content-sized, so their slack falls to
-              the bottom of the viewport, and an indicator pinned there gives
-              that air a job instead of leaving it as a hole.
-
-              The cue above the dots is the page saying it is scrollable, which
-              it did not say before: readers stopped on the first screen and
-              one of them said so plainly — "the only problem is to not have at
-              least a scroll feedback ... The first time I opened this website
-              I thought it was just that, and quit". Both are decoration for a
-              screen reader (the frames are all in the DOM and reachable
-              without any of this), hence `aria-hidden`.
-            */}
-            <div className={classes.foot} aria-hidden>
-              <span className={classes.cue}>
-                <span className={classes.cueLabel}>Scroll</span>
-                <IconChevronDown size={15} className={classes.cueChevron} />
-              </span>
-              <span className={classes.dots}>
-                {[HERO_SHOT.src, ...frames.map((frame) => frame.src)].map((src, i) => (
-                  <span key={src} className={classes.dot} data-active={i === active} />
-                ))}
-                <span className={classes.count}>
-                  {active + 1}/{readings.length}
-                </span>
-              </span>
-            </div>
-          </Container>
+            </section>
+          ))}
         </div>
-      </div>
+      </Container>
     </section>
   );
 }
