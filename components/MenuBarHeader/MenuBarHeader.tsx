@@ -47,15 +47,11 @@ export function MenuBarHeader() {
   const onHome = pathname === '/';
   const barRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState<string | null>(null);
-  const [ready, setReady] = useState(false);
 
-  // The bar fades in on the first paint, together with the hero under it.
-  // Flipped in an effect rather than rendered ready, so the transition has a
-  // state to run FROM: a value that is already final never animates.
-  useEffect(() => {
-    const id = requestAnimationFrame(() => setReady(true));
-    return () => cancelAnimationFrame(id);
-  }, []);
+  // The bar's entrance is a CSS animation now (`bar-arrive` in the stylesheet),
+  // not a `data-ready` flag flipped from here. It used to be an effect, which
+  // made the bar's RESTING state invisible: a reader whose script never lands
+  // got no header at all. See the comment on `.bar`.
 
   /*
    * Which section the reader is in, measured against the bar's own bottom
@@ -97,12 +93,7 @@ export function MenuBarHeader() {
 
   return (
     <div className={classes.dock}>
-      <header
-        ref={barRef}
-        className={`lan-menubar ${classes.bar}`}
-        data-ready={ready}
-        aria-label="Lancetta"
-      >
+      <header ref={barRef} className={`lan-menubar ${classes.bar}`} aria-label="Lancetta">
         <div className={classes.left}>
           <Link href="/" className={classes.brand} aria-label="Lancetta, home">
             <Logo size={20} />

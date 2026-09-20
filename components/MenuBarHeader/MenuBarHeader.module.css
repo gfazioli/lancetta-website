@@ -64,17 +64,43 @@
   color: rgb(255 255 255 / 92%);
   pointer-events: auto;
 
-  /* Point (a): the bar arrives with the hero rather than being there first. */
-  opacity: 0;
-  transform: translateY(rem(-10px));
-  transition:
-    opacity 520ms ease,
-    transform 620ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  /*
+   * Point (a): the bar arrives with the hero rather than being there first —
+   * as a CSS ANIMATION, not as an attribute JavaScript flips.
+   *
+   * It used to open at `opacity: 0` and wait for `data-ready="true"`, supplied
+   * by a `requestAnimationFrame` inside an effect. That is an entrance that
+   * never ends for a reader whose script never arrives, and the resting state
+   * of the markup we SERVE is therefore invisible. Measured 2026-09-20 by
+   * stripping the 19 `<script>` tags out of the served page and rendering it:
+   * no bar, and no hero either, because `HeroStage` carried the same pattern.
+   * The page was a gradient with six dots on it.
+   *
+   * An animation ends at its `to` state whether or not anything is listening,
+   * so the same entrance now costs nothing when the script is late, blocked or
+   * broken. Nothing else changes: same curve, same distance, same duration.
+   *
+   * `forwards`, never `both`. `both` also applies the `from` keyframe BEFORE
+   * the animation runs, which hands the failure straight back: an engine that
+   * has not started it yet, or will not start it at all, holds the bar at
+   * `opacity: 0` — the same stranded state, reached a different way. With
+   * `forwards` the resting style is the element's own, so "the animation never
+   * ran" degrades to "the bar is simply there". It is also what
+   * `mantine-text-animate` emits for its own segments.
+   */
+  animation: bar-arrive 620ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
 }
 
-.bar[data-ready='true'] {
-  opacity: 1;
-  transform: none;
+@keyframes bar-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(rem(-10px));
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 @media (max-width: $mantine-breakpoint-sm) {
@@ -345,6 +371,7 @@
   }
 
   .bar {
+    animation: none;
     opacity: 1;
     transform: none;
   }
