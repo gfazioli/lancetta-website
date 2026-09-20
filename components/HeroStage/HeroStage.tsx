@@ -316,32 +316,47 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
     setMenuBarReading(readings[active] ?? heroReading);
   }, [active]);
 
+  // THE THREE LINES MUST NOT WRAP AT 390px, and that is a hard constraint
+  // rather than a preference. Measured 2026-09-20: a headline whose lines wrapped
+  // took the h1 from 93px to 154px, and the pinned stage answered by rendering the
+  // whole copy block at opacity 0 on a phone -- a blank hero, which no markup check
+  // can see. Each line here is about as long as "Every agent's quota.", which is
+  // known to fit. Lengthen one and re-shoot at 390 before believing it.
   const headline = (
     <>
       <Title className={classes.title}>
         <span className={classes.titleLine}>Every agent’s quota.</span>
-        <span className={classes.titleLine}>One glance.</span>
+        <span className={classes.titleLine}>Every number, dated.</span>
         <span className={classes.titleLine}>
           <TextAnimate
             animate="in"
-            by="character"
+            // By WORD, not by character. TextAnimate makes one element per
+            // segment, so per-character splitting lets the browser break a line
+            // anywhere, and a headline that wraps then breaks INSIDE a word:
+            // "And what they left runnin / g." at 390px. The three lines are
+            // now short enough not to wrap at all (see below), but this stays:
+            // it is the difference between a wrap and a broken word.
+            by="word"
             inherit
             variant="gradient"
             component="span"
-            segmentDelay={0.12}
+            // Three words rather than fourteen characters, so the per-segment
+            // delay goes back up to keep the whole line under a second.
+            segmentDelay={0.2}
             duration={1.5}
             animation="scale"
             animateProps={{ scaleAmount: 2 }}
             gradient={{ from: '#0D7DFA', to: '#672AFA' }}
           >
-            Costs nothing.
+            Every stray process.
           </TextAnimate>
         </span>
       </Title>
 
       <Text c="dimmed" fz={{ base: 'md', md: 'lg' }} lh={1.5} className={classes.lead}>
-        Both windows for both agents, when each one resets, and how old every reading is — in your
-        Mac’s menu bar, without spending a token to find out.
+        Codex and Claude Code, both windows each, with the age of every reading on its face — plus
+        the background process trees the agents leave behind and nothing ever reaps. Measured on one
+        Mac: 28 of them, holding 2.68 GB.
       </Text>
 
       <Group mt="lg" gap="sm" className={classes.actions}>

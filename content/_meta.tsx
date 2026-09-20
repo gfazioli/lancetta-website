@@ -12,6 +12,7 @@ import {
   IconSettings,
   IconLock,
   IconHelpCircle,
+  IconScale,
   IconAlertTriangle,
 } from '@tabler/icons-react';
 
@@ -36,6 +37,7 @@ function nav(Icon: typeof IconBook2, label: string, color?: string): { title: Re
 
 export default {
   index: nav(IconBook2, 'Introduction', 'lancetta'),
+  'why-lancetta': nav(IconScale, 'Why Lancetta', 'lancetta'),
   '---get-started': { type: 'separator', title: 'Get Started' },
   'getting-started': nav(IconRocket, 'Getting Started', 'orange'),
   'the-menu': nav(IconLayoutNavbar, 'The Menu', 'teal'),

@@ -1,0 +1,97 @@
+---
+description: "An honest comparison with CodexBar, ccusage and Quotio: what each one knows, what Lancetta keeps that none of them do, and when you should use one of the others instead."
+---
+
+# Why Lancetta
+
+There are good tools in this space, and one of them is free, open source and watches
+seventy-four providers. If you have read this far you deserve a straight answer about
+where Lancetta fits, so here it is — including the cases where you should use something
+else.
+
+## Use CodexBar instead if you pay for a lot of things
+
+[CodexBar](https://github.com/steipete/CodexBar) is very good, and the comparison starts
+there rather than ending there. It covers Codex, Claude, Cursor, Copilot, Gemini,
+OpenRouter, Bedrock and around seventy more, it is MIT licensed, and it ships almost
+daily.
+
+If your bill has five names on it, that breadth is the whole product and nothing here
+replaces it. Lancetta watches **two** agents — Codex and Claude Code — and has no plan to
+watch seventy.
+
+What follows is what Lancetta does with those two that breadth cannot buy.
+
+## What a tool has to know before it can tell you anything useful
+
+Three separate things, and almost nobody holds all of them.
+
+- **The ceiling** — how much of your quota is actually left, as the provider reports it.
+- **The flow** — how many tokens you have really spent, read from your own transcripts.
+- **The series** — what the quota did over the past days, kept rather than recomputed.
+
+| | ceiling | flow | series |
+| --- | --- | --- | --- |
+| **ccusage** | guessed | yes | no |
+| **CodexBar** | yes | yes | no |
+| **Quotio** | yes | partly | no |
+| **Lancetta** | yes | yes | **yes** |
+
+**ccusage** reads the transcripts on your disk, so it knows exactly how many tokens went
+out and has no way at all to learn what your limit is. Its projections run against a
+ceiling you have to supply or it infers from your biggest previous session. That is an
+honest tool doing the best it can with half the information.
+
+**CodexBar** has the ceiling and the flow, and keeps no memory of either. Its burn-down is
+computed from the reading in front of it: how much of the window has elapsed against how
+much you have used. Nothing is stored. With seventy-four providers that is the only
+sane choice — one saved series per provider per window is a commitment multiplied by
+seventy-four.
+
+**Quotio** answers a limit by routing around it: a local proxy that fails over to another
+account, and a scheduler that fires small requests to keep sessions warm. A different
+philosophy, and a legitimate one. It is the opposite of this app's founding rule.
+
+**Lancetta has been recording since v0.2.** Every reading, both agents, both windows, in a
+plain file on your Mac. That is the only thing on this page that gets harder to copy the
+longer it runs.
+
+## So what does that buy you
+
+**A number you can date.** Every reading on every surface carries its own age. When a
+source falls behind, it says so instead of going quiet — because the defect that started
+this project was a status line showing a three-hour-old number as if it were current, and
+an unknown drawn as `0%`.
+
+**The bucket that refused, named.** When a limit stops you, you see *which* window stopped
+you. Not an average across all of them that lands somewhere comfortable and tells you
+nothing.
+
+**Every failure has a code.** Eighteen of them, each with a sentence saying what happened,
+why, and what to do — the same list the app shows you, this site's
+[troubleshooting page](/docs/troubleshooting), and any bug report you ever file. A tool
+that can only say "unavailable" leaves you with no words to describe what went wrong.
+
+**The processes nobody else reaps.** Both agents leave a background tree behind for every
+folder they worked in, and the ones whose folder is gone can never be reconnected to. On
+one Mac: twenty-eight of them, holding 2.68 GB. No other tool in this comparison looks for
+them at all. [How that works](/docs/memory).
+
+**And reading costs nothing.** No model is asked anything, ever. Measured, not assumed:
+twelve account reads left the lifetime token counter unmoved.
+
+## What is coming, and why only this app can say it
+
+A five-hour refusal costs you a coffee break. Running out of your **weekly** window on a
+Tuesday costs three working days — and by the time that bar is red it is far too late to
+do anything about it.
+
+A sentence like *"at this week's pace your weekly window runs out Thursday afternoon"* is
+impossible from a single reading. It needs history, which is the one thing in the table
+above that only Lancetta keeps. That is [what is next](/docs/roadmap).
+
+---
+
+*Comparison current as of September 2026, and written from the competitors' own source
+and documentation rather than from their marketing. If something here has gone out of
+date, it is a bug — please [say so](https://github.com/gfazioli/lancetta-website/issues).*

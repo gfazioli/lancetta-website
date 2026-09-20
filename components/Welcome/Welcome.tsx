@@ -57,7 +57,7 @@ const glance = [
   },
   {
     label: 'What it does',
-    body: 'Shows how much of each agent’s quota is left, and when it comes back. Both windows, both agents, one glance.',
+    body: 'Shows how much of each agent’s quota is left, when it comes back, and how old that number is — plus the background processes they left running.',
   },
   {
     label: 'What it costs',
@@ -79,6 +79,15 @@ interface Feature {
  * the description in the future tense to match, and remove both together when
  * it ships — a card that says "will" with no badge reads as a missing
  * feature, and a card with no "will" and a badge reads as a lie.
+ *
+ * THE ORDER IS LOAD-BEARING, and mirrors the hero's three lines. First the
+ * promise (the quota), then the two claims no competitor can make: that every
+ * reading carries its age, and the orphaned trees nobody else reaps. Reclaim
+ * sat SEVENTH until 2026-09-20, behind the notch and the mark switcher, while
+ * the grid opened on "both windows, both agents" — which is exactly what the
+ * free, open-source, 74-provider alternative also does. A reader who knows that
+ * alternative has to reach card seven before meeting a reason to prefer this
+ * one. Do not sort these by feel.
  */
 const features: Feature[] = [
   {
@@ -106,6 +115,14 @@ const features: Feature[] = [
     href: '/docs/the-menu#limits',
   },
   {
+    icon: IconTrash,
+    title: 'Reclaim the memory',
+    description:
+      'Agents leave a background tree behind for every folder they worked in, and nothing ever reaps the ones whose folder is gone: 28 processes holding 2.68 GB on one Mac, 12 of 14 trees unreachable. Lancetta finds them and frees them — showing you the list first, and never touching a live one.',
+    color: 'indigo',
+    href: '/docs/memory',
+  },
+  {
     icon: IconCreditCardOff,
     title: 'Reading costs nothing',
     description:
@@ -128,14 +145,6 @@ const features: Feature[] = [
       'Each agent carries its own colour and the vendor’s own mark, drawn from vector data so they stay sharp at any size. One switch replaces the lot with neutral system symbols.',
     color: 'orange',
     href: '/docs/settings#appearance',
-  },
-  {
-    icon: IconTrash,
-    title: 'Reclaim the memory',
-    description:
-      'Agents leave a background tree behind for every folder they worked in, and nothing ever reaps the ones whose folder is gone: 28 processes holding 2.68 GB on one Mac, 12 of 14 trees unreachable. Lancetta finds them and frees them — showing you the list first, and never touching a live one.',
-    color: 'indigo',
-    href: '/docs/memory',
   },
   {
     icon: IconChartHistogram,
