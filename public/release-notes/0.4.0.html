@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.4.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.4.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<h3>The pace line</h3>
+<p>Under each bar, one line saying where that window ends at the rate you are going — “55% in 2 days · at this pace full by Wednesday afternoon”. It is always there and turns amber only when the window would run out before it resets, because a line that appears only in trouble is one nobody has learnt to read by the time it matters.</p>
+<p>It reads the series Lancetta has been keeping of its own readings since v0.2, so it costs nothing extra to say and no tokens to find out. Two switches in <strong>Settings · General</strong> govern it: whether the line appears at all, and whether it appears only when a window would run out early.</p>
+<p><strong>The weekly line waits until your Mac has watched that window turn over at least once.</strong> What a bucket does at its own edge is a fact about your account, not an assumption worth shipping, and advice about a reset nobody has seen is not advice.</p>
+<h3>The menu is now a panel</h3>
+<p>A macOS menu’s background belongs to the system, so the one surface of the app that was system grey could not be anything else while it stayed a menu. It is now Lancetta’s own navy, one card per agent — and a third narrower, because a menu reserves a column for keyboard shortcuts that nothing can reclaim: the same content needed 466 points and now needs 318.</p>
+<p>Escape, ⌘R, ⌘O, ⌘, and ⌘Q all still work. <strong>Settings</strong>, <strong>Check for Updates</strong>, <strong>About</strong> and <strong>Quit</strong> are buttons along the bottom rather than four more rows, each naming itself when you point at it, and the rows light up under the pointer the way a menu never did.</p>
+<p>A card also says now when one of its windows has been <strong>exhausted</strong>. The island and the window both said it and the menu never did — which put the one thing you open it to find in the two places you are not looking.</p>
+<h3>Fixes</h3>
+<ul>
+<li>A reading that is being held rather than refreshed no longer produces a more comfortable forecast than the numbers justify.</li>
+<li>Switching Claude between the account and the status-line file no longer lets one route’s history speak for the other’s readings.</li>
+<li>The evidence that a window has been watched across a reset belongs to the wiring it was gathered through, so connecting or disconnecting Claude no longer inherits it.</li>
+</ul>
+<hr>
+<p>Requires macOS 15 or later. Universal, signed and notarized.<br>
+<a href="https://lancetta.app/docs/the-menu" rel="nofollow">What every row means</a> · <a href="https://lancetta.app/docs/roadmap" rel="nofollow">What’s next</a></p>
+</body>
+</html>
