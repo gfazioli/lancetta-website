@@ -117,6 +117,11 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
       'Codex and Claude Code today. A new agent needs code that can read its quota without spending any, which is the whole constraint — so agents arrive with the app rather than being added by hand in Settings.',
   },
   {
+    question: 'How is it different from the other quota monitors?',
+    answer:
+      'Advice about a quota needs three things: the ceiling (what your real limit is), the flow (what you have spent), and the series (how that percentage moved over time). The good tools in this space have the first two. The series is the one nobody keeps — a monitor that reads your transcripts has no way to learn the ceiling at all and infers it from your own highest previous block, and one that covers dozens of providers cannot store a series per provider per window and stay maintainable. Lancetta watches two agents instead of dozens and has kept the series for both since v0.2, which is the only reason it can say where this pace lands against the percentage your account actually reports rather than an inferred one. It is also the part that cannot be added later: history only accumulates forward.',
+  },
+  {
     question: 'Can I refresh Claude on demand, like Codex?',
     answer:
       'Yes, once it is connected: one click in the menu, and macOS asks once whether Lancetta may read the sign-in Claude Code keeps. From then on Claude answers an account read the way Codex does, on the same interval and on Refresh now. Through the status-line file instead, the numbers arrive when a session renders one, and the card shows how old they are rather than pretending to be live.',
