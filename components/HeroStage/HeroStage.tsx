@@ -99,7 +99,7 @@ const frames: Frame[] = [
     body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is whether this pace empties the window before it resets. Lancetta says it under the bar it is about, in the same place every time, amber only when the window would run out early — because a line that appears only in trouble is one nobody has learnt to read by the time it matters. It can say it because it keeps a series of its own readings; the field keeps the ceiling and the flow and no history at all.',
     figures: [
       { value: '7 days', label: 'the window that actually hurts' },
-      { value: 'since v0.2', label: 'the series it reads' },
+      { value: '1,890', label: 'readings that settled the rule' },
     ],
     href: '/docs/the-menu#the-pace-line',
     linkLabel: 'How the pace line reads',

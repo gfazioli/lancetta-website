@@ -200,13 +200,13 @@ const roadmap = [
   {
     version: 'Next',
     title: 'It speaks first',
-    body: 'A window that refused, and a source gone quiet past its own cadence. The advice half of this shipped in v0.4; what is left is the app speaking first rather than waiting to be looked at.',
+    body: 'A window that refused, and a source gone quiet past its own cadence. The advice half of this has already shipped; what is left is the app speaking first rather than waiting to be looked at.',
     state: 'planned',
   },
   {
     version: 'Then',
     title: 'Everyone else’s Mac',
-    body: 'The discovery UI and the Sources pane. The version where it stops assuming one machine — the signing and the feed it needed arrived early, in v0.2, and the Claude step became one click and a macOS dialog rather than a script.',
+    body: 'The discovery UI and the Sources pane. The version where it stops assuming one machine — the signing and the feed it needed arrived early, and the Claude step became one click and a macOS dialog rather than a script.',
     state: 'planned',
   },
   {
