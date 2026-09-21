@@ -230,6 +230,29 @@ see.
 - The trademark position is fixed and appears in `content/settings.mdx` and the
   FAQ: the agent marks are the vendors' own artwork, used nominatively, and
   Lancetta is not affiliated with or endorsed by OpenAI or Anthropic.
+- **A version number is not evidence to a reader who has never used this app.**
+  The hero carried a figure reading `since v0.2 — the series it reads`, and the
+  user's objection is the whole rule (2026-09-21): *"tecnicamente Lancetta non è
+  ancora stato lanciato, quindi gli utenti non hanno coscenza del pregresso"*.
+  The app is downloadable, but it has not been LAUNCHED, so every visitor is
+  meeting it for the first time and `v0.2` tells them nothing except that there
+  is a history they are not part of. Prefer the measurement (`1,890 readings`),
+  or drop the qualifier — `the advice half has shipped` says everything
+  `shipped in v0.4` said.
+
+  **Two places keep their version numbers, because there the version IS the
+  content**: the `### v0.N` headings under *Already shipped* on the roadmap, and
+  the `version` field of the homepage roadmap strip. The page says why in its
+  own opening — shipped versions are named *because they exist and you can
+  download them*. Do not strip those.
+
+  Adjacent and NOT the same thing: *arrived early* and *was planned for a later
+  version* on the roadmap. Those reference the PLAN, which that page's first
+  paragraph offers as its thesis (the order changes as the work teaches you
+  things), so they are the evidence for it and they stay. What went with the
+  version credentials is the third kind — *this entry used to promise*, *this
+  entry used to describe* — which references revisions of the page itself. No
+  reader has seen the previous draft.
 
 ## Screenshots
 
