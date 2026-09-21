@@ -13,9 +13,25 @@ import {
 import { Badge, Box, Container, Group, Stack, Text, Title } from '@mantine/core';
 
 /*
- * Only things v0.1 actually is. `Notifications` was here and had to go: it is
- * still ahead ("It speaks first"), and a pill is a claim exactly as much as
- * a sentence is.
+ * Only things the shipped build actually is. `Notifications` was here and had
+ * to go: it is still ahead ("It speaks first"), and a pill is a claim exactly
+ * as much as a sentence is.
+ *
+ * Two of them were wrong claims until 2026-09-21, and both failed in the
+ * direction a reader cannot check:
+ *
+ * - **"Stays Out of the Dock"** is the short version of the Dock behaviour,
+ *   and the short version is false: a Dock icon appears while the window is
+ *   open, because a window needs a `.regular` app to have its own menu bar.
+ *   Four pages say so correctly (the-window, getting-started, settings, FAQ)
+ *   and this pill was the last place still saying the flat thing.
+ * - **"Apple Silicon"** under-claimed the binary and contradicted the hero on
+ *   the same page, which reads `Universal`. Measured on the shipped 0.4.0
+ *   bundle: `lipo -archs` answers `x86_64 arm64`. An Intel Mac on macOS 15 can
+ *   run this and the pill was telling its owner otherwise.
+ *
+ * Both are checkable in one command each. Check them rather than tidying the
+ * wording.
  */
 const techPills = [
   { label: 'SwiftUI', icon: IconCode },
@@ -23,8 +39,8 @@ const techPills = [
   { label: 'Under the Notch', icon: IconDeviceDesktop },
   { label: 'Light & Dark', icon: IconPalette },
   { label: 'Auto-Refresh', icon: IconRefresh },
-  { label: 'Stays Out of the Dock', icon: IconWindowMinimize },
-  { label: 'Apple Silicon', icon: IconCpu },
+  { label: 'No Dock Icon at Rest', icon: IconWindowMinimize },
+  { label: 'Universal', icon: IconCpu },
 ];
 
 export function BuiltForMacSection() {
