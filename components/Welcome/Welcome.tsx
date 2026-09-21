@@ -170,7 +170,7 @@ const features: Feature[] = [
     icon: IconBellRinging,
     title: 'Before the wall, not after it',
     description:
-      'Two moments worth interrupting for: a window about to refuse you, and a window about to reset with most of it unspent. Lancetta will speak first for both.',
+      'Three moments worth interrupting for: an agent refused you, a window crossed a level you chose, and a reading stopped moving. Lancetta will speak first for each — once, when it changes, rather than repeating a number that is already on your menu bar.',
     color: 'pink',
     href: '/docs/roadmap#it-speaks-first',
     badge: 'Next',
@@ -262,8 +262,16 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           />
 
           {/*
-            Three across, not four: there are nine cards, and 9 in a 4-column
-            grid is two full rows and a single orphan. 3x3 is exact.
+            Three across, not four. It was chosen when there were nine cards
+            and 3x3 was exact; the pace card made it TEN in v0.4, so the grid
+            is now 3 + 3 + 3 + 1 and the last row carries one card alone.
+            That is tolerable only because the orphan is the `Next`-badged
+            roadmap teaser, which is a different kind of card from the nine
+            above it and reads as a closing note rather than as a gap. Add an
+            eleventh shipped feature and this stops being true: either add a
+            twelfth or the orphan becomes a real one. Count them before
+            deciding — the comment here asserted nine for a day after there
+            were ten.
           */}
           <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
             {features.map((feature) => (
