@@ -15,6 +15,15 @@ import classes from './SolutionSection.module.css';
  * and this is where the page says so rather than letting a grid imply the
  * opposite. Keep it short: the features have their own section, and a second
  * list here would be the same four points twice.
+ *
+ * ONE JOB IS NOT ONE ANSWER, and this section was a version behind until
+ * 2026-09-21. It stated the job as "how much is left and when it comes back"
+ * — written for v0.3, and still there after v0.4 shipped the pace line. The
+ * hero leads on that line and it is the second feature card; only the page's
+ * own thesis had missed it, which is the worst of the three places to be
+ * stale in, because it is what a reader takes the page to be claiming. The
+ * argument this section exists to make is quota-versus-reaper, and it is
+ * untouched by the third clause.
  */
 export function SolutionSection() {
   return (
@@ -46,11 +55,11 @@ export function SolutionSection() {
             One job, done properly
           </Title>
           <Text c="dimmed" ta="center" size="lg" maw={700} lh={1.6}>
-            Lancetta tells you how much of each agent&apos;s quota is left, and when it comes back.
-            That is the whole job. Everything else in it exists to make that one number trustworthy:
-            both windows for both agents, the plan read from the account rather than typed in, the
-            bucket that refused named instead of averaged away, and every reading carrying its own
-            age.
+            Lancetta tells you how much of each agent&apos;s quota is left, when it comes back, and
+            whether the rate you are going at gets you there. That is the whole job. Everything else
+            in it exists to make those answers trustworthy: both windows for both agents, the plan
+            read from the account rather than typed in, the bucket that refused named instead of
+            averaged away, and every reading carrying its own age.
           </Text>
 
           <Stack align="center" gap={6} mt="lg" className={classes.footnote}>
