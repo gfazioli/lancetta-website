@@ -1,28 +1,38 @@
 ---
-description: "Every row in the Lancetta menu explained: the percentage, the bar, the reset time, the plan, the freshness marker, the process line, and what the menu-bar item itself shows."
+description: "Every row in the Lancetta panel explained: the percentage, the bar, the reset time, the pace line, the plan, the freshness marker, the process strip, and what the menu-bar item itself shows."
 ---
 
-# The Menu
+# The Panel
 
 One card per agent, one row per window.
 
-![The Lancetta menu in light mode](/screenshot-menu-light.png)
+![The Lancetta panel: Claude Code and Codex, each with a 5-hour and a 7-day quota window, the time each one resets, and the line saying where the window ends at the current rate](/screenshot-menu-dark.png)
+
+It is a panel rather than a menu, and that is not decoration. A macOS menu's
+background belongs to the system: its rows can be anything, the surface behind
+them cannot. Lancetta's own colours are a deep navy, and the menu was the one
+place in the app that was system grey. It is also narrower — a menu reserves a
+column for keyboard shortcuts that nothing can reclaim, so the same content used
+to need 466 points and now needs 318.
+
+It is always dark, like the window, whatever appearance your Mac is in.
 
 ## The card header
 
 ```
-Claude · max 20× · seen 9s
+Claude · max 20×                    seen 7s ago
 ```
 
 - **The mark and the name** — the agent this card is about. The marks are the vendors' own artwork; one switch in [Settings](/docs/settings#appearance) replaces them with neutral system symbols.
 - **The plan** — read from the account itself rather than typed into a setting, so it cannot drift out of date.
-- **The freshness marker** — how long ago this reading was taken. It appears when the reading is not effectively live. Codex can be asked and so has none. Claude, once connected, is asked too — at most once a minute, and straight away on Refresh now — so it has none either while the account answers; if the account asks for a pause, the last reading stays on the card with its age. Through the status-line file instead, Claude always shows its age, because nothing can make that reading newer. That asymmetry is real and the menu shows it rather than smoothing it over — see [How it reads each agent](/docs/how-it-reads).
+- **The freshness marker** — how long ago this reading was taken. It appears when the reading is not effectively live. Codex can be asked and so has none. Claude, once connected, is asked too — at most once a minute, and straight away on Refresh now — so it has none either while the account answers; if the account asks for a pause, the last reading stays on the card with its age. Through the status-line file instead, Claude always shows its age, because nothing can make that reading newer. That asymmetry is real and the panel shows it rather than smoothing it over — see [How it reads each agent](/docs/how-it-reads).
 
 ## The rows
 
 ```
-20%   5h   ▓▓▓▓░░░░░░░░░░░░   ↻ 1h46m
-46%   7d   ▓▓▓▓▓▓▓░░░░░░░░░   ↻ 18h06m
+ 4%   5h   ▓░░░░░░░░░░░░░░░   ↻ 3h29m
+           4% in 1h30m · at this pace 13% by reset
+55%   7d   ▓▓▓▓▓▓░░░░░░░░░░   ↻ 4d
 ```
 
 - **The percentage** — how much of that window is spent, or how much is left, depending on [one setting](/docs/settings#general). The bar is filled with whichever number is on screen, never with its opposite.
@@ -32,34 +42,71 @@ Claude · max 20× · seen 9s
 
 The agents appear in **the order you put them in**, set by dragging in [Settings → Agents](/docs/settings#agents). Every surface reads the same order.
 
+## The pace line
+
+Under the bar it belongs to, a caption saying where that window ends at the rate
+you are going:
+
+```
+55% in 2 days · at this pace full by Wednesday afternoon
+```
+
+This is the part the percentage cannot tell you. The number is on your menu bar
+all day, so you already know when it is getting low; what you cannot see is
+whether **this** pace empties the window before it resets. The line is always
+there, in the same place, and the only thing that changes is its colour: it turns
+orange when the window would run out early. A line that only ever appears in
+trouble is a line nobody has learnt to read by the time it matters.
+
+It comes from the series Lancetta keeps of its own readings, so it costs nothing
+extra to say. Two things it will not do. It will not speak about the weekly
+window until this Mac has watched that window actually turn over at least once —
+what a bucket does at its own edge is a fact about your account, not an
+assumption worth shipping. And if you want the number and nothing else, one
+switch in [Settings](/docs/settings#general) keeps the line for the case where
+there is something to do about it and hides it otherwise.
+
+When a window has refused you outright, the card says so under the rows, in the
+window's own name.
+
 ## Processes
 
 ```
-Processes · 14 Codex trees · 2.68 GB
-  Reclaim 12 orphaned · 2.24 GB
+14 Codex trees · 2.68 GB          Reclaim 2.24 GB
 ```
 
 *(Those are the figures from the census that produced this feature, not a mock-up.)*
 
-A line for the background trees the agents have left running, and a **Reclaim** item when some of them are serving directories that no longer exist. It is drawn only when there are trees to report — a permanent row of zeroes teaches you to stop reading that part of the menu. It shows you the list before it stops anything on it. See [The processes they leave behind](/docs/memory).
+One strip for the background trees the agents have left running, and a
+**Reclaim** button when some of them are serving directories that no longer
+exist. It is drawn only when there are trees to report — a permanent row of
+zeroes teaches you to stop reading that part of the panel. It shows you the list
+before it stops anything on it. See [The processes they leave behind](/docs/memory).
 
 ## Limits
 
 When a window refuses you, **that window is the one you see**. Lancetta does not average the buckets into one comfortable total — an average across a refused bucket and a healthy one lands somewhere reassuring and tells you nothing about why the last request failed. In the menu bar the refusal is named: the refusing agent's cell becomes its mark beside a no-entry sign and the time that window comes back, and the other agents keep their turns — a block on Codex is not information about Claude.
 
-When an agent cannot be read at all, the card says so in one sentence. A situation that is not a fault, such as Codex not being installed or Claude Code not signed in, is described calmly with what would change it. A fault is drawn red, and **Why, and what to do…** opens a window naming the code, the likely cause and the fix beside the raw evidence, with a report to copy into an issue. Every code is listed on the [Troubleshooting](/docs/troubleshooting) page.
+When an agent cannot be read at all, the card says so in one sentence. A situation that is not a fault, such as Codex not being installed or Claude Code not signed in, is described calmly with what would change it, and with the one button that would change it. A fault is drawn red, and **Why, and what to do…** opens a window naming the code, the likely cause and the fix beside the raw evidence, with a report to copy into an issue. Every code is listed on the [Troubleshooting](/docs/troubleshooting) page.
 
 ## Unknown is not zero
 
 A window Lancetta has no reading for is drawn as unknown. It is never drawn as `0%`, and a reading whose reset time has already passed is not silently treated as an empty window — a rolled-over window does not mean nothing was spent since.
 
-## The rest of the menu
+## The rest of the panel
+
+Two commands are spelled out, because they are the two you open the panel to
+reach:
 
 - **Refresh now** (⌘R) — asks every agent that can be asked: Codex, and Claude once it is connected. Through the status-line file instead, the Claude card is refreshed by the next session that renders one, not by this item.
 - **Open Lancetta…** (⌘O) — the window: usage over weeks, both agents in detail, and the process list. See [The Window](/docs/the-window).
-- **Settings…** (⌘,) — see [Settings](/docs/settings).
-- **Check for Updates…** — reports what state the build is in.
-- **About Lancetta** — version, build date, and the trademark notice for the agent marks.
+
+The four that open something and then get out of the way are a row of buttons
+along the bottom, each naming itself when you point at it: **Settings…** (⌘,),
+**Check for Updates…**, **About Lancetta**, and **Quit Lancetta** (⌘Q).
+
+The panel closes when you press Escape, click anywhere outside it, or click the
+menu-bar item again.
 
 ## The menu-bar item itself
 

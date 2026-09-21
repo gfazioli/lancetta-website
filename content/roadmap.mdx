@@ -16,9 +16,11 @@ A percentage on an icon is passive: it rewards looking. The value is in the two 
 
 That sentence is only true if a window is a bucket that empties at an instant. If quota instead drains back gradually, the advice is wrong in the one direction that costs you money: it tells you to spend. So the advice half was made conditional on a measurement, with the rule fixed in advance — a step function and it ships, a slope and the feature is deleted rather than softened.
 
-**Measured on 20 September 2026, and it came back a step.** 1,890 readings collected since v0.2, both agents, both windows: across twenty-five windows the floor of the series never fell, and every boundary with something left to lose dropped in one step — the sharpest of them from 100% to zero in forty-two seconds. So the advice is a true sentence, and it is being built.
+**Measured on 20 September 2026, and it came back a step.** 1,890 readings collected since v0.2, both agents, both windows: across twenty-five windows the floor of the series never fell, and every boundary with something left to lose dropped in one step — the sharpest of them from 100% to zero in forty-two seconds. So the advice is a true sentence.
 
-Two things that measurement has not settled, and they are the reason nothing here is dated: one agent's weekly window was never seen to reset during the sample, and the other crossed exactly one boundary. Advice about a window whose reset nobody has watched is not advice.
+**The advice half shipped in v0.4**, as the [pace line](/docs/the-menu#the-pace-line) under each bar. The alarms half has not: that is what is still next here.
+
+Two things that measurement did not settle, and the app now carries the answer rather than the assumption: one agent's weekly window was never seen to reset during the sample, and the other crossed exactly one boundary. Advice about a window whose reset nobody has watched is not advice — so the weekly line stays silent on your Mac until your Mac has watched that window turn over at least once. It is a fact about your account, not a verdict shipped from ours.
 
 ## Everyone else's Mac
 
@@ -28,7 +30,7 @@ Half of what this entry used to describe arrived early: v0.2 ships signed, notar
 
 ## Reset credits
 
-Redeeming a Codex reset credit from the menu, with every safety rule an irreversible action needs.
+Redeeming a Codex reset credit from the panel, with every safety rule an irreversible action needs.
 
 ---
 
@@ -39,6 +41,14 @@ Redeeming a Codex reset credit from the menu, with every safety rule an irrevers
 ---
 
 ## Already shipped
+
+### v0.4 — the pace, and the panel
+
+*Shipped 2026-09-21.*
+
+**The pace line.** Under each bar, one line saying where that window ends at the rate you are going, from the series Lancetta has been keeping of its own readings since v0.2. It is always there and turns amber only when the window would run out before it resets, because a line that appears only in trouble is one nobody has learnt to read by the time it matters. The weekly line waits until your Mac has watched that window turn over — see above for why.
+
+**The menu became a panel.** A macOS menu's background belongs to the system, so the one surface of the app that was system grey could not be anything else while it stayed a menu. It is now Lancetta's own navy, one card per agent, and 318 points wide where the menu needed 466 for the same content — a menu reserves a column for keyboard shortcuts that nothing can reclaim. Escape, ⌘R, ⌘O, ⌘, and ⌘Q all still work; Settings, Check for Updates, About and Quit are buttons along the bottom rather than four more rows.
 
 ### v0.3 — Claude from the account
 
@@ -66,7 +76,7 @@ The point of this version was narrow and concrete: stop reading a quota number o
 
 **Two things arrived early and are in this version rather than the next two.**
 
-**The processes they leave behind** — the reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it, in the menu and in the window. It was planned for a later version and is built. It reproduces the twelve-of-fourteen result with zero live trees touched, and it is driven against decoy processes in an automated self-test rather than against the machine it is running on. See [The processes they leave behind](/docs/memory).
+**The processes they leave behind** — the reaper: count, total footprint, orphan count, and a **Reclaim** that lists what it will stop *before* stopping it, in the panel and in the window. It was planned for a later version and is built. It reproduces the twelve-of-fourteen result with zero live trees touched, and it is driven against decoy processes in an automated self-test rather than against the machine it is running on. See [The processes they leave behind](/docs/memory).
 
 **The window** — Overview, Usage, Limits and Processes, with the daily token series drawn as a chart. The series was planned for much later and turned out to be free: Codex already keeps it and gives it away. See [The Window](/docs/the-window).
 

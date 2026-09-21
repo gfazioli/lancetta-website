@@ -8,6 +8,7 @@ import {
   IconBellRinging,
   IconBook2,
   IconChartHistogram,
+  IconChartLine,
   IconClockHour4,
   IconCreditCardOff,
   IconGauge,
@@ -81,8 +82,11 @@ interface Feature {
  * feature, and a card with no "will" and a badge reads as a lie.
  *
  * THE ORDER IS LOAD-BEARING, and mirrors the hero's three lines. First the
- * promise (the quota), then the two claims no competitor can make: that every
- * reading carries its age, and the orphaned trees nobody else reaps. Reclaim
+ * promise (the quota), then the claims no competitor can make: where this pace
+ * lands, that every reading carries its age, and the orphaned trees nobody
+ * else reaps. The pace card joined them in v0.4, ahead of the age, because
+ * the hero leads on it too — the order in the two places is one decision.
+ * Reclaim
  * sat SEVENTH until 2026-09-20, behind the notch and the mark switcher, while
  * the grid opened on "both windows, both agents" — which is exactly what the
  * free, open-source, 74-provider alternative also does. A reader who knows that
@@ -97,6 +101,14 @@ const features: Feature[] = [
       'The 5-hour and the 7-day window for Codex and Claude Code, drawn as bars, with the time each one resets beside it.',
     color: 'teal',
     href: '/docs/the-menu',
+  },
+  {
+    icon: IconChartLine,
+    title: 'Where this pace lands',
+    description:
+      'Under each bar, one line saying where that window ends at the rate you are going — amber only when it would run out before it resets. It can say it because it keeps a series of its own readings; the field keeps the ceiling and the flow and no history at all.',
+    color: 'orange',
+    href: '/docs/the-menu#the-pace-line',
   },
   {
     icon: IconClockHour4,
@@ -180,9 +192,15 @@ const roadmap = [
     state: 'shipped',
   },
   {
+    version: 'v0.4',
+    title: 'The pace, and the panel',
+    body: 'Under each bar, where that window ends at the rate you are going — amber only when it would run out early, and silent about the weekly one until your Mac has watched it turn over. And the menu became a panel in the app’s own navy: 318 points where a menu needed 466, with the four windowing commands as buttons along the bottom.',
+    state: 'shipped',
+  },
+  {
     version: 'Next',
     title: 'It speaks first',
-    body: 'A window that refused, a threshold crossed, a source gone quiet — and quota about to evaporate unused.',
+    body: 'A window that refused, and a source gone quiet past its own cadence. The advice half of this shipped in v0.4; what is left is the app speaking first rather than waiting to be looked at.',
     state: 'planned',
   },
   {
