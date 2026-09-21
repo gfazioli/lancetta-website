@@ -83,15 +83,28 @@ const windowSession: MenuBarReadingState = {
  * to advise from. So those two lead, and the surfaces that every monitor has
  * — a menu, an island, a window, a chart — come after them.
  *
- * The reaper goes FIRST of the two although the advice is the deeper moat,
- * for one reason that is not editorial: the reaper ships today and the advice
- * does not. The pace line is merged on `main` and sits after the v0.3.4 tag
- * (`9e7caaf`, `82952ee`), and the alerts are still PR #36. A page whose first
- * claim below the fold is a promise is a weaker page than one whose first
- * claim is a number. When a release carries the pace, this order is worth
- * revisiting and `next` comes off that frame.
+ * The ADVICE goes first since v0.4, and that is the revisit this comment used
+ * to ask for. It was second, behind the reaper, for one reason that was not
+ * editorial: the advice did not ship, so the page's first claim below the fold
+ * would have been a promise rather than a number. The pace line ships in v0.4,
+ * so the deeper moat leads and the frame has a screenshot like any other.
+ * (The alerts are still PR #36, and they are on the roadmap, not here.)
  */
 const frames: Frame[] = [
+  {
+    src: '/screenshot-pace.png',
+    alt: 'A Lancetta card: the five-hour window at 4% with the line “4% in 1h30m · at this pace 13% by reset” under it, and the weekly window at 55% with “55% in 2 days · at this pace full by Wednesday afternoon” in amber',
+    eyebrow: 'What nothing else can say',
+    title: 'The number you can already see is not the useful one.',
+    body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is whether this pace empties the window before it resets. Lancetta says it under the bar it is about, in the same place every time, amber only when the window would run out early — because a line that appears only in trouble is one nobody has learnt to read by the time it matters. It can say it because it keeps a series of its own readings; the field keeps the ceiling and the flow and no history at all.',
+    figures: [
+      { value: '7 days', label: 'the window that actually hurts' },
+      { value: 'since v0.2', label: 'the series it reads' },
+    ],
+    href: '/docs/the-menu#the-pace-line',
+    linkLabel: 'How the pace line reads',
+    reading: windowSession,
+  },
   {
     src: '/screenshot-window-processes.png',
     alt: 'The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total',
@@ -106,21 +119,6 @@ const frames: Frame[] = [
     href: '/docs/memory',
     linkLabel: 'What accumulates, and why nothing reaps it',
     reading: windowSession,
-  },
-  {
-    src: '',
-    alt: '',
-    eyebrow: 'Next',
-    title: 'The number you can already see is not the useful one.',
-    body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is whether this pace empties the window before it resets — and the moment you are no longer blocked, which is the one nobody can watch for, because being blocked is why they went somewhere else. Lancetta keeps a quota series, which is what an answer to either question needs; the field keeps the ceiling and the flow and no history at all.',
-    figures: [
-      { value: '7 days', label: 'the window that actually hurts' },
-      { value: 'since v0.2', label: 'the series it reads' },
-    ],
-    href: '/docs/roadmap',
-    linkLabel: 'Where this is in the roadmap',
-    reading: windowSession,
-    next: true,
   },
   {
     src: '/screenshot-notch-open.png',
@@ -178,15 +176,15 @@ const frames: Frame[] = [
  */
 const heroReading: MenuBarReadingState = {
   cells: [
-    { agent: 'claude', percent: 20, resets: '1h44m' },
-    { agent: 'codex', percent: 5, resets: '3h23m' },
+    { agent: 'claude', percent: 4, resets: '3h29m' },
+    { agent: 'codex', percent: 0, resets: '4h59m' },
   ],
   open: true,
 };
 
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
-  alt: 'The Lancetta menu: Claude Code and Codex, each with a 5-hour and a 7-day quota window and the time it resets',
+  alt: 'The Lancetta panel: Claude Code and Codex, each with a 5-hour and a 7-day quota window, the time each one resets, and the line saying where the window ends at the current rate',
 };
 
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {

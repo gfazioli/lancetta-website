@@ -38,7 +38,7 @@ export default {
   index: nav(IconBook2, 'Introduction', 'lancetta'),
   '---get-started': { type: 'separator', title: 'Get Started' },
   'getting-started': nav(IconRocket, 'Getting Started', 'orange'),
-  'the-menu': nav(IconLayoutNavbar, 'The Menu', 'teal'),
+  'the-menu': nav(IconLayoutNavbar, 'The Panel', 'teal'),
   'the-notch': nav(IconDeviceDesktop, 'The Notch', 'violet'),
   'the-window': nav(IconAppWindow, 'The Window', 'cyan'),
   '---how-it-works': { type: 'separator', title: 'How it works' },

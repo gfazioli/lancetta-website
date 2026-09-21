@@ -4,7 +4,7 @@ description: "Lancetta's Settings: the refresh interval, counting down what is l
 
 # Settings
 
-⌘, from the menu, or **Settings…**. Six panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
+⌘, from the panel, or the gear button along its bottom. Six panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
 
 ![Lancetta's Settings, on the General pane: the refresh interval, counting down what is left, the three startup switches, and the rotation interval for the menu bar](/screenshot-settings-general.png)
 
@@ -17,6 +17,10 @@ It applies to Claude too once it is connected, with a floor: the account is aske
 **Count down what is left** — off, the number is what has been *used* and rises from 0. On, a fresh window reads 100% and falls as tokens go, which is how Codex's own status line puts it.
 
 Whichever you pick, the bars are filled with **the number that is shown**, and every label that names the quantity follows it. That sounds like a detail and is not: a card headed *Quota left* over a bar filled with what was used is the exact defect this app was built in response to, and the app has written it twice by accident since.
+
+**Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone, how long it has been open, and where that rate lands. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything.
+
+**Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there and turns amber when the window would empty before it resets. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
 
 **Open Lancetta at login** — off by default. It binds to macOS's own login-item status rather than to a copy of it, so the switch reflects what the system actually has registered.
 
@@ -50,7 +54,7 @@ A row opens on a click anywhere, and drags from anywhere. The grip on the left s
 
 **Each agent's page** carries:
 
-- **Colour** — the tint its bars are drawn in, everywhere: the menu, the window, the island, and the token chart if the data is that agent's. A colour you set is a colour you expect to see. There is a Reset beside it.
+- **Colour** — the tint its bars are drawn in, everywhere: the panel, the window, the island, and the token chart if the data is that agent's. A colour you set is a colour you expect to see. There is a Reset beside it.
 - **Watch this agent** — off, it keeps no card in the menu and no cell in the bar. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
 - **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width. A refusal is shown regardless: when this agent is refused, its mark and a no-entry sign take a turn in the bar even with this off, because the bar's rule is alarm first.
 - **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
