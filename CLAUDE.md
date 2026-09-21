@@ -486,14 +486,24 @@ quota, one level down: both are the cost of running these things all day, and
 neither is visible until something tells you.
 
 **The order of `frames` in `HeroStage.tsx` is the argument, so changing it is an
-editorial act, not a layout one.** The reaper goes first of the two although the
-advice is the deeper moat, and for a reason that is not taste: the reaper ships
-and the advice does not yet. The pace line is merged on `main` AFTER the v0.3.4
-tag (`9e7caaf`, `82952ee`) and the alerts are PR #36, so that frame carries
-`next: true`, the `NEXT` badge and the future tense, and it is drawn as a
-bordered card rather than as a screenshot section — a page that dresses a
-promise exactly like a shipped feature has to be read carefully to be trusted.
-**When a release carries the pace, take `next` off it and revisit the order.**
+editorial act, not a layout one.** The **advice goes first**, because it is the
+deeper moat and, since v0.4, it also ships — the pace line has a screenshot like
+any other frame, no `next` flag and no `NEXT` badge. The reaper is second.
+
+Until v0.4 this said the opposite, and the reason it did is worth keeping: the
+reaper led *because* the advice had not shipped, and the pace frame was drawn as
+a bordered card with the future tense, since a page that dresses a promise
+exactly like a shipped feature has to be read carefully to be trusted. That rule
+still governs the next unshipped thing to reach this array — today the alerts
+(Lancetta PR #36), which are not a frame.
+
+The instruction that used to close this paragraph — *when a release carries the
+pace, take `next` off it and revisit the order* — was carried out on 2026-09-21
+and this paragraph was not, so for a day it described a badge the component no
+longer had and named the wrong frame as leading. **An instruction with its own
+trigger in it is finished when the paragraph around it is rewritten, not when
+the code is changed**; `rg 'next:' components/HeroStage/HeroStage.tsx` is the
+one command that settles which state this file is describing.
 
 ### The hero is ordinary flow, and the scroll-jacking is gone
 
