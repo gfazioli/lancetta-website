@@ -9,6 +9,7 @@ import { IconMenu2 } from '@tabler/icons-react';
 import config from '@/config';
 import { Logo } from '../Logo/Logo';
 import { MenuBarReading } from './MenuBarReading';
+import { isSamePageHashInMobileNav } from './mobile-nav-hash';
 import { productSections } from './sections';
 import classes from './MenuBarHeader.module.css';
 
@@ -52,6 +53,31 @@ export function MenuBarHeader() {
   // not a `data-ready` flag flipped from here. It used to be an effect, which
   // made the bar's RESTING state invisible: a reader whose script never lands
   // got no header at all. See the comment on `.bar`.
+
+  /*
+   * Close Nextra's mobile navigation when one of ITS entries points at an
+   * anchor on the page already open.
+   *
+   * Nextra closes that panel on a route change, and a hash is not one — so on
+   * the home page, tapping "Features" scrolled the page correctly and left the
+   * panel over it, which is a tap that did nothing as far as the reader is
+   * concerned. Reported 2026-09-21 and measured at 390x844 before this
+   * existed: `scrollY` 0 to 7269 with the anchor at 7375, `location.hash`
+   * `#features`, and `<html>` still carrying `x:max-md:overflow-hidden`.
+   *
+   * On `document` rather than on the panel: the panel is Nextra's, rendered
+   * outside this component, and it comes and goes. `setMenu` is the same store
+   * the burger writes, so nothing here duplicates its state.
+   */
+  useEffect(() => {
+    const onClick = (event: MouseEvent) => {
+      if (isSamePageHashInMobileNav(event.target, window.location.href)) {
+        setMenu(false);
+      }
+    };
+    document.addEventListener('click', onClick);
+    return () => document.removeEventListener('click', onClick);
+  }, []);
 
   /*
    * Which section the reader is in, measured against the bar's own bottom
