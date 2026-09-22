@@ -1,0 +1,57 @@
+---
+description: "What Lancetta says first, and why it says so little: a window heading for empty before it resets, an agent with nothing left, one that is ready again, a reading that has stopped moving — once, when it changes."
+---
+
+# Alerts
+
+The percentage is always on your menu bar, so a notification that repeats it interrupts you to tell you what you are looking at. Lancetta speaks first only about what the menu bar **cannot** show, and it says each thing once, at the moment it changes.
+
+## What it says
+
+**A window will run out early.** The one sentence nothing on screen can say: where the rate you are going lands. It names two times, and the gap between them is the point:
+
+> **Codex · the weekly window will run out early**
+> At this pace it is spent by tomorrow afternoon, and it does not reset until Thursday afternoon.
+
+"Spent by tomorrow afternoon" alone is a number; with the reset beside it, it is the two days you would lose. It matters most on the weekly window, where the wait is days rather than hours. Said once per window, and not again if the rate wavers back and forth across the line. The weekly form waits until your Mac has watched that window turn over at least once, for the same reason the [pace line](/docs/the-menu#the-pace-line) does.
+
+**An agent has nothing left.** It refused you, or a window arrived at 100% — one event, because they stop the work identically:
+
+> **Codex is refusing requests**
+> The premium bucket is spent. Back in 1h39m.
+
+It outranks any number: a refusal is not announced twice, once as "refused" and once as "at 100%".
+
+**An agent is ready again.** The window reset and the work can start again — the one moment you cannot possibly be watching for, since you were blocked and went and did something else:
+
+> **Codex is ready again**
+> Its 5-hour window has reset. You were held up for 2h00m.
+
+**A reading has gone quiet.** A source that can be asked has produced no new reading for half an hour, so the number on your menu bar has stopped moving while looking live. A frozen number passing for a current one is the defect this whole app exists because of, so its silence is itself an event:
+
+> **Claude has gone quiet**
+> No new reading for 45m — the number in the menu bar has stopped moving.
+
+Through the status-line file this never fires: that file moves only while a Claude Code session is open, and an app that announced a quiet evening would speak every night about nothing.
+
+**A window passed a level you chose** — off by default, because it announces the number already in your menu bar. It stays available for a hard "tell me at 95%, whatever the rate says": each level is announced once per window, going up only, and again after that window resets, because tomorrow's 80% is a different 80%.
+
+## What it never does
+
+- **It does not repeat itself.** Every one of these is a transition between two readings, so a state that has not changed is not announced again — a refusal is said once, however long it lasts.
+- **It says nothing on launch.** An app that has just started has evidence of a *state* — a window already at 90%, an agent already refused — and none of a change. A state is what the menu bar is for.
+- **It never asks for permission before it has something to say.** macOS asks whether Lancetta may notify you the first time there is actually something worth saying, not at launch and not when you flip the switch. A prompt raised before an app has ever said anything is how it gets denied for good.
+
+Clicking any notification opens the Limits pane of [the window](/docs/the-window), which carries every agent, both windows, the pace line with its detail, and the age of the reading a silence is about.
+
+## Two families, two sounds, one switch per agent
+
+In [Settings › General](/docs/settings#alerts):
+
+- **Let Lancetta speak first** — the whole feature, on or off.
+- **Alerts** — what the account *reported*: nothing left, ready again, gone quiet, a level passed. Facts.
+- **Suggestions** — what the app *extrapolated*: a window heading for empty. It follows the pace line's own switch, since it is the louder form of the same projection.
+- **Sound when you are out** and **Sound when you can start again** — the only two moments worth a sound, because they are the two that land while you are looking at something other than the menu bar. Pick one of macOS's own, or silence.
+- **Also say when a window passes** — the level list, *Never* by default.
+
+And on each agent's page under Settings › Agents, **Notify me about this agent**: you can have these for Codex and not for Claude, or the other way round. Off, Lancetta says nothing about that agent — not a refusal, not a suggestion — and what the menu bar draws is unaffected.

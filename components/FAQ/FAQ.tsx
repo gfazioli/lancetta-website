@@ -8,10 +8,10 @@ import { Accordion, Anchor, Text } from '@mantine/core';
  * of the build that is actually shipping. Two rules when editing:
  *
  *  - Do not describe a feature in the present tense until it ships. As of
- *    2026-09-17 the reaper, the window and the updater all HAVE shipped, and
- *    only the notifications ("It speaks first" on the roadmap, which is no
- *    longer numbered) have not. This list goes stale silently:
- *    check the app's own CLAUDE.md and git log, not this comment.
+ *    2026-09-22 everything the roadmap once listed ahead of "Everyone else's
+ *    Mac" has shipped, the notifications included (v0.5). This list goes
+ *    stale silently: check the app's own CLAUDE.md and git log, not this
+ *    comment.
  *  - `faqItems` is paired with the FAQPage JSON-LD in StructuredData.tsx.
  *    Change one and change the other, or the rich result quotes an answer
  *    that is no longer on the page.
@@ -58,6 +58,12 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
     question: 'What happens when a reading goes stale?',
     answer:
       'It says so. Every reading carries the time it was taken, and an unknown is drawn as an unknown — never as 0%. A status line rendering an unknown as zero, and a three-hour-old number as current, is the defect this app exists because of.',
+  },
+  {
+    value: 'interrupt',
+    question: 'Will it interrupt me?',
+    answer:
+      'Only about what the menu bar cannot already show. The percentage is on your bar, so Lancetta never announces it; it speaks first when a window will run out before it resets — naming the reset beside the moment it runs out — when an agent has nothing left, when it is ready again, and when a reading has stopped moving while looking live. Each once, at the moment it changes, never on launch, and macOS is asked for permission the first time there is actually something to say. Alerts and suggestions are separate switches, each agent has its own, and a sound is reserved for the two moments you are not looking at a screen.',
   },
   {
     value: 'surfaces',

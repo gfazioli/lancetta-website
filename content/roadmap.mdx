@@ -6,22 +6,6 @@ description: "What Lancetta goes after next, and what each step has to prove bef
 
 Nothing here is a promise, and nothing ahead is numbered or dated: the order changes as the work teaches you things (two of the entries on this page were built early, and one was deleted by a measurement). What is worth publishing is the other half: **what each step has to do before it counts as finished**. The versions that have shipped are at the end of the page, named, because they exist and you can download them.
 
-## It speaks first
-
-A percentage on an icon is passive: it rewards looking. The value is in the two moments the app can speak first.
-
-**Alarms** — a window refused you, a threshold was crossed, or a source has gone quiet past its own cadence. A frozen number is the original defect of this whole project, so its silence is itself an event.
-
-**Advice** — nothing changed, but the shape of the next hour did. *"The 5-hour window resets in 12 minutes and you are at 33% — the remaining 67% goes with it."*
-
-That sentence is only true if a window is a bucket that empties at an instant. If quota instead drains back gradually, the advice is wrong in the one direction that costs you money: it tells you to spend. So the advice half was made conditional on a measurement, with the rule fixed in advance — a step function and it ships, a slope and the feature is deleted rather than softened.
-
-**Measured on 20 September 2026, and it came back a step.** 1,890 readings, both agents, both windows: across twenty-five windows the floor of the series never fell, and every boundary with something left to lose dropped in one step — the sharpest of them from 100% to zero in forty-two seconds. So the advice is a true sentence.
-
-**The advice half has shipped**, as the [pace line](/docs/the-menu#the-pace-line) under each bar. The alarms half has not: that is what is still next here.
-
-Two things that measurement did not settle, and the app now carries the answer rather than the assumption: one agent's weekly window was never seen to reset during the sample, and the other crossed exactly one boundary. Advice about a window whose reset nobody has watched is not advice — so the weekly line stays silent on your Mac until your Mac has watched that window turn over at least once. It is a fact about your account, not a verdict shipped from ours.
-
 ## Everyone else's Mac
 
 The discovery UI and the Sources pane. This is the version where the app stops assuming one machine, and it is a bigger step than it looks. Connecting Claude is already one click and a macOS dialog, not a script.
@@ -44,11 +28,19 @@ Redeeming a Codex reset credit from the panel, with every safety rule an irrever
 
 ## Already shipped
 
+### v0.5 — it speaks first
+
+*Shipped 2026-09-22.*
+
+**The alarms half.** A percentage on an icon is passive: it rewards looking. Lancetta now speaks first, and only about what the menu bar cannot show: a window that will run out before it resets, with the reset named beside the moment it runs out; an agent with nothing left; one that is ready again; a reading that has stopped moving. Each once, at the moment it changes, never on launch, and with a sound only for the two moments you are not looking at a screen. Alerts and suggestions are separate switches, each agent has its own, and macOS is asked for permission the first time there is something to say. See [Alerts](/docs/alerts).
+
+**Two things two Macs taught.** Refresh now no longer puts the login-keychain dialog up — that dialog belongs to Connect alone, and a renewed sign-in is a card offering Reconnect. And a Claude card still read through the status-line file now says so, and offers the account beside the number: that file moves only while a Claude Code session is open, which is why Refresh now could not move it.
+
 ### v0.4 — the pace, and the panel
 
 *Shipped 2026-09-21.*
 
-**The pace line.** Under each bar, one line saying where that window ends at the rate you are going, from the series Lancetta keeps of its own readings. It is always there and turns amber only when the window would run out before it resets, because a line that appears only in trouble is one nobody has learnt to read by the time it matters. The weekly line waits until your Mac has watched that window turn over — see above for why.
+**The pace line.** Under each bar, one line saying where that window ends at the rate you are going, from the series Lancetta keeps of its own readings. That sentence is only true if a window is a bucket that empties at an instant; if quota drained back gradually the advice would be wrong in the one direction that costs you money, so it was made conditional on a measurement with the rule fixed in advance — a step and it ships, a slope and it is deleted rather than softened. **Measured on 20 September 2026, and it came back a step:** 1,890 readings, both agents, both windows; across twenty-five windows the floor of the series never fell, and every boundary with something left to lose dropped in one step, the sharpest from 100% to zero in forty-two seconds. The line is always there and turns amber only when the window would run out before it resets, because a line that appears only in trouble is one nobody has learnt to read by the time it matters. The weekly line waits until your Mac has watched that window turn over at least once — advice about a reset nobody has watched is not advice, and it is a fact about your account rather than a verdict shipped from ours.
 
 **The menu became a panel.** A macOS menu's background belongs to the system, so the one surface of the app that was system grey could not be anything else while it stayed a menu. It is now Lancetta's own navy, one card per agent, and 318 points wide where the menu needed 466 for the same content — a menu reserves a column for keyboard shortcuts that nothing can reclaim. Escape, ⌘R, ⌘O, ⌘, and ⌘Q all still work; Settings, Check for Updates, About and Quit are buttons along the bottom rather than four more rows.
 

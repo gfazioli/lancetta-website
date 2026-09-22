@@ -88,7 +88,8 @@ const windowSession: MenuBarReadingState = {
  * editorial: the advice did not ship, so the page's first claim below the fold
  * would have been a promise rather than a number. The pace line ships in v0.4,
  * so the deeper moat leads and the frame has a screenshot like any other.
- * (The alerts are still PR #36, and they are on the roadmap, not here.)
+ * (The alerts shipped in v0.5 and have a page of their own; a notification is
+ * not a frame here because a banner has no screenshot worth a hero.)
  */
 const frames: Frame[] = [
   {

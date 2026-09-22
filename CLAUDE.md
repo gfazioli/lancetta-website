@@ -41,9 +41,10 @@ future tense for anything the build does not do. A badge without the future
 tense and a future tense without the badge are the same defect in opposite
 directions, so change them together.
 
-Today exactly one card is `Next`: the notifications (v0.3). **The process reaper
-and the window are not** — both are built, and the site was two versions behind
-the app on 2026-09-17 until this was swept. That is the failure mode to watch
+Today no card is `Next`: the notifications were the last one and shipped in v0.5
+on 2026-09-22 (the card now links `/docs/alerts`). **The process reaper and the
+window were never `Next` either** — both were built before this file said so, and
+the site was two versions behind the app on 2026-09-17 until this was swept. That is the failure mode to watch
 for here: the app moves and nothing on this site fails when it does. The gate is
 reading `../Lancetta/CLAUDE.md` and `git log` in the app repo before believing
 any page, not running `yarn test`.
@@ -517,8 +518,9 @@ Until v0.4 this said the opposite, and the reason it did is worth keeping: the
 reaper led *because* the advice had not shipped, and the pace frame was drawn as
 a bordered card with the future tense, since a page that dresses a promise
 exactly like a shipped feature has to be read carefully to be trusted. That rule
-still governs the next unshipped thing to reach this array — today the alerts
-(Lancetta PR #36), which are not a frame.
+still governs the next unshipped thing to reach this array — today nothing: the
+alerts shipped in v0.5 (2026-09-22) and are not a frame, since a banner has no
+screenshot worth a hero.
 
 The instruction that used to close this paragraph — *when a release carries the
 pace, take `next` off it and revisit the order* — was carried out on 2026-09-21

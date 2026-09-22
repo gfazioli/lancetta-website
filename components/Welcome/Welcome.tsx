@@ -168,12 +168,11 @@ const features: Feature[] = [
   },
   {
     icon: IconBellRinging,
-    title: 'Before the wall, not after it',
+    title: 'It speaks first',
     description:
-      'Three moments worth interrupting for: an agent refused you, a window crossed a level you chose, and a reading stopped moving. Lancetta will speak first for each — once, when it changes, rather than repeating a number that is already on your menu bar.',
+      'About what the menu bar cannot show: a window heading for empty before it resets, with the reset named beside it; an agent with nothing left; one that is ready again; a reading that stopped moving. Once, when it changes — never the number already on your bar.',
     color: 'pink',
-    href: '/docs/roadmap#it-speaks-first',
-    badge: 'Next',
+    href: '/docs/alerts',
   },
 ];
 
@@ -198,10 +197,10 @@ const roadmap = [
     state: 'shipped',
   },
   {
-    version: 'Next',
+    version: 'v0.5',
     title: 'It speaks first',
-    body: 'A window that refused, and a source gone quiet past its own cadence. The advice half of this has already shipped; what is left is the app speaking first rather than waiting to be looked at.',
-    state: 'planned',
+    body: 'A window that will run out before it resets, an agent with nothing left, one that is ready again, a reading gone quiet — said once, when it changes, with a sound only for the two moments you are not looking. And two fixes from two Macs: Refresh now never raises the keychain dialog, and a card still on the status-line file offers the account.',
+    state: 'shipped',
   },
   {
     version: 'Then',
