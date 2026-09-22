@@ -60,6 +60,12 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
       'It says so. Every reading carries the time it was taken, and an unknown is drawn as an unknown — never as 0%. A status line rendering an unknown as zero, and a three-hour-old number as current, is the defect this app exists because of.',
   },
   {
+    value: 'model-limit',
+    question: 'Claude says I am out, but Lancetta shows two thirds left. Which is right?',
+    answer:
+      'Both, and that gap is what Lancetta 0.6 exists to close. Some plans give one model a weekly limit of its own, counted separately from the window every monitor reads — so the model you actually want can be spent while the general window is comfortable. The account sends that limit as a row of its own, and Lancetta now draws it under the name your account gives it, with a sentence when its week is spent, when it is back, and when it is heading for empty before it resets. It needs the account route: the status-line file carries the two general windows and nothing else.',
+  },
+  {
     value: 'interrupt',
     question: 'Will it interrupt me?',
     answer:
