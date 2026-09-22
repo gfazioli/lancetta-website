@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.8.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.8.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Lancetta 0.8.0 — the menu bar says where you stand, all day rather than at the end.</p>
+<h2>A lamp beside every agent</h2>
+<p>There is now a small glass bead between an agent’s mark and its numbers, and it is always there.</p>
+<markdown-accessiblity-table><table role="table">
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>green</strong></td>
+<td>up to half the window spent — work</td>
+</tr>
+<tr>
+<td><strong>amber</strong></td>
+<td>past halfway — still yours, but it is going</td>
+</tr>
+<tr>
+<td><strong>red</strong></td>
+<td>near the end — finish what you are on</td>
+</tr>
+<tr>
+<td><strong>black, red edge</strong></td>
+<td>refused, or nothing left. Unusable until it comes back</td>
+</tr>
+</tbody>
+</table></markdown-accessiblity-table>
+<p>A window nobody has managed to read yet shows a <strong>grey</strong> bead rather than a green one. An unknown is not an empty quota, and telling the two apart is the reason this app exists.</p>
+<p>It replaces the red sign that used to mark a blocked agent. That sign only ever appeared once you were already blocked — so for the whole of the day when the answer could still change what you did, the menu bar had no colour to give you, and then it had one at the single moment nothing could be done with it.</p>
+<p>The bead reads what is <strong>spent</strong>, whichever way round you asked to see the number. If your bar shows what remains, <code class="notranslate">3%</code> on screen is a red lamp, not a green one.</p>
+<h2>A blocked agent looks like the others</h2>
+<p>A refused agent used to lose its percentage entirely: <code class="notranslate">19% · ↻83m</code> beside <code class="notranslate">↻25h19m</code>, two different shapes in one bar at the moment you are scanning it fastest. It now reads <strong>100%</strong>, in the same shape as every cell beside it.</p>
+<p>The number is not the last reading. Your account has said there is nothing left, which is more recent than whatever the last check measured. And it follows the fields you picked, like any other cell: switch the percentage off in Settings and a blocked agent has none either.</p>
+<h2>Also</h2>
+<ul>
+<li><strong>Copy report</strong> keeps its name in the What went wrong window. On the default window the button had been truncated to <code class="notranslate">Copy rep…</code> — the one control that window exists to offer.</li>
+<li>The Troubleshooting page on the site now shows that window instead of only describing it.</li>
+</ul>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.8.0.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+</body>
+</html>
