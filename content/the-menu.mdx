@@ -86,7 +86,7 @@ before it stops anything on it. See [The processes they leave behind](/docs/memo
 
 ## Limits
 
-When a window refuses you, **that window is the one you see**. Lancetta does not average the buckets into one comfortable total — an average across a refused bucket and a healthy one lands somewhere reassuring and tells you nothing about why the last request failed. In the menu bar the refusal is named: the refusing agent's cell becomes its mark beside a no-entry sign and the time that window comes back, and the other agents keep their turns — a block on Codex is not information about Claude.
+When a window refuses you, **that window is the one you see**. Lancetta does not average the buckets into one comfortable total — an average across a refused bucket and a healthy one lands somewhere reassuring and tells you nothing about why the last request failed. In the menu bar the refusal is named: the refusing agent's cell shows its mark beside a dead lamp — black with a red edge — and the time that window comes back, and the other agents keep their turns — a block on Codex is not information about Claude.
 
 When an agent cannot be read at all, the card says so in one sentence. A situation that is not a fault, such as Codex not being installed or Claude Code not signed in, is described calmly with what would change it, and with the one button that would change it. A fault is drawn red, and **Why, and what to do…** opens a window naming the code, the likely cause and the fix beside the raw evidence, with a report to copy into an issue. Every code is listed on the [Troubleshooting](/docs/troubleshooting) page.
 
@@ -123,6 +123,23 @@ rows work under the pointer regardless: **Refresh now** does refresh.
 
 ## The menu-bar item itself
 
+```
+[mark] [lamp] 28% · ↻1h44m
+```
+
 What sits in the menu bar is configurable per agent: its mark, its percentage, its reset, in any combination. With more than one agent in the bar they take turns, cross-fading, and the item holds a fixed width at the widest of them so the items beside it never shift.
 
-An agent can be watched and still kept out of the bar — the menu bar is narrow, and an agent worth a card is not always worth the width.
+**The lamp is always there, and it is the part you do not have to read.** A small glass bead between the mark and the numbers, in one of four colours:
+
+| | |
+| --- | --- |
+| **green** | up to 50% of the window spent — work |
+| **amber** | over 50%, up to 80% — still yours, but it is going |
+| **red** | over 80% — finish what you are on |
+| **black, red edge** | refused, or nothing left. Unusable until it comes back |
+
+A window nobody has managed to read yet shows a **grey** bead rather than a green one. An unknown is not an empty quota, and this app exists because a status line once drew one as the other.
+
+The bead reads what is **spent**, whichever way round you asked to see the number: if you have the item showing what remains, `3%` on screen is a red lamp, not a green one.
+
+An agent can be watched and still kept out of the bar — the menu bar is narrow, and an agent worth a card is not always worth the width. The lamp, though, does not follow the fields: switch the mark and the percentage off and the bead is still there, because it is the whole of the question *can I use this*.
