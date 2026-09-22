@@ -86,7 +86,7 @@ before it stops anything on it. See [The processes they leave behind](/docs/memo
 
 ## Limits
 
-When a window refuses you, **that window is the one you see**. Lancetta does not average the buckets into one comfortable total — an average across a refused bucket and a healthy one lands somewhere reassuring and tells you nothing about why the last request failed. In the menu bar the refusal is named: the refusing agent's cell shows its mark beside a dead lamp — black with a red edge — and the time that window comes back, and the other agents keep their turns — a block on Codex is not information about Claude.
+When a window refuses you, **that window is the one you see**. Lancetta does not average the buckets into one comfortable total — an average across a refused bucket and a healthy one lands somewhere reassuring and tells you nothing about why the last request failed. In the menu bar the refusal is named: the refusing agent's cell shows its mark beside a dead lamp — black with a red edge — its window at 100%, and the time that window comes back, and the other agents keep their turns — a block on Codex is not information about Claude.
 
 When an agent cannot be read at all, the card says so in one sentence. A situation that is not a fault, such as Codex not being installed or Claude Code not signed in, is described calmly with what would change it, and with the one button that would change it. A fault is drawn red, and **Why, and what to do…** opens a window naming the code, the likely cause and the fix beside the raw evidence, with a report to copy into an issue. Every code is listed on the [Troubleshooting](/docs/troubleshooting) page.
 
@@ -141,5 +141,14 @@ What sits in the menu bar is configurable per agent: its mark, its percentage, i
 A window nobody has managed to read yet shows a **grey** bead rather than a green one. An unknown is not an empty quota, and this app exists because a status line once drew one as the other.
 
 The bead reads what is **spent**, whichever way round you asked to see the number: if you have the item showing what remains, `3%` on screen is a red lamp, not a green one.
+
+A refused agent reads **100%** — or `0%` if you are showing what remains — so its cell has the same shape as the cells beside it:
+
+```
+[mark] [green]  19% · ↻83m
+[mark] [black] 100% · ↻25h19m
+```
+
+The number is not the last reading: the account has said there is nothing left, which is more recent than whatever the last poll measured. It follows your fields like any other cell — switch the percentage off and a refusal has none either. The reset does not: a block raises exactly one question, and that is it.
 
 An agent can be watched and still kept out of the bar — the menu bar is narrow, and an agent worth a card is not always worth the width. The lamp, though, does not follow the fields: switch the mark and the percentage off and the bead is still there, because it is the whole of the question *can I use this*.
