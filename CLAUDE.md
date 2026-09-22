@@ -186,6 +186,42 @@ darkened cut for light mode because the app's own values read 2.3:1 and 2.7:1 on
 white. **Do not use either one as a decorative accent.** That is what
 `--lan-accent` is for.
 
+## Two typefaces, and the constraint one of them imposes
+
+**Instrument Serif** on the display, **Inter** on everything else, both declared
+in `app/layout.tsx` through `next/font/google` and self-hosted — the built
+output contains no request to `fonts.googleapis.com`, and each family's
+metric-compatible fallback is what keeps the first paint from shifting. Until
+2026-09-22 the site had no font configuration at all: Mantine's system stack,
+which on a Mac is SF, which is why it read as a default. It *was* the default.
+
+**Instrument Serif ships ONE weight, and that is the rule to remember.** A
+browser asked for a weight a family does not have synthesises it by smearing
+the glyph sideways; on a serif that turns the hairlines to mud and reads as a
+rendering fault rather than a choice. So `theme.headings.fontWeight` is `'400'`
+and **no `<Title>` on this site may carry a `fw`**. The two `fw={900}` that
+remain are on `<Text>`, in Inter, which is variable: those are real weights.
+
+Three surfaces the theme does not reach, each for its own reason:
+
+| Surface | Why | Where it is named |
+|---|---|---|
+| the hero `h1` | a CSS module, and unlayered styles outrank every layer | `HeroStage.module.css` `.title` |
+| the scroll narrative's titles | `<Text>` at 34px, carrying no heading level on purpose | `HeroStage.module.css` `.frameTitle` |
+| the docs headings | Nextra renders MDX headings itself, with its own Tailwind classes | `app/global.css`, `main[data-pagefind-body]` |
+
+That last selector was **read off the served markup**, not guessed, and it is
+docs-only by construction: the home page has no `<main>` at all. `h1` and `h2`
+only — below that a one-weight serif at body size stops separating a heading
+from the paragraph under it, so the hierarchy hands over from *face* to
+*weight* at `h3`.
+
+The hero also needed its tracking loosened from `-0.035em` to `-0.012em`. That
+was cut for a grotesque, and at it a serif's adjacent serifs touch. Check any
+change to it at **390px**: the module's own comment records a descender
+collision at `line-height: 1.03`, and a serif's descenders are deeper than the
+sans it replaced.
+
 ### The favicon is a different drawing, and that is deliberate
 
 The gradient app icon does not survive 16px. Measured rather than judged: its
@@ -620,9 +656,23 @@ current version) is in the hero's meta line and on the releases page.
   shows a SUBSET — six menus in a bar this size stop reading as menus — and
   the hrefs are absolute (`/#features`), because this bar is on every page and a
   bare fragment from inside the docs scrolls nowhere.
-- The agent marks in the reading (`AgentMark.tsx`) are **stylisations, not the
-  vendors' artwork**: the app renders the real vector data, and a website should
-  not ship someone else's logo file to decorate a mock-up of its own chrome.
+- The agent marks in the reading (`AgentMark.tsx`) are the **app's own vector
+  data**, extracted from `../Lancetta/Sources/LancettaCore/BrandMark.swift`
+  rather than redrawn, each at its original viewBox (Claude 248, OpenAI 24).
+  This file argued the opposite until 2026-09-22 — that a website should not
+  ship someone else's logo file to decorate a mock-up of its own chrome — and
+  the argument does not survive the page it is on: **every screenshot on this
+  site already shows the real marks**, because the app draws them. The
+  stylisation protected nothing and made the header disagree with the pictures
+  under it, which is what the user reported.
+
+  The trap, paid for on the way: the app draws the **OpenAI** mark for Codex,
+  not the Codex `>_` glyph. `CodexSource.mark` is `.openAI` (the user's call,
+  2026-09-17). The first extraction took `BrandMark.codex` on the strength of
+  its name, and `BrandMark.swift`'s own doc comment agreed with that mistake
+  until it was corrected in the app's 0.7.0. **Pick the mark by what the
+  source assigns, never by what it is called** — and the site's own
+  screenshots are the cheapest check.
 
 `components/SectionHeading` is left by default — title left, lead right,
 bottom-aligned — and `center` for the statement bands. Its `tone="onDark"` has
