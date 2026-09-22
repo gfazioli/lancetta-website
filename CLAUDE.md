@@ -41,8 +41,13 @@ future tense for anything the build does not do. A badge without the future
 tense and a future tense without the badge are the same defect in opposite
 directions, so change them together.
 
-Today no card is `Next`: the notifications were the last one and shipped in v0.5
-on 2026-09-22 (the card now links `/docs/alerts`). **The process reaper and the
+No feature CARD is `Next` — the notifications were the last one and shipped in
+v0.5 on 2026-09-22 (the card now links `/docs/alerts`). **One hero SECTION is**,
+since 2026-09-22: *The rhythm it has not learnt yet*, the advice-from-history
+step. It carries no screenshot, `next: true`, the future tense throughout, and
+a body that names what ships today so a skimmer cannot read it as shipped. See
+*The one job* near the end of this file for why it is said at all rather than
+withheld. **The process reaper and the
 window were never `Next` either** — both were built before this file said so, and
 the site was two versions behind the app on 2026-09-17 until this was swept. That is the failure mode to watch
 for here: the app moves and nothing on this site fails when it does. The gate is
@@ -186,21 +191,40 @@ darkened cut for light mode because the app's own values read 2.3:1 and 2.7:1 on
 white. **Do not use either one as a decorative accent.** That is what
 `--lan-accent` is for.
 
-## Two typefaces, and the constraint one of them imposes
+## One superfamily, two cuts
 
-**Instrument Serif** on the display, **Inter** on everything else, both declared
-in `app/layout.tsx` through `next/font/google` and self-hosted — the built
-output contains no request to `fonts.googleapis.com`, and each family's
+**Source Serif 4** on the display, **Source Sans 3** on everything else, both
+declared in `app/layout.tsx` through `next/font/google` and self-hosted — the
+built output contains no request to `fonts.googleapis.com`, and each family's
 metric-compatible fallback is what keeps the first paint from shifting. Until
 2026-09-22 the site had no font configuration at all: Mantine's system stack,
 which on a Mac is SF, which is why it read as a default. It *was* the default.
 
-**Instrument Serif ships ONE weight, and that is the rule to remember.** A
-browser asked for a weight a family does not have synthesises it by smearing
-the glyph sideways; on a serif that turns the hairlines to mud and reads as a
-rendering fault rather than a choice. So `theme.headings.fontWeight` is `'400'`
-and **no `<Title>` on this site may carry a `fw`**. The two `fw={900}` that
-remain are on `<Text>`, in Inter, which is variable: those are real weights.
+**They are the same design with and without serifs** — one skeleton, one set of
+proportions, one set of vertical metrics — and that is the whole reason they
+are here. The first attempt that day paired **Instrument Serif with Inter**, a
+high-contrast display serif against a neutral grotesque, and shipped; the
+user's reading of it is the rule (*"l'unica cosa che non mi convince è il mix -
+i titoli sono in un modo e il resto in un'altro"*). **A pairing is a
+relationship, and a relationship does not show in a type sample**: the choice
+was made from six pairings rendered live on this page, through a throwaway
+dev-only switcher that set `--font-display` and `--font-body` from a menu, with
+`?type=<key>` so each one had an address. Build that again rather than
+comparing specimens.
+
+**Both are variable, 200 to 900, and that is a change from what stood here
+before.** Instrument Serif had one weight, so `headings.fontWeight` HAD to be
+`'400'` and no `<Title>` could carry a `fw` — ask a family for a weight it does
+not have and the browser smears the glyph sideways, which on a serif turns the
+hairlines to mud. **That constraint is gone.** Every weight on this site is now
+a real cut.
+
+The headings stay at 400 anyway, and `theme.ts` carries the reason: the
+hierarchy here is size and face, not weight, and a page whose headings are all
+bold has spent its loudest signal on every one of them. If one ever needs more
+presence, move the theme's value — do not put a `fw` back on a single `<Title>`
+and leave the rest, which is how a page ends up with three heading weights
+nobody chose.
 
 Three surfaces the theme does not reach, each for its own reason:
 
@@ -543,17 +567,30 @@ money is a claim, not an omission** — write it as one. Copy that leads on a
 percentage, a token total or a spend figure is copy that has drifted back, and
 the tell is a sentence a reader has to act on themselves.
 
-**Two things may not be written until they ship, and both are the natural end
-of that argument**, which is exactly why they will keep trying to get in:
+**Two things are the natural end of that argument and do not ship yet**:
 telling the reader **when to start working**, and anything **learnt from an
 average across days**. Checked in the source on 2026-09-22 rather than assumed:
 `Pace` does receive the history, and it uses it to decide whether the spending
 is still going on (the `.idle` case) — the projection itself is the current
-window's own rate, `used / elapsed`. An app that *learns how you work* is the
-next feature. Until it lands, the three headline lines each have to name
-something shipped, and today they do: a model's own weekly window (v0.6, in the
-island since v0.7), the pace line (v0.4), and the reset on every bar plus the
-alert that fires when a window you were blocked on reopens (v0.5).
+window's own rate, `used / elapsed`, and `Pace.swift` says so in its own
+header.
+
+**They are still SAID, and saying them is the point** (user, 2026-09-22:
+*"anche se delle cose ancora non le fa citiamole comunque"*). This is the moat;
+a page that hides it to stay safe has protected nothing. What governs is the
+shape the site already has for an unshipped thing, and it is the rule two
+paragraphs down: **the badge AND the future tense, never one without the
+other**, plus an entry on the roadmap carrying what it has to prove. Today that
+is the second section of `HeroStage` — no screenshot, `next: true`, and the
+body names what ships so the two cannot be confused — and *Advice from your own
+history* on `content/roadmap.mdx`.
+
+**Where it may not go is the HEADLINE**, and that is not a matter of degree: an
+`h1` carries no badge, no tense marker a skimmer reads, and no link to a
+roadmap. So the three lines each have to name something shipped, and today they
+do — a model's own weekly window (v0.6, in the island since v0.7), the pace
+line (v0.4), and the reset on every bar plus the alert that fires when a window
+you were blocked on reopens (v0.5).
 
 **What changed on 2026-09-20 is which part of that job leads.** This file used
 to say the reaper was "a feature card and a footnote, never a second half", and
@@ -579,9 +616,11 @@ Until v0.4 this said the opposite, and the reason it did is worth keeping: the
 reaper led *because* the advice had not shipped, and the pace frame was drawn as
 a bordered card with the future tense, since a page that dresses a promise
 exactly like a shipped feature has to be read carefully to be trusted. That rule
-still governs the next unshipped thing to reach this array — today nothing: the
-alerts shipped in v0.5 (2026-09-22) and are not a frame, since a banner has no
-screenshot worth a hero.
+governs the one unshipped section in the array today: *The rhythm it has not
+learnt yet*, added 2026-09-22 in second place — right after the pace line,
+because the pace line is the first step of the same idea and this is where it
+goes. (The alerts shipped in v0.5 and are not a section at all: a banner has no
+screenshot worth a hero.)
 
 The instruction that used to close this paragraph — *when a release carries the
 pace, take `next` off it and revisit the order* — was carried out on 2026-09-21

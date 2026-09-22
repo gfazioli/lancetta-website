@@ -59,14 +59,20 @@
   color: var(--lan-ink);
 
   /*
-   * A size up from the 56px this held as a heavy sans. A serif at one weight
-   * carries a headline with its SHAPE rather than its mass, so at the old size
-   * the three lines stopped reading as the loudest thing on the page.
+   * A size up from the 56px this held as a heavy sans. A serif carries a
+   * headline with its SHAPE rather than its mass, so at the old size the three
+   * lines stopped reading as the loudest thing on the page.
    */
   font-size: clamp(rem(34px), 4.8vw, rem(64px));
 
   /*
-   * 400 is the only weight Instrument Serif has; see `app/layout.tsx`. And
+   * 400 is a CHOICE here, not a limit. It was a limit until 2026-09-22, when
+   * the display face was Instrument Serif and 400 was the only weight it had;
+   * Source Serif 4 is variable from 200 to 900, so every heavier cut is real
+   * and available. It stays at 400 because that is the voice — and because
+   * Source Serif is a text face with fuller stems than the display serif it
+   * replaced, so 400 here is already sturdier than 400 was.
+   *
    * -0.035em was tracking for a grotesque — on a serif that tight the serifs
    * of adjacent letters touch, which reads as a font that failed to load
    * rather than as a headline set close.
