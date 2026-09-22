@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.6.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.6.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Lancetta reads the window your menu bar cannot show.</p>
+<h2>The window one model keeps to itself</h2>
+<p><strong>Some plans give one model a weekly limit of its own</strong>, counted separately from the two windows every monitor reads. It can run out while the percentage on your menu bar still reads two thirds — and it did: Claude’s own panel showed one model at 100% for the week while Lancetta drew 65% and said nothing about it.</p>
+<p>The data was arriving all along. Beside the two windows, your account sends <strong>a row per meter</strong>, each one saying what kind it is, how much is spent, when it resets, and — where the row belongs to one model — that model’s name. Lancetta now reads every row it is sent and draws the ones with a name, on the card and in the Limits pane, under the name your account gave them. Nothing in the app has a list of models in it, so a window that appears tomorrow for a model nobody has heard of yet appears on the card that day.</p>
+<p><strong>It says so, too.</strong> When that week is spent, when it is back, and — the one worth having — when it is heading for empty ahead of its reset, with the same two times the weekly projection names. What it never says is that you are blocked, because you are not: your agent carries on with another model.</p>
+<p>These rows come from the Claude account. A card still reading the status-line file cannot see them at all, and says so.</p>
+<h2>Smaller</h2>
+<ul>
+<li>The percentage column in the panel was too narrow for <code class="notranslate">100%</code>, which wrapped onto two lines in the card of an agent that had nothing left.</li>
+</ul>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.6.0.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later.</p>
+</body>
+</html>
