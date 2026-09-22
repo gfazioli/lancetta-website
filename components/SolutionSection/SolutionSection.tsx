@@ -51,7 +51,7 @@ export function SolutionSection() {
           >
             The app
           </Text>
-          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
+          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }}>
             One job, done properly
           </Title>
           <Text c="dimmed" ta="center" size="lg" maw={700} lh={1.6}>

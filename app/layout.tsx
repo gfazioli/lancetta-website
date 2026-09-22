@@ -7,6 +7,7 @@ import '@gfazioli/mantine-scene/styles.css';
 import '@/theme/global.css';
 
 import { Analytics } from '@vercel/analytics/react';
+import { Instrument_Serif, Inter } from 'next/font/google';
 import { Layout } from 'nextra-theme-docs';
 import { Head } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
@@ -21,6 +22,39 @@ import { theme } from '../theme';
 
 import './global.css';
 
+/*
+ * The site's two faces, self-hosted by `next/font` — no request leaves the
+ * visitor's browser for a font, and the metric-compatible fallback each one
+ * generates is what keeps the first paint from shifting.
+ *
+ * INSTRUMENT SERIF is the display face, and it ships ONE weight. That is the
+ * whole reason `headings.fontWeight` is '400' in the theme and why every
+ * `fw={900}` on a <Title> had to go: a browser asked for a weight a family
+ * does not have SYNTHESISES it, by smearing the glyph sideways — which on a
+ * serif turns the hairlines into mud and looks like a rendering fault rather
+ * than a choice. The italic is loaded because a display face's italic is half
+ * of what it is for, and because a synthesised oblique on a serif is the same
+ * failure at a shallower angle.
+ *
+ * INTER is everything else: body copy, UI, the readings. It is variable, so
+ * the 900s that remain — all of them on <Text>, none on a heading — are real
+ * weights cut by the designer.
+ */
+const display = Instrument_Serif({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  variable: '--font-display',
+  display: 'swap',
+});
+
+const body = Inter({
+  subsets: ['latin'],
+  style: ['normal', 'italic'],
+  variable: '--font-body',
+  display: 'swap',
+});
+
 export const metadata = config.metadata;
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -28,7 +62,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { nextraLayout, head } = config;
 
   return (
-    <html lang="en" dir="ltr" {...mantineHtmlProps}>
+    <html
+      lang="en"
+      dir="ltr"
+      {...mantineHtmlProps}
+      className={`${display.variable} ${body.variable}`}
+    >
       <Head>
         {/*
           Forced, not defaulted. The site is light-only: `forceColorScheme`

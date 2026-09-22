@@ -380,7 +380,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                 <Text className={classes.eyebrow} data-next={frame.next}>
                   {frame.eyebrow}
                 </Text>
-                <Text fw={800} fz={{ base: 26, md: 34 }} lh={1.15} mt={8}>
+                <Text className={classes.frameTitle} fz={{ base: 26, md: 34 }} lh={1.15} mt={8}>
                   {frame.title}
                 </Text>
                 <Text c="dimmed" fz="lg" lh={1.6} mt={12}>

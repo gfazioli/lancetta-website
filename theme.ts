@@ -120,8 +120,20 @@ export const theme = createTheme({
       '#262C42',
     ],
   },
+  /*
+   * The two faces are declared in `app/layout.tsx`, which is where `next/font`
+   * puts the variables on <html>. Naming them here rather than a stack means
+   * the metric-compatible fallback next/font generates travels with them.
+   */
+  fontFamily: 'var(--font-body)',
   headings: {
-    fontWeight: '600',
+    fontFamily: 'var(--font-display)',
+    /*
+     * 400, not 600: Instrument Serif has one weight. Asking for a heavier one
+     * gets a synthesised smear, so the heading hierarchy here is carried by
+     * SIZE and by the face itself, never by weight.
+     */
+    fontWeight: '400',
   },
   defaultRadius: 'md',
 });

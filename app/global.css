@@ -6,6 +6,14 @@
 @layer overwrite {
   html {
     scroll-behavior: smooth;
+
+    /*
+     * Nextra sets the prose font on <html> from its own stylesheet, and
+     * Mantine's `fontFamily` only reaches Mantine's components — so without
+     * this line the docs would keep the system stack while the home page
+     * changed face, which is the half of the site nobody re-reads.
+     */
+    font-family: var(--font-body);
   }
 
   /*
@@ -19,6 +27,31 @@
     --lan-bar-height: 46px;
     --nextra-navbar-height: var(--lan-bar-height);
     --x-color-nextra-bg: var(--lan-body);
+  }
+
+  /*
+   * The display face on the DOCS' own headings.
+   *
+   * Nextra renders MDX headings itself, with Tailwind classes of its own
+   * (`x:font-bold`, `x:font-semibold`, `x:tracking-tight`) — they are not
+   * Mantine <Title>s, so `headings.fontFamily` in the theme never reaches
+   * them. Read off the served markup rather than guessed: `main` carries
+   * `data-pagefind-body`, which is Nextra's content region and nothing else
+   * on the site has it.
+   *
+   * h1 and h2 only. Below that a one-weight serif at body size stops
+   * separating a heading from the paragraph under it — the hierarchy on this
+   * page is FACE at the top and weight further down, and h3 is where the
+   * hand-over happens.
+   *
+   * No !important: this block is in `overwrite`, the last layer declared, so
+   * it already outranks everything in `nextra` regardless of specificity.
+   */
+  main[data-pagefind-body] h1,
+  main[data-pagefind-body] h2 {
+    font-family: var(--font-display);
+    font-weight: 400;
+    letter-spacing: -0.01em;
   }
 
   /*

@@ -42,7 +42,7 @@ export function SectionHeading({
     return (
       <Stack align="center" gap="md" mb={mb}>
         {eyebrowNode}
-        <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900} c={titleColor}>
+        <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} c={titleColor}>
           {title}
         </Title>
         {lead && (
@@ -61,7 +61,6 @@ export function SectionHeading({
         <Title
           order={2}
           fz={{ base: 32, sm: 42 }}
-          fw={900}
           lh={1.08}
           mt={10}
           c={titleColor}
