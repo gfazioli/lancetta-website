@@ -2,6 +2,7 @@
 
 import { Scene } from '@gfazioli/mantine-scene';
 import {
+  IconBellRinging,
   IconCode,
   IconCpu,
   IconDeviceDesktop,
@@ -13,9 +14,9 @@ import {
 import { Badge, Box, Container, Group, Stack, Text, Title } from '@mantine/core';
 
 /*
- * Only things the shipped build actually is. `Notifications` was here and had
- * to go: it is still ahead ("It speaks first"), and a pill is a claim exactly
- * as much as a sentence is.
+ * Only things the shipped build actually is. `Notifications` was here, had to
+ * go while "It speaks first" was still ahead -- a pill is a claim exactly as
+ * much as a sentence is -- and is back since v0.5 shipped it.
  *
  * Two of them were wrong claims until 2026-09-21, and both failed in the
  * direction a reader cannot check:
@@ -41,6 +42,7 @@ const techPills = [
   { label: 'Auto-Refresh', icon: IconRefresh },
   { label: 'No Dock Icon at Rest', icon: IconWindowMinimize },
   { label: 'Universal', icon: IconCpu },
+  { label: 'Notifications', icon: IconBellRinging },
 ];
 
 export function BuiltForMacSection() {

@@ -13,6 +13,7 @@ import {
   IconLock,
   IconHelpCircle,
   IconAlertTriangle,
+  IconBellRinging,
 } from '@tabler/icons-react';
 
 // Sidebar entry with a leading icon. The icon inherits `currentColor`, so it
@@ -41,6 +42,7 @@ export default {
   'the-menu': nav(IconLayoutNavbar, 'The Panel', 'teal'),
   'the-notch': nav(IconDeviceDesktop, 'The Notch', 'violet'),
   'the-window': nav(IconAppWindow, 'The Window', 'cyan'),
+  alerts: nav(IconBellRinging, 'Alerts', 'pink'),
   '---how-it-works': { type: 'separator', title: 'How it works' },
   'how-it-reads': nav(IconEye, 'How it reads each agent', 'blue'),
   memory: nav(IconTrash, 'Processes left behind', 'indigo'),

@@ -132,6 +132,11 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
       'It says so. Every reading carries the time it was taken, and an unknown is drawn as an unknown — never as 0%. A status line rendering an unknown as zero, and a three-hour-old number as current, is the defect this app exists because of.',
   },
   {
+    question: 'Will it interrupt me?',
+    answer:
+      'Only about what the menu bar cannot already show. The percentage is on your bar, so Lancetta never announces it; it speaks first when a window will run out before it resets — naming the reset beside the moment it runs out — when an agent has nothing left, when it is ready again, and when a reading has stopped moving while looking live. Each once, at the moment it changes, never on launch, and macOS is asked for permission the first time there is actually something to say. Alerts and suggestions are separate switches, each agent has its own, and a sound is reserved for the two moments you are not looking at a screen.',
+  },
+  {
     question: 'Is Lancetta only in the menu bar?',
     answer:
       'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the daily token chart, both agents in detail, and the background processes the agents have left running. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch.',

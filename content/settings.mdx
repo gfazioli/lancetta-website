@@ -22,6 +22,20 @@ Whichever you pick, the bars are filled with **the number that is shown**, and e
 
 **Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there and turns amber when the window would empty before it resets. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
 
+### Alerts
+
+The switches for what Lancetta says first, which is deliberately little: the percentage is already on your menu bar, so a notification is for what the bar cannot show. The whole of it is on [its own page](/docs/alerts); the controls are:
+
+**Let Lancetta speak first** — on by default. macOS asks whether Lancetta may notify you the first time there is something worth saying, not now and not at launch.
+
+**Alerts** — what the account reported: it refused you or a window is spent, it is ready again, or its reading has stopped moving.
+
+**Suggestions** — what the series implies: a window heading for empty before it resets, with the reset named beside it. It follows the pace line above, because it is the same projection said louder.
+
+**Sound when you are out** and **Sound when you can start again** — one of macOS's own sounds, or none. Only these two moments carry a sound: the work stopping, and the work being possible again.
+
+**Also say when a window passes** — *Never* by default, because this one announces the number already in your menu bar. Kept for a hard threshold; each level is said once per window, going up, and again after the window resets.
+
 **Open Lancetta at login** — off by default. It binds to macOS's own login-item status rather than to a copy of it, so the switch reflects what the system actually has registered.
 
 **Show the support window at launch** — off by default. Opens About + Support when Lancetta starts. Netfox ships the same switch on; here it is off, because this app opens at login, and a window at every login is the thing a menu-bar app exists to avoid.
@@ -58,7 +72,8 @@ A row opens on a click anywhere, and drags from anywhere. The grip on the left s
 - **Watch this agent** — off, it keeps no card in the menu and no cell in the bar. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
 - **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width. A refusal is shown regardless: when this agent is refused, its mark and a no-entry sign take a turn in the bar even with this off, because the bar's rule is alarm first.
 - **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
-- **How it is wired** — which route that agent's numbers arrive by, so a card that is not updating tells you where to look.
+- **How it is wired** — which route that agent's numbers arrive by, so a card that is not updating tells you where to look. The panel says it too: a Claude card still read through the status-line file carries a line saying so, and a Connect button beside it.
+- **Notify me about this agent** — off, Lancetta sends nothing about it: not a refusal, not a suggestion. The two agents are used differently and the answer differs with them; what the menu bar draws is unaffected.
 - **Account** (Claude only) — **Connect** reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left; macOS asks once whether to allow it. **Disconnect** stops it. What that click does and does not do is spelled out in [Getting Started](/docs/getting-started#claude-code).
 
 ![Claude's page in Lancetta's Settings: colour, Watch this agent, Show in the menu bar, the three bar fields, and the Account section reading the quota from the Claude account, with a Disconnect button](/screenshot-settings-agent-claude.png)
@@ -85,7 +100,7 @@ Three controls and the build you are running:
 
 ## About
 
-Version, build date, the sponsor link, and the trademark notice. It is reached from the header at the top of the sidebar, and also has its own window under **About Lancetta** in the menu.
+Version and build number, the sponsor link, and the trademark notice. It is reached from the header at the top of the sidebar, and also has its own window under **About Lancetta** in the menu.
 
 ![Lancetta's Settings, on the About pane: the icon, the version, the one-line description, the links, and the sponsors block](/screenshot-settings-about.png)
 
