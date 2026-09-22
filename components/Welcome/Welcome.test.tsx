@@ -12,15 +12,26 @@ describe('Welcome component', () => {
     // sibling site's version of this test only passes there because half its
     // headline sits outside the animated span.
     //
-    // All three lines are asserted, not just the first, because the first is
-    // the only one a competitor could also claim. The headline said "Every
-    // agent's quota. One glance. Costs nothing." until 2026-09-20, and every
-    // word of that was equally true of the free, open-source alternative. If
-    // this ever goes back to a generic promise, this test is what says so.
+    // All three lines are asserted, not just the first, and each revision of
+    // this list has been a change of POSITION rather than of wording:
+    //
+    //   until 2026-09-20  "Every agent's quota. One glance. Costs nothing."
+    //                     every word equally true of the free alternative
+    //   until 2026-09-22  "Every agent's quota. Every number, dated. Every
+    //                     stray process." — an inventory: three things the app
+    //                     HOLDS, with the reader doing the reasoning
+    //   now               three things the app ANSWERS
+    //
+    // So this is not a copy test, it is the guard on the thesis. Each line has
+    // to name something that SHIPS: "what you can use" is a model's own weekly
+    // window (v0.6), "how long it lasts" the pace line (v0.4), "when it comes
+    // back" the reset on every bar and the alert when a window reopens (v0.5).
+    // If a line ever describes when to START, or anything learnt from an
+    // average across days, it has outrun the app and this test is what says so.
     const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading.textContent).toContain('Every agent');
-    expect(heading.textContent).toContain('Every number, dated.');
-    expect(heading.textContent).toContain('Every stray process.');
+    expect(heading.textContent).toContain('What you can use.');
+    expect(heading.textContent).toContain('How long it lasts.');
+    expect(heading.textContent).toContain('When it comes back.');
   });
 
   it('answers what it is, what it does and what it costs before the first scroll', () => {
