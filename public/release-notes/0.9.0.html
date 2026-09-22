@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.9.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.9.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Four things about how a reading is presented, and one of them was a defect that had been on screen since the app shipped.</p>
+<h3>The panel pins</h3>
+<p>A <strong>pin</strong> in the top-right corner of the panel. Pinned, nothing closes it: not a click elsewhere, not another window taking the keyboard, not the pointer leaving the menu-bar item — and not a command pressed inside it either, so Refresh now leaves the panel exactly where it is. It stays in front of whatever you are working in, and you can drag it off the menu bar to wherever suits.</p>
+<p>Escape still closes it, because a window with no keyboard exit is a trap whatever it is called. The pin is remembered, so it opens pinned the next time.</p>
+<h3>Times read the way you say them</h3>
+<p>An hour and four minutes was printing as <code class="notranslate">64m</code>. A day and eight minutes was printing as <code class="notranslate">24h08m</code>. Both are arithmetic handed back to you, in the one place this app exists to take it off you — and both were on screen everywhere a length of time appears: the menu bar, the panel, the island, the window.</p>
+<p>Every duration now follows one rule: <strong>two units, the larger first, and the larger one is the largest that has reached 1.</strong></p>
+<pre class="notranslate"><code class="notranslate">45s     59m     1h04m     23h59m     1d     1d05h     6d23h
+</code></pre>
+<p>The second unit is dropped when it is zero, so a reset exactly two days out is <code class="notranslate">2d</code> rather than <code class="notranslate">2d00h</code>, and nothing is ever rounded up — a countdown that overstates would promise a return that has not happened. Under ninety seconds it still counts in seconds, which is the one place the smaller unit is the more honest one.</p>
+<p>The same cliff was in the sentences: a weekly window a day and a quarter old read <em>"71% in 30h"</em>, and a pause Claude's account asked for could read <em>"in 187 minutes"</em>.</p>
+<h3>The pace sentence starts where its bar starts</h3>
+<p>Under every bar, the line saying where that window ends at the rate you are going used to begin one column to the left of the bar it is about — lined up with the percentage instead. It now starts exactly where the bar does, in the panel and in the Limits pane, so it reads as a caption on that bar rather than as another reading beside it. The panel is a little wider to pay for it.</p>
+<h3>Five hours or seven days, both on screen</h3>
+<p>On the front page of the window, the chooser over the quota bars is a pair of buttons rather than a menu. With exactly two options a menu hides half the vocabulary and charges a click to change it; now both are visible, switching is one click either way, and the one you leave it on is the one you come back to.</p>
+</body>
+</html>
