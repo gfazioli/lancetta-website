@@ -272,7 +272,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           <SectionHeading
             eyebrow="What is in it"
             title="An instrument, not a dashboard"
-            lead="It has one job: tell you where you stand, honestly, without being asked and without costing anything to ask."
+            lead="It has one job: tell you what you can still do, honestly, without being asked and without costing anything to ask."
           />
 
           {/*

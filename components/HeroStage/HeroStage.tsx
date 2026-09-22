@@ -264,13 +264,25 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
         >
           {/*
             THE THREE LINES MUST NOT WRAP AT 390px, and that is a hard
-            constraint rather than a preference: each line is about as long as
-            "Every agent's quota.", which is known to fit. Lengthen one and
-            re-shoot at 390 before believing it.
+            constraint rather than a preference: 20 characters is the length
+            known to fit, and these are 17, 18 and 19. Lengthen one and
+            re-shoot at 390 before believing it — the display face is a serif
+            now, which sets wider than the grotesque this budget was measured
+            against.
+
+            Each line is a QUESTION THE APP ANSWERS TODAY, and that is what
+            makes it a headline rather than a promise. "What you can use" is
+            the model's own weekly window, drawn since v0.6 and in the island
+            since v0.7; "how long it lasts" is the pace line, v0.4; "when it
+            comes back" is the reset on every bar plus the alert that fires
+            when a window you were blocked on has reopened, v0.5. What is NOT
+            here, and must not creep in until it ships: when to START, and
+            anything learnt from an average across days. The projection is the
+            current window's own rate.
           */}
           <Title className={classes.title}>
-            <span className={classes.titleLine}>Every agent’s quota.</span>
-            <span className={classes.titleLine}>Every number, dated.</span>
+            <span className={classes.titleLine}>What you can use.</span>
+            <span className={classes.titleLine}>How long it lasts.</span>
             <span className={classes.titleLine}>
               <TextAnimate
                 animate="in"
@@ -288,15 +300,16 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                 animateProps={{ scaleAmount: 2 }}
                 gradient={{ from: '#0D7DFA', to: '#672AFA' }}
               >
-                Every stray process.
+                When it comes back.
               </TextAnimate>
             </span>
           </Title>
 
           <Text c="dimmed" fz={{ base: 'md', md: 'lg' }} lh={1.5} className={classes.lead}>
-            Codex and Claude Code, both windows each, with the age of every reading on its face —
-            and the background process trees they leave behind, which nothing else on your Mac will
-            ever close.
+            For Codex and Claude Code. A percentage tells you what is gone; Lancetta reads the
+            account’s own windows and says what they leave you — which model still has room, whether
+            this pace runs the window out before it resets, and when you are back. No prices, no
+            budget to type in.
           </Text>
 
           <Group mt="lg" gap="sm" className={classes.actions}>

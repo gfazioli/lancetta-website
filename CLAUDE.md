@@ -524,11 +524,36 @@ Three more, all measured on 2026-09-18 and all the instrument's:
 
 ## The one job, and the order that argues for it
 
-The copy is built around **one job**: how much of each agent's quota is left,
-and when it comes back (user, 2026-09-17: *"l'app alla fine deve svolgere 'un
-solo compito' bene"*). If a new feature is big, it still goes under that job,
-not beside it — the page once had two panels, "Half one" and "Half two", and
-that layout said the app does two things.
+The copy is built around **one job** (user, 2026-09-17: *"l'app alla fine deve
+svolgere 'un solo compito' bene"*). If a new feature is big, it still goes
+under that job, not beside it — the page once had two panels, "Half one" and
+"Half two", and that layout said the app does two things.
+
+**What the job IS was re-stated on 2026-09-22, and it is a different page after
+it.** It used to be *how much of each agent's quota is left and when it comes
+back* — an INVENTORY, three facts read off an account, with the reader doing
+the last step of the reasoning. It is now the three ANSWERS those facts are
+for: **what you can still use, how long it lasts, and when it comes back.**
+Same measurements; the app finishes the sentence.
+
+The user's own framing of why (2026-09-22): *"le altre ti dicono quanto stai
+consumando e spendendo (infatti noi ad esempio non stiamo mostrando i soldi $)
+invece Lancetta ti dice cosa puoi usare, quando e per quanto"*. So **showing no
+money is a claim, not an omission** — write it as one. Copy that leads on a
+percentage, a token total or a spend figure is copy that has drifted back, and
+the tell is a sentence a reader has to act on themselves.
+
+**Two things may not be written until they ship, and both are the natural end
+of that argument**, which is exactly why they will keep trying to get in:
+telling the reader **when to start working**, and anything **learnt from an
+average across days**. Checked in the source on 2026-09-22 rather than assumed:
+`Pace` does receive the history, and it uses it to decide whether the spending
+is still going on (the `.idle` case) — the projection itself is the current
+window's own rate, `used / elapsed`. An app that *learns how you work* is the
+next feature. Until it lands, the three headline lines each have to name
+something shipped, and today they do: a model's own weekly window (v0.6, in the
+island since v0.7), the pace line (v0.4), and the reset on every bar plus the
+alert that fires when a window you were blocked on reopens (v0.5).
 
 **What changed on 2026-09-20 is which part of that job leads.** This file used
 to say the reaper was "a feature card and a footnote, never a second half", and
