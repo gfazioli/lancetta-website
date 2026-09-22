@@ -13,7 +13,7 @@ background belongs to the system: its rows can be anything, the surface behind
 them cannot. Lancetta's own colours are a deep navy, and the menu was the one
 place in the app that was system grey. It is also narrower — a menu reserves a
 column for keyboard shortcuts that nothing can reclaim, so the same content used
-to need 466 points and now needs 318.
+to need 466 points and now needs 380.
 
 It is always dark, like the window, whatever appearance your Mac is in.
 
@@ -32,14 +32,32 @@ Claude · max 20×                    seen 7s ago
 ```
  4%   5h   ▓░░░░░░░░░░░░░░░   ↻ 3h29m
            4% in 1h30m · at this pace 13% by reset
-55%   7d   ▓▓▓▓▓▓░░░░░░░░░░   ↻ 4d
-100%  Fable ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   ↻ 4d
+55%   7d   ▓▓▓▓▓▓░░░░░░░░░░   ↻ 4d06h
+100%  Fable ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   ↻ 4d06h
 ```
 
 - **The percentage** — how much of that window is spent, or how much is left, depending on [one setting](/docs/settings#general). The bar is filled with whichever number is on screen, never with its opposite.
 - **The window** — `5h` is the rolling five-hour bucket, `7d` the weekly one. A row carrying a **model's name** instead is a weekly limit that belongs to that model alone, counted separately from the two above and sent by your account under that name. It appears only when your account has one and only once it has been used; see [How it reads each agent](/docs/how-it-reads#a-window-one-model-keeps-to-itself).
 - **The bar** — the same number, drawn, so a glance is enough. It is tinted with the colour you gave that agent.
 - **The reset** — when this window rolls over. This is the number that makes the percentage actionable: 80% with four hours to go is a different afternoon from 80% with ten minutes to go.
+
+### How a length of time is written
+
+Every duration in Lancetta — a reset, an age, a window's elapsed time — is written
+the same way: **two units, the larger first, and the larger one is the largest that has
+reached 1.**
+
+```
+45s     59m     1h04m     23h59m     1d     1d05h     6d23h
+```
+
+The second unit is dropped when it is zero, so a reset exactly two days out is `2d`
+rather than `2d00h`. Nothing is ever rounded up: a countdown that overstates would
+promise a return that has not happened.
+
+Up to ninety seconds it counts in seconds, which is the one place a smaller unit is
+*more* honest than a larger one: `75s` says something `1m` does not, and it costs you
+no arithmetic to read.
 
 The agents appear in **the order you put them in**, set by dragging in [Settings → Agents](/docs/settings#agents). Every surface reads the same order.
 
@@ -109,6 +127,17 @@ along the bottom, each naming itself when you point at it: **Settings…** (⌘,
 The panel closes when you press Escape, click anywhere outside it, or click the
 menu-bar item again.
 
+### Pinning it
+
+The **pin** in the top-right corner keeps the panel on screen. Pinned, none of those
+three things closes it — not a click elsewhere, not another window taking the keyboard,
+not the pointer leaving the item — and neither does pressing a command inside it, so
+Refresh now leaves it where it is instead of dismissing it. It stays in front of
+whatever you are working in, and you can drag it away from the menu bar to wherever
+suits.
+
+**Escape still closes it.** The pin is remembered, so it opens pinned next time.
+
 ### Opening it without clicking
 
 If you would rather not click at all, **Settings › General › Menu › Open the menu on
@@ -145,8 +174,8 @@ The bead reads what is **spent**, whichever way round you asked to see the numbe
 A refused agent reads **100%** — or `0%` if you are showing what remains — so its cell has the same shape as the cells beside it:
 
 ```
-[mark] [green]  19% · ↻83m
-[mark] [black] 100% · ↻25h19m
+[mark] [green]  19% · ↻1h23m
+[mark] [black] 100% · ↻1d01h
 ```
 
 The number is not the last reading: the account has said there is nothing left, which is more recent than whatever the last poll measured. It follows your fields like any other cell — switch the percentage off and a refusal has none either. The reset does not: a block raises exactly one question, and that is it.
