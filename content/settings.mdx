@@ -18,6 +18,10 @@ It applies to Claude too once it is connected, with a floor: the account is aske
 
 Whichever you pick, the bars are filled with **the number that is shown**, and every label that names the quantity follows it. That sounds like a detail and is not: a card headed *Quota left* over a bar filled with what was used is the exact defect this app was built in response to, and the app has written it twice by accident since.
 
+**Open the menu on hover** — off by default. On, pointing at Lancetta in the menu bar opens the panel after a quarter of a second, with no click; it closes when the pointer leaves it. Opening it this way deliberately **does not take the keyboard**, so nothing is pulled out of whatever you are typing in — which also means the panel's shortcuts are not live yet. Click the item and the panel is yours: it takes the keyboard, its shortcuts work, and it stays open until you click away, exactly as a clicked-open panel always did. Clicking a row inside it works either way.
+
+The quarter-second is not a round number for its own sake: a pointer on its way to another app's menu-bar item crosses ours in a few dozen milliseconds, and a panel that opened on the way past would be in the way every time.
+
 **Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone, how long it has been open, and where that rate lands. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything.
 
 **Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there and turns amber when the window would empty before it resets. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.

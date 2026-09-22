@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.6.2 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.6.2</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Two changes, one asked for and one found in a log.</p>
+<h2>Point at it, if you would rather not click</h2>
+<p><strong>Settings › General › Menu › Open the menu on hover.</strong> Off unless you turn it on: a panel that opens while the pointer is merely crossing the menu bar on its way somewhere else is an interruption for everyone who did not ask for one.</p>
+<p>It waits a quarter of a second, which is not a round number for its own sake — a pointer travelling to another app's menu-bar item crosses ours in a few dozen milliseconds, and a panel that opened on the way past would be in the way every time.</p>
+<p>Opened by the pointer, the panel <strong>does not take the keyboard</strong>: moving a mouse should not pull the focus out of what you are typing, so Escape and ⌘R are not live yet. Click the item and it is yours — the panel takes the keyboard, its shortcuts work, and it stays open until you click away, exactly as a clicked-open panel always did. Clicking a row inside it works either way: Refresh now does refresh.</p>
+<h2>A pause no longer freezes the card for minutes</h2>
+<p>When Claude's account answers "too many reads" in the first moments after Lancetta starts, there is no number on the card yet — so the pause is the whole card, and it used to sit there for a minute and a half at a time, with Refresh now apparently doing nothing. Reported twice, both times on the first launch after an update, and escaped by quitting the app.</p>
+<p>The account sends that refusal with <strong>no wait attached</strong>, and Lancetta took the absence of a number as a wait of zero seconds: the pause never grew, and the sentence under it rounded up and promised a minute that nothing was counting.</p>
+<p>Now: with nothing on the card, Lancetta asks again after ten seconds, then twenty, forty, up to two minutes — and comes back for it by itself rather than waiting for the next scheduled reading. Once there is a number on screen nothing changes: a pause is invisible, because the reading you can see is kept and shown with its age. <strong>Refresh now</strong> gets through a pause as well, and the sentence says "in a few seconds" when it means seconds.</p>
+<h2>Also</h2>
+<ul>
+<li>The panel's Settings page gained a <strong>Menu</strong> section; everything else there is where it was.</li>
+<li>A development hatch that had been quietly ignoring half of what it was given now reads it properly. Nothing user-facing, but it is why a flag in Settings is read the same way everywhere.</li>
+</ul>
+</body>
+</html>
