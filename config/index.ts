@@ -101,9 +101,9 @@ export default {
     // `released` gates the Download tab, the hero button and the JSON-LD download
     // claim. It went true with the first release, v0.2.0 on 2026-09-18 — v0.2 and
     // not v0.1 because the memory half planned for later landed in the same build.
-    version: '0.4.0',
+    version: '0.5.0',
     released: true,
-    releaseDate: '2026-09-21',
+    releaseDate: '2026-09-22',
     minMacOS: '15.0',
     // The FALLBACK for `/download`, which normally resolves the newest release's
     // .dmg from the GitHub API. A failure there lands the reader on the releases

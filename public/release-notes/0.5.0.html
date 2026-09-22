@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.5.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.5.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Lancetta speaks first, about what the menu bar cannot show.</p>
+<h2>It speaks first</h2>
+<p><strong>Notifications for what the percentage on your bar cannot say.</strong> A window that will run out before it resets — <em>at this pace it is spent by tomorrow afternoon, and it does not reset until Thursday</em> — an agent that has nothing left, one that is ready again, and a reading that has stopped moving while looking live. Each is said once, at the moment it changes, never on launch. A sound only for the two moments you are not looking at a screen: the work stopping, and the work being possible again.</p>
+<p><strong>Alerts and suggestions are separate switches</strong>, and each agent has its own: you can have them for Codex and not for Claude. Clicking any notification opens the Limits pane. macOS asks for permission the first time there is something to say, not at launch.</p>
+<h2>The Claude route, from two Macs</h2>
+<p><strong>Refresh now no longer puts the login-keychain dialog up.</strong> When Claude Code has renewed its sign-in, the card says so and Reconnect is the one button that asks macOS — a manual refresh landing on an expired grant was where that dialog had moved to. Every sentence that ends in a keychain read now names that click.</p>
+<p><strong>A Claude card still read through the status-line file says so</strong>, and offers the account beside the number. That file moves only while a Claude Code session is open, which is why Refresh now could not move it.</p>
+<h2>Smaller</h2>
+<ul>
+<li>The Updates pane names the build number, as About and the update prompt do.</li>
+<li>A reset that drifts inside its window is no longer read as a new window, which kept records out of the series the pace line reads.</li>
+</ul>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.5.0.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later.</p>
+</body>
+</html>
