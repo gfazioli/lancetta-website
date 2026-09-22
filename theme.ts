@@ -129,9 +129,17 @@ export const theme = createTheme({
   headings: {
     fontFamily: 'var(--font-display)',
     /*
-     * 400, not 600: Instrument Serif has one weight. Asking for a heavier one
-     * gets a synthesised smear, so the heading hierarchy here is carried by
-     * SIZE and by the face itself, never by weight.
+     * 400, not 600 — and since 2026-09-22 that is a choice rather than a
+     * constraint. The first display face, Instrument Serif, had ONE weight, so
+     * anything heavier was a synthesised smear. Source Serif 4 is variable
+     * (200-900), so every weight on this site is now a real cut.
+     *
+     * It stays light because the hierarchy here is carried by SIZE and by the
+     * face, not by weight: a page whose headings are all bold has spent its
+     * loudest signal on every one of them. If a heading ever does need more
+     * presence, reach for a real 500 or 600 rather than putting `fw` back on
+     * one <Title> and leaving the rest at 400 — that is how a page ends up
+     * with three heading weights nobody chose.
      */
     fontWeight: '400',
   },

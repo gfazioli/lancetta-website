@@ -44,8 +44,9 @@ import classes from './HeroStage.module.css';
  */
 
 interface Frame {
-  src: string;
-  alt: string;
+  /** Absent for a `next` section: a promise does not get a screenshot. */
+  src?: string;
+  alt?: string;
   eyebrow: string;
   title: string;
   body: string;
@@ -104,6 +105,27 @@ const frames: Frame[] = [
     ],
     href: '/docs/the-menu#the-pace-line',
     linkLabel: 'How the pace line reads',
+    reading: windowSession,
+  },
+  {
+    /*
+     * NO SCREENSHOT, ON PURPOSE. This is the only unshipped section on the
+     * page, and the rule it follows is the one the pace frame followed before
+     * v0.4: the badge on the eyebrow AND the future tense in the body, never
+     * one without the other. A promise dressed exactly like a shipped feature
+     * makes the whole page something a reader has to check.
+     *
+     * It is SECOND rather than last because the order of this array is the
+     * argument: the pace line above it is the first step of this same idea,
+     * and this is where that idea goes. What ships today is named inside the
+     * body so the two cannot be confused.
+     */
+    eyebrow: 'Next',
+    next: true,
+    title: 'The rhythm it has not learnt yet.',
+    body: 'Today the projection is this window\u2019s own rate \u2014 what you have spent since it opened, carried forward. It does not know that you start at nine, that Thursday is your long day, or that you never touch it at the weekend. The readings are already being kept. What comes next is reasoning from them: an average across your own days, so the app can say when to start, what a normal afternoon costs you, and when you will probably stop \u2014 advice from your history rather than from the last two hours.',
+    href: '/docs/roadmap',
+    linkLabel: 'What is planned, and what it has to prove',
     reading: windowSession,
   },
   {

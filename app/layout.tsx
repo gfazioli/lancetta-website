@@ -7,7 +7,7 @@ import '@gfazioli/mantine-scene/styles.css';
 import '@/theme/global.css';
 
 import { Analytics } from '@vercel/analytics/react';
-import { Instrument_Serif, Inter } from 'next/font/google';
+import { Source_Sans_3, Source_Serif_4 } from 'next/font/google';
 import { Layout } from 'nextra-theme-docs';
 import { Head } from 'nextra/components';
 import { getPageMap } from 'nextra/page-map';
@@ -27,28 +27,35 @@ import './global.css';
  * visitor's browser for a font, and the metric-compatible fallback each one
  * generates is what keeps the first paint from shifting.
  *
- * INSTRUMENT SERIF is the display face, and it ships ONE weight. That is the
- * whole reason `headings.fontWeight` is '400' in the theme and why every
- * `fw={900}` on a <Title> had to go: a browser asked for a weight a family
- * does not have SYNTHESISES it, by smearing the glyph sideways — which on a
- * serif turns the hairlines into mud and looks like a rendering fault rather
- * than a choice. The italic is loaded because a display face's italic is half
- * of what it is for, and because a synthesised oblique on a serif is the same
- * failure at a shallower angle.
+ * ONE SUPERFAMILY, TWO CUTS. Source Serif 4 and Source Sans 3 are the same
+ * design with and without serifs: the same skeleton, the same proportions, the
+ * same vertical metrics. That is the whole reason they are here. The first
+ * attempt paired Instrument Serif with Inter — a high-contrast display serif
+ * against a neutral grotesque — and the page read as two decisions rather than
+ * one (user, 2026-09-22: *"l'unica cosa che non mi convince è il mix - i titoli
+ * sono in un modo e il resto in un'altro"*). Chosen from six pairings rendered
+ * live on this page, not from specimens: a pairing is a relationship, and a
+ * relationship does not show in a type sample.
  *
- * INTER is everything else: body copy, UI, the readings. It is variable, so
- * the 900s that remain — all of them on <Text>, none on a heading — are real
- * weights cut by the designer.
+ * BOTH ARE VARIABLE, 200 to 900, which is a real change from what stood here
+ * before. Instrument Serif shipped one weight, so `headings.fontWeight` had to
+ * be '400' and no <Title> could carry a `fw` — ask a family for a weight it
+ * does not have and the browser smears the glyph sideways. That constraint is
+ * gone: every weight on this site is now a real cut. The headings stay light
+ * anyway, because that is the voice, but it is a choice now rather than a
+ * limit — see `theme.ts`.
+ *
+ * Italic on both: MDX prose uses <em>, and a synthesised oblique on a serif is
+ * the same failure as a synthesised bold, at a shallower angle.
  */
-const display = Instrument_Serif({
+const display = Source_Serif_4({
   subsets: ['latin'],
-  weight: '400',
   style: ['normal', 'italic'],
   variable: '--font-display',
   display: 'swap',
 });
 
-const body = Inter({
+const body = Source_Sans_3({
   subsets: ['latin'],
   style: ['normal', 'italic'],
   variable: '--font-body',
