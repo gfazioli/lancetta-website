@@ -50,7 +50,7 @@ export function CostsNothingSection() {
           >
             The founding constraint
           </Text>
-          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900} maw={760}>
+          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} maw={760}>
             Looking at your quota does not spend any of it
           </Title>
           <Text c="dimmed" ta="center" size="lg" maw={680}>

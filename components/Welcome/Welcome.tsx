@@ -395,7 +395,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
             >
               {released ? 'Get started' : 'Not yet'}
             </Text>
-            <Title order={2} ta="center" fz={{ base: 36, sm: 48 }} fw={900}>
+            <Title order={2} ta="center" fz={{ base: 36, sm: 48 }}>
               Know where you stand.
             </Title>
             <Text c="dimmed" ta="center" size="lg" maw={520}>

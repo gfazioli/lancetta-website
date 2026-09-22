@@ -80,7 +80,7 @@ export function BuiltForMacSection() {
           >
             Built for macOS
           </Text>
-          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} fw={900}>
+          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }}>
             A menu-bar app, and nothing more than one.
           </Title>
 
