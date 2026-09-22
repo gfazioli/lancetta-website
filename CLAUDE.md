@@ -664,15 +664,23 @@ implementation:
 
 `frameIndex` and its test went with it.
 
-The header still follows the page: each section writes
-`MenuBarHeader/reading-store.ts` through an **IntersectionObserver** whose
-`rootMargin` collapses the root to a band around the viewport's middle line, so
-at most one section is intersecting and there is no tie to break. Nothing there
-decides what is VISIBLE — if the observer never runs, the page is the page and
-the bar keeps the reading it opened on. A module-level store with
-`useSyncExternalStore` rather than a context, because Nextra's `Layout` renders
-its `navbar` slot as a SIBLING of `children`: no provider in the page can reach
-the bar.
+**The header no longer follows the page, and the absence is a decision.** Each
+section used to write `MenuBarHeader/reading-store.ts` through an
+IntersectionObserver, so the status item always quoted the picture beneath it —
+faithful in intent, and wrong on screen: three different readings went past on
+one pass down the home page, and the report was that the bar *"seems to change
+when you scroll the site down"* (user, 2026-09-22). A number moving in a header
+while the reader is somewhere else entirely looks like a defect, not a demo, and
+it is not what the app does either: a poll repaints the item wherever the person
+happens to be looking.
+
+So the reading is a CONSTANT in `MenuBarHeader/reading.ts` and the only thing
+that moves in the header is **whose turn it is**, on the app's own four-second
+timer. The store, the observer, the `active` state, the per-frame `reading`
+fields and the `open` highlight all went with it — the last one because it too
+changed on scroll (the hero's first frame set it true, every other frame false).
+The general shape, worth carrying: *a scroll-linked illustration is legible as a
+malfunction long before it is legible as a demonstration.*
 
 One thing that survived the rewrite and is worth keeping: the **figures** under
 a frame's body (`28` / `2.68 GB` / `2.24 GB`) come from the measurement table

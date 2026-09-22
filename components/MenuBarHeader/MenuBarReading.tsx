@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
 import { ClaudeMark, CodexMark, ResetMark } from './AgentMark';
-import { useMenuBarReading } from './reading-store';
+import { barReading, ledBand } from './reading';
 import classes from './MenuBarHeader.module.css';
 
 /**
@@ -25,55 +25,52 @@ const FADE_MS = 160;
 /**
  * The app's own menu-bar item, rebuilt in the header.
  *
- * Same three parts in the same order as the real one: the agent's mark in the
- * agent's tint, the percent of the 5-hour window used, and the time it resets
- * behind a refresh arrow. The hero drives the NUMBERS as the reader scrolls,
- * so the thing at the top of the page shows the same reading as the picture
- * under it.
+ * Same four parts in the same order as the real one: the agent's mark in the
+ * agent's tint, the LAMP, the percent of the 5-hour window used, and the time
+ * it resets behind a refresh arrow. `BarArt.cell` composes the first two into
+ * one image because the status item's button holds exactly one; here they are
+ * two spans, which is the same picture by other means.
  *
- * Whose turn it is, though, is this component's — and it turns on a timer, not
- * on the scroll. That is the app: with more than one agent in the bar they
- * take turns every few seconds whether or not anything else happens, and a
- * page where the item only ever moves while you drag the scrollbar is
- * demonstrating something the app does not do.
+ * THE ONLY THING THAT MOVES IS WHOSE TURN IT IS, and it moves on a timer. The
+ * hero used to drive the numbers as the reader scrolled, so the bar always
+ * quoted the picture beneath it; three readings went past on one pass down the
+ * home page and it read as a glitch rather than as a demonstration (user,
+ * 2026-09-22). A reading that changes while you are reading something else is
+ * not what the app does either: a poll repaints the item wherever the person
+ * happens to be looking.
  *
  * Faithful on the three points `StatusItemRotator.swift` makes:
  *
- * - the turn changes on a timer, and a fresh POLL does not restart it. Here a
- *   poll is a change of frame: the numbers repaint in place and the index
- *   stays where it was, which is the rotator's `.repaint` case.
+ * - the turn changes on a timer, and nothing else re-arms it.
  * - the change is a cross-fade with nothing overlapping — out, swap, in.
  * - the item holds a FIXED width so its neighbours never shift. See
  *   `.readingCell` in the stylesheet: the cells are stacked in one grid cell,
  *   so the box is the widest of them without anything measuring a string.
  *
  * `aria-hidden`, and deliberately: it is a picture of the product, and a
- * screen reader reading "9 percent, 4 hours 3 minutes" out of a page header
+ * screen reader reading "4 percent, 3 hours 29 minutes" out of a page header
  * would be quoting a number that is not the reader's. The header's accessible
  * name comes from the nav around it.
  */
 export function MenuBarReading() {
-  const { cells, open } = useMenuBarReading();
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [dim, setDim] = useState(false);
 
   /*
-   * `cells.length` is the whole dependency, so the hero moving the numbers on
-   * does not re-arm the timer — only an agent joining or leaving does. A
-   * reader who asked for reduced motion gets no rotation at all: a thing that
-   * changes in the header every four seconds is motion however small it is,
-   * and the hero already stands still for them.
+   * A reader who asked for reduced motion gets no rotation at all: a thing that
+   * changes in the header every four seconds is motion however small it is, and
+   * the hero already stands still for them.
    */
   useEffect(() => {
-    if (reduced || cells.length < 2) {
+    if (reduced || barReading.length < 2) {
       return undefined;
     }
     let swap: number | undefined;
     const turn = window.setInterval(() => {
       setDim(true);
       swap = window.setTimeout(() => {
-        setIndex((i) => (i + 1) % cells.length);
+        setIndex((i) => (i + 1) % barReading.length);
         setDim(false);
       }, FADE_MS);
     }, ROTATE_MS);
@@ -81,14 +78,13 @@ export function MenuBarReading() {
       window.clearInterval(turn);
       window.clearTimeout(swap);
     };
-  }, [reduced, cells.length]);
+  }, [reduced]);
 
-  // An agent leaving while its turn is up would index past the end.
-  const shown = index % cells.length;
+  const shown = index % barReading.length;
 
   return (
-    <span className={classes.reading} data-open={open} data-dim={dim} aria-hidden>
-      {cells.map((cell, i) => {
+    <span className={classes.reading} data-dim={dim} aria-hidden>
+      {barReading.map((cell, i) => {
         const Mark = cell.agent === 'codex' ? CodexMark : ClaudeMark;
         return (
           <span
@@ -100,6 +96,7 @@ export function MenuBarReading() {
             <span className={classes.readingMark}>
               <Mark />
             </span>
+            <span className={classes.readingLed} data-band={ledBand(cell.percent)} />
             <span className={classes.readingValue}>{cell.percent}%</span>
             <span className={classes.readingDot}>·</span>
             <span className={classes.readingReset}>

@@ -1,13 +1,11 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
 import { TextAnimate } from '@gfazioli/mantine-text-animate';
 import { IconArrowRight, IconBook2, IconGauge } from '@tabler/icons-react';
 import { Button, Container, Group, Image, Stack, Text, Title } from '@mantine/core';
 import config from '@/config';
-import { type MenuBarReadingState, setMenuBarReading } from '../MenuBarHeader/reading-store';
 import { ReleaseCadence } from '../ReleaseCadence/ReleaseCadence';
 import {
   fallbackReleaseCadence,
@@ -37,10 +35,14 @@ import classes from './HeroStage.module.css';
  *   just that, and quit". Every fix for that is a fix for a problem the
  *   technique introduced.
  *
- * What survives is the thing that was actually good about it: the header's
- * status item shows the same reading as the surface in front of you, so the
- * bar at the top of the page is the app the page is describing. That is an
- * IntersectionObserver now (below), not scroll arithmetic.
+ * One thing that looked like it survived did not, and it is worth recording as
+ * a failure rather than as a simplification. The header's status item used to
+ * show the reading of whichever surface was in front of you — an
+ * IntersectionObserver rather than scroll arithmetic, but still the page
+ * driving the bar. It went on 2026-09-22: three readings passed on one pass
+ * down here, and a number moving in a header while the reader is somewhere
+ * else is legible as a malfunction long before it is legible as a
+ * demonstration. The bar holds one reading and rotates on its own timer.
  */
 
 interface Frame {
@@ -54,23 +56,9 @@ interface Frame {
   figures?: { value: string; label: string }[];
   href: string;
   linkLabel: string;
-  reading: MenuBarReadingState;
   /** Shipping later, and the section says so on its face. */
   next?: boolean;
 }
-
-/*
- * The window's three panes are ONE session, so they quote one reading. The
- * Limits pane is the only one that draws a reset time, so it supplies both
- * agents' for all three.
- */
-const windowSession: MenuBarReadingState = {
-  cells: [
-    { agent: 'claude', percent: 16, resets: '25m' },
-    { agent: 'codex', percent: 28, resets: '53m' },
-  ],
-  open: false,
-};
 
 /**
  * THE ORDER IS THE ARGUMENT, and it changed on 2026-09-20 (user: *"mettendo
@@ -105,7 +93,6 @@ const frames: Frame[] = [
     ],
     href: '/docs/the-menu#the-pace-line',
     linkLabel: 'How the pace line reads',
-    reading: windowSession,
   },
   {
     /*
@@ -126,7 +113,6 @@ const frames: Frame[] = [
     body: 'Today the projection is this window\u2019s own rate \u2014 what you have spent since it opened, carried forward. It does not know that you start at nine, that Thursday is your long day, or that you never touch it at the weekend. The readings are already being kept. What comes next is reasoning from them: an average across your own days, so the app can say when to start, what a normal afternoon costs you, and when you will probably stop \u2014 advice from your history rather than from the last two hours.',
     href: '/docs/roadmap',
     linkLabel: 'What is planned, and what it has to prove',
-    reading: windowSession,
   },
   {
     src: '/screenshot-window-processes.png',
@@ -141,7 +127,6 @@ const frames: Frame[] = [
     ],
     href: '/docs/memory',
     linkLabel: 'What accumulates, and why nothing reaps it',
-    reading: windowSession,
   },
   {
     src: '/screenshot-notch-open.png',
@@ -151,13 +136,6 @@ const frames: Frame[] = [
     body: 'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. Point at it and it opens.',
     href: '/docs/the-notch',
     linkLabel: 'How the island works',
-    reading: {
-      cells: [
-        { agent: 'claude', percent: 12, resets: '1h55m' },
-        { agent: 'codex', percent: 28, resets: '2h23m' },
-      ],
-      open: false,
-    },
   },
   {
     src: '/screenshot-window-overview.png',
@@ -167,7 +145,6 @@ const frames: Frame[] = [
     body: 'Command-O for the rest: daily tokens over weeks, each agent in detail, and the background processes the agents have left running.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
-    reading: windowSession,
   },
   {
     src: '/screenshot-window-usage.png',
@@ -177,7 +154,6 @@ const frames: Frame[] = [
     body: 'The same chart over 7, 30 or 90 days, with the lifetime total and the streaks under it. Codex publishes its own history; Claude’s is rebuilt from the transcripts on your Mac.',
     href: '/docs/the-window#usage',
     linkLabel: 'What the chart can and cannot say',
-    reading: windowSession,
   },
   {
     src: '/screenshot-window-limits.png',
@@ -187,23 +163,8 @@ const frames: Frame[] = [
     body: 'Two agents, four windows, the reset time for each — and beside every reading, when it was last true. A number with no timestamp is a number you cannot trust.',
     href: '/docs/how-it-reads',
     linkLabel: 'How it reads each agent',
-    reading: windowSession,
   },
 ];
-
-/*
- * The hero's own reading, read OFF the screenshot beside it for BOTH agents,
- * because the bar shows them in turn. They are ILLUSTRATION, not claims: one
- * developer's numbers on one afternoon. Every figure the prose states comes
- * from the measurement table in CLAUDE.md instead.
- */
-const heroReading: MenuBarReadingState = {
-  cells: [
-    { agent: 'claude', percent: 4, resets: '3h29m' },
-    { agent: 'codex', percent: 0, resets: '4h59m' },
-  ],
-  open: true,
-};
 
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
@@ -212,45 +173,17 @@ const HERO_SHOT = {
 
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
   const released = config.app.released;
-  const sectionsRef = useRef<(HTMLElement | null)[]>([]);
-  const [active, setActive] = useState(0);
-
   /*
-   * The bar's status item follows whichever section is crossing the middle of
-   * the viewport. `rootMargin` collapses the root to a band around that middle
-   * line, so at most one section is intersecting and there is no tie to break
-   * — which is the whole reason this is an observer rather than a scroll
-   * handler doing arithmetic on six rectangles.
+   * NOTHING HERE WATCHES THE SCROLL any more, and the absence is the point.
    *
-   * Nothing here decides what is VISIBLE. That is the difference from the
-   * stage this replaced: if the observer never runs, the page is the page, and
-   * the bar simply keeps the reading it opened on.
+   * An IntersectionObserver used to hand the header's status item whichever
+   * section was crossing the middle of the viewport, so the bar always quoted
+   * the picture beneath it. Faithful in intent and wrong on screen: three
+   * readings went past on one pass down this page, and a number changing in a
+   * header while the reader is somewhere else entirely looks like a defect
+   * rather than a demonstration (user, 2026-09-22). The bar holds ONE reading
+   * now and only its turn moves, on its own timer — `MenuBarReading.tsx`.
    */
-  useEffect(() => {
-    const nodes = sectionsRef.current.filter((n): n is HTMLElement => n !== null);
-    if (!nodes.length || typeof IntersectionObserver === 'undefined') {
-      return undefined;
-    }
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) {
-            const index = nodes.indexOf(entry.target as HTMLElement);
-            if (index >= 0) {
-              setActive(index);
-            }
-          }
-        }
-      },
-      { rootMargin: '-50% 0px -50% 0px', threshold: 0 }
-    );
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
-  }, []);
-
-  useEffect(() => {
-    setMenuBarReading(active === 0 ? heroReading : (frames[active - 1]?.reading ?? heroReading));
-  }, [active]);
 
   const wash = (
     <Scene lazy>
@@ -278,12 +211,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
       {wash}
 
       <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
-        <div
-          ref={(node) => {
-            sectionsRef.current[0] = node;
-          }}
-          className={classes.opening}
-        >
+        <div className={classes.opening}>
           {/*
             THE THREE LINES MUST NOT WRAP AT 390px, and that is a hard
             constraint rather than a preference: 20 characters is the length
@@ -395,12 +323,9 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
         />
 
         <div className={classes.frames}>
-          {frames.map((frame, i) => (
+          {frames.map((frame) => (
             <section
               key={frame.title}
-              ref={(node) => {
-                sectionsRef.current[i + 1] = node;
-              }}
               className={classes.frame}
               data-textonly={!frame.src}
               aria-label={frame.title}
