@@ -9,6 +9,7 @@ import {
   IconBook2,
   IconChartHistogram,
   IconChartLine,
+  IconChartPie,
   IconClockHour4,
   IconCreditCardOff,
   IconGauge,
@@ -111,6 +112,14 @@ const features: Feature[] = [
     href: '/docs/the-menu#the-pace-line',
   },
   {
+    icon: IconChartPie,
+    title: 'The window your bar cannot show',
+    description:
+      'Some plans give one model a weekly limit of its own, counted separately — it can run out while the percentage on your menu bar still reads two thirds. Lancetta draws that window too, under the name your account gives it, and says so before it ends rather than after.',
+    color: 'grape',
+    href: '/docs/how-it-reads#a-window-one-model-keeps-to-itself',
+  },
+  {
     icon: IconClockHour4,
     title: 'Every reading carries its age',
     description:
@@ -200,6 +209,12 @@ const roadmap = [
     version: 'v0.5',
     title: 'It speaks first',
     body: 'A window that will run out before it resets, an agent with nothing left, one that is ready again, a reading gone quiet — said once, when it changes, with a sound only for the two moments you are not looking. And two fixes from two Macs: Refresh now never raises the keychain dialog, and a card still on the status-line file offers the account.',
+    state: 'shipped',
+  },
+  {
+    version: 'v0.6',
+    title: 'The window one model keeps to itself',
+    body: 'Some plans limit one model separately, and every monitor was reading past it — including this one. The account sends a row per meter; Lancetta now draws the ones that belong to a single model, under the name it is given, and says when that week is spent, when it is back and when it is heading for empty ahead of its reset.',
     state: 'shipped',
   },
   {

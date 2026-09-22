@@ -132,6 +132,11 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
       'It says so. Every reading carries the time it was taken, and an unknown is drawn as an unknown — never as 0%. A status line rendering an unknown as zero, and a three-hour-old number as current, is the defect this app exists because of.',
   },
   {
+    question: 'Claude says I am out, but Lancetta shows two thirds left. Which is right?',
+    answer:
+      'Both, and that gap is what Lancetta 0.6 exists to close. Some plans give one model a weekly limit of its own, counted separately from the window every monitor reads — so the model you actually want can be spent while the general window is comfortable. The account sends that limit as a row of its own, and Lancetta now draws it under the name your account gives it, with a sentence when its week is spent, when it is back, and when it is heading for empty before it resets. It needs the account route: the status-line file carries the two general windows and nothing else.',
+  },
+  {
     question: 'Will it interrupt me?',
     answer:
       'Only about what the menu bar cannot already show. The percentage is on your bar, so Lancetta never announces it; it speaks first when a window will run out before it resets — naming the reset beside the moment it runs out — when an agent has nothing left, when it is ready again, and when a reading has stopped moving while looking live. Each once, at the moment it changes, never on launch, and macOS is asked for permission the first time there is actually something to say. Alerts and suggestions are separate switches, each agent has its own, and a sound is reserved for the two moments you are not looking at a screen.',

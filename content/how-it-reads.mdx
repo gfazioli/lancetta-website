@@ -34,6 +34,16 @@ They look symmetrical from the panel now, and the reason they can is worth knowi
 
 Until then, or if you would rather not hand the app a keychain item, the older route still works: a line in your status-line script writes the numbers to a file, and Lancetta reads the file. That reading is only as fresh as your last rendered session, and the card says so instead of pretending to be live — and offers Connect right there, because a file that exists outranks the offer, and a Mac wired that way was otherwise never shown it.
 
+## A window one model keeps to itself
+
+Some plans give **one model its own weekly limit**, counted separately from everything else. It can run out while the percentage on your menu bar still reads two thirds — and until Lancetta 0.6 nothing here drew it, because the two windows every monitor reads are not the whole answer.
+
+They are not the whole answer literally: the account's reply carries a **row per meter**, each one saying what kind it is, how much of it is spent, when it resets, and — where a row belongs to one model — that model's name. Lancetta reads every row it is sent and draws the ones with a name, under the name the account gave them. Nothing here has a list of models in it, so a window that appears tomorrow for a model nobody has heard of yet appears on the card the same day.
+
+A spent window of this kind is **not** an agent with nothing left, and Lancetta does not say it is: your agent carries on with another model, the menu bar keeps drawing the windows that belong to everything, and what you get instead is one sentence naming the model and the day it comes back. See [Alerts](/docs/alerts).
+
+**This is an account-route fact.** The status-line payload carries the two general windows and nothing else, so a Claude card reading that file cannot see these rows at all — one more thing [Connect](/docs/getting-started#claude-code) buys, and the card says so.
+
 ## The other route
 
 Before 0.3 the only way in was a file: Claude Code hands its status-line command a payload that carries the same two windows, and one line in that script writes them where Lancetta can read them. It still works, and it is the route for anyone who would rather not hand the app a keychain item.
