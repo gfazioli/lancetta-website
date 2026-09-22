@@ -202,7 +202,7 @@ const roadmap = [
   {
     version: 'v0.4',
     title: 'The pace, and the panel',
-    body: 'Under each bar, where that window ends at the rate you are going — amber only when it would run out early, and silent about the weekly one until your Mac has watched it turn over. And the menu became a panel in the app’s own navy: 318 points where a menu needed 466, with the four windowing commands as buttons along the bottom.',
+    body: 'Under each bar, where that window ends at the rate you are going — amber only when it would run out early, and silent about the weekly one until your Mac has watched it turn over. And the menu became a panel in the app’s own navy: 380 points where a menu needed 466, with the four windowing commands as buttons along the bottom.',
     state: 'shipped',
   },
   {
