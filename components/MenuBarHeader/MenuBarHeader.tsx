@@ -10,6 +10,8 @@ import config from '@/config';
 import { Logo } from '../Logo/Logo';
 import { MenuBarReading } from './MenuBarReading';
 import { isSamePageHashInMobileNav } from './mobile-nav-hash';
+import { panelDemo } from './panel-demo';
+import { PanelDemo } from './PanelDemo';
 import { productSections } from './sections';
 import classes from './MenuBarHeader.module.css';
 
@@ -48,6 +50,10 @@ export function MenuBarHeader() {
   const onHome = pathname === '/';
   const barRef = useRef<HTMLElement>(null);
   const [active, setActive] = useState<string | null>(null);
+  const [panelOpen, setPanelOpen] = useState(false);
+  const [pinned, setPinned] = useState(false);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const readingRef = useRef<HTMLButtonElement>(null);
 
   // The bar's entrance is a CSS animation now (`bar-arrive` in the stylesheet),
   // not a `data-ready` flag flipped from here. It used to be an effect, which
@@ -115,6 +121,44 @@ export function MenuBarHeader() {
     };
   }, [onHome]);
 
+  /*
+   * The panel closes the way the app's does: a click anywhere else unless it is
+   * pinned, Escape always, and — the page's own case — a change of page. The
+   * click on the reading itself is left to its `onClick`, or it would close
+   * here and reopen there.
+   */
+  useEffect(() => {
+    if (!panelOpen) {
+      return undefined;
+    }
+    panelRef.current?.focus({ preventScroll: true });
+    const onPointer = (event: PointerEvent) => {
+      const target = event.target as Node;
+      if (panelRef.current?.contains(target) || readingRef.current?.contains(target)) {
+        return;
+      }
+      if (!pinned) {
+        setPanelOpen(false);
+      }
+    };
+    const onKey = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setPanelOpen(false);
+        readingRef.current?.focus({ preventScroll: true });
+      }
+    };
+    document.addEventListener('pointerdown', onPointer);
+    document.addEventListener('keydown', onKey);
+    return () => {
+      document.removeEventListener('pointerdown', onPointer);
+      document.removeEventListener('keydown', onKey);
+    };
+  }, [panelOpen, pinned]);
+
+  useEffect(() => {
+    setPanelOpen(false);
+  }, [pathname]);
+
   const released = config.app.released;
 
   return (
@@ -147,7 +191,12 @@ export function MenuBarHeader() {
           notch sits on the Mac this app was drawn for — which is what the
           second frame is about.
         */}
-        <MenuBarReading />
+        <MenuBarReading
+          open={panelOpen}
+          onToggle={() => setPanelOpen((open) => !open)}
+          controls="lancetta-panel-demo"
+          buttonRef={readingRef}
+        />
 
         <div className={classes.status}>
           <div className={classes.search}>
@@ -171,6 +220,22 @@ export function MenuBarHeader() {
           </button>
         </div>
       </header>
+
+      {panelOpen && (
+        <div className={classes.panelSlot}>
+          <PanelDemo
+            id="lancetta-panel-demo"
+            state={panelDemo}
+            pinned={pinned}
+            onPin={setPinned}
+            onClose={() => setPanelOpen(false)}
+            panelRef={panelRef}
+          />
+          <p className={classes.panelNote}>
+            Invented numbers. The buttons open the page that explains them.
+          </p>
+        </div>
+      )}
     </div>
   );
 }

@@ -250,6 +250,63 @@
   opacity: 0;
 }
 
+/*
+ * A button since the item opens the panel. The reset is what keeps it looking
+ * like the status item it was: no border, the bar's own face, and a highlight
+ * only when pointed at or open — macOS lights a status item the same way while
+ * its panel is up.
+ */
+button.reading {
+  border: 0;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.reading:hover,
+.reading[data-open='true'] {
+  background-color: rgb(255 255 255 / 16%);
+}
+
+.reading:focus-visible {
+  outline: 2px solid var(--lan-accent);
+  outline-offset: 2px;
+}
+
+/*
+ * Where the panel hangs: under the bar, on its centre line, which is where the
+ * reading sits (the bar's middle grid column). The dock is sticky, so the panel
+ * stays under the bar while the page scrolls — as a menu-bar panel does.
+ */
+.panelSlot {
+  position: absolute;
+  top: calc(var(--lan-bar-height, rem(46px)) + rem(8px));
+  left: 50%;
+  width: min(rem(380px), calc(100vw - rem(16px)));
+  transform: translateX(-50%);
+  pointer-events: auto;
+  animation: panel-in 140ms ease-out;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, rem(-4px));
+  }
+}
+
+/* Said outside the panel, so the copy of the app stays a copy of the app. */
+.panelNote {
+  width: fit-content;
+  margin: rem(8px) auto 0;
+  padding: rem(4px) rem(10px);
+  border-radius: rem(999px);
+  background: rgb(255 255 255 / 92%);
+  box-shadow: 0 2px 10px -4px rgb(10 14 32 / 35%);
+  color: var(--mantine-color-gray-7);
+  font-size: rem(11.5px);
+  text-align: center;
+}
+
 .readingCell {
   grid-area: 1 / 1;
   display: inline-flex;
@@ -423,6 +480,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .panelSlot {
+    animation: none;
+  }
+
   .bar,
   .menu,
   .reading,

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, type Ref } from 'react';
 import { useReducedMotion } from '@mantine/hooks';
 import { ClaudeMark, CodexMark, ResetMark } from './AgentMark';
 import { barReading, ledBand } from './reading';
@@ -47,12 +47,27 @@ const FADE_MS = 160;
  *   `.readingCell` in the stylesheet: the cells are stacked in one grid cell,
  *   so the box is the widest of them without anything measuring a string.
  *
- * `aria-hidden`, and deliberately: it is a picture of the product, and a
- * screen reader reading "4 percent, 3 hours 29 minutes" out of a page header
- * would be quoting a number that is not the reader's. The header's accessible
- * name comes from the nav around it.
+ * The CELLS are `aria-hidden`, and deliberately: they are a picture of the
+ * product, and a screen reader reading "4 percent, 3 hours 29 minutes" out of
+ * a page header would be quoting a number that is not the reader's. What it
+ * hears instead is the button's own label.
+ *
+ * It is a BUTTON since 2026-09-23, because in the app clicking this item is
+ * how you meet Lancetta at all: it opens the panel, and here it opens a copy of
+ * it (`PanelDemo`, owned by `MenuBarHeader`, which holds the open state and
+ * closes it on an outside click, Escape or a change of page).
  */
-export function MenuBarReading() {
+export function MenuBarReading({
+  open = false,
+  onToggle,
+  controls,
+  buttonRef,
+}: {
+  open?: boolean;
+  onToggle?: () => void;
+  controls?: string;
+  buttonRef?: Ref<HTMLButtonElement>;
+}) {
   const reduced = useReducedMotion();
   const [index, setIndex] = useState(0);
   const [dim, setDim] = useState(false);
@@ -83,7 +98,19 @@ export function MenuBarReading() {
   const shown = index % barReading.length;
 
   return (
-    <span className={classes.reading} data-dim={dim} aria-hidden>
+    <button
+      ref={buttonRef}
+      type="button"
+      className={classes.reading}
+      data-dim={dim}
+      data-open={open}
+      aria-expanded={open}
+      aria-controls={controls}
+      aria-haspopup="dialog"
+      aria-label="Lancetta’s panel, with invented numbers"
+      title="Open the panel"
+      onClick={onToggle}
+    >
       {barReading.map((cell, i) => {
         const Mark = cell.agent === 'codex' ? CodexMark : ClaudeMark;
         return (
@@ -92,6 +119,7 @@ export function MenuBarReading() {
             className={classes.readingCell}
             data-agent={cell.agent}
             data-shown={i === shown}
+            aria-hidden
           >
             <span className={classes.readingMark}>
               <Mark />
@@ -106,6 +134,6 @@ export function MenuBarReading() {
           </span>
         );
       })}
-    </span>
+    </button>
   );
 }
