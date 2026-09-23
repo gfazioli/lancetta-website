@@ -753,6 +753,34 @@ current version) is in the hero's meta line and on the releases page.
   source assigns, never by what it is called** — and the site's own
   screenshots are the cheapest check.
 
+### The reading opens the panel, and the app icon points at it
+
+Since 2026-09-23 the reading in the bar is a BUTTON: clicking it drops
+`PanelDemo`, a copy of the app's status panel (`MenuPanelView.swift`) with
+invented numbers — blume.codes' idea of showing the product rather than a
+picture of it. Theirs is the real UI package; ours is a copy, so it is kept
+honest three ways: its numbers are the hero screenshot's (`panel-demo.ts`, and
+`panel-demo.test.ts` fails if the bar and the panel disagree), the two rules
+that decide its text — `shortDuration` and the refresh stamp — are PORTED and
+tested at their edges, and every size and colour in `PanelDemo.module.css`
+names the Swift constant it came from. What the page cannot do (Settings, the
+window, spending a reset) links to the page that explains it.
+
+It closes on an outside click unless pinned, on Escape, on a change of page,
+and on a SCROLL of more than 24px pinned or not (user: *"quando l'utente
+scrolla la pagina, la finestrella si dovrebbe chiudere comunque"*).
+
+`PanelHint` is what makes it findable: the app icon with eyes and legs walks
+in under the bar, points at the reading and says what it does — on the home
+page only, never on a phone (its bubble covered the headline there), and never
+again once this browser has opened the panel (`lancetta.panelDemo.opened` in
+localStorage, read after mount so a returning reader sees no frame of it).
+**The character is ours on purpose.** The first sketch was Claude Code's pixel
+mascot, and a vendor's character inviting clicks on this app reads as an
+endorsement it never gave — the same line the trademark notice draws for the
+marks. Its walk is in a lane clipped sideways only: translated past the
+window's edge it widened the page to 1675px on a 1440px window.
+
 `components/SectionHeading` is left by default — title left, lead right,
 bottom-aligned — and `center` for the statement bands. Its `tone="onDark"` has
 no caller since the plate bands went; leave it until something needs it again.

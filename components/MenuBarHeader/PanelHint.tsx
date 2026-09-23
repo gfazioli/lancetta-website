@@ -89,25 +89,32 @@ export function PanelHint({ enabled, open, onOpen, onDismiss }: PanelHintProps) 
   };
 
   return (
-    <div className={classes.hint} data-phase={phase}>
-      <button
-        type="button"
-        className={classes.walker}
-        aria-label="Open Lancetta’s panel"
-        onClick={onOpen}
-      >
-        <Mascot walking={phase === 'walking'} pointing={phase === 'pointing'} />
-      </button>
-      {phase === 'pointing' && (
-        <div className={classes.bubble}>
-          <button type="button" className={classes.say} onClick={onOpen}>
-            Click the reading up there — it opens the real panel.
-          </button>
-          <button type="button" className={classes.dismiss} aria-label="Dismiss" onClick={dismiss}>
-            <IconX size={12} stroke={2.2} />
-          </button>
-        </div>
-      )}
+    <div className={classes.lane}>
+      <div className={classes.hint} data-phase={phase}>
+        <button
+          type="button"
+          className={classes.walker}
+          aria-label="Open Lancetta’s panel"
+          onClick={onOpen}
+        >
+          <Mascot walking={phase === 'walking'} pointing={phase === 'pointing'} />
+        </button>
+        {phase === 'pointing' && (
+          <div className={classes.bubble}>
+            <button type="button" className={classes.say} onClick={onOpen}>
+              Click the reading up there — it opens the real panel.
+            </button>
+            <button
+              type="button"
+              className={classes.dismiss}
+              aria-label="Dismiss"
+              onClick={dismiss}
+            >
+              <IconX size={12} stroke={2.2} />
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

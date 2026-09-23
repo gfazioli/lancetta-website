@@ -3,6 +3,23 @@
  * panel does, so it stays under the bar while the page scrolls, and it stands
  * just right of the bar's centre line, which is where the reading is.
  */
+/*
+ * The lane it walks in: as wide as the dock, clipped SIDEWAYS only. The walk
+ * starts 60vw right of where it ends, i.e. past the edge of the window, and
+ * an element translated out there widens the page — measured 1675px of
+ * scroll width on a 1440px window, a horizontal scrollbar for the length of
+ * the walk. `clip` on one axis leaves the other visible and makes no scroll
+ * container, so nothing below the bar is cut.
+ */
+.lane {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 0;
+  overflow-x: clip;
+  overflow-y: visible;
+  pointer-events: none;
+}
+
 .hint {
   position: absolute;
   top: calc(var(--lan-bar-height, rem(46px)) + rem(8px));
