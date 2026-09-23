@@ -301,11 +301,18 @@ see.
   or drop the qualifier — `the advice half has shipped` says everything
   `shipped in v0.4` said.
 
-  **Two places keep their version numbers, because there the version IS the
-  content**: the `### v0.N` headings under *Already shipped* on the roadmap, and
-  the `version` field of the homepage roadmap strip. The page says why in its
-  own opening — shipped versions are named *because they exist and you can
-  download them*. Do not strip those.
+  **One place keeps its version numbers, because there the version IS the
+  content**: the `### v0.N` headings under *Already shipped* on the roadmap.
+  The page says why in its own opening — shipped versions are named *because
+  they exist and you can download them*. Do not strip those.
+
+  The homepage strip carried them too, v0.2 to v0.11, until 2026-09-23 — and
+  that was the rule above failing on the home page itself: eight cards of a
+  history no visitor was part of, with the one forward-looking card last. It
+  is now a grid by STATE (`Today` / `Soon` / `Next`, after blume.codes' own
+  capability grid), linking to the roadmap for the versions. Its `Soon` and
+  `Next` cards follow the badge-and-future-tense rule, and each one is a
+  section of `content/roadmap.mdx` — the two still mirror each other.
 
   Adjacent and NOT the same thing: *arrived early* and *was planned for a later
   version* on the roadmap. Those reference the PLAN, which that page's first

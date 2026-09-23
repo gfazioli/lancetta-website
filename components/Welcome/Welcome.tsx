@@ -263,7 +263,7 @@ const ahead: Step[] = [
   {
     icon: IconSunrise,
     title: 'When to start',
-    body: 'It will learn which hours are yours from an average across your own days, not the last two hours — and say when to start.',
+    body: 'Once you tell it which hours are yours, it will reason from an average across your own days, not the last two hours — and say when to start.',
     color: 'gray',
     state: 'next',
   },
