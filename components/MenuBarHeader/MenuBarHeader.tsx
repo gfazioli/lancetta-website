@@ -11,7 +11,9 @@ import { Logo } from '../Logo/Logo';
 import { MenuBarReading } from './MenuBarReading';
 import { isSamePageHashInMobileNav } from './mobile-nav-hash';
 import { panelDemo } from './panel-demo';
+import { rememberPanelOpened } from './panel-hint';
 import { PanelDemo } from './PanelDemo';
+import { PanelHint } from './PanelHint';
 import { productSections } from './sections';
 import classes from './MenuBarHeader.module.css';
 
@@ -123,14 +125,20 @@ export function MenuBarHeader() {
 
   /*
    * The panel closes the way the app's does: a click anywhere else unless it is
-   * pinned, Escape always, and — the page's own case — a change of page. The
-   * click on the reading itself is left to its `onClick`, or it would close
-   * here and reopen there.
+   * pinned, Escape always, and — the page's own two cases — a change of page,
+   * and the page SCROLLING, pinned or not (user, 2026-09-23: *"quando l'utente
+   * scrolla la pagina, la finestrella si dovrebbe chiudere comunque"*). A
+   * menu-bar panel is not part of the page, and one that stays put while the
+   * page slides under it reads as stuck. The 24px is for trackpad jitter, not
+   * for scrolling. The click on the reading itself is left to its `onClick`,
+   * or it would close here and reopen there.
    */
   useEffect(() => {
     if (!panelOpen) {
       return undefined;
     }
+    // Opened once, from anywhere: the hint that points at it has done its job.
+    rememberPanelOpened();
     panelRef.current?.focus({ preventScroll: true });
     const onPointer = (event: PointerEvent) => {
       const target = event.target as Node;
@@ -147,11 +155,19 @@ export function MenuBarHeader() {
         readingRef.current?.focus({ preventScroll: true });
       }
     };
+    const openedAt = window.scrollY;
+    const onScroll = () => {
+      if (Math.abs(window.scrollY - openedAt) > 24) {
+        setPanelOpen(false);
+      }
+    };
     document.addEventListener('pointerdown', onPointer);
     document.addEventListener('keydown', onKey);
+    window.addEventListener('scroll', onScroll, { passive: true });
     return () => {
       document.removeEventListener('pointerdown', onPointer);
       document.removeEventListener('keydown', onKey);
+      window.removeEventListener('scroll', onScroll);
     };
   }, [panelOpen, pinned]);
 
@@ -220,6 +236,13 @@ export function MenuBarHeader() {
           </button>
         </div>
       </header>
+
+      <PanelHint
+        enabled={onHome}
+        open={panelOpen}
+        onOpen={() => setPanelOpen(true)}
+        onDismiss={rememberPanelOpened}
+      />
 
       {panelOpen && (
         <div className={classes.panelSlot}>
