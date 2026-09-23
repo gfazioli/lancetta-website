@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.11.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.11.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Codex grants free resets of its windows, and until now nothing in Lancetta showed them. This release does, and it is careful about the one thing here that cannot be undone.</p>
+<h3>A free reset, where you can see it</h3>
+<p>When Codex's account grants you a reset credit, the card says so under its bars: <strong>1 free reset · until 22 Oct</strong>. Point at the row for what the account calls it — the first one measured was <em>Full reset (Weekly + 5 hr)</em> — and when it was granted. The same row sits in the window's Limits pane.</p>
+<h3>Use… asks first, with both dates</h3>
+<p><strong>Use…</strong> appears only while a window has something to reset, and it never spends anything by itself. It asks, and the question puts two dates side by side: when each window would come back <strong>on its own</strong>, and when the credit <strong>lapses</strong>. A week that returns by itself this afternoon and a credit that lasts a month are two facts, and the question shows both instead of deciding for you. <strong>Cancel</strong> is the default, for Return and for Escape.</p>
+<p>If the answer to a spend is lost on the way back, trying again repeats the <em>same</em> request, so it can never cost a second credit — and the question says it is a retry rather than claiming to spend.</p>
+<p>While a credit is in hand, a spent window's line no longer says <em>nothing more until it resets</em>; it says <em>until it resets, or a free reset</em>.</p>
+<h3>Told when one arrives</h3>
+<p>A notification when a new credit is granted — <strong>Codex granted you a free reset</strong>, with what it resets and when it lapses — including one that landed while Lancetta was closed. Silent, once per grant. The switch is on <strong>Codex's</strong> page under Settings › Agents, because only Codex has these: Claude's account grants no free resets.</p>
+<h3>Smaller things</h3>
+<ul>
+<li>A run of the built-in demo no longer writes its invented agents into your quota history, and neither can any other stand-in for a real agent.</li>
+</ul>
+</body>
+</html>

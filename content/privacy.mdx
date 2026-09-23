@@ -8,22 +8,37 @@ Lancetta has no account, no server and no telemetry. **Nothing you do in it leav
 
 ## What it reads
 
-- **Codex** — an account read, on your machine, over the agent's own local interface. It returns your rate-limit percentages, reset times and plan, and — separately, when the window is open — your token totals per day. It does not return, and Lancetta does not read, the contents of any session.
-- **Claude Code** — once you connect it, the sign-in Claude Code keeps in your keychain, read and never renewed (the refresh token beside it is never read at all), and with it one account read: your rate-limit percentages and reset times. Or, if you set that up instead, one file on your disk written by your own status-line command. Lancetta does not read your transcripts, your prompts or your projects.
+- **Codex** — an account read, on your machine, over the agent's own local interface. It returns your rate-limit percentages, reset times and plan, how many free resets the account holds (and, once per new count, what each is called and when it lapses), and — separately, when the window is open — your token totals per day. It does not return, and Lancetta does not read, the contents of any session.
+- **Claude Code** — once you connect it, the sign-in Claude Code keeps in your keychain, read and never renewed (the refresh token beside it is never read at all), and with it one account read: your rate-limit percentages and reset times. Or, if you set that up instead, one file on your disk written by your own status-line command.
+- **Claude Code's transcripts, for the token chart** — the files Claude Code keeps under `~/.claude/projects`, searched for the usage block on each reply. Lancetta keeps the message's id, its time and its token counts, and nothing else: the text of your prompts and answers is never extracted, stored or sent. Only the files that changed since the last look are read again.
 - **Your plan** — read from the account metadata the agent already keeps locally.
 - **The process table** — the same list `ps` gives you, to find the background trees the agents have left running. It reads their command lines, which is where the working directory each one was started for lives. That directory is shown to you in the window; it is never sent anywhere.
 
 ## What it does
 
-One thing in this app is not read-only: **Reclaim** stops background processes. Three rules bound it, and all three are in the code rather than in this paragraph:
+Two things in this app are not read-only, and each one happens only after a question you answer.
+
+**Reclaim** stops background processes. Three rules bound it, and all three are in the code rather than in this paragraph:
 
 - only a Codex broker **whose working directory no longer exists** is ever a candidate — one whose directory is unknown is never treated as gone;
 - it **shows you the list first**, and the confirmation puts Cancel on the default key;
 - it signals the broker, which closes its own tree. It does not touch anything else.
 
+**Use… on a free reset** spends one of your Codex reset credits, which cannot be given back:
+
+- it is offered only while the account says you hold one and a window has something to reset;
+- the question names the credit, when each window would come back on its own and when the credit lapses, and puts Cancel on the default key;
+- it is asked through the Codex CLI on your Mac, the same way every Codex reading is, and a retry after a lost answer repeats the same request instead of spending a second credit.
+
 ## What it writes
 
-Your own preferences — the refresh interval, the colours and order you gave the agents, which ones are hidden, what each one shows in the menu bar, the notch switch, and whether you count up or down — in the standard macOS preferences location for the app. Nothing else.
+Three things, all on this Mac:
+
+- **Your own preferences** — the refresh interval, the colours and order you gave the agents, which ones are hidden, what each one shows in the menu bar, the notch switch, whether you count up or down, and how many free resets it last saw, so that a new one can be announced — in the standard macOS preferences location for the app.
+- **The series of its own readings**, in `~/Library/Application Support/Lancetta/history.jsonl`: for each reading, when it was taken, which agent, both windows' percentages and resets, the plan, the route it arrived by and the free resets held. It is what the pace line reasons from, and it never leaves your Mac.
+- **A cache of Claude's token counts**, `claude-usage-cache.json` beside it: per transcript file, its size and date and the tokens of each reply by day, so the chart does not re-read every transcript each time. File paths and numbers, never text.
+
+Deleting that folder costs you the series the pace line learns from; the cache is rebuilt on the next read.
 
 ## What it sends
 

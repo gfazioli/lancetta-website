@@ -28,7 +28,7 @@ Claude Code's route is the same shape: an account read, made with the sign-in Cl
 
 They look symmetrical from the panel now, and the reason they can is worth knowing.
 
-**Codex** answers an account question directly, over its own local interface. So it refreshes on the interval you set and again on **Refresh now**, and the reading is as current as the last poll.
+**Codex** answers an account question directly, over its own local interface. So it refreshes on the interval you set and again on **Refresh now**, and the reading is as current as the last poll. The same answer says how many free resets the account holds, at no extra cost; what each one is called and when it lapses is a second question, asked once when the count changes rather than on every poll.
 
 **Claude Code** has no equivalent question of its own: no usage subcommand, no rate-limit block in its hooks, no quota figure in its metrics export. But its *account* does. The numbers Claude Code shows under `/usage` come from one account read, and Lancetta makes the same one, with the sign-in Claude Code keeps on your Mac. So Claude refreshes on the same interval and on **Refresh now** — once you have connected it, which is one click and one macOS dialog. [Getting Started](/docs/getting-started#claude-code) says exactly what that click does and does not do.
 
