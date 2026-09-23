@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.10.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.10.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>The panel had seven controls in three places: a pin alone on a row of its own, two command rows, and four small buttons along the bottom. It now has five in two, and it is a row shorter for it.</p>
+<h3>The top of the panel says how fresh the numbers are</h3>
+<p>The strip across the top reads <strong>Updated 14s ago</strong> — how long since Lancetta last read an agent — and clicking it is Refresh now. Refresh used to be a row at the foot of the panel, as far as it could be from the only thing that makes you want it: a number that might be old. Now the age and the command are one control.</p>
+<p>It spins while the read is on its way, and the panel <strong>stays open</strong> while it does, so you can watch the numbers move. ⌘R does the same, and no longer closes the panel either. Once three polls — and at least three minutes — go by without a reading, the timestamp turns amber: that is the moment a click is worth making.</p>
+<p>That line is the panel's one clock. A card used to carry an age of its own as well, so a Claude card read from the status-line file said <em>seen 10s ago</em> under <em>Updated 7s ago</em> — two facts from two instants that read as one fact printed twice. A card now shows its age only when it trails the top line by more than a minute and a half: after an evening with no Claude Code session open, <em>seen 3h17m ago</em> under <em>Updated 5s ago</em>, and the gap is the information.</p>
+<h3>Settings beside the pin, and a shorter foot</h3>
+<p>The gear moved up next to the pin, where window chrome lives. The foot of the panel is down to <strong>Open Lancetta…</strong> and <strong>Quit</strong>.</p>
+<h3>Right-click for every command</h3>
+<p>Right-click Lancetta in the menu bar and you get the classic menu: Refresh Now, Open Lancetta…, Settings…, Check for Updates…, About Lancetta and Quit Lancetta. A left click still opens the panel. It works with the panel pinned, too.</p>
+<p>Check for Updates and About moved here from the panel because each one repeated a Settings pane, and the first nearly always answers "you are up to date".</p>
+<h3>An update shows up when there is one</h3>
+<p>When a new version is out, a button naming it appears at the top of the panel, and it opens the update prompt. The rest of the time it is not there at all — a button that is always on screen and almost never has anything to say teaches you to stop looking at it.</p>
+</body>
+</html>
