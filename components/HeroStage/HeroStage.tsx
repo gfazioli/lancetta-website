@@ -83,7 +83,7 @@ interface Frame {
 const frames: Frame[] = [
   {
     src: '/screenshot-pace.png',
-    alt: 'A Lancetta card: the five-hour window at 4% with the line “4% in 1h30m · at this pace 13% by reset” under it, and the weekly window at 55% with “55% in 2 days · at this pace full by Wednesday afternoon” in amber',
+    alt: 'A Lancetta card for Claude: the five-hour window at 3% with the line “3% in 31m · at this pace 29% by reset” under it, the weekly window at 6% with “6% in 4 days · at this pace 9% by reset”, and its separate Fable limit at 0%',
     eyebrow: 'What nothing else can say',
     title: 'The number you can already see is not the useful one.',
     body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is whether this pace empties the window before it resets. Lancetta says it under the bar it is about, in the same place every time, amber only when the window would run out early — because a line that appears only in trouble is one nobody has learnt to read by the time it matters. It can say it because it keeps a series of its own readings; the field keeps the ceiling and the flow and no history at all.',
