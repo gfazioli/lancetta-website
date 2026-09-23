@@ -1,7 +1,16 @@
 'use client';
 
 import type { ReactNode } from 'react';
+import {
+  IconCoins,
+  IconDownload,
+  IconGift,
+  IconInfoCircle,
+  IconShieldLock,
+  type Icon,
+} from '@tabler/icons-react';
 import { Accordion, Anchor, Text } from '@mantine/core';
+import classes from './FAQ.module.css';
 
 /*
  * Every answer here is a claim someone can check, so each one has to be true
@@ -138,21 +147,49 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
   },
 ];
 
+/*
+ * A small icon on the questions a visitor most likely came with (user,
+ * 2026-09-23: on the most important ones, not on every one). Keyed by the
+ * item's `value`, so the list the JSON-LD reads stays exactly as it is.
+ */
+const faqIcons: Partial<Record<string, Icon>> = {
+  what: IconInfoCircle,
+  tokens: IconCoins,
+  privacy: IconShieldLock,
+  price: IconGift,
+  when: IconDownload,
+};
+
 export function FAQ() {
   return (
-    <Accordion variant="separated" radius="md">
-      {faqItems.map((item) => (
-        <Accordion.Item key={item.value} value={item.value}>
-          <Accordion.Control>
-            <Text fw={600}>{item.question}</Text>
-          </Accordion.Control>
-          <Accordion.Panel>
-            <Text c="dimmed" size="sm" lh={1.65}>
-              {item.answer}
-            </Text>
-          </Accordion.Panel>
-        </Accordion.Item>
-      ))}
+    <Accordion
+      variant="separated"
+      radius="md"
+      classNames={{ root: classes.root, item: classes.item }}
+    >
+      {faqItems.map((item) => {
+        const ItemIcon = faqIcons[item.value];
+        return (
+          <Accordion.Item key={item.value} value={item.value}>
+            <Accordion.Control
+              icon={
+                ItemIcon && (
+                  <span className={classes.icon} aria-hidden>
+                    <ItemIcon size={16} stroke={1.8} />
+                  </span>
+                )
+              }
+            >
+              <Text fw={600}>{item.question}</Text>
+            </Accordion.Control>
+            <Accordion.Panel>
+              <Text c="dimmed" size="sm" lh={1.65}>
+                {item.answer}
+              </Text>
+            </Accordion.Panel>
+          </Accordion.Item>
+        );
+      })}
     </Accordion>
   );
 }
