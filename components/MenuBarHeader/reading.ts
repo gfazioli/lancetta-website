@@ -63,6 +63,6 @@ export function ledBand(percent: number): LedBand {
  * figure the prose states comes from the measurement table in CLAUDE.md instead.
  */
 export const barReading: AgentReading[] = [
-  { agent: 'claude', percent: 4, resets: '3h29m' },
+  { agent: 'claude', percent: 10, resets: '47m' },
   { agent: 'codex', percent: 0, resets: '4h59m' },
 ];
