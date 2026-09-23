@@ -168,7 +168,7 @@ const frames: Frame[] = [
 
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
-  alt: 'The Lancetta panel: Claude Code and Codex, each with a 5-hour and a 7-day quota window, the time each one resets, and the line saying where the window ends at the current rate',
+  alt: 'The Lancetta panel: how fresh the numbers are across the top, then Claude Code and Codex, each window with its bar and the time it resets. Claude’s lines say where each window ends at the current rate; Codex, spent for the week, shows the free reset it holds, with a Use… button',
 };
 
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
