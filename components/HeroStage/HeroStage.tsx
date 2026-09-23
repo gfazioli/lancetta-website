@@ -157,10 +157,10 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-limits.png',
-    alt: 'The Limits pane of the Lancetta window: Claude Code seen a second ago and Codex live, each with its 5-hour and 7-day bar and the time it resets',
+    alt: 'The Limits pane of the Lancetta window: Claude Code and Codex, both live. Claude’s 5-hour and 7-day bars each carry the line saying where the window ends at the current rate, with the rate and the readings behind it, and its separate Fable limit sits below; Codex, spent for the week, shows the free reset it holds, with a Use… button',
     eyebrow: 'In detail',
     title: 'Live, or seen a moment ago.',
-    body: 'Two agents, four windows, the reset time for each — and beside every reading, when it was last true. A number with no timestamp is a number you cannot trust.',
+    body: 'Two agents, every window, the reset time for each — and beside every reading, when it was last true. A number with no timestamp is a number you cannot trust.',
     href: '/docs/how-it-reads',
     linkLabel: 'How it reads each agent',
   },
