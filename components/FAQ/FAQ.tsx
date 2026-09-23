@@ -69,7 +69,7 @@ const faqItems: { value: string; question: string; answer: ReactNode }[] = [
     value: 'interrupt',
     question: 'Will it interrupt me?',
     answer:
-      'Only about what the menu bar cannot already show. The percentage is on your bar, so Lancetta never announces it; it speaks first when a window will run out before it resets — naming the reset beside the moment it runs out — when an agent has nothing left, when it is ready again, and when a reading has stopped moving while looking live. Each once, at the moment it changes, never on launch, and macOS is asked for permission the first time there is actually something to say. Alerts and suggestions are separate switches, each agent has its own, and a sound is reserved for the two moments you are not looking at a screen.',
+      'Only about what the menu bar cannot already show. The percentage is on your bar, so Lancetta never announces it; it speaks first when a window will run out before it resets — naming the reset beside the moment it runs out — when an agent has nothing left, when it is ready again, when a reading has stopped moving while looking live, and when Codex grants you a free reset. Each once, at the moment it changes, and never on launch — except for a free reset granted while Lancetta was closed, which is news rather than a state. macOS is asked for permission the first time there is actually something to say. Alerts and suggestions are separate switches, each agent has its own, and a sound is reserved for the two moments you are not looking at a screen.',
   },
   {
     value: 'surfaces',

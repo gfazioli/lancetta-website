@@ -218,15 +218,21 @@ const roadmap = [
     state: 'shipped',
   },
   {
+    version: 'v0.7–v0.10',
+    title: 'The panel, sharpened',
+    body: 'A model’s own week under the notch too, a lamp beside each agent in the menu bar, a pin that keeps the panel in front, times written the way you say them, and a toolbar across the top of the panel that says how fresh the numbers are.',
+    state: 'shipped',
+  },
+  {
+    version: 'v0.11',
+    title: 'A free reset, in hand',
+    body: 'Codex grants free resets, and now the card says so, with the day each one lapses. Use… asks first, with the two dates side by side: when each window would come back on its own, and when the credit runs out. A new one is a notification.',
+    state: 'shipped',
+  },
+  {
     version: 'Then',
     title: 'Everyone else’s Mac',
     body: 'The discovery UI and the Sources pane. The version where it stops assuming one machine — the signing and the feed it needed arrived early, and the Claude step became one click and a macOS dialog rather than a script.',
-    state: 'planned',
-  },
-  {
-    version: 'Later',
-    title: 'Reset credits',
-    body: 'Redeeming a Codex reset credit from the menu, with every safety rule an irreversible action needs.',
     state: 'planned',
   },
 ];
