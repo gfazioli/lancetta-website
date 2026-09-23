@@ -362,7 +362,19 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                     {step.version}
                   </Text>
                   {step.state === 'shipped' && (
-                    <Badge size="xs" variant="light" color="teal" radius="sm">
+                    <Badge
+                      size="xs"
+                      variant="light"
+                      color="teal"
+                      radius="sm"
+                      // The light variant's teal-9 on its own teal-1 ground is
+                      // 4.3:1, at 9px. Darker ink, same ground.
+                      styles={{
+                        root: {
+                          color: 'color-mix(in srgb, var(--mantine-color-teal-9) 80%, black)',
+                        },
+                      }}
+                    >
                       Shipped
                     </Badge>
                   )}

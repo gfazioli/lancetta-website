@@ -82,7 +82,9 @@ export function ProblemSection() {
                 </Text>
                 <Text c="dimmed" fz={14} lh={1.55}>
                   {item.description}
-                  <Text component="span" c="red" fw={600} fz={14} td="underline">
+                  {/* red-9: Mantine's red text in a light scheme is red-6, 3.3:1
+                      on the card; this is 5.5:1. */}
+                  <Text component="span" c="red.9" fw={600} fz={14} td="underline">
                     {item.highlight}
                   </Text>
                   {item.rest}
