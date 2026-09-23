@@ -217,13 +217,63 @@
   transition: border-color 180ms ease;
 }
 
-.roadmapCard[data-state='building'] {
-  border-color: color-mix(in srgb, var(--lan-accent) 45%, transparent);
-  box-shadow: 0 12px 30px -16px color-mix(in srgb, var(--lan-accent) 45%, transparent);
+/* Not started: drawn, but not solid. */
+.roadmapCard[data-state='next'] {
+  border-style: dashed;
+  background: transparent;
 }
 
 .roadmapCard:hover {
   border-color: color-mix(in srgb, var(--lan-accent) 35%, transparent);
+}
+
+/*
+ * One badge per state, set here rather than through Mantine's `color` so the
+ * three read as one family. Today's ink is the darker teal the old "Shipped"
+ * badge needed: the light variant's teal-9 on its own teal-1 ground is 4.3:1,
+ * at 9px.
+ */
+.horizonBadge {
+  flex-shrink: 0;
+  border: 1px solid transparent;
+  letter-spacing: 0.08em;
+}
+
+.horizonBadge[data-state='today'] {
+  background: var(--mantine-color-teal-1);
+  color: color-mix(in srgb, var(--mantine-color-teal-9) 80%, black);
+}
+
+.horizonBadge[data-state='soon'] {
+  background: color-mix(in srgb, var(--lan-accent) 12%, white);
+  color: var(--lan-accent-ink);
+}
+
+.horizonBadge[data-state='next'] {
+  background: transparent;
+  border-color: var(--lan-line);
+  color: var(--mantine-color-gray-7);
+}
+
+/* The rule between what ships and what does not, with its label on it. */
+.horizon {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin: 44px 0 28px;
+  color: var(--mantine-color-gray-7);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.horizon::before,
+.horizon::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--lan-line);
 }
 
 /*

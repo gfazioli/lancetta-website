@@ -5,16 +5,21 @@ import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
 import {
   IconAlertTriangle,
+  IconArrowRight,
   IconBellRinging,
   IconBook2,
+  IconCalendarWeek,
   IconChartHistogram,
   IconChartLine,
   IconChartPie,
   IconClockHour4,
   IconCreditCardOff,
+  IconDeviceLaptop,
   IconGauge,
   IconLayoutNavbar,
   IconPalette,
+  IconSunrise,
+  IconSunset2,
   IconTrash,
 } from '@tabler/icons-react';
 import {
@@ -185,57 +190,116 @@ const features: Feature[] = [
   },
 ];
 
-/** The versions, and what each one is for. Mirrors `content/roadmap.mdx`. */
-const roadmap = [
+type Horizon = 'today' | 'soon' | 'next';
+
+interface Step {
+  icon: typeof IconGauge;
+  title: string;
+  body: string;
+  color: string;
+  state: Horizon;
+}
+
+/*
+ * What ships, and what comes after it — by STATE, not by version. Until
+ * 2026-09-23 this was a strip of eight cards, v0.2 through v0.11 and then one
+ * "Then": a changelog on the home page, telling a first-time reader about a
+ * past they were not part of, with the only forward-looking card last. The
+ * versions live on `/docs/roadmap` under *Already shipped*, which the link
+ * under the grid points at.
+ *
+ * `today` is the one job as the headline states it — what you can use, how
+ * long it lasts, when it comes back — plus the reaper, each a thing that SHIPS.
+ * `soon` and `next` carry the badge AND the future tense, never one without
+ * the other, and each is a section of `content/roadmap.mdx` that says what it
+ * has to prove before it counts as finished. Add one here and it goes there too.
+ */
+const today: Step[] = [
   {
-    version: 'v0.2',
-    title: 'The quota, and the memory back',
-    body: 'Both agents, both windows, the notch island, the window with the daily token chart, the reclaim that lists what it will stop before stopping it, open at login and the updater. Signed, notarized and downloadable: the memory half planned for later landed here too, which is why the first release is v0.2.',
-    state: 'shipped',
+    icon: IconGauge,
+    title: 'What you can use',
+    body: 'Both windows for both agents, the week one model keeps to itself, and a free reset when Codex grants one — with the day it lapses.',
+    color: 'blue',
+    state: 'today',
   },
   {
-    version: 'v0.3',
-    title: 'Claude from the account',
-    body: 'One click and one macOS dialog instead of a line in a status-line script: Lancetta asks your Claude account, with the sign-in Claude Code keeps, so Claude refreshes on demand like Codex. What’s New under Help, and the icon in the format macOS 26 introduced.',
-    state: 'shipped',
+    icon: IconChartLine,
+    title: 'How long it lasts',
+    body: 'A line under each bar saying where that window ends at the rate you are going — amber only when it would run out before it resets.',
+    color: 'violet',
+    state: 'today',
   },
   {
-    version: 'v0.4',
-    title: 'The pace, and the panel',
-    body: 'Under each bar, where that window ends at the rate you are going — amber only when it would run out early, and silent about the weekly one until your Mac has watched it turn over. And the menu became a panel in the app’s own navy: 380 points where a menu needed 466, with the four windowing commands as buttons along the bottom.',
-    state: 'shipped',
+    icon: IconBellRinging,
+    title: 'When it comes back',
+    body: 'The reset beside every bar, and a notification when a window that stopped you is ready again.',
+    color: 'cyan',
+    state: 'today',
   },
   {
-    version: 'v0.5',
-    title: 'It speaks first',
-    body: 'A window that will run out before it resets, an agent with nothing left, one that is ready again, a reading gone quiet — said once, when it changes, with a sound only for the two moments you are not looking. And two fixes from two Macs: Refresh now never raises the keychain dialog, and a card still on the status-line file offers the account.',
-    state: 'shipped',
-  },
-  {
-    version: 'v0.6',
-    title: 'The window one model keeps to itself',
-    body: 'Some plans limit one model separately, and every monitor was reading past it — including this one. The account sends a row per meter; Lancetta now draws the ones that belong to a single model, under the name it is given, and says when that week is spent, when it is back and when it is heading for empty ahead of its reset.',
-    state: 'shipped',
-  },
-  {
-    version: 'v0.7–v0.10',
-    title: 'The panel, sharpened',
-    body: 'A model’s own week under the notch too, a lamp beside each agent in the menu bar, a pin that keeps the panel in front, times written the way you say them, and a toolbar across the top of the panel that says how fresh the numbers are.',
-    state: 'shipped',
-  },
-  {
-    version: 'v0.11',
-    title: 'A free reset, in hand',
-    body: 'Codex grants free resets, and now the card says so, with the day each one lapses. Use… asks first, with the two dates side by side: when each window would come back on its own, and when the credit runs out. A new one is a notification.',
-    state: 'shipped',
-  },
-  {
-    version: 'Then',
-    title: 'Everyone else’s Mac',
-    body: 'The discovery UI and the Sources pane. The version where it stops assuming one machine — the signing and the feed it needed arrived early, and the Claude step became one click and a macOS dialog rather than a script.',
-    state: 'planned',
+    icon: IconTrash,
+    title: 'What they leave behind',
+    body: 'The background processes agents never clean up, listed before anything is stopped — and never a live one.',
+    color: 'indigo',
+    state: 'today',
   },
 ];
+
+const ahead: Step[] = [
+  {
+    icon: IconCalendarWeek,
+    title: 'Last week',
+    body: 'It will look back at the week that just ended: when each weekly window ran out, and how often the five-hour one stopped you.',
+    color: 'grape',
+    state: 'soon',
+  },
+  {
+    icon: IconDeviceLaptop,
+    title: 'Everyone else’s Mac',
+    body: 'It will stop assuming the machine it was built on: where it found each agent, where it looked, and a way to point it at one by hand.',
+    color: 'pink',
+    state: 'soon',
+  },
+  {
+    icon: IconSunrise,
+    title: 'When to start',
+    body: 'It will learn which hours are yours from an average across your own days, not the last two hours — and say when to start.',
+    color: 'gray',
+    state: 'next',
+  },
+  {
+    icon: IconSunset2,
+    title: 'When you will probably stop',
+    body: 'Before you have spent anything, it will say roughly how far into the day the five-hour window will carry you — or nothing, until it is right often enough.',
+    color: 'gray',
+    state: 'next',
+  },
+];
+
+const horizonLabel: Record<Horizon, string> = { today: 'Today', soon: 'Soon', next: 'Next' };
+
+function StepCard({ step }: { step: Step }) {
+  return (
+    <Paper p="lg" radius="lg" className={classes.roadmapCard} data-state={step.state}>
+      <Stack gap={10}>
+        <Group justify="space-between" align="flex-start" wrap="nowrap">
+          <ThemeIcon size={40} radius="md" color={step.color} variant="light">
+            <step.icon size={22} />
+          </ThemeIcon>
+          <Badge size="xs" radius="sm" className={classes.horizonBadge} data-state={step.state}>
+            {horizonLabel[step.state]}
+          </Badge>
+        </Group>
+        <Text fw={700} fz={17}>
+          {step.title}
+        </Text>
+        <Text c="dimmed" fz="sm" lh={1.55}>
+          {step.body}
+        </Text>
+      </Stack>
+    </Paper>
+  );
+}
 
 /**
  * `cadence` is fetched on the server in `app/page.tsx` so the release count
@@ -344,56 +408,34 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         <SectionHeading
           eyebrow="Where it is going"
           title="What’s next"
-          lead="No dates, and no version numbers on work that has not started — the order changes as the work teaches you things. What each step has to prove before it counts as finished is the part worth publishing."
+          lead="What ships today, and what comes after it. Nothing ahead carries a date — the order changes as the work teaches you things, and the roadmap says what each step has to prove before it counts as finished."
         />
 
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
-          {roadmap.map((step) => (
-            <Paper
-              key={step.version}
-              p="lg"
-              radius="lg"
-              className={classes.roadmapCard}
-              data-state={step.state}
-            >
-              <Stack gap={8}>
-                <Group gap="xs">
-                  <Text fw={900} fz={20} style={{ color: 'var(--lan-accent-ink)' }}>
-                    {step.version}
-                  </Text>
-                  {step.state === 'shipped' && (
-                    <Badge
-                      size="xs"
-                      variant="light"
-                      color="teal"
-                      radius="sm"
-                      // The light variant's teal-9 on its own teal-1 ground is
-                      // 4.3:1, at 9px. Darker ink, same ground.
-                      styles={{
-                        root: {
-                          color: 'color-mix(in srgb, var(--mantine-color-teal-9) 80%, black)',
-                        },
-                      }}
-                    >
-                      Shipped
-                    </Badge>
-                  )}
-                  {step.state === 'building' && (
-                    <Badge size="xs" variant="light" color="grape" radius="sm">
-                      Now
-                    </Badge>
-                  )}
-                </Group>
-                <Text fw={700} fz={16}>
-                  {step.title}
-                </Text>
-                <Text c="dimmed" fz="sm" lh={1.55}>
-                  {step.body}
-                </Text>
-              </Stack>
-            </Paper>
+          {today.map((step) => (
+            <StepCard key={step.title} step={step} />
           ))}
         </SimpleGrid>
+
+        <p className={classes.horizon}>Ahead</p>
+
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
+          {ahead.map((step) => (
+            <StepCard key={step.title} step={step} />
+          ))}
+        </SimpleGrid>
+
+        <Group justify="center" mt={36}>
+          <Button
+            component={Link}
+            href="/docs/roadmap"
+            variant="subtle"
+            radius="xl"
+            rightSection={<IconArrowRight size={16} />}
+          >
+            The whole roadmap, and every version so far
+          </Button>
+        </Group>
       </Container>
 
       {/* Get Started CTA */}
