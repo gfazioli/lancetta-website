@@ -772,9 +772,14 @@ scrolla la pagina, la finestrella si dovrebbe chiudere comunque"*).
 
 `PanelHint` is what makes it findable: the app icon with eyes and legs walks
 in under the bar, points at the reading and says what it does — on the home
-page only, never on a phone (its bubble covered the headline there), and never
-again once this browser has opened the panel (`lancetta.panelDemo.opened` in
-localStorage, read after mount so a returning reader sees no frame of it).
+page only, never on a phone (its bubble covered the headline there), and on
+EVERY load. It came once per browser until 2026-09-24 (`lancetta.panelDemo.opened`
+in localStorage), and the user took that out: *"facciamolo apparire sempre ad
+ogni reload della pagina"*. What it remembers now is a ref, so for the life of
+the page only: opened or dismissed, it does not walk in again on a link back to
+the home page, and a reload brings it back. Browsers that opened the panel
+before then still carry the old key; nothing reads it, and `PanelHint.test.tsx`
+sets it to prove so.
 **The character is ours on purpose.** The first sketch was Claude Code's pixel
 mascot, and a vendor's character inviting clicks on this app reads as an
 endorsement it never gave — the same line the trademark notice draws for the
