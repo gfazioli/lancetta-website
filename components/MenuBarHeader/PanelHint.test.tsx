@@ -5,20 +5,12 @@ import { PanelHint } from './PanelHint';
 type Props = ComponentProps<typeof PanelHint>;
 
 /**
- * `render` from test-utils wraps its tree in a fragment and a bare `rerender`
- * does not, so the first rerender REMOUNTS the component (measured: two mounts
- * for three renders). Here a remount is a reload — the one thing these tests
- * tell apart — so every later render keeps the first one's shape.
+ * `update` re-renders in place, never remounts (`test-utils/render.test.tsx`):
+ * here a remount is a reload, the one thing these tests tell apart.
  */
 function mount(props: Props) {
   const view = render(<PanelHint {...props} />);
-  const update = (next: Props) =>
-    view.rerender(
-      <>
-        <PanelHint {...next} />
-      </>
-    );
-  return { ...view, update };
+  return { ...view, update: (next: Props) => view.rerender(<PanelHint {...next} />) };
 }
 
 describe('PanelHint', () => {
