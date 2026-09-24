@@ -1,9 +1,10 @@
-import { compileReleaseBodies, type Release } from './use-release-notes';
+import { compileReleaseBodies } from './load-releases';
+import type { Release } from './use-release-notes';
 
 // The real compiler is ESM and needs a Node environment; the branch under test
 // is what this hook does AROUND it, so it is injected instead. What the real one
 // does with each format was measured against the live release bodies and is
-// recorded on `MARKDOWN` in the hook.
+// recorded on `MARKDOWN` in load-releases.ts.
 jest.mock('nextra/compile', () => ({ compileMdx: jest.fn() }), { virtual: true });
 
 function release(tag: string, body: string): Release {

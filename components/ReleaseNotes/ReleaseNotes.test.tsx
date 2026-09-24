@@ -55,6 +55,16 @@ describe('ReleaseNotes', () => {
     expect(screen.queryByText('Loading releases...')).not.toBeInTheDocument();
   });
 
+  it('hands the releases the build compiled to the hook', () => {
+    // The page passes them in so they are in the served HTML: fetched in the
+    // browser, Googlebot got a 403 from the API route and saw the skeleton.
+    const built = [{ id: 1, tag_name: 'v0.11.0', body: null, rawBody: 'notes' } as any];
+    mocked.mockReturnValue({ data: built, error: null, isLoading: false, ready: true });
+    render(<ReleaseNotes initialReleases={built} />);
+    expect(mocked).toHaveBeenLastCalledWith(built);
+    expect(screen.getByText('notes')).toBeInTheDocument();
+  });
+
   it('reports an error rather than a skeleton', () => {
     mocked.mockReturnValue({ data: [], error: 'boom', isLoading: false, ready: false });
     render(<ReleaseNotes />);
