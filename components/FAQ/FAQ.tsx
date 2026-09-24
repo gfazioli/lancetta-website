@@ -25,7 +25,7 @@ import classes from './FAQ.module.css';
  *    Change one and change the other, or the rich result quotes an answer
  *    that is no longer on the page.
  */
-const faqItems: { value: string; question: string; answer: ReactNode }[] = [
+export const faqItems: { value: string; question: string; answer: ReactNode }[] = [
   {
     value: 'what',
     question: 'What is Lancetta?',
@@ -166,6 +166,12 @@ export function FAQ() {
       variant="separated"
       radius="md"
       classNames={{ root: classes.root, item: classes.item }}
+      // Mantine 9 keeps a closed panel in a React <Activity>, which renders
+      // nothing on the server: the served markup carried the 16 questions and
+      // not one answer (only the JSON-LD mirror had them), and Google left
+      // pages of the sibling sites "Crawled - currently not indexed"
+      // (2026-09-24). `display-none` renders every answer and only hides it.
+      keepMountedMode="display-none"
     >
       {faqItems.map((item) => {
         const ItemIcon = faqIcons[item.value];
