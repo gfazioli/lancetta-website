@@ -48,8 +48,13 @@ export function NoReleasesYet() {
   );
 }
 
-export function ReleaseNotes() {
-  const { data, error, isLoading, ready } = useReleaseNotes();
+/**
+ * `initialReleases` is what the build compiled, so the releases are in the
+ * served HTML for crawlers and the browser makes no request. Without it (the
+ * build could not reach GitHub) the component fetches at runtime instead.
+ */
+export function ReleaseNotes({ initialReleases }: { initialReleases?: Release[] }) {
+  const { data, error, isLoading, ready } = useReleaseNotes(initialReleases);
 
   const components = useMDXComponents();
 

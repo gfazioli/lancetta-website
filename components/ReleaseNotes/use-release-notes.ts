@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
-import { compileMdx } from 'nextra/compile';
 import useSWR from 'swr';
 
-import { formatReleaseDate } from './format-release-date';
+import { compileReleaseBodies } from './load-releases';
 
 export interface Author {
   login: string;
@@ -63,54 +62,17 @@ export interface TOC {
 }
 
 /**
- * A release body is MARKDOWN, not MDX, and compiling it as MDX is what took this
- * page down on 2026-09-19: Lancetta 0.3.3 quotes an agent's raw error object,
- * `{ code = "-32600"; message = "Invalid request" }`, and in MDX a brace opens a
- * JavaScript expression -- `Could not parse expression with acorn`. Measured with
- * this same compiler: as `mdx` that body throws while 0.3.2 and 0.3.1 compile, and
- * as `md` all three pass, along with a body carrying `<br/>`, an autolink and
- * `Array<String>` in prose. Nothing in these notes is ever meant as JSX, so the
- * format is not a workaround, it is the correct reading of the input.
+ * The releases for the page. `initial` is what the build compiled (see
+ * `loadReleases`); when it holds anything the hook returns it as is, final from
+ * the first render, and the browser never calls the API. Only an empty
+ * `initial` -- the build could not reach GitHub -- falls back to fetching at
+ * runtime, as the page always did.
  */
-const MARKDOWN: Parameters<typeof compileMdx>[1] = { mdxOptions: { format: 'md' } };
-
-/**
- * Compile every body, and let one bad body cost only its own formatting.
- *
- * The compiler is injected so a test can drive the failing branch without asking
- * jsdom to load nextra's compiler. The `try` is the whole point: these bodies are
- * written on GitHub, after the site is built and by hand, so they are the least
- * trusted input on the site -- and until today a single one of them that would
- * not parse rejected the `Promise.all`, left the hook's `ready` false for ever,
- * and hid the OTHER releases behind a skeleton that never resolved.
- */
-export async function compileReleaseBodies(
-  releases: Release[],
-  compile: typeof compileMdx = compileMdx
-): Promise<Release[]> {
-  return Promise.all(
-    releases.map(async (release) => {
-      const rawBody = release.body ?? '';
-      const common = {
-        ...release,
-        rawBody,
-        displayDate: formatReleaseDate(release.published_at, release.created_at),
-      };
-      try {
-        return { ...common, body: await compile(rawBody, MARKDOWN) };
-      } catch {
-        // Shown as plain text rather than dropped. A release nobody can read is
-        // still better than a release nobody is told about.
-        return { ...common, body: null };
-      }
-    })
-  );
-}
-
-export function useReleaseNotes() {
+export function useReleaseNotes(initial: Release[] = []) {
   const fetcher = (url: string) => fetch(url).then((res) => res.json());
+  const prebuilt = initial.length > 0;
 
-  const [compiledReleases, setCompiledReleases] = useState<Release[]>([]);
+  const [compiledReleases, setCompiledReleases] = useState<Release[]>(initial);
   const [error, setError] = useState<string | null>(null);
   // True once the list is FINAL: compiled, or confirmed empty. `isLoading` is
   // SWR's and goes false the moment the API answers, while the MDX compile
@@ -119,7 +81,7 @@ export function useReleaseNotes() {
   // the component papered over that by treating an empty list as loading, and
   // on a repo with NO releases yet that skeleton never went away: lancetta.app
   // showed "Loading releases..." forever on 2026-09-17.
-  const [ready, setReady] = useState(false);
+  const [ready, setReady] = useState(prebuilt);
 
   const {
     data,
@@ -127,10 +89,10 @@ export function useReleaseNotes() {
     isLoading,
   } = useSWR<{
     releases: Release[];
-  }>('/api/github-releases', fetcher);
+  }>(prebuilt ? null : '/api/github-releases', fetcher);
 
   useEffect(() => {
-    if (data && !isLoading && !error) {
+    if (!prebuilt && data && !isLoading && !error) {
       if (data.toString() === 'rate limit exceeded') {
         setError('Rate limit exceeded. Please try again later. Or check your API key.');
         return;
@@ -147,7 +109,7 @@ export function useReleaseNotes() {
       };
       fetchReleases();
     }
-  }, [data, isLoading, error]); // Add isLoading and error to the dependency array
+  }, [prebuilt, data, isLoading, error]);
 
   return { data: compiledReleases, error: error || swrError, isLoading, ready } as const;
 }
