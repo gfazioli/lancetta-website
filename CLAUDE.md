@@ -818,18 +818,46 @@ costs only its own formatting (the release is shown as plain text), and
 in. `compileReleaseBodies` takes the compiler as an argument precisely so the
 failing branch is testable without asking jsdom to load nextra's compiler.
 
-**The sibling sites carry the un-fixed shape.** Checked the same day:
-`findergit-website`, `netfox-website` and `vicenda-website` all compile as MDX
-with no `catch`. None of their current release bodies breaks — which is exactly
-what an armed mine looks like. The first release note quoting a JSON object, a
-shell brace expansion or an HTML tag takes those pages down the same way.
+**The sibling sites carried the un-fixed shape** until 2026-09-24, when the
+build-time compile below made the `try` a requirement: `findergit-website` and
+`netfox-website` took it then. `vicenda-website` still compiles as MDX with no
+`catch` — an armed mine until a release note quotes a JSON object, a shell brace
+expansion or an HTML tag.
 
-**The token is not the suspect, whatever the symptom suggests.** The page fetches
-`/api/github-releases`, and an empty page reads like a missing credential;
+**The token is not the suspect, whatever the symptom suggests.** The page used to
+fetch `/api/github-releases` (now only its fallback, below), and an empty page
+reads like a missing credential;
 `GITHUB_TOKEN` only widens the GitHub rate limit (60/hr per IP to 5000/hr) and
 feeds the build-time TOC. Settle it before touching Vercel: `curl` the endpoint
 with a browser User-Agent — it answered `200` with three complete releases while
 the page was blank.
+
+## What a crawler gets is the served HTML
+
+Measured 2026-09-24, when Search Console listed findergit.app and netfox.app
+pages as *Crawled - currently not indexed*; this site had the same two defects.
+Neither page looked wrong in a browser.
+
+- **`/docs/release-notes` was 32 words.** `/api/github-releases` answers **403 to
+  any user agent containing `bot`** — Googlebot's rendering service included —
+  so even the JavaScript-rendered page Google saw was the skeleton. Now
+  `load-releases.ts` fetches and compiles the releases at BUILD time, one fetch
+  feeding the page and its TOC, and `useReleaseNotes(initial)` starts `ready`
+  with them; the browser makes no request. An empty build result falls back to
+  the runtime fetch. Fresh at every release because release.sh creates the
+  GitHub release before it pushes this repo. `compileReleaseBodies` moved into
+  `load-releases.ts` for this: the page imports it on the server, and the hook's
+  module pulls in React and SWR.
+- **`/docs/faq` was 104 words: the 16 questions, no answers.** Mantine 9's
+  Accordion keeps a closed panel in a React `<Activity>`, which renders nothing
+  on the server; only the JSON-LD mirror had the answers.
+  `keepMountedMode="display-none"` renders every answer and only hides it.
+  `FAQ.test.tsx` uses `renderToString`, because a jsdom `render` mounts a hidden
+  Activity's children and cannot see the defect.
+
+Check a page the way a crawler gets it: `curl -A Googlebot` and count words in
+`<main>` with the scripts stripped. A number under a few hundred on a page that
+looks full in the browser is this class of defect.
 
 ## Tooling
 
