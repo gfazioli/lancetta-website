@@ -1,9 +1,9 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { IconX } from '@tabler/icons-react';
 import { useReducedMotion } from '@mantine/hooks';
-import { hasOpenedPanel, MASCOT } from './panel-hint';
+import { MASCOT } from './panel-hint';
 import classes from './PanelHint.module.css';
 
 type Phase = 'hidden' | 'walking' | 'pointing' | 'leaving';
@@ -21,36 +21,44 @@ interface PanelHintProps {
   /** Whether the panel is open. The moment it is, the hint's job is done. */
   open: boolean;
   onOpen: () => void;
-  onDismiss: () => void;
 }
 
 /**
  * The reading in the bar opens a copy of the app's panel, and nothing on the
  * page says so. This says so: the app icon, walking — see `MASCOT` for how it
  * is drawn and why it is ours — comes in under the bar from the right, stops
- * beside the reading, raises an arm at it and says what it does. The user's idea (2026-09-23), and its one rule is theirs too: once
- * this browser has opened the panel, it never comes back.
+ * beside the reading, raises an arm at it and says what it does. The user's
+ * idea (2026-09-23).
  *
- * Everything is decided AFTER mount, from localStorage, so a returning reader
- * never sees a frame of it and the served markup carries nothing. A reader who
- * asked for reduced motion gets it standing in place, no walk.
+ * It comes back on EVERY load. Until 2026-09-24 it came once per browser —
+ * localStorage remembered that the panel had been opened — and the user took
+ * that out: *"facciamolo apparire sempre ad ogni reload della pagina"*. What
+ * it still remembers lives in a ref, so for the life of the page only: once
+ * the panel has been opened or the bubble dismissed, it does not walk in
+ * again when the reader comes back to the home page through a link (the
+ * header, and this with it, stays mounted across client navigations), and a
+ * reload brings it back.
+ *
+ * Everything is decided AFTER mount, so the served markup carries nothing. A
+ * reader who asked for reduced motion gets it standing in place, no walk.
  */
-export function PanelHint({ enabled, open, onOpen, onDismiss }: PanelHintProps) {
+export function PanelHint({ enabled, open, onOpen }: PanelHintProps) {
   const reduced = useReducedMotion();
   const [phase, setPhase] = useState<Phase>('hidden');
+  const done = useRef(false);
 
   useEffect(() => {
     if (!enabled) {
       setPhase('hidden');
       return undefined;
     }
-    if (hasOpenedPanel()) {
+    if (done.current) {
       return undefined;
     }
     const timers: number[] = [];
     timers.push(
       window.setTimeout(() => {
-        if (hasOpenedPanel()) {
+        if (done.current) {
           return;
         }
         if (reduced) {
@@ -73,6 +81,7 @@ export function PanelHint({ enabled, open, onOpen, onDismiss }: PanelHintProps) 
     if (!open) {
       return undefined;
     }
+    done.current = true;
     setPhase((now) => (now === 'hidden' ? now : 'leaving'));
     const gone = window.setTimeout(() => setPhase('hidden'), LEAVE_MS);
     return () => window.clearTimeout(gone);
@@ -83,7 +92,7 @@ export function PanelHint({ enabled, open, onOpen, onDismiss }: PanelHintProps) 
   }
 
   const dismiss = () => {
-    onDismiss();
+    done.current = true;
     setPhase('leaving');
     window.setTimeout(() => setPhase('hidden'), LEAVE_MS);
   };

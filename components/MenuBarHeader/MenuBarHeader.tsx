@@ -11,7 +11,6 @@ import { Logo } from '../Logo/Logo';
 import { MenuBarReading } from './MenuBarReading';
 import { isSamePageHashInMobileNav } from './mobile-nav-hash';
 import { panelDemo } from './panel-demo';
-import { rememberPanelOpened } from './panel-hint';
 import { PanelDemo } from './PanelDemo';
 import { PanelHint } from './PanelHint';
 import { productSections } from './sections';
@@ -137,8 +136,6 @@ export function MenuBarHeader() {
     if (!panelOpen) {
       return undefined;
     }
-    // Opened once, from anywhere: the hint that points at it has done its job.
-    rememberPanelOpened();
     panelRef.current?.focus({ preventScroll: true });
     const onPointer = (event: PointerEvent) => {
       const target = event.target as Node;
@@ -237,12 +234,7 @@ export function MenuBarHeader() {
         </div>
       </header>
 
-      <PanelHint
-        enabled={onHome}
-        open={panelOpen}
-        onOpen={() => setPanelOpen(true)}
-        onDismiss={rememberPanelOpened}
-      />
+      <PanelHint enabled={onHome} open={panelOpen} onOpen={() => setPanelOpen(true)} />
 
       {panelOpen && (
         <div className={classes.panelSlot}>
