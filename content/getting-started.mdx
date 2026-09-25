@@ -27,15 +27,15 @@ That question costs no tokens. It is an account read, not a model turn; see [How
 
 ## Claude Code
 
-One click. Open the panel and, under Claude, choose **Connect Claude Code…** (it is also in Settings › Agents › Claude). Lancetta reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left — the question Claude Code's own `/usage` asks. macOS shows its own dialog the first time, naming the item it is about to hand over; choose **Allow**, or **Always Allow** if you would rather not see it again.
+One click. Open the panel and, under Claude, choose **Connect Claude Code…** (it is also in Settings › Agents › Claude). Lancetta reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left — the question Claude Code's own `/usage` asks. It reads that sign-in the way Claude Code itself does, through macOS's own `security` tool, so there is normally no dialog to answer.
 
-That dialog is the only one Lancetta ever raises, and only when you choose Connect. Claude Code renews its own sign-in about once an hour and clears the permission when it does; a background read never asks for it back, and neither does Refresh now — the card says the sign-in was renewed and offers **Reconnect**: one click, and macOS asks once more.
+Claude Code rewrites its sign-in every time it renews it, and Lancetta reads the new one by itself: no Reconnect, no dialog. If that route is ever closed — the login keychain is locked, say — Lancetta has to ask macOS directly, and it only does that when you choose Connect: a background read never raises a dialog, and neither does Refresh now. The card offers **Reconnect** instead; choose **Always Allow** when macOS asks.
 
 What that click does, and does not do:
 
-- **It reads the sign-in; it never renews it.** Claude Code renews its own sign-in whenever you use it. If it has expired, the card says so; once Claude Code has renewed it, the card offers Reconnect.
+- **It reads the sign-in; it never renews it.** Claude Code renews its own sign-in whenever you use it. If it has expired, the card says so, and once Claude Code has renewed it Lancetta reads the new one by itself.
 - **One request, to Anthropic, the same one Claude Code makes.** Nothing else is sent, and no model is involved, so nothing is billed.
-- **Disconnect**, in Settings › Agents › Claude, stops it. The keychain permission you granted stays yours to revoke in Keychain Access.
+- **Disconnect**, in Settings › Agents › Claude, stops it.
 
 If you would rather not hand Lancetta a keychain item, there is an older route that connects nothing: a line in your status-line script writes the numbers to a file, and Lancetta reads the file. It is spelled out in [How it reads each agent](/docs/how-it-reads#the-other-route), with its two limits. If Claude was already being read through that file when you installed this version, nothing changes until you ask: the card carries the numbers as before, a line saying where they come from, and the Connect button beside it.
 
