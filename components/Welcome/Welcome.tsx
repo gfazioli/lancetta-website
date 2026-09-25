@@ -103,88 +103,77 @@ const features: Feature[] = [
   {
     icon: IconGauge,
     title: 'Both windows, both agents',
-    description:
-      'The 5-hour and the 7-day window for Codex and Claude Code, drawn as bars, with the time each one resets beside it.',
+    description: 'The 5-hour and 7-day windows, with each reset.',
     color: 'teal',
     href: '/docs/the-menu',
   },
   {
     icon: IconChartLine,
     title: 'Where this pace lands',
-    description:
-      'Under each bar, one line saying where that window ends at the rate you are going — amber only when it would run out before it resets. It can say it because it keeps a series of its own readings; the field keeps the ceiling and the flow and no history at all.',
+    description: 'Where each window ends at the rate you are going.',
     color: 'orange',
     href: '/docs/the-menu#the-pace-line',
   },
   {
     icon: IconChartPie,
     title: 'The window your bar cannot show',
-    description:
-      'Some plans give one model a weekly limit of its own, counted separately — it can run out while the percentage on your menu bar still reads two thirds. Lancetta draws that window too, under the name your account gives it, and says so before it ends rather than after.',
+    description: 'A model’s own weekly limit, which can run out first.',
     color: 'grape',
     href: '/docs/how-it-reads#a-window-one-model-keeps-to-itself',
   },
   {
     icon: IconClockHour4,
     title: 'Every reading carries its age',
-    description:
-      'A number with no timestamp is a number you cannot trust. Lancetta says when each one was taken, and a source that has fallen behind says so rather than going quiet.',
+    description: 'How old each number is, and when a source lags.',
     color: 'blue',
     href: '/docs/how-it-reads',
   },
   {
     icon: IconAlertTriangle,
     title: 'The bucket that refused is named',
-    description:
-      'When a limit is hit, the window that hit it is the one you see — not an average across all of them that lands somewhere comfortable and tells you nothing.',
+    description: 'The window that stopped you, not an average.',
     color: 'red',
     href: '/docs/the-menu#limits',
   },
   {
     icon: IconTrash,
     title: 'Reclaim the memory',
-    description:
-      'Agents leave a background tree behind for every folder they worked in, and nothing ever reaps the ones whose folder is gone: 28 processes holding 2.68 GB on one Mac, 12 of 14 trees unreachable. Lancetta finds them and frees them — showing you the list first, and never touching a live one.',
+    description: 'Frees what agents leave running — the list first.',
     color: 'indigo',
     href: '/docs/memory',
   },
   {
     icon: IconCreditCardOff,
     title: 'Reading costs nothing',
-    description:
-      'No model is asked anything. Both agents are read from numbers they already keep, which is why the poll can be frequent without ever eating into the window it is showing you.',
+    description: 'No model is asked, so checking costs no quota.',
     color: 'grape',
     href: '/docs/how-it-reads',
   },
   {
     icon: IconLayoutNavbar,
     title: 'Under the notch',
-    description:
-      'On a MacBook Pro the reading also lives in the notch — exactly as wide as the notch when collapsed, so the items either side stay clickable. Point at it and it opens.',
+    description: 'On a MacBook Pro, the reading lives in the notch too.',
     color: 'violet',
     href: '/docs/the-notch',
   },
   {
     icon: IconPalette,
     title: 'Your marks, or none',
-    description:
-      'Each agent carries its own colour and the vendor’s own mark, drawn from vector data so they stay sharp at any size. One switch replaces the lot with neutral system symbols.',
+    description: 'Each agent’s colour and mark, or neutral symbols.',
     color: 'orange',
     href: '/docs/settings#appearance',
   },
   {
     icon: IconChartHistogram,
     title: 'Where the tokens went',
-    description:
-      'A window with the daily token series over 7, 30 or 90 days, both agents in detail, and the processes still running. Codex publishes its own history; Claude’s is rebuilt from the transcripts on your Mac, and the chart says which is which.',
+    description: 'Daily tokens for both agents, over 7, 30 or 90 days.',
     color: 'cyan',
     href: '/docs/the-window',
   },
   {
     icon: IconBellRinging,
     title: 'It speaks first',
-    description:
-      'About what the menu bar cannot show: a window heading for empty before it resets, with the reset named beside it; an agent with nothing left; one that is ready again; a reading that stopped moving. Once, when it changes — never the number already on your bar.',
+    description: 'Only about what the menu bar cannot already show.',
     color: 'pink',
     href: '/docs/alerts',
   },
@@ -346,16 +335,17 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           />
 
           {/*
-            Three across, not four. It was chosen when there were nine cards
-            and 3x3 was exact; the pace card made it TEN in v0.4, so the grid
-            is now 3 + 3 + 3 + 1 and the last row carries one card alone.
-            That is tolerable only because the orphan is the `Next`-badged
-            roadmap teaser, which is a different kind of card from the nine
-            above it and reads as a closing note rather than as a gap. Add an
-            eleventh shipped feature and this stops being true: either add a
-            twelfth or the orphan becomes a real one. Count them before
-            deciding — the comment here asserted nine for a day after there
-            were ten.
+            Three across, eleven cards: 3 + 3 + 3 + 2. Count them before
+            deciding anything about the last row — this comment asserted nine
+            cards and a `Next` teaser for days after neither was true.
+
+            ONE LINE per description, the title carrying the claim and the
+            card linking to the page that explains it (2026-09-25; they ran
+            22 to 53 words and this block was 1372px of a 12052px page at
+            1440). The budget at three columns is about 314px, roughly fifty
+            characters, and a card that wraps stretches its whole row, so one
+            long line undoes the other two. Measure a new or edited line at
+            1440 and at 390 rather than counting characters.
           */}
           <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
             {features.map((feature) => (
