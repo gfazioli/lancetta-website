@@ -86,7 +86,7 @@ const frames: Frame[] = [
     alt: 'A Lancetta card for Claude: the five-hour window at 3% with the line “3% in 31m · at this pace 29% by reset” under it, the weekly window at 6% with “6% in 4 days · at this pace 9% by reset”, and its separate Fable limit at 0%',
     eyebrow: 'What nothing else can say',
     title: 'The number you can already see is not the useful one.',
-    body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is whether this pace empties the window before it resets. Lancetta says it under the bar it is about, in the same place every time, amber only when the window would run out early — because a line that appears only in trouble is one nobody has learnt to read by the time it matters. It can say it because it keeps a series of its own readings; the field keeps the ceiling and the flow and no history at all.',
+    body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is whether this pace empties the window before it resets. Lancetta says it under the bar, in the same place every time — amber only when the window would run out early.',
     figures: [
       { value: '7 days', label: 'the window that actually hurts' },
       { value: '1,890', label: 'readings that settled the rule' },
@@ -110,7 +110,7 @@ const frames: Frame[] = [
     eyebrow: 'Next',
     next: true,
     title: 'The rhythm it has not learnt yet.',
-    body: 'Today the projection is this window\u2019s own rate \u2014 what you have spent since it opened, carried forward. It does not know that you start at nine, that Thursday is your long day, or that you never touch it at the weekend. The readings are already being kept. What comes next is reasoning from them: an average across your own days, so the app can say when to start, what a normal afternoon costs you, and when you will probably stop \u2014 advice from your history rather than from the last two hours.',
+    body: 'Today the projection is this window\u2019s own rate, carried forward. It does not know that you start at nine, or that you never touch it at the weekend. Next, it will reason from the readings it already keeps \u2014 an average across your own days \u2014 to say when to start, and when you will probably stop.',
     href: '/docs/roadmap',
     linkLabel: 'What is planned, and what it has to prove',
   },
@@ -119,7 +119,7 @@ const frames: Frame[] = [
     alt: 'The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total',
     eyebrow: 'What nothing else reaps',
     title: 'Nobody ever closes them.',
-    body: 'Every folder an agent works in leaves a background tree behind, and one whose folder is gone will never be shut down by anything — not by the agent, not by the terminal you closed, not by macOS. Lancetta is the only one of these monitors that finds them, and it shows you the list before it closes a single thing on it.',
+    body: 'Every folder an agent works in leaves a background tree behind, and one whose folder is gone is never shut down — not by the agent, not by the terminal, not by macOS. Lancetta is the only one of these monitors that finds them, and it shows you the list before it closes anything.',
     figures: [
       { value: '28', label: 'trees on one Mac' },
       { value: '2.68 GB', label: 'held between them' },
@@ -138,31 +138,22 @@ const frames: Frame[] = [
     linkLabel: 'How the island works',
   },
   {
+    /*
+     * ONE frame for the window since 2026-09-25, where there were three — this
+     * one, "The history." (the Usage pane) and "Live, or seen a moment ago."
+     * (Limits) — to shorten the page; the feature row below names both, and
+     * the docs carry their pictures. Not a pane switcher in one box: the Limits
+     * capture is 1800x1400 against 1800x1256 for the other two, so the window
+     * would visibly grow on the switch, which is the complaint the Screenshots
+     * section of CLAUDE.md records twice. Re-shoot the set first.
+     */
     src: '/screenshot-window-overview.png',
     alt: 'The Lancetta window: the daily token series for both agents side by side, and both agents’ quota bars underneath',
     eyebrow: 'When a glance is not enough',
     title: 'The window.',
-    body: 'Command-O for the rest: daily tokens over weeks, each agent in detail, and the background processes the agents have left running.',
+    body: 'Command-O for the rest: daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, and the processes the agents have left running.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
-  },
-  {
-    src: '/screenshot-window-usage.png',
-    alt: 'The Usage pane: thirty days of tokens for both agents side by side, with the lifetime total, the best day and the streaks underneath',
-    eyebrow: 'Where the tokens went',
-    title: 'The history.',
-    body: 'The same chart over 7, 30 or 90 days, with the lifetime total and the streaks under it. Codex publishes its own history; Claude’s is rebuilt from the transcripts on your Mac.',
-    href: '/docs/the-window#usage',
-    linkLabel: 'What the chart can and cannot say',
-  },
-  {
-    src: '/screenshot-window-limits.png',
-    alt: 'The Limits pane of the Lancetta window: Claude Code and Codex, both live. Claude’s 5-hour and 7-day bars each carry the line saying where the window ends at the current rate, with the rate and the readings behind it, and its separate Fable limit sits below; Codex, spent for the week, shows the free reset it holds, with a Use… button',
-    eyebrow: 'In detail',
-    title: 'Live, or seen a moment ago.',
-    body: 'Two agents, every window, the reset time for each — and beside every reading, when it was last true. A number with no timestamp is a number you cannot trust.',
-    href: '/docs/how-it-reads',
-    linkLabel: 'How it reads each agent',
   },
 ];
 
