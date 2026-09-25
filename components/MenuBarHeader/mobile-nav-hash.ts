@@ -3,9 +3,9 @@
  *
  * Nextra closes its mobile nav on a ROUTE CHANGE, and a hash on the page you
  * are already on is not one. So on the home page every entry in `app/_meta.tsx`
- * that points at an anchor — `features` (`/#features`) and `sponsor`
- * (`#sponsors`) — scrolls the page correctly and then leaves the panel sitting
- * over it, which from the reader's side is a tap that did nothing.
+ * that points at an anchor — today `features` (`/#features`) — scrolls the page
+ * correctly and then leaves the panel sitting over it, which from the reader's
+ * side is a tap that did nothing.
  *
  * Measured on lancetta.app 2026-09-21 at 390x844, by driving a real click
  * through the DevTools protocol: `scrollY` went 0 to 7269 with `#features` at
