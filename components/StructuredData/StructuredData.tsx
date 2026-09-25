@@ -124,7 +124,7 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
   {
     question: 'Can I refresh Claude on demand, like Codex?',
     answer:
-      'Yes, once it is connected: one click in the menu, and macOS asks once whether Lancetta may read the sign-in Claude Code keeps. From then on Claude answers an account read the way Codex does, on the same interval and on Refresh now. Through the status-line file instead, the numbers arrive when a session renders one, and the card shows how old they are rather than pretending to be live.',
+      'Yes, once it is connected: one click in the menu, and Lancetta reads the sign-in Claude Code keeps the way Claude Code does, with normally no dialog to answer. From then on Claude answers an account read the way Codex does, on the same interval and on Refresh now. Through the status-line file instead, the numbers arrive when a session renders one, and the card shows how old they are rather than pretending to be live.',
   },
   {
     question: 'What happens when a reading goes stale?',
