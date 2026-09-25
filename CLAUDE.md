@@ -333,9 +333,13 @@ the window's Overview, Usage, Limits and Processes panes, and every Settings
 pane: General, Appearance, Notch, Agents, both agent pages, Updates and About.
 
 **The four window panes are ONE SET, shot at ONE window size, in one run.** The
-hero shows them in the same box, one per frame, cross-fading in place, so a
-capture of a different size is drawn at a different scale -- and the reader sees
-the window change size as they scroll. It was reported twice. The three panes
+hero showed them in the same box, one per frame, cross-fading in place, so a
+capture of a different size was drawn at a different scale -- and the reader saw
+the window change size as they scrolled. It was reported twice. **The set is
+broken again today**: the Limits pane re-shot on 2026-09-23 is 1800x1400 against
+1800x1256 for Overview and Usage, which is why the hero now carries Overview
+alone and has no pane switcher (2026-09-25). Re-shoot all four before putting
+two of them in one box again. The three panes
 published before 2026-09-19 were 588 points tall and the app will not open below
 **628** any more, so they showed a window that can no longer exist; padding them
 onto a common canvas fixed the scale and left the windows visibly different
@@ -653,6 +657,19 @@ one command that settles which state this file is describing.
 one `<section>` per surface, laid out as a two-column grid that alternates
 sides. Adding one is a row in the `frames` array, and its `reading` is read OFF
 its own screenshot (see the comment above `heroReading`).
+
+**The page was cut by a sixth on 2026-09-25**, and the length is now something
+to measure before adding to it. It was 12,052px at 1440 (18,030 at 390) and had
+moved 1.3% since a "shorter home" was proposed on 2026-09-23 — proposed after
+blume.codes, dropped from the plan without anyone saying so. Now 10,018 (13,967
+at 390): the eleven feature cards are one line each in a full-width marquee
+(`Welcome/FeatureMarquee.tsx`, which says what it adds to the component for the
+keyboard, screen readers and reduced motion), and the hero is five frames, not
+seven — the window, the history and the limits became one. What is still long,
+at 1440: the FAQ (1254), the roadmap (938), "costs nothing" (777), the problem
+(725) and the solution (621), some of which repeat what the hero already says.
+The number is `document.documentElement.scrollHeight` through
+`scripts/pageeval.swift` at 1440 and at 390.
 
 It was a pinned stage from 2026-09-19 to 2026-09-20 — a tall track sized in
 `svh`, a viewport-high sticky stage, five absolutely-positioned artifacts
