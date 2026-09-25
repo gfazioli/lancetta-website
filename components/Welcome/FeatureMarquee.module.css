@@ -1,0 +1,35 @@
+/*
+ * The marquee's animated copies read `--marquee-play-state`, which the
+ * component writes inline on its root. Declaring it on the root's first child
+ * (the track holding the copies) is what reaches them, so a keyboard focus
+ * inside pauses the row exactly the way the pointer does.
+ */
+.marquee:focus-within > div {
+  --marquee-play-state: paused;
+}
+
+/*
+ * One card in the row: a fixed width, so eleven of them make one track. 360
+ * leaves the text 320 once the card's padding is taken, and the widest
+ * description measured 310 at three columns — so each still fits one line.
+ */
+.item {
+  flex: none;
+  width: rem(360px);
+}
+
+/*
+ * No motion: the component already stops the animation; show one copy, and
+ * let the row scroll by hand so every card can still be reached. Doubled
+ * class to outrank the component's own `overflow: hidden` whatever the order
+ * the two stylesheets load in.
+ */
+@media (prefers-reduced-motion: reduce) {
+  .marquee.marquee {
+    overflow-x: auto;
+  }
+
+  .marquee > div > div:not(:first-child) {
+    display: none;
+  }
+}
