@@ -352,6 +352,12 @@ the app repo. `-claudeAccountConnected 0` in the ARGUMENT domain turns the
 account route off for that process alone, so no launch reads the keychain and no
 macOS dialog lands in front of the user -- the Claude card falls back to the
 status-line file, which is the route the published Limits capture already shows.
+**That pin makes the launch a TEST LAUNCH (Lancetta#54), so add
+`LANCETTA_CAPTURE=1`**: without it the Claude card draws Connect disabled, with
+"Off in a test launch: ..." beside it -- a sentence no user ever sees, on the
+panel and in Limits alike. With it the buttons are drawn as a user sees them and
+stay inert. The Settings set is unaffected: it is shot from the INSTALLED app,
+with no hatch and no pin (below).
 And `LANCETTA_DEMO_TREES=1` draws an invented process table, because every row of
 the Processes pane is a working directory and on a real Mac those are the
 developer's own folders. Measured 2026-09-19: four launches, zero
