@@ -1,6 +1,7 @@
 'use client';
 
 import type { CSSProperties } from 'react';
+import { FeatureMarquee, featureMarqueeItem } from './FeatureMarquee';
 import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
 import {
@@ -333,58 +334,55 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
             title="An instrument, not a dashboard"
             lead="It has one job: tell you what you can still do, honestly, without being asked and without costing anything to ask."
           />
-
-          {/*
-            Three across, eleven cards: 3 + 3 + 3 + 2. Count them before
-            deciding anything about the last row — this comment asserted nine
-            cards and a `Next` teaser for days after neither was true.
-
-            ONE LINE per description, the title carrying the claim and the
-            card linking to the page that explains it (2026-09-25; they ran
-            22 to 53 words and this block was 1372px of a 12052px page at
-            1440). The budget at three columns is about 314px, roughly fifty
-            characters, and a card that wraps stretches its whole row, so one
-            long line undoes the other two. Measure a new or edited line at
-            1440 and at 390 rather than counting characters.
-          */}
-          <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
-            {features.map((feature) => (
-              <Paper
-                key={feature.title}
-                component={Link}
-                href={feature.href}
-                p="lg"
-                className={`${classes.featureCard} ${classes.cardLink}`}
-                style={
-                  { '--card-color': `var(--mantine-color-${feature.color}-6)` } as CSSProperties
-                }
-              >
-                {feature.badge && (
-                  <Badge className={classes.newBadge} variant="filled" size="sm" radius="sm">
-                    {feature.badge}
-                  </Badge>
-                )}
-                <Stack gap={10} align="flex-start">
-                  <ThemeIcon
-                    size={48}
-                    radius="md"
-                    color={feature.color}
-                    variant="light"
-                    className={classes.featureIcon}
-                  >
-                    <feature.icon size={26} />
-                  </ThemeIcon>
-                  <Text fw={700} fz={18}>
-                    {feature.title}
-                  </Text>
-                  <Text c="dimmed" size="sm" lh={1.55}>
-                    {feature.description}
-                  </Text>
-                </Stack>
-              </Paper>
-            ))}
-          </SimpleGrid>
         </Container>
+
+        {/*
+          ONE ROW, full width, scrolling (2026-09-25). This block was a grid of
+          eleven cards, 1372px of a 12052px page at 1440, whose descriptions
+          ran 22 to 53 words. Each is now one line — the title carries the
+          claim and the card links to the page that explains it — and the row
+          is a marquee that stops under the pointer; FeatureMarquee says what
+          it had to add for the keyboard, screen readers and reduced motion.
+
+          A description is ONE line in a 360px card: about 320px of text, and
+          the widest today measures 310. Measure a new or edited one rather
+          than counting characters.
+        */}
+        <FeatureMarquee>
+          {features.map((feature) => (
+            <Paper
+              key={feature.title}
+              component={Link}
+              href={feature.href}
+              p="lg"
+              className={`${classes.featureCard} ${classes.cardLink} ${featureMarqueeItem}`}
+              style={{ '--card-color': `var(--mantine-color-${feature.color}-6)` } as CSSProperties}
+            >
+              {feature.badge && (
+                <Badge className={classes.newBadge} variant="filled" size="sm" radius="sm">
+                  {feature.badge}
+                </Badge>
+              )}
+              <Stack gap={10} align="flex-start">
+                <ThemeIcon
+                  size={48}
+                  radius="md"
+                  color={feature.color}
+                  variant="light"
+                  className={classes.featureIcon}
+                >
+                  <feature.icon size={26} />
+                </ThemeIcon>
+                <Text fw={700} fz={18}>
+                  {feature.title}
+                </Text>
+                <Text c="dimmed" size="sm" lh={1.55}>
+                  {feature.description}
+                </Text>
+              </Stack>
+            </Paper>
+          ))}
+        </FeatureMarquee>
       </Box>
 
       {/* The founding constraint */}
