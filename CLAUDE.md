@@ -457,7 +457,7 @@ two byte-identical PNGs waiting to disagree. The alt text is
 
 **Check what is actually set before assuming.** Uploading is a separate step
 from committing, and it was skipped once: on 2026-09-25 the repo still
-previewed as the mockup below, eight days after the correct image had been
+previewed as the mockup below, a week after the correct image had been
 committed. The one found on this repo on 2026-09-17 was a mockup of a product
 Lancetta is not: "842,320 tokens" over a
 weekly bar chart with "OpenAI" as a provider rather than Codex, and an axis
