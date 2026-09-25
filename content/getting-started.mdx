@@ -29,7 +29,7 @@ That question costs no tokens. It is an account read, not a model turn; see [How
 
 One click. Open the panel and, under Claude, choose **Connect Claude Code…** (it is also in Settings › Agents › Claude). Lancetta reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left — the question Claude Code's own `/usage` asks. It reads that sign-in the way Claude Code itself does, through macOS's own `security` tool, so there is normally no dialog to answer.
 
-Claude Code rewrites its sign-in every time it renews it, and Lancetta reads the new one by itself: no Reconnect, no dialog. If your login keychain is locked, Lancetta reads nothing and says so, and the card clears by itself at the next reading after the keychain is unlocked; **Refresh now** reads it straight away. If the route is closed for any other reason, Lancetta has to ask macOS directly, and it only does that when you choose Connect: a background read never raises a dialog, and neither does Refresh now. The card offers **Reconnect** instead; choose **Always Allow** when macOS asks.
+Claude Code rewrites its sign-in every time it renews it, and Lancetta reads the new one by itself: no Reconnect, no dialog. If your login keychain is locked, Lancetta reads nothing and says so, and tries again by itself at the next reading once you unlock it (Keychain Access does); **Refresh now** tries straight away. If the route is closed for any other reason, Lancetta has to ask macOS directly, and it only does that when you choose Connect: a background read never raises a dialog, and neither does Refresh now. The card offers **Reconnect** instead; choose **Always Allow** when macOS asks.
 
 What that click does, and does not do:
 
