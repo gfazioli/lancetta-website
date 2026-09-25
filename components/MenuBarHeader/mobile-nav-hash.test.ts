@@ -25,7 +25,8 @@ describe('isSamePageHashInMobileNav', () => {
   });
 
   it('closes it for a bare fragment too', () => {
-    // `sponsor` inside the Support menu is written `#sponsors`, with no path.
+    // No entry is written this way today: `sponsor` was `#sponsors` until it
+    // went to GitHub Sponsors (2026-09-25). The next anchor may well be.
     const body = mount('<aside class="nextra-mobile-nav"><a href="#sponsors">Sponsor</a></aside>');
     expect(isSamePageHashInMobileNav(body.querySelector('a'), HOME)).toBe(true);
   });
