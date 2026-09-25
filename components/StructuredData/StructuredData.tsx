@@ -67,7 +67,7 @@ export function SoftwareApplicationJsonLd() {
         operatingSystem: `macOS ${config.app.minMacOS}+`,
         url: `${SITE}/`,
         softwareVersion: config.app.version,
-        image: `${SITE}/opengraph-image.png`,
+        image: `${SITE}/opengraph-image.jpg`,
         screenshot: `${SITE}/screenshot-menu-dark.png`,
         offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
         publisher: { '@id': `${SITE}/#organization` },

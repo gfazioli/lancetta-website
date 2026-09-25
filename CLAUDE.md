@@ -445,11 +445,21 @@ preview** is not: there is no field for it in the repo object and no `gh`
 command, so it is a drag-and-drop in Settings → General → Social preview and
 nothing in this repo can assert what is currently there.
 
-`/.github/social-preview.png` is the image that belongs there, 1280×640, built
-from the real mark and a real capture of the menu.
+`/.github/social-preview.jpg` is the image that belongs there, 1280×640. It and
+`app/opengraph-image.jpg` are both derived from ONE master,
+`scripts/social-card.png` (the designed card, 2:1, supplied by the user on
+2026-09-25), by `swift scripts/social.swift .` — edit the master and re-run,
+never the outputs. There is deliberately no `twitter-image` file: with none,
+Next copies the Open Graph image into `twitter:image`, and the last pair were
+two byte-identical PNGs waiting to disagree. The alt text is
+`app/opengraph-image.alt.txt`, which Next turns into `og:image:alt` and
+`twitter:image:alt`; change it with the picture.
 
-**Check what is actually set before assuming.** The one found on this repo on
-2026-09-17 was a mockup of a product Lancetta is not: "842,320 tokens" over a
+**Check what is actually set before assuming.** Uploading is a separate step
+from committing, and it was skipped once: on 2026-09-25 the repo still
+previewed as the mockup below, eight days after the correct image had been
+committed. The one found on this repo on 2026-09-17 was a mockup of a product
+Lancetta is not: "842,320 tokens" over a
 weekly bar chart with "OpenAI" as a provider rather than Codex, and an axis
 reading Mon Tue Wed Thu Fri Fri Sat Sun — eight bars for seven days. It is the
 image every link to this repo previews as, so it is marketing copy and the same
