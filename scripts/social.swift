@@ -13,18 +13,18 @@ import UniformTypeIdentifiers
 // Settings → General → Social preview).
 //
 // There is no twitter-image file any more, on purpose: with none, Next copies
-// the Open Graph image into twitter:image (`inheritFromMetadata` in
+// the Open Graph image into twitter:image (`postProcessMetadata` in
 // next/dist/lib/metadata/resolve-metadata.js), so X gets the same card and
 // there is no second copy to forget. The last pair were byte-identical PNGs.
 //
 // JPEG, not PNG: the card is gradients and a photograph of a laptop, and the
-// PNG it replaced weighed 870 KB at 1200x630. At quality 0.88 this one is a
-// few hundred KB less, and link-preview clients are known to drop large ones.
+// PNG it replaced weighed 870 KB at 1200x630. At quality 0.88 this one is
+// about 185 KB.
 //
 // 1200x630 is 1.905:1 against the master's 2:1, so the master is scaled to
 // cover and the surplus width is cut a third from the left and two thirds from
-// the right: the feature labels sit close to the left edge, and a centred cut
-// took the margin they had.
+// the right, because the feature labels sit close to the left edge and a
+// centred cut would take more of their margin.
 //
 // This used to DRAW the cards from the icon and a menu capture. It is still
 // committed rather than recreated per session for the reason that version gave:
