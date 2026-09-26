@@ -17,11 +17,23 @@ It is a normal window and it closes like one. Closing it quits nothing — the m
 
 ## Overview
 
-Three cards, in the order you would ask the questions in:
+Four cards, in the order you would ask the questions in:
 
 - **Total Usage** — tokens over the last seven days, one bar per agent per day, with a chooser for either agent alone or both.
-- **Quota Used** — both agents, one bar each, with a pair of buttons for the 5-hour or the 7-day window; both are on screen, so switching is one click either way, and the one you leave it on is the one you come back to. The title follows the setting that decides what the bars are filled with, so it reads *Quota Left* when you are counting down.
+- **Quota Used** — every agent on one row, its 5-hour and 7-day windows side by side: the figure, the bar, the time to the reset and, when there is something worth saying, where the window is heading at this pace. A model with a weekly limit of its own is drawn under its agent. It gives the numbers and never a verdict — whether one agent can take over what the other is in the middle of is yours to know. The title follows the setting that decides what the bars are filled with, so it reads *Quota Left* when you are counting down.
+- **Last week** — the week that just ended, per agent. See [below](#last-week).
 - **Processes** — how many background trees are running, what they are holding, and how many of them nothing will ever close.
+
+### Last week
+
+Lancetta keeps a record of the quota it reads — each change, and a line every fifteen minutes while nothing moves — so it can tell you what the week that just ended did. Each agent's own **weekly window**, not a calendar week: Claude's and Codex's turn over on different days, so each agent's lines say which days they cover.
+
+- **Weekly** — when it ran out and when it was back (*Spent Thursday 24 at 14:10, back Saturday 26 at 09:00*), or the highest it reached. If Lancetta was not reading at the moment it ran out, you get the range it happened in, never a guess at a minute inside it.
+- **5-hour** — how many 5-hour windows reached 100%, and how long they held you up in all, counted to each window's reset.
+- **Not seen** — how much of the week had no reading at all: the Mac asleep, the app quit, or the agent not answering. Time nobody read is said as such and never counted as a quiet hour.
+- One line against **the week before**, once there is a whole one to compare with.
+
+It needs one whole week. Until Lancetta has read a week from its start, the card says when the first whole one ends rather than passing a few days off as a week. Codex's week begins with your first request after a reset, so a Codex you have not touched shows *No quota used since …* — and only when Lancetta read it often enough to know. It says what happened and never what you should have done about it. It is a card and not a notification on purpose: nothing in a look back is urgent.
 
 ## Usage
 
