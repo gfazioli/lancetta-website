@@ -19,7 +19,7 @@ ln -s /Applications/Lancetta.app/Contents/MacOS/Lancetta ~/.local/bin/lancetta
 
 ## It never reads an agent itself
 
-The app rewrites the document after every read, once a refresh interval (45 seconds unless you changed it in Settings), and whenever the agents it shows change. The command prints it. So the command never touches the keychain, never puts up a dialog, and never sends a request to either account. The price is that it is only as fresh as the app's last read, and it moves only while the app is running. That is why every reading carries its own `observedAt`, and the document its `writtenAt`: a consumer can tell a held number from a fresh one, and a `writtenAt` more than a few refresh intervals old means the app has stopped.
+The app rewrites the document after every read, once a refresh interval (45 seconds unless you changed it in Settings), and whenever the agents it shows change. The command prints it. So the command never touches the keychain, never puts up a dialog, and never sends a request to either account. The price is that it is only as fresh as the app's last read, and it moves only while the app is running. That is why every reading carries its own `observedAt`, and the document its `writtenAt`: a consumer can tell a held number from a fresh one, and a `writtenAt` more than a few refresh intervals old means the app has stopped reading: it has quit, or one of its own alerts is waiting for an answer.
 
 If Lancetta has not read anything since it was installed, the command says so on standard error and exits with status 1.
 
@@ -90,7 +90,7 @@ Three rules hold everywhere in it:
 
 ## Exit status
 
-`0` when it printed the document; `1` when there is none yet; `74` when the file cannot be read (a permission, say) or standard output will not take it; `64` for anything else. A mistyped command is refused, never launched: `lancetta Usage --json`, `lancetta -v` or `lancetta --version` exits `64` instead of starting a second copy of the app. `lancetta --help` prints the usage on standard output.
+`0` when it printed the document; `1` when there is none yet; `74` when the file cannot be read (a permission, say) or standard output will not take it; `64` for anything else. A mistyped command is refused rather than launched: `lancetta Usage --json`, `lancetta -v`, `lancetta -usage -json` or `lancetta --version` exits `64` instead of starting a second copy of the app. `lancetta --help` prints the usage on standard output.
 
 ## Example: a tmux or SketchyBar strip
 
