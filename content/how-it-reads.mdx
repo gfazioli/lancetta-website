@@ -51,16 +51,24 @@ Before 0.3 the only way in was a file: Claude Code hands its status-line command
 
 ```sh
 # in your status-line script, immediately after you read stdin:
-mkdir -p ~/.cache/claude-statusline
-printf '%s' "$input" | /usr/bin/jq -c \
-  '{rate_limits, observed_at: (now | todate)}' \
-  > ~/.cache/claude-statusline/claude-limits.json
+dir="$HOME/.cache/claude-statusline"; mkdir -p "$dir"
+line=$(printf '%s' "$input" | /usr/bin/jq -c '.rate_limits as $r
+  | select($r.five_hour.used_percentage != null)
+  | {observed_at: (now | floor),
+     five_hour: {used_percent: $r.five_hour.used_percentage,
+                 resets_at: $r.five_hour.resets_at},
+     seven_day: {used_percent: $r.seven_day.used_percentage,
+                 resets_at: $r.seven_day.resets_at}}')
+[ -n "$line" ] && printf '%s\n' "$line" > "$dir/claude-limits.json.tmp" \
+  && mv -f "$dir/claude-limits.json.tmp" "$dir/claude-limits.json"
 ```
+
+It writes through a temporary file, so Lancetta never reads half of one. If you set this up from an earlier version of this page, replace that line: it wrote the windows in a shape the app does not read, and the card showed them as unknown.
 
 Two things about it, because Lancetta shows both rather than hiding them:
 
 - **The card is only as fresh as your last rendered session.** If nothing has rendered a status line for two hours, the reading is two hours old, and the panel says so.
-- **The file is a shared slot.** Every Claude Code session that renders writes it, so two sessions can disagree. Lancetta prefers a complete older reading over a fresher partial one.
+- **The file is a shared slot.** Every Claude Code session that renders writes it, so two sessions can disagree. The line above writes only when the payload carries the five-hour window, so a session that sees just the weekly one does not replace a complete reading with a partial one.
 
 With the account connected, the file is not read at all.
 
