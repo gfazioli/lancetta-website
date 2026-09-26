@@ -233,16 +233,16 @@ const today: Step[] = [
     color: 'indigo',
     state: 'today',
   },
-];
-
-const ahead: Step[] = [
   {
     icon: IconCalendarWeek,
     title: 'Last week',
-    body: 'It will look back at the week that just ended: when each weekly window ran out, and how often the five-hour one stopped you.',
+    body: 'The week that just ended: when each weekly window ran out, how often the five-hour one stopped you, and the hours nobody read.',
     color: 'grape',
-    state: 'soon',
+    state: 'today',
   },
+];
+
+const ahead: Step[] = [
   {
     icon: IconDeviceLaptop,
     title: 'Everyone else’s Mac',
