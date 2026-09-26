@@ -14,6 +14,7 @@ import {
   IconHelpCircle,
   IconAlertTriangle,
   IconBellRinging,
+  IconTerminal2,
 } from '@tabler/icons-react';
 
 // Sidebar entry with a leading icon. The icon inherits `currentColor`, so it
@@ -48,6 +49,7 @@ export default {
   memory: nav(IconTrash, 'Processes left behind', 'indigo'),
   '---reference': { type: 'separator', title: 'Reference' },
   settings: nav(IconSettings, 'Settings'),
+  'command-line': nav(IconTerminal2, 'Command line'),
   privacy: nav(IconLock, 'Privacy'),
   troubleshooting: nav(IconAlertTriangle, 'Troubleshooting', 'red'),
   '---resources': { type: 'separator', title: 'Resources' },
