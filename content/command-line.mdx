@@ -19,7 +19,7 @@ ln -s /Applications/Lancetta.app/Contents/MacOS/Lancetta ~/.local/bin/lancetta
 
 ## It never reads an agent itself
 
-The app writes the document every time a reading changes, and the command prints it. So the command never touches the keychain, never puts up a dialog, and never sends a request to either account. The price is that it is only as fresh as the app's last reading, and it moves only while the app is running. That is why every reading carries its own `observedAt`, and the document its `writtenAt`: a consumer can tell a held number from a fresh one, and a running app from one that has stopped.
+The app rewrites the document after every read, once a refresh interval (45 seconds unless you changed it in Settings), and whenever the agents it shows change. The command prints it. So the command never touches the keychain, never puts up a dialog, and never sends a request to either account. The price is that it is only as fresh as the app's last read, and it moves only while the app is running. That is why every reading carries its own `observedAt`, and the document its `writtenAt`: a consumer can tell a held number from a fresh one, and a `writtenAt` more than a few refresh intervals old means the app has stopped.
 
 If Lancetta has not read anything since it was installed, the command says so on standard error and exits with status 1.
 
@@ -69,7 +69,7 @@ If Lancetta has not read anything since it was installed, the command says so on
 | `writtenAt` | When the app last wrote the document. |
 | `agents` | Every agent the app is watching, in the order it draws them. |
 | `agent`, `route` | The agent, and the route its numbers came through — or, beside a `problem`, the route that failed: `appServer` for Codex; `account` or `statusLine` for Claude, and `unwired` while it is connected to neither. |
-| `reading` | The last reading, or `null` when there is none. With `problem` also `null`, the app has not heard from that agent since it started; that lasts until the agent first answers, usually a second or two after launch. |
+| `reading` | The last reading, or `null` when there is none. With `problem` also `null`, the app has not heard from that agent since it started; that lasts until the agent first answers, usually a second or two after launch or after you turn it on. |
 | `observedAt` | When that reading was taken. |
 | `fiveHour`, `sevenDay` | Each window: `usedPercent` and `resetsAt`. |
 | `plan` | The plan the account reports, or `null`. |
@@ -90,7 +90,7 @@ Three rules hold everywhere in it:
 
 ## Exit status
 
-`0` when it printed the document; `1` when there is none yet; `74` when the file is there but cannot be read, or standard output will not take it; `64` for anything else. A mistyped command is refused, never launched: `lancetta Usage --json` or `lancetta --version` exits `64` instead of starting a second copy of the app. `lancetta --help` prints the usage on standard output.
+`0` when it printed the document; `1` when there is none yet; `74` when the file cannot be read (a permission, say) or standard output will not take it; `64` for anything else. A mistyped command is refused, never launched: `lancetta Usage --json`, `lancetta -v` or `lancetta --version` exits `64` instead of starting a second copy of the app. `lancetta --help` prints the usage on standard output.
 
 ## Example: a tmux or SketchyBar strip
 
