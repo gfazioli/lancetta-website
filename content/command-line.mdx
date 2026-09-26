@@ -68,8 +68,8 @@ If Lancetta has not read anything since it was installed, the command says so on
 | `app` | The version of Lancetta that wrote it. |
 | `writtenAt` | When the app last wrote the document. |
 | `agents` | Every agent the app is watching, in the order it draws them. |
-| `agent`, `route` | The agent, and how its numbers arrived: `appServer` for Codex; `account` or `statusLine` for Claude, and `unwired` while it is connected to neither. |
-| `reading` | The last reading, or `null` when there is none. |
+| `agent`, `route` | The agent, and the route its numbers came through — or, beside a `problem`, the route that failed: `appServer` for Codex; `account` or `statusLine` for Claude, and `unwired` while it is connected to neither. |
+| `reading` | The last reading, or `null` when there is none. With `problem` also `null`, the app has not heard from that agent since it started; that lasts until the agent first answers, usually a second or two after launch. |
 | `observedAt` | When that reading was taken. |
 | `fiveHour`, `sevenDay` | Each window: `usedPercent` and `resetsAt`. |
 | `plan` | The plan the account reports, or `null`. |
@@ -90,7 +90,7 @@ Three rules hold everywhere in it:
 
 ## Exit status
 
-`0` when it printed the document; `1` when there is none yet; `64` for anything else after `usage`. `Lancetta usage --help` prints the usage.
+`0` when it printed the document; `1` when there is none yet; `74` when the file is there but cannot be read, or standard output will not take it; `64` for anything else. A mistyped command is refused, never launched: `lancetta Usage --json` or `lancetta --version` exits `64` instead of starting a second copy of the app. `lancetta --help` prints the usage on standard output.
 
 ## Example: a tmux or SketchyBar strip
 
@@ -111,4 +111,4 @@ lancetta=/Applications/Lancetta.app/Contents/MacOS/Lancetta
   ] | join("  ")'
 ```
 
-Against the document above it prints `Codex 41%`: an agent with no reading is left out. A window nobody has read yet shows as `?`, an agent whose account said no gets ` refused`, and a reading more than ten minutes old gets ` (stale)`.
+Against the document above it prints `Codex 41% (stale)`: that reading is long past, and Claude, with no reading, is left out. A window nobody has read yet shows as `?`, an agent whose account said no gets ` refused`, and a reading more than ten minutes old gets ` (stale)`.
