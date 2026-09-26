@@ -90,7 +90,7 @@ Three rules hold everywhere in it:
 
 ## Exit status
 
-`0` when it printed the document; `1` when there is none yet; `74` when the file cannot be read (a permission, say) or standard output will not take it; `64` for anything else. A mistyped command is refused rather than launched: `lancetta Usage --json`, `lancetta -v`, `lancetta -usage -json` or `lancetta --version` exits `64` instead of starting a second copy of the app. `lancetta --help` prints the usage on standard output.
+`0` when it printed the document; `1` when there is none yet; `74` when the file cannot be read (a permission, say) or standard output will not take it; `64` for anything else typed at a terminal, where it never starts a second copy of the app: `lancetta` alone, `lancetta Usage --json` or `lancetta -v` prints the usage and exits `64`. `lancetta --help` prints the usage on standard output.
 
 ## Example: a tmux or SketchyBar strip
 
