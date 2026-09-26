@@ -50,7 +50,7 @@ A spent window of this kind is **not** an agent with nothing left, and Lancetta 
 Before 0.3 the only way in was a file: Claude Code hands its status-line command a payload that carries the same two windows, and one line in that script writes them where Lancetta can read them. It still works, and it is the route for anyone who would rather not hand the app a keychain item.
 
 ```sh
-# in your status-line script, immediately after you read stdin:
+# in your status-line script, after `input=$(cat)`:
 dir="$HOME/.cache/claude-statusline"; mkdir -p "$dir"
 line=$(printf '%s' "$input" | /usr/bin/jq -c '.rate_limits as $r
   | select($r.five_hour.used_percentage != null)
@@ -59,11 +59,13 @@ line=$(printf '%s' "$input" | /usr/bin/jq -c '.rate_limits as $r
                  resets_at: $r.five_hour.resets_at},
      seven_day: {used_percent: $r.seven_day.used_percentage,
                  resets_at: $r.seven_day.resets_at}}')
-[ -n "$line" ] && printf '%s\n' "$line" > "$dir/claude-limits.json.tmp" \
-  && mv -f "$dir/claude-limits.json.tmp" "$dir/claude-limits.json"
+if [ -n "$line" ]; then
+  printf '%s\n' "$line" > "$dir/claude-limits.json.$$"
+  mv -f "$dir/claude-limits.json.$$" "$dir/claude-limits.json"
+fi
 ```
 
-It writes through a temporary file, so Lancetta never reads half of one. If you set this up from an earlier version of this page, replace that line: it wrote the windows in a shape the app does not read, and the card showed them as unknown.
+It writes through a temporary file of its own, so Lancetta never reads half of one, even when two sessions render at once. If you set this up from an earlier version of this page, replace that line: it wrote the windows in a shape the app does not read, and the card showed them as unknown.
 
 Two things about it, because Lancetta shows both rather than hiding them:
 
