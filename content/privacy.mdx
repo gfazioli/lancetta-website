@@ -33,13 +33,14 @@ Two things in this app are not read-only, and each one happens only after a ques
 
 ## What it writes
 
-Three things, all on this Mac:
+Four things, all on this Mac:
 
 - **Your own preferences** — the refresh interval, the colours and order you gave the agents, which ones are hidden, what each one shows in the menu bar, the notch switch, whether you count up or down, and how many free resets it last saw, so that a new one can be announced — in the standard macOS preferences location for the app.
 - **The series of its own readings**, in `~/Library/Application Support/Lancetta/history.jsonl`: for each reading, when it was taken, which agent, both windows' percentages and resets, the plan, the route it arrived by and the free resets held. It is what the pace line reasons from, and it never leaves your Mac.
 - **A cache of Claude's token counts**, `claude-usage-cache.json` beside it: per transcript file, its size and date and the tokens of each reply by day, so the chart does not re-read every transcript each time. File paths and numbers, never text.
+- **The last reading of each agent**, `usage.json` beside it: what [`Lancetta usage --json`](/docs/command-line) prints — each agent's numbers, the plan, the route they came by, and the problem when there is one, whose detail can name a file in your home folder or quote the error an agent returned. Rewritten after every read; nothing reads it but that command and whatever you point at it.
 
-Deleting that folder costs you the series the pace line learns from; the cache is rebuilt on the next read.
+Deleting that folder costs you the series the pace line learns from; the cache and the last readings are written again on the next read.
 
 ## What it sends
 

@@ -1,0 +1,114 @@
+---
+title: "The command line: Lancetta usage --json"
+description: "Lancetta usage --json prints what Lancetta last read for each agent as one JSON document, for a tmux line, SketchyBar or anything that can run a command."
+---
+
+# The command line
+
+`Lancetta usage --json` prints what Lancetta last read for each agent, as one JSON document: for a tmux status line, SketchyBar, a desk display, or anything else that can run a command.
+
+```sh
+/Applications/Lancetta.app/Contents/MacOS/Lancetta usage --json
+```
+
+To type it as `lancetta`, link it into any directory on your `PATH`:
+
+```sh
+ln -s /Applications/Lancetta.app/Contents/MacOS/Lancetta ~/.local/bin/lancetta
+```
+
+## It never reads an agent itself
+
+The app rewrites the document after every read, once a refresh interval (45 seconds unless you changed it in Settings), and whenever the agents it shows change. The command prints it. So the command never touches the keychain, never puts up a dialog, and never sends a request to either account. The price is that it is only as fresh as the app's last read, and it moves only while the app is running. That is why every reading carries its own `observedAt`, and the document its `writtenAt`: a consumer can tell a held number from a fresh one, and a `writtenAt` more than a few refresh intervals old means the app has stopped reading: it has quit, or one of its own alerts is waiting for an answer.
+
+If Lancetta has not read anything since it was installed, the command says so on standard error and exits with status 1.
+
+## The document
+
+```json
+{
+  "schema": 1,
+  "app": "0.12.0",
+  "writtenAt": 1790400000,
+  "agents": [
+    {
+      "agent": "Codex",
+      "route": "appServer",
+      "reading": {
+        "observedAt": 1790400000,
+        "fiveHour": { "usedPercent": 41, "resetsAt": 1790417000 },
+        "sevenDay": { "usedPercent": 12.5, "resetsAt": 1790946000 },
+        "plan": "pro",
+        "blocked": false,
+        "blockedBucket": null,
+        "models": [],
+        "resetCreditsAvailable": 1
+      },
+      "problem": null
+    },
+    {
+      "agent": "Claude",
+      "route": "account",
+      "reading": null,
+      "problem": {
+        "code": "CLAUDE-9",
+        "title": "Claude's account asked for a pause",
+        "message": "Claude's account asked for a pause. Lancetta reads again in 1 minute.",
+        "detail": "HTTP 429, waiting 60 s",
+        "state": true
+      }
+    }
+  ]
+}
+```
+
+| Field | What it is |
+|---|---|
+| `schema` | The version of this shape. See [what may change](#what-may-change). |
+| `app` | The version of Lancetta that wrote it. |
+| `writtenAt` | When the app last wrote the document. |
+| `agents` | Every agent the app is watching, in the order it draws them. |
+| `agent`, `route` | The agent, and the route its numbers came through — or, beside a `problem`, the route that failed: `appServer` for Codex; `account` or `statusLine` for Claude, and `unwired` while it is connected to neither. |
+| `reading` | The last reading, or `null` when there is none. With `problem` also `null`, the app has not heard from that agent since it started; that lasts until the agent first answers, usually a second or two after launch or after you turn it on. |
+| `observedAt` | When that reading was taken. |
+| `fiveHour`, `sevenDay` | Each window: `usedPercent` and `resetsAt`. |
+| `plan` | The plan the account reports, or `null`. |
+| `blocked`, `blockedBucket` | Whether the account refused, and the bucket that did when it has a name worth saying. Read this before the percentages: a refused account can still show a comfortable one. |
+| `models` | Windows the account reports for one model each: `id`, `label`, `group`, `usedPercent`, `resetsAt`. Empty when none are reported, which is always the case on the status-line route. |
+| `resetCreditsAvailable` | Codex's free resets; `null` for an agent that has none. |
+| `problem` | Why there is no reading, as the entry in [Troubleshooting](/docs/troubleshooting): `code`, `title`, `message`, `detail`, and `state` — `true` for a state that clears by itself or waits for a click, `false` for a fault. |
+
+Three rules hold everywhere in it:
+
+- **`usedPercent` is what has been used**, whatever the app is set to show. What is left is 100 minus it.
+- **An unknown is `null`, never `0`.** A `0` is a reading.
+- **Times are Unix epoch seconds**, the same unit as Claude Code's own status-line payload.
+
+## What may change
+
+`schema` changes only when a field is removed, renamed or changes meaning. A new field can appear in any version, so ignore the keys you do not know.
+
+## Exit status
+
+`0` when it printed the document; `1` when there is none yet; `74` when the file cannot be read (a permission, say) or standard output will not take it; `64` for anything else. Run from a shell (a terminal, a script, an agent), it never starts a second copy of the app: `lancetta` alone, `lancetta Usage --json` or `lancetta -v` prints the usage and exits `64`. `lancetta --help` prints the usage on standard output.
+
+## Example: a tmux or SketchyBar strip
+
+One line, each agent's five-hour figure, a word when the account refused, and a flag once a reading is more than ten minutes old:
+
+```sh
+#!/bin/sh
+# A tmux / SketchyBar strip: one line, each agent's 5-hour figure, a mark when the
+# account refused, and "(stale)" once a reading is more than ten minutes old.
+lancetta=/Applications/Lancetta.app/Contents/MacOS/Lancetta
+"$lancetta" usage --json 2>/dev/null | /usr/bin/jq -r '
+  [.agents[] | select(.reading != null) | .reading as $r
+   | .agent + " "
+     + (if $r.fiveHour.usedPercent == null then "?"
+        else ($r.fiveHour.usedPercent | floor | tostring) + "%" end)
+     + (if $r.blocked then " refused" else "" end)
+     + (if now - $r.observedAt > 600 then " (stale)" else "" end)
+  ] | join("  ")'
+```
+
+Against the document above it prints `Codex 41% (stale)`: that reading is long past, and Claude, with no reading, is left out. A window nobody has read yet shows as `?`, an agent whose account said no gets ` refused`, and a reading more than ten minutes old gets ` (stale)`.
