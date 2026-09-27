@@ -142,16 +142,16 @@ const frames: Frame[] = [
      * ONE frame for the window since 2026-09-25, where there were three — this
      * one, "The history." (the Usage pane) and "Live, or seen a moment ago."
      * (Limits) — to shorten the page; the feature row below names both, and
-     * the docs carry their pictures. Not a pane switcher in one box: the Limits
-     * capture is 1800x1400 against 1800x1256 for the other two, so the window
-     * would visibly grow on the switch, which is the complaint the Screenshots
-     * section of CLAUDE.md records twice. Re-shoot the set first.
+     * the docs carry their pictures. The four panes were re-shot as ONE set on
+     * 2026-09-27, all 2080x1440 (the window's default 1040x720), so a pane
+     * switcher would no longer change the window's size; one frame stays for
+     * the page's length, not for the pictures.
      */
     src: '/screenshot-window-overview.png',
-    alt: 'The Lancetta window: the daily token series for both agents side by side, and both agents’ quota bars underneath',
+    alt: 'The Lancetta window: the daily token series for both agents side by side, and underneath, each agent’s 5-hour and 7-day windows on one row',
     eyebrow: 'When a glance is not enough',
     title: 'The window.',
-    body: 'Command-O for the rest: daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, and the processes the agents have left running.',
+    body: 'Command-O for the rest: daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, and the processes the agents have left running.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
   },

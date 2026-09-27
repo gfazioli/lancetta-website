@@ -329,17 +329,31 @@ see.
 window and Settings, and a hover on the notch for the island.
 
 Published today: the menu in both appearances, the island collapsed and open,
-the window's Overview, Usage, Limits and Processes panes, and every Settings
+the window's Overview, Usage, Limits and Processes panes plus the Overview
+scrolled to Last week, and every Settings
 pane: General, Appearance, Notch, Agents, both agent pages, Updates and About.
 
 **The four window panes are ONE SET, shot at ONE window size, in one run.** The
 hero showed them in the same box, one per frame, cross-fading in place, so a
 capture of a different size was drawn at a different scale -- and the reader saw
-the window change size as they scrolled. It was reported twice. **The set is
-broken again today**: the Limits pane re-shot on 2026-09-23 is 1800x1400 against
-1800x1256 for Overview and Usage, which is why the hero now carries Overview
-alone and has no pane switcher (2026-09-25). Re-shoot all four before putting
-two of them in one box again. The three panes
+the window change size as they scrolled. It was reported twice. It broke once
+more when the Limits pane alone was re-shot on 2026-09-23 (1800x1400 against
+1800x1256), which is why the hero carries Overview alone (2026-09-25). **The
+whole set was re-shot in one run on 2026-09-27**, at the window's DEFAULT size
+(1040x720 points, 2080x1440 pixels), one launch per pane:
+
+    APP_LANG=en_GB LANCETTA_CAPTURE=1 APP_DEFAULTS="-claudeAccountConnected 0" \
+      ../Lancetta/scripts/app.sh up light "" "" <overview|usage|limits|processes>
+    ../Lancetta/scripts/app.sh window Lancetta <out.png>
+
+with `LANCETTA_DEMO_TREES=1` added for Processes. A fifth capture,
+`screenshot-window-last-week.png`, is the Overview scrolled down to Quota Used
+and Last week: the scroll is set through the scroll bar's accessibility value
+(`set value of scroll bar 1 of scroll area 1 of group 2 of window "Lancetta"` to
+0.70, by pid through System Events), so nothing moved the pointer. The window
+is always dark, whatever `up light` says; the launch leaves the app frontmost,
+so the traffic lights are drawn active. Compressed with ImageOptim's `oxipng -o
+4 --strip safe`, which keeps the Display P3 profile. The three panes
 published before 2026-09-19 were 588 points tall and the app will not open below
 **628** any more, so they showed a window that can no longer exist; padding them
 onto a common canvas fixed the scale and left the windows visibly different
