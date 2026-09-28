@@ -1,3 +1,5 @@
+import { readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { renderToString } from 'react-dom/server';
 import { MantineProvider } from '@mantine/core';
 import { act, render, screen } from '@/test-utils';
@@ -64,7 +66,7 @@ describe('HeroStage frames', () => {
     expect(html).not.toContain('data-revealed');
   });
 
-  it('brings each picture in from the side it sits on, alternating as the page did', () => {
+  it('gives each picture its frame’s side, alternating from the left as the page did', () => {
     const { container } = render(<HeroStage />);
     const frames = [...container.querySelectorAll('section[data-side]')];
     expect(frames.length).toBeGreaterThan(3);
@@ -77,6 +79,28 @@ describe('HeroStage frames', () => {
         expect(picture).toHaveAttribute('data-reveal', frame.getAttribute('data-side'));
       }
     });
+  });
+
+  it('puts a right picture in the right column and starts it from the right', () => {
+    // Jest swaps every CSS module for a proxy, so no render above ever meets
+    // the rules that give `data-side` its meaning: they are read from source.
+    const hero = readFileSync(join(__dirname, 'HeroStage.module.css'), 'utf8');
+    const motion = readFileSync(join(__dirname, '../Motion/Motion.module.css'), 'utf8');
+    const [wide, narrow] = hero.split('@media (max-width: 62em)');
+    const order = (css: string) =>
+      css.match(/\.frame\[data-side='right'\] \.frameShot \{\s*order: (\d+);/)?.[1];
+    expect(order(wide)).toBe('2');
+    expect(order(narrow)).toBe('0');
+    const start = (side: string) =>
+      Number(
+        motion.match(
+          new RegExp(
+            `\\.item\\[data-reveal='${side}'\\]\\[data-armed\\]:not\\(\\[data-revealed\\]\\) \\{\\s*transform: translate3d\\((-?\\d+)px`
+          )
+        )?.[1]
+      );
+    expect(start('right')).toBeGreaterThan(0);
+    expect(start('left')).toBeLessThan(0);
   });
 
   it('reveals the picture, the copy and the figures each on its own way into view', () => {
@@ -106,11 +130,16 @@ describe('HeroStage frames', () => {
     expect(figures).toHaveAttribute('data-revealed');
   });
 
-  it('lands the frame with no picture whole, as a card', () => {
+  it('lands the frame with no picture whole, its copy rising with the card', () => {
     const { container } = render(<HeroStage />);
     const card = container.querySelector('section[data-textonly="true"]')!;
+    const copy = card.querySelector('a')!.parentElement!;
     expect(card).toHaveAttribute('data-reveal', 'morph');
     expect(card).toHaveAttribute('data-armed');
+    // One scope, the card's. A copy watching for itself landed an empty
+    // bordered card a quarter of a second before its text.
+    expect(copy).toHaveAttribute('data-reveal', 'rise');
+    expect(copy).not.toHaveAttribute('data-armed');
     scrollIn(card);
     expect(card).toHaveAttribute('data-revealed');
   });

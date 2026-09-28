@@ -871,16 +871,20 @@ panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
   the LCP (see *Seeing the page*), and nothing on screen at mount is ever armed
   (below). **Its frames are** (user, *"anima anche le immagini e i copytext,
   come fatto sul sito web di netfox, non solo i numeri"*): each picture comes
-  in from the side it sits on (`left` / `right`), the copy rises 140 ms
-  behind, the figures pop and their numbers roll, and the frame with no picture
-  lands as a card. One value, `data-side`, both orders the grid and picks the
-  direction, so a picture cannot come in from the wrong side.
+  in from the side it sits on (`left` / `right`), the copy rises, the figures
+  pop and their numbers roll, and the frame with no picture lands as a card,
+  its copy rising with it. One value, `data-side`, both orders the grid and
+  picks the direction, so in two columns a picture cannot come in from the
+  wrong side; in one column every picture is centred and they alternate.
   - **Each part watches for itself**, where netfox.app's frame watches for all
     of them. Scrolled at 750px/s, a reveal fired by the frame found the copy
     136px below the fold on a 390x844 phone and the figures 424px below; at
     1440x900 the figures were 241px below. With a scope per part, every part
     starts at the reveal line, measured on both. So scopes nest here (the
-    figures inside the copy): an item waits for every scope above it.
+    figures inside the copy): an item waits for every scope above it. The
+    price is that side by side the order is not fixed: the taller part's top
+    is higher and goes first, and at 200px/s a copy started from 110 ms before
+    its picture to 606 ms after it.
   - **`.hero` clips on x.** A picture coming in from the right waits 80px past
     its column while armed, and that made the page 64px wider at 1024 and at
     390, where a phone widened its layout viewport to 454. `overflow-x: clip`
