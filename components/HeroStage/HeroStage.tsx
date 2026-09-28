@@ -340,19 +340,47 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
  * frame went off, its copy was 136px below the fold of a 390x844 phone (one
  * column there, the copy under the picture) and its figures 424px below; at
  * 1440x900 the figures were 241px below. They moved before they were on
- * screen, unless the reader scrolled fast enough to meet them. Side by side
- * the picture and the copy enter together, and the copy's 140 ms keeps it a
- * beat behind.
+ * screen, unless the reader scrolled fast enough to meet them.
  *
- * The frame with no picture is a card, and lands whole as the page's cards do.
+ * So side by side the order is not fixed: the taller of the picture and the
+ * copy has its top higher and starts first. Scrolling at 200px/s, a copy
+ * started anywhere from 110 ms before its picture to 606 ms after it. Each
+ * part moves where the reader is looking, which is the point; the copy's 140
+ * ms only orders the two when they cross the line together.
+ *
+ * The frame with no picture is a card, and lands whole as the page's cards do:
+ * its copy rises with it rather than watching for itself, which let an empty
+ * bordered card land a quarter of a second before its text.
+ *
  * `side` does two jobs, where the picture sits (the stylesheet orders the grid
- * on `data-side`) and where it comes in from, so the two cannot disagree. It
- * counts every frame, the card included, as the grid's `:nth-child` did, so
+ * on `data-side`) and where it comes in from, so in two columns the two cannot
+ * disagree. In one column every picture is centred, and they keep alternating.
+ * It counts every frame, the card included, as the grid's `:nth-child` did, so
  * the layout is the one the page already had.
  */
 function FrameSection({ frame, side }: { frame: Frame; side: 'left' | 'right' }) {
   const reveal = useReveal<HTMLElement>();
   const card = frame.src ? undefined : { ...revealScope(reveal), item: revealItem('morph') };
+  const rise = revealItem('rise', 140);
+  const copy = (
+    <>
+      <Text className={classes.eyebrow} data-next={frame.next}>
+        {frame.eyebrow}
+      </Text>
+      <Text className={classes.frameTitle} fz={{ base: 26, md: 34 }} lh={1.15} mt={8}>
+        {frame.title}
+      </Text>
+      <Text c="dimmed" fz="lg" lh={1.6} mt={12}>
+        {frame.body}
+      </Text>
+
+      {frame.figures && <Figures figures={frame.figures} />}
+
+      <Link href={frame.href} className={classes.frameLink}>
+        {frame.linkLabel}
+      </Link>
+    </>
+  );
 
   return (
     <section
@@ -372,23 +400,19 @@ function FrameSection({ frame, side }: { frame: Frame; side: 'left' | 'right' })
         </Reveal>
       )}
 
-      <Reveal variant="rise" delay={140} className={classes.frameCopy}>
-        <Text className={classes.eyebrow} data-next={frame.next}>
-          {frame.eyebrow}
-        </Text>
-        <Text className={classes.frameTitle} fz={{ base: 26, md: 34 }} lh={1.15} mt={8}>
-          {frame.title}
-        </Text>
-        <Text c="dimmed" fz="lg" lh={1.6} mt={12}>
-          {frame.body}
-        </Text>
-
-        {frame.figures && <Figures figures={frame.figures} />}
-
-        <Link href={frame.href} className={classes.frameLink}>
-          {frame.linkLabel}
-        </Link>
-      </Reveal>
+      {card ? (
+        <div
+          className={`${classes.frameCopy} ${rise.className}`}
+          data-reveal={rise['data-reveal']}
+          style={rise.style}
+        >
+          {copy}
+        </div>
+      ) : (
+        <Reveal variant="rise" delay={140} className={classes.frameCopy}>
+          {copy}
+        </Reveal>
+      )}
     </section>
   );
 }
