@@ -4,8 +4,10 @@
  * is hidden until a script has run and found it off screen.
  *
  * A *scope* is what an IntersectionObserver watches (`useReveal`); an *item*
- * is what moves. One element can be both. Scopes are not nested: an item
- * answers to the nearest scope above it.
+ * is what moves. One element can be both, and scopes can sit inside each other
+ * (a hero frame's figures inside its copy): an item holds its starting pose
+ * while ANY scope above it is armed and not yet revealed, so it moves when the
+ * last of them is.
  *
  * A scope has three states. At REST (no attribute) its items are where the
  * layout put them: that is the served HTML, and it is what stays if the
@@ -78,6 +80,31 @@
   .scope.item[data-reveal='pop'][data-armed]:not([data-revealed]) {
     filter: blur(6px);
     transform: scale(0.4);
+  }
+
+  /*
+   * A picture: in from the side it sits on, narrowed, and grown back out of
+   * that edge on the spring. No light on its rim: a screenshot is not a card,
+   * and its transparent margins would put the ring round nothing. Coming in
+   * from the right it starts past its column, so whatever holds it has to clip
+   * on x (`.hero`), or the page is wider for as long as it stays armed.
+   */
+  .item[data-reveal='left'] {
+    transform-origin: 0% 50%;
+  }
+
+  .item[data-reveal='right'] {
+    transform-origin: 100% 50%;
+  }
+
+  .scope[data-armed]:not([data-revealed]) .item[data-reveal='left'],
+  .scope.item[data-reveal='left'][data-armed]:not([data-revealed]) {
+    transform: translate3d(-80px, 0, 0) scale(0.86, 0.94);
+  }
+
+  .scope[data-armed]:not([data-revealed]) .item[data-reveal='right'],
+  .scope.item[data-reveal='right'][data-armed]:not([data-revealed]) {
+    transform: translate3d(80px, 0, 0) scale(0.86, 0.94);
   }
 
   /*
