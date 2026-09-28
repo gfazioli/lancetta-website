@@ -13,8 +13,9 @@ import classes from './SectionHeading.module.css';
  * line. `center` is for the statement bands, where the copy is the whole
  * section and a split would leave the title talking to an empty column.
  *
- * Either way it lifts into place the first time it scrolls into view
- * (`Reveal`, `rise`), so every band of the page starts the same way.
+ * Either way, a heading that is below the fold when the page loads lifts into
+ * place the first time it scrolls into view (`Reveal`, `rise`); one already on
+ * screen stays as it was drawn.
  */
 export function SectionHeading({
   eyebrow,
