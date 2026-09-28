@@ -849,15 +849,18 @@ panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
 - **Reveals** (`Reveal`, `revealScope` / `revealItem`, `useReveal`): one
   IntersectionObserver per scope, one-shot. Every `SectionHeading` rises; cards
   MORPH (squashed and low, then the landing spring) staggered 120 ms; the pills
-  pop; the feature marquee, the CTA and the FAQ rise. A card with a hover
-  transform of its own (the problem cards, the roadmap cards) is wrapped rather
-  than given the props, so the two transforms never fight -- and a wrapper has
-  no radius, so it takes the card's through `radius`.
+  pop; the feature marquee, the CTA and the FAQ rise. The problem cards lift
+  on hover with a transform of their own, so they are wrapped rather than given
+  the props and the two transforms never fight; the roadmap cards are wrapped
+  because `StepCard` passes nothing through. A wrapper has no radius, so it
+  takes the card's through `radius`.
 - **Figures roll** (`ScrollNumber`): the hero's figures, the problem's three
   readings, the cost measurement and its control (inline too), the release
-  count. The text is only ever the value -- the digits that roll are generated
-  content -- and a space inside a figure ("59% left") needs `white-space: pre`
-  on its glyph, or the flex row collapses it.
+  count -- which sits in the hero, so it rolls only on a screen short enough to
+  start it below the fold. The text is only ever the value -- the digits that
+  roll are generated content. What sits between digits is ONE run ("% left"),
+  so its letters keep their kerning, and it needs `white-space: pre`, or the
+  flex row collapses its leading space.
 - **The light is on the rim**, not across the face: two opposite corners, top
   right and bottom left, the same as the app and Netfox since 2026-09-28 (user:
   *"solo sui bordi top-right / bottom-left opposti"*). On this LIGHT page it is
@@ -865,15 +868,34 @@ panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
   card. `--glint` is a registered `@property` in `theme/global.css`, or it
   could not be animated.
 - **The hero is not animated**, on purpose: its first screenshot is the LCP
-  (see *Seeing the page*). Only its figures roll, below the fold.
+  (see *Seeing the page*), and nothing on screen at mount is ever armed (below).
 - **The panel** (`PanelDemo.module.css`, end of file) plays the app's entrance
   at the app's pace (`Motion.pace` 0.7): the header and the commands rise, the
   cards land in `MenuPanelView`'s order with white light round the rim, the
   figures roll out of zeros after the app's hold with every digit together and
   no overshoot (`numericText` on `.smooth`), and the bars fill. It is mounted
-  on open, so every opening is a new entrance. Refresh PRESSES the cards (Web
-  Animations, since a CSS animation cannot restart without the entrance) and
-  never rolls a figure back through zero, as in the app.
+  on open, so every opening is a new entrance, and its figures roll on mount
+  (`on="mount"`): a short screen cannot scroll to the lower rows, because a
+  scroll closes the panel. Refresh PRESSES the cards (Web Animations, since a
+  CSS animation cannot restart without the entrance) and never rolls a figure
+  back through zero, as in the app. The press takes its spring from
+  `springFor`, never from the stylesheet: minified, `879ms` is served as
+  `.879s`, and `parseFloat` made the spring-back last under a millisecond.
+
+**Nothing is hidden until a script has found it off screen.** The first cut
+hid everything from the first paint, as netfox.app does, behind `@media
+(scripting: enabled)`. The review of #59 caught what that costs here: the hero's
+release count painted *"00 releases since April 2026"* on every load until the
+bundle had hydrated, and a chunk that fails to load or throws would have left
+every reveal at opacity 0 and every figure at zeros -- the class this page has
+already shipped once, as the pinned stage an iPad saw as *"you cannot see
+anything"* (*The one job*, above). So a scope has three states (`useReveal`):
+at REST it is the served HTML; after mount, one that is entirely off screen is
+ARMED -- `data-armed`, its starting pose, taken where nobody sees it; and it is
+REVEALED on the way into view. Only a revealed item has a transition, so arming
+snaps rather than animates. What is on screen at mount never moves.
+`threshold` is 0: at 0.15 a scope taller than about six viewports can never
+fire, and the FAQ is that at 500% zoom.
 
 **The springs are generated, never typed.** `components/Motion/springs.ts`
 samples the films' closed-form spring into `linear()` stops, each with the
@@ -884,13 +906,14 @@ page runs the film's own tempo (a page is read once, as a film is watched once);
 the `--lan-panel-*` ones are the app's, at its pace. The positive control: the
 same generator reproduces netfox.app's three curves to the last digit.
 
-Everything moves only on a screen, with scripting and without Reduce Motion;
-otherwise it is simply there. **To see it**, `scripts/shot.mjs` films it:
-`--no-wake` (or the page-wide wake scroll fires every one-shot reveal before
-the first frame), `--rate 0.25` to slow the page's animations, `--frames 10
---every 350` for the strip, `--at <fraction>` for a section and `--click
-'button[aria-haspopup="dialog"]'` for the panel. A capture takes about a tenth
-of a second, so at full speed a 0.3 s spring is two frames.
+Everything moves only on a screen, once a script has armed it, and without
+Reduce Motion; otherwise it is simply there. **To see it**, `scripts/shot.mjs`
+films it: `--no-wake` (or the page-wide wake scroll fires every one-shot reveal
+before the first frame), `--rate 0.25` to slow the page's animations, `--frames
+10 --every 350` for the strip, `--at <fraction>` for a section and `--click
+'button[aria-haspopup="dialog"]'` for the panel; `--eval` runs after the strip,
+and the times printed beside the frames are measured, not planned. A capture
+takes about a tenth of a second, so at full speed a 0.3 s spring is two frames.
 
 ## The release-notes page has THREE states, and the middle one was missing
 

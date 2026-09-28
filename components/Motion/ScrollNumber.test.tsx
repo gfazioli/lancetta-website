@@ -1,4 +1,4 @@
-import { render, screen } from '@/test-utils';
+import { render, screen, waitFor } from '@/test-utils';
 import { ScrollNumber } from './ScrollNumber';
 
 describe('ScrollNumber', () => {
@@ -22,10 +22,11 @@ describe('ScrollNumber', () => {
     expect(strips.map((s) => s.style.getPropertyValue('--i'))).toEqual(['0', '1']);
   });
 
-  it('keeps every other character, spaces included, where it stands', () => {
+  it('keeps what sits between digits as one run, space and all', () => {
+    // One box per letter would cost the words their kerning ("left", "GB").
     const { container } = render(<ScrollNumber value="59% left" />);
     const still = [...container.querySelectorAll<HTMLElement>('[data-ch]')];
-    expect(still.map((s) => s.dataset.ch).join('')).toBe('% left');
+    expect(still.map((s) => s.dataset.ch)).toEqual(['% left']);
   });
 
   it('renders a value with no digits as plain text', () => {
@@ -42,16 +43,24 @@ describe('ScrollNumber', () => {
     // The copy of the app's panel sets `--reveal-delay` on a card, so the card's
     // figures roll as it lands; an inline 0ms here would override it.
     const { container, rerender } = render(<ScrollNumber value="5" />);
-    const number = () => container.querySelector<HTMLElement>('[data-revealed]');
+    const number = () => container.querySelector<HTMLElement>('[aria-hidden]')?.parentElement;
     expect(number()?.style.getPropertyValue('--reveal-delay')).toBe('');
     rerender(<ScrollNumber value="5" delay={150} />);
     expect(number()?.style.getPropertyValue('--reveal-delay')).toBe('150ms');
   });
 
-  it('is revealed at once where nothing can observe it scrolling in', () => {
+  it('is never parked at zero where nothing can observe it scrolling in', () => {
     // jsdom has no IntersectionObserver: a reveal that cannot fire must not
-    // leave the number parked at zero.
+    // arm the number, or it would read 0 for good.
     const { container } = render(<ScrollNumber value="5" />);
-    expect(container.querySelector('[data-revealed]')).not.toBeNull();
+    expect(container.querySelector('[data-armed]')).toBeNull();
+  });
+
+  it('rolls on its own once mounted, for the copy of the panel', async () => {
+    // The panel opens on a click and closes on a scroll, so its lower rows
+    // cannot wait to be scrolled to: they start at zero and roll at once.
+    const { container } = render(<ScrollNumber value="47%" on="mount" />);
+    expect(container.querySelector('[data-armed]:not([data-revealed])')).not.toBeNull();
+    await waitFor(() => expect(container.querySelector('[data-revealed]')).not.toBeNull());
   });
 });

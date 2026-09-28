@@ -409,7 +409,8 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
 
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
           {today.map((step, i) => (
-            // Wrapped, so the card's own hover never fights the landing.
+            // Wrapped: StepCard passes nothing through, and the wrapper takes
+            // the card's radius for the light on its rim.
             <Reveal key={step.title} delay={i * 120} radius="var(--mantine-radius-lg)">
               <StepCard step={step} />
             </Reveal>

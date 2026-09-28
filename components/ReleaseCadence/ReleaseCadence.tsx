@@ -42,7 +42,7 @@ export function ReleaseCadence({ cadence }: { cadence: Cadence }) {
           {total !== null && since !== null && (
             <>
               <Text size="xs" c="dimmed">
-                <ScrollNumber value={total} delay={500} /> releases since {since}
+                <ScrollNumber value={total} /> releases since {since}
               </Text>
               <Text size="xs" c="dimmed" aria-hidden="true">
                 &middot;

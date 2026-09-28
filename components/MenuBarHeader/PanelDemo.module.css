@@ -405,24 +405,27 @@
  * from two opposite corners, white on this dark card as in the app
  * (`EdgeGlint`), reaching 70 points: the app's cap, which both cards are tall
  * enough to take (60% of their short side is over it). `--glint` is
- * registered in theme/global.css; the opacity is its sine, dark at both ends.
+ * registered in theme/global.css; the opacity is its sine, dark at both ends,
+ * behind `@supports` as on the page's cards (Motion.module.css says why).
  */
-.card::after {
-  --reach: calc(70px * (0.45 + 0.55 * var(--glint)));
+@supports (opacity: sin(0)) {
+  .card::after {
+    --reach: calc(70px * (0.45 + 0.55 * var(--glint)));
 
-  position: absolute;
-  inset: 0;
-  padding: 1.5px;
-  border-radius: inherit;
-  pointer-events: none;
-  content: '';
-  background:
-    radial-gradient(circle var(--reach) at 100% 0, rgb(255 255 255 / 80%), transparent),
-    radial-gradient(circle var(--reach) at 0 100%, rgb(255 255 255 / 80%), transparent);
-  opacity: sin(calc(var(--glint) * 180deg));
-  mask:
-    linear-gradient(#000 0 0) content-box exclude,
-    linear-gradient(#000 0 0);
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    pointer-events: none;
+    content: '';
+    background:
+      radial-gradient(circle var(--reach) at 100% 0, rgb(255 255 255 / 80%), transparent),
+      radial-gradient(circle var(--reach) at 0 100%, rgb(255 255 255 / 80%), transparent);
+    opacity: sin(calc(var(--glint) * 180deg));
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
