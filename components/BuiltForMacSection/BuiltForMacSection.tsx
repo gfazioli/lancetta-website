@@ -12,6 +12,8 @@ import {
   IconWindowMinimize,
 } from '@tabler/icons-react';
 import { Badge, Box, Container, Group, Stack, Text, Title } from '@mantine/core';
+import { revealItem, revealScope } from '../Motion/Reveal';
+import { useReveal } from '../Motion/useReveal';
 
 /*
  * Only things the shipped build actually is. `Notifications` was here, had to
@@ -46,6 +48,10 @@ const techPills = [
 ];
 
 export function BuiltForMacSection() {
+  // One scope for the whole block: the heading lifts in, the pills pop one after
+  // another, and the line under them follows the last.
+  const { ref, revealed } = useReveal<HTMLDivElement>();
+  const scope = revealScope(revealed);
   return (
     <Box pos="relative" py={80} className="lan-feather" style={{ overflow: 'hidden' }}>
       {/*
@@ -71,8 +77,15 @@ export function BuiltForMacSection() {
         <Scene.Noise opacity={0.018} />
       </Scene>
       <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
-        <Stack align="center" gap="md">
+        <Stack
+          ref={ref}
+          align="center"
+          gap="md"
+          className={scope.className}
+          data-revealed={scope['data-revealed']}
+        >
           <Text
+            {...revealItem('rise')}
             size="sm"
             fw={700}
             tt="uppercase"
@@ -80,14 +93,15 @@ export function BuiltForMacSection() {
           >
             Built for macOS
           </Text>
-          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }}>
+          <Title {...revealItem('rise', 80)} order={2} ta="center" fz={{ base: 32, sm: 42 }}>
             A menu-bar app, and nothing more than one.
           </Title>
 
           <Group justify="center" gap="sm" mt="lg" maw={700}>
-            {techPills.map((pill) => (
+            {techPills.map((pill, i) => (
               <Badge
                 key={pill.label}
+                {...revealItem('pop', 240 + i * 60)}
                 size="xl"
                 variant="light"
                 color="gray"
@@ -105,7 +119,14 @@ export function BuiltForMacSection() {
             ))}
           </Group>
 
-          <Text c="dimmed" ta="center" size="lg" maw={620} mt="lg">
+          <Text
+            {...revealItem('rise', 240 + techPills.length * 60)}
+            c="dimmed"
+            ta="center"
+            size="lg"
+            maw={620}
+            mt="lg"
+          >
             No Electron, and no window you have to keep open. Native SwiftUI that sits in the menu
             bar and gets out of the way — and on a MacBook Pro, one thin bar per agent under the
             notch.

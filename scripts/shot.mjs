@@ -6,6 +6,8 @@
  *   node scripts/shot.mjs <url> <out-prefix> [--width 1440] [--height 900]
  *                                            [--at 0,0.25,0.6] [--find "text"]
  *                                            [--eval "<expression>"]
+ *                                            [--click "<selector>"] [--rate 0.1]
+ *                                            [--frames 12 --every 250] [--no-wake]
  *
  * With no `--at` it writes ONE full-page `<prefix>.png`. With `--at` it writes
  * one VIEWPORT capture per fraction of the scrollable height:
@@ -45,6 +47,23 @@
  *
  * Chrome runs with a throwaway profile under /tmp: it never touches the user's
  * own session or storage.
+ *
+ * MOTION (2026-09-28, for the scroll reveals and the panel's entrance). Three
+ * flags turn a capture into a film strip:
+ *
+ * - `--frames N --every MS` writes N viewport captures instead of one, MS apart,
+ *   starting the moment the page got where it was sent (`-f00.png`, `-f01.png`
+ *   ...): at each `--at` fraction, or after `--click`.
+ * - `--rate R` slows every CSS animation, transition and Web Animation in the
+ *   page by R (DevTools' Animation.setPlaybackRate) -- the page's own
+ *   `LANCETTA_SLOWMO`. A capture takes about a tenth of a second, so a 0.3 s
+ *   spring is two frames at full speed and thirty at 0.1.
+ * - `--click "<selector>"` clicks the first match before the frames start: the
+ *   header's reading (`button[aria-haspopup="dialog"]`) opens the panel.
+ *
+ * And `--no-wake`, without which none of that can see a reveal: the default
+ * scrolls the whole page once to wake the lazy backgrounds, which is exactly
+ * what fires every one-shot reveal before the first frame.
  */
 import { spawn } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
@@ -72,6 +91,11 @@ const width = Number(flag('--width') ?? 1440);
 const height = Number(flag('--height') ?? 900);
 const find = flag('--find');
 const evaluate = flag('--eval');
+const click = flag('--click');
+const rate = Number(flag('--rate') ?? 1);
+const frames = Number(flag('--frames') ?? 0);
+const every = Number(flag('--every') ?? 200);
+const wake = !rest.includes('--no-wake');
 const at = flag('--at')
   ?.split(',')
   .map((value) => Number(value.trim()))
@@ -185,15 +209,23 @@ try {
   await loaded;
   await sleep(900);
 
-  // Wake every lazy observer, then come back to the top.
+  if (rate !== 1) {
+    await send('Animation.enable', {}, sessionId);
+    await send('Animation.setPlaybackRate', { playbackRate: rate }, sessionId);
+  }
+
+  // Wake every lazy observer, then come back to the top -- unless the reveals
+  // are what is being photographed (`--no-wake`).
   const woken = await send(
     'Runtime.evaluate',
     {
       expression: `(async () => {
         const h = document.documentElement.scrollHeight;
-        for (let y = 0; y < h; y += 700) { window.scrollTo({ top: y, behavior: 'instant' }); await new Promise(r => setTimeout(r, 50)); }
-        window.scrollTo({ top: 0, behavior: 'instant' });
-        await new Promise(r => setTimeout(r, 500));
+        if (${wake}) {
+          for (let y = 0; y < h; y += 700) { window.scrollTo({ top: y, behavior: 'instant' }); await new Promise(r => setTimeout(r, 50)); }
+          window.scrollTo({ top: 0, behavior: 'instant' });
+          await new Promise(r => setTimeout(r, 500));
+        }
         return h;
       })()`,
       awaitPromise: true,
@@ -210,6 +242,30 @@ try {
     );
     writeFileSync(file, Buffer.from(data, 'base64'));
     return file;
+  }
+
+  // `--frames`: a strip of viewport captures from this moment on.
+  async function strip(stem) {
+    for (let k = 0; k < frames; k++) {
+      const started = Date.now();
+      const file = await capture(`${stem}-f${String(k).padStart(2, '0')}.png`);
+      console.log(`${file}  t=${k === 0 ? 0 : Math.round(k * every)}ms`);
+      await sleep(Math.max(0, every - (Date.now() - started)));
+    }
+  }
+
+  if (click) {
+    const clicked = await send(
+      'Runtime.evaluate',
+      {
+        expression: `(() => { const el = document.querySelector(${JSON.stringify(click)}); if (!el) return false; el.click(); return true; })()`,
+        returnByValue: true,
+      },
+      sessionId
+    );
+    if (!clicked.result.value) {
+      throw new Error(`--click: nothing matches ${click}`);
+    }
   }
 
   const scheme = await send(
@@ -238,7 +294,8 @@ try {
             // started. Two visits to the same fraction came out 78px apart and
             // looked like the page had changed under the reader.
             window.scrollTo({ top: y, behavior: 'instant' });
-            await new Promise(r => setTimeout(r, 900));
+            // A strip starts at once; a single capture waits for things to land.
+            await new Promise(r => setTimeout(r, ${frames > 0 ? 0 : 900}));
             return [window.scrollY, max];
           })()`,
           awaitPromise: true,
@@ -247,6 +304,11 @@ try {
         sessionId
       );
       const [y, max] = where.result.value;
+      if (frames > 0) {
+        console.log(`at ${fraction}: y=${y}/${max}`);
+        await strip(`${prefix}-at-${fraction}`);
+        continue;
+      }
       const file = await capture(`${prefix}-at-${fraction}.png`);
       console.log(`${file}  ${width}x${height}  y=${y}/${max}`);
       if (evaluate) {
@@ -259,6 +321,8 @@ try {
         console.log(`  eval: ${JSON.stringify(read.result.value ?? read.result.description)}`);
       }
     }
+  } else if (frames > 0) {
+    await strip(prefix);
   } else {
     const { contentSize } = await send('Page.getLayoutMetrics', {}, sessionId);
     const full = Math.ceil(contentSize.height);

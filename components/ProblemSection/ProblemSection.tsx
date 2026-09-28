@@ -3,6 +3,8 @@
 import type { CSSProperties } from 'react';
 import { IconClockExclamation, IconSwitch3, IconWand } from '@tabler/icons-react';
 import { Box, Container, Group, Paper, SimpleGrid, Stack, Text, ThemeIcon } from '@mantine/core';
+import { Reveal } from '../Motion/Reveal';
+import { ScrollNumber } from '../Motion/ScrollNumber';
 import { SectionHeading } from '../SectionHeading/SectionHeading';
 import classes from './ProblemSection.module.css';
 
@@ -60,42 +62,46 @@ export function ProblemSection() {
         />
 
         <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="lg">
-          {problems.map((item) => (
-            <Paper
-              key={item.title}
-              p="lg"
-              className={classes.problemCard}
-              style={{ '--card-color': `var(--mantine-color-${item.color}-5)` } as CSSProperties}
-            >
-              <Stack gap={10} align="flex-start">
-                <ThemeIcon
-                  size={48}
-                  radius="md"
-                  color={item.color}
-                  variant="light"
-                  className={classes.problemIcon}
-                >
-                  <item.icon size={26} />
-                </ThemeIcon>
-                <Text fw={700} fz={18}>
-                  {item.title}
-                </Text>
-                <Text c="dimmed" fz={14} lh={1.55}>
-                  {item.description}
-                  {/* red-9: Mantine's red text in a light scheme is red-6, 3.3:1
-                      on the card; this is 5.5:1. */}
-                  <Text component="span" c="red.9" fw={600} fz={14} td="underline">
-                    {item.highlight}
+          {problems.map((item, i) => (
+            // A wrapper, because the card lifts on hover with a transform of
+            // its own; the radius is the card's, for the light on its rim.
+            <Reveal key={item.title} delay={i * 120} radius={16}>
+              <Paper
+                p="lg"
+                h="100%"
+                className={classes.problemCard}
+                style={{ '--card-color': `var(--mantine-color-${item.color}-5)` } as CSSProperties}
+              >
+                <Stack gap={10} align="flex-start">
+                  <ThemeIcon
+                    size={48}
+                    radius="md"
+                    color={item.color}
+                    variant="light"
+                    className={classes.problemIcon}
+                  >
+                    <item.icon size={26} />
+                  </ThemeIcon>
+                  <Text fw={700} fz={18}>
+                    {item.title}
                   </Text>
-                  {item.rest}
-                </Text>
-              </Stack>
-            </Paper>
+                  <Text c="dimmed" fz={14} lh={1.55}>
+                    {item.description}
+                    {/* red-9: Mantine's red text in a light scheme is red-6, 3.3:1
+                      on the card; this is 5.5:1. */}
+                    <Text component="span" c="red.9" fw={600} fz={14} td="underline">
+                      {item.highlight}
+                    </Text>
+                    {item.rest}
+                  </Text>
+                </Stack>
+              </Paper>
+            </Reveal>
           ))}
         </SimpleGrid>
 
         <Group justify="center" gap={0} mt={48} wrap="wrap">
-          {readings.map((r) => (
+          {readings.map((r, i) => (
             <Stack key={r.label} gap={2} align="center" px={32} py={12}>
               <Text
                 fz={{ base: 28, sm: 34 }}
@@ -106,7 +112,7 @@ export function ProblemSection() {
                   fontVariantNumeric: 'tabular-nums',
                 }}
               >
-                {r.value}
+                <ScrollNumber value={r.value} delay={i * 150} />
               </Text>
               <Text c="dimmed" fz="sm" ta="center">
                 {r.label}

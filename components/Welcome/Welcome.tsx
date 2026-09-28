@@ -40,6 +40,7 @@ import config from '@/config';
 import { BuiltForMacSection } from '../BuiltForMacSection/BuiltForMacSection';
 import { CostsNothingSection } from '../CostsNothingSection/CostsNothingSection';
 import { FAQ } from '../FAQ/FAQ';
+import { Reveal } from '../Motion/Reveal';
 import { HeroStage } from '../HeroStage/HeroStage';
 import { ProblemSection } from '../ProblemSection/ProblemSection';
 import {
@@ -270,7 +271,7 @@ const horizonLabel: Record<Horizon, string> = { today: 'Today', soon: 'Soon', ne
 
 function StepCard({ step }: { step: Step }) {
   return (
-    <Paper p="lg" radius="lg" className={classes.roadmapCard} data-state={step.state}>
+    <Paper p="lg" radius="lg" h="100%" className={classes.roadmapCard} data-state={step.state}>
       <Stack gap={10}>
         <Group justify="space-between" align="flex-start" wrap="nowrap">
           <ThemeIcon size={40} radius="md" color={step.color} variant="light">
@@ -311,11 +312,13 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
 
       <Container size="lg">
         <dl className={classes.glance}>
-          {glance.map((item) => (
-            <div key={item.label} className={classes.glanceItem}>
+          {glance.map((item, i) => (
+            // The item IS the wrapper: a <dl> may hold a <div> around its <dt>
+            // and <dd>, not a <div> around that <div>.
+            <Reveal key={item.label} variant="rise" delay={i * 100} className={classes.glanceItem}>
               <dt className={classes.glanceLabel}>{item.label}</dt>
               <dd className={classes.glanceBody}>{item.body}</dd>
-            </div>
+            </Reveal>
           ))}
         </dl>
       </Container>
@@ -348,41 +351,46 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           the widest today measures 310. Measure a new or edited one rather
           than counting characters.
         */}
-        <FeatureMarquee>
-          {features.map((feature) => (
-            <Paper
-              key={feature.title}
-              component={Link}
-              href={feature.href}
-              p="lg"
-              className={`${classes.featureCard} ${classes.cardLink} ${featureMarqueeItem}`}
-              style={{ '--card-color': `var(--mantine-color-${feature.color}-6)` } as CSSProperties}
-            >
-              {feature.badge && (
-                <Badge className={classes.newBadge} variant="filled" size="sm" radius="sm">
-                  {feature.badge}
-                </Badge>
-              )}
-              <Stack gap={10} align="flex-start">
-                <ThemeIcon
-                  size={48}
-                  radius="md"
-                  color={feature.color}
-                  variant="light"
-                  className={classes.featureIcon}
-                >
-                  <feature.icon size={26} />
-                </ThemeIcon>
-                <Text fw={700} fz={18}>
-                  {feature.title}
-                </Text>
-                <Text c="dimmed" size="sm" lh={1.55}>
-                  {feature.description}
-                </Text>
-              </Stack>
-            </Paper>
-          ))}
-        </FeatureMarquee>
+        {/* The row lifts in as one: its cards already move, sideways, for ever. */}
+        <Reveal variant="rise">
+          <FeatureMarquee>
+            {features.map((feature) => (
+              <Paper
+                key={feature.title}
+                component={Link}
+                href={feature.href}
+                p="lg"
+                className={`${classes.featureCard} ${classes.cardLink} ${featureMarqueeItem}`}
+                style={
+                  { '--card-color': `var(--mantine-color-${feature.color}-6)` } as CSSProperties
+                }
+              >
+                {feature.badge && (
+                  <Badge className={classes.newBadge} variant="filled" size="sm" radius="sm">
+                    {feature.badge}
+                  </Badge>
+                )}
+                <Stack gap={10} align="flex-start">
+                  <ThemeIcon
+                    size={48}
+                    radius="md"
+                    color={feature.color}
+                    variant="light"
+                    className={classes.featureIcon}
+                  >
+                    <feature.icon size={26} />
+                  </ThemeIcon>
+                  <Text fw={700} fz={18}>
+                    {feature.title}
+                  </Text>
+                  <Text c="dimmed" size="sm" lh={1.55}>
+                    {feature.description}
+                  </Text>
+                </Stack>
+              </Paper>
+            ))}
+          </FeatureMarquee>
+        </Reveal>
       </Box>
 
       {/* The founding constraint */}
@@ -400,16 +408,23 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         />
 
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
-          {today.map((step) => (
-            <StepCard key={step.title} step={step} />
+          {today.map((step, i) => (
+            // Wrapped, so the card's own hover never fights the landing.
+            <Reveal key={step.title} delay={i * 120} radius="var(--mantine-radius-lg)">
+              <StepCard step={step} />
+            </Reveal>
           ))}
         </SimpleGrid>
 
-        <p className={classes.horizon}>Ahead</p>
+        <Reveal variant="rise">
+          <p className={classes.horizon}>Ahead</p>
+        </Reveal>
 
         <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
-          {ahead.map((step) => (
-            <StepCard key={step.title} step={step} />
+          {ahead.map((step, i) => (
+            <Reveal key={step.title} delay={i * 120} radius="var(--mantine-radius-lg)">
+              <StepCard step={step} />
+            </Reveal>
           ))}
         </SimpleGrid>
 
@@ -434,52 +449,56 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           <Scene.Glow color="#B117C5" size={360} blur={150} opacity={0.1} top="40%" left="88%" />
         </Scene>
         <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
-          <Stack align="center" gap="lg">
-            <Text
-              size="sm"
-              fw={700}
-              tt="uppercase"
-              style={{ letterSpacing: 3, color: 'var(--lan-accent-ink)' }}
-            >
-              {released ? 'Get started' : 'Not yet'}
-            </Text>
-            <Title order={2} ta="center" fz={{ base: 36, sm: 48 }}>
-              Know where you stand.
-            </Title>
-            <Text c="dimmed" ta="center" size="lg" maw={520}>
-              {released
-                ? 'Put both agents in your menu bar and stop reading a number you have to squint at a terminal for.'
-                : 'The first build is not out yet. What’s next says what is in it, and the releases page is where it will appear.'}
-            </Text>
+          <Reveal variant="rise">
+            <Stack align="center" gap="lg">
+              <Text
+                size="sm"
+                fw={700}
+                tt="uppercase"
+                style={{ letterSpacing: 3, color: 'var(--lan-accent-ink)' }}
+              >
+                {released ? 'Get started' : 'Not yet'}
+              </Text>
+              <Title order={2} ta="center" fz={{ base: 36, sm: 48 }}>
+                Know where you stand.
+              </Title>
+              <Text c="dimmed" ta="center" size="lg" maw={520}>
+                {released
+                  ? 'Put both agents in your menu bar and stop reading a number you have to squint at a terminal for.'
+                  : 'The first build is not out yet. What’s next says what is in it, and the releases page is where it will appear.'}
+              </Text>
 
-            <Button
-              href={released ? '/download' : '/docs/roadmap'}
-              component="a"
-              leftSection={released ? <IconGauge size={20} /> : <IconBook2 size={20} />}
-              size="xl"
-              radius="xl"
-              px={48}
-              mt="md"
-            >
-              {released ? 'Download for macOS' : 'Read what’s next'}
-            </Button>
-            <Text c="dimmed" size="sm">
-              {`Free · macOS ${config.app.minMacOS} Sequoia or later`}
-            </Text>
-            {/* Sharing belongs at the end of the pitch, not at the top of it. */}
-            <Group justify="center" mt="sm">
-              <ShareButtons />
-            </Group>
-          </Stack>
+              <Button
+                href={released ? '/download' : '/docs/roadmap'}
+                component="a"
+                leftSection={released ? <IconGauge size={20} /> : <IconBook2 size={20} />}
+                size="xl"
+                radius="xl"
+                px={48}
+                mt="md"
+              >
+                {released ? 'Download for macOS' : 'Read what’s next'}
+              </Button>
+              <Text c="dimmed" size="sm">
+                {`Free · macOS ${config.app.minMacOS} Sequoia or later`}
+              </Text>
+              {/* Sharing belongs at the end of the pitch, not at the top of it. */}
+              <Group justify="center" mt="sm">
+                <ShareButtons />
+              </Group>
+            </Stack>
+          </Reveal>
         </Container>
       </Box>
 
       {/* FAQ */}
       <Container id="faq" size="lg" py={72}>
         <SectionHeading align="center" eyebrow="FAQ" title="Frequently asked questions" mb={24} />
-        <Box w="100%" maw={700} mx="auto">
-          <FAQ />
-        </Box>
+        <Reveal variant="rise">
+          <Box w="100%" maw={700} mx="auto">
+            <FAQ />
+          </Box>
+        </Reveal>
       </Container>
     </div>
   );
