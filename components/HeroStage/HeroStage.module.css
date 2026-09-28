@@ -36,6 +36,16 @@
    * `.lan-feather` in `app/global.css`.
    */
   --lan-feather-top: 0;
+
+  /*
+   * A frame's picture that comes in from the right starts 80px past its column
+   * (`right` in Motion.module.css), and it waits there, armed, for as long as
+   * it is below the fold. Unclipped, that made the page 64px wider at 1024 and
+   * at 390, measured with every frame armed; at 390 a phone widened its layout
+   * viewport to 454 to show it. `clip`, not `hidden`: it makes no scroll
+   * container, so the vertical flow and the bar above are untouched.
+   */
+  overflow-x: clip;
 }
 
 /* ------------------------------------------------------------- the opening */
@@ -133,7 +143,12 @@
   gap: clamp(rem(28px), 5vw, rem(64px));
 }
 
-.frame:nth-child(even) .frameShot {
+/*
+ * The side is `data-side`, not `:nth-child`: the same value tells the picture
+ * which way to come in (`FrameSection`), so where it sits and where it comes
+ * from cannot disagree.
+ */
+.frame[data-side='right'] .frameShot {
   order: 2;
 }
 
@@ -287,7 +302,7 @@
     text-align: center;
   }
 
-  .frame:nth-child(even) .frameShot {
+  .frame[data-side='right'] .frameShot {
     order: 0;
   }
 

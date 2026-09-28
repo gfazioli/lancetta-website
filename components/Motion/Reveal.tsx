@@ -4,8 +4,11 @@ import type { CSSProperties, HTMLAttributes, ReactNode } from 'react';
 import { useReveal } from './useReveal';
 import classes from './Motion.module.css';
 
-/** How an item arrives. See Motion.module.css for each starting pose. */
-export type RevealVariant = 'morph' | 'rise' | 'pop';
+/**
+ * How an item arrives. See Motion.module.css for each starting pose. `left` and
+ * `right` are for a picture, and name the side it sits on: it comes in from there.
+ */
+export type RevealVariant = 'morph' | 'rise' | 'pop' | 'left' | 'right';
 
 /**
  * Props that make an element a scope: the thing the observer watches. Pass it
