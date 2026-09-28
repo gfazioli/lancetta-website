@@ -837,6 +837,61 @@ window's edge it widened the page to 1675px on a 1440px window.
 bottom-aligned — and `center` for the statement bands. Its `tone="onDark"` has
 no caller since the plate bands went; leave it until something needs it again.
 
+## Motion: the page reveals itself, and the panel moves like the app
+
+Asked for on 2026-09-28, *"come abbiamo fatto ieri sul sito web di netfox,
+aggiungi delle animazioni sfruttando l'interceptor quando gli elementi sono
+visibili scrollando la pagina giù e anche qui dove ci sono delle cifre numeriche
+aggiungi lo scroll dei numeri, insieme a qualche morph"* -- and the copy of the
+panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
+`components/Motion`, cross-ported from netfox.app's #77:
+
+- **Reveals** (`Reveal`, `revealScope` / `revealItem`, `useReveal`): one
+  IntersectionObserver per scope, one-shot. Every `SectionHeading` rises; cards
+  MORPH (squashed and low, then the landing spring) staggered 120 ms; the pills
+  pop; the feature marquee, the CTA and the FAQ rise. A card with a hover
+  transform of its own (the problem cards, the roadmap cards) is wrapped rather
+  than given the props, so the two transforms never fight -- and a wrapper has
+  no radius, so it takes the card's through `radius`.
+- **Figures roll** (`ScrollNumber`): the hero's figures, the problem's three
+  readings, the cost measurement and its control (inline too), the release
+  count. The text is only ever the value -- the digits that roll are generated
+  content -- and a space inside a figure ("59% left") needs `white-space: pre`
+  on its glyph, or the flex row collapses it.
+- **The light is on the rim**, not across the face: two opposite corners, top
+  right and bottom left, the same as the app and Netfox since 2026-09-28 (user:
+  *"solo sui bordi top-right / bottom-left opposti"*). On this LIGHT page it is
+  the icon's own rim, cyan and magenta: the app's white vanishes on a white
+  card. `--glint` is a registered `@property` in `theme/global.css`, or it
+  could not be animated.
+- **The hero is not animated**, on purpose: its first screenshot is the LCP
+  (see *Seeing the page*). Only its figures roll, below the fold.
+- **The panel** (`PanelDemo.module.css`, end of file) plays the app's entrance
+  at the app's pace (`Motion.pace` 0.7): the header and the commands rise, the
+  cards land in `MenuPanelView`'s order with white light round the rim, the
+  figures roll out of zeros after the app's hold with every digit together and
+  no overshoot (`numericText` on `.smooth`), and the bars fill. It is mounted
+  on open, so every opening is a new entrance. Refresh PRESSES the cards (Web
+  Animations, since a CSS animation cannot restart without the entrance) and
+  never rolls a figure back through zero, as in the app.
+
+**The springs are generated, never typed.** `components/Motion/springs.ts`
+samples the films' closed-form spring into `linear()` stops, each with the
+duration its envelope takes to fall under 0.4%, and `springs.test.ts` fails when
+`theme/global.css` (between its `springs:begin` / `springs:end` markers) does
+not carry exactly what it generates -- mutated by hand to prove it fails. The
+page runs the film's own tempo (a page is read once, as a film is watched once);
+the `--lan-panel-*` ones are the app's, at its pace. The positive control: the
+same generator reproduces netfox.app's three curves to the last digit.
+
+Everything moves only on a screen, with scripting and without Reduce Motion;
+otherwise it is simply there. **To see it**, `scripts/shot.mjs` films it:
+`--no-wake` (or the page-wide wake scroll fires every one-shot reveal before
+the first frame), `--rate 0.25` to slow the page's animations, `--frames 10
+--every 350` for the strip, `--at <fraction>` for a section and `--click
+'button[aria-haspopup="dialog"]'` for the panel. A capture takes about a tenth
+of a second, so at full speed a 0.3 s spring is two frames.
+
 ## The release-notes page has THREE states, and the middle one was missing
 
 `ReleaseNotes.tsx` shows a skeleton, a list, or an empty state, and the hook

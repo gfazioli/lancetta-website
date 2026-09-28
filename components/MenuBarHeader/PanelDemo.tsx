@@ -12,6 +12,7 @@ import {
   IconRotate,
   IconSettings,
 } from '@tabler/icons-react';
+import { ScrollNumber } from '../Motion/ScrollNumber';
 import { ClaudeMark, CodexMark, ResetMark } from './AgentMark';
 import {
   agentTint,
@@ -24,6 +25,48 @@ import classes from './PanelDemo.module.css';
 
 /** Long enough to read "Refreshing…", short enough not to feel like a network. */
 const REFRESH_MS = 900;
+
+/**
+ * A refresh PRESSES the cards, as `CardEntrance.press` does in the app: a quick
+ * dip, the landing spring back, and the light round the rim again -- the
+ * figures stay where they are, because in the app 0% is a reading and a card
+ * rolling back through zero would show an account as spent. At the app's pace:
+ * 77 ms down (`pressHold`), 35 ms between cards (`pressing`).
+ *
+ * Web Animations rather than CSS, because a CSS animation cannot be started
+ * again without starting the entrance again. An engine that cannot run a
+ * `linear()` easing or animate a registered property simply does not press.
+ */
+function pressCards(panel: HTMLElement | null) {
+  if (!panel || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    return;
+  }
+  panel.querySelectorAll<HTMLElement>('[data-panel-card]').forEach((card, i) => {
+    const style = getComputedStyle(card);
+    const land = style.getPropertyValue('--lan-panel-land').trim() || 'ease-out';
+    const back = Number.parseFloat(style.getPropertyValue('--lan-panel-land-duration')) || 879;
+    const down = 77;
+    const delay = 35 * (i + 1);
+    try {
+      card.animate(
+        [
+          { transform: 'none', easing: 'ease-out' },
+          { transform: 'scale(0.98, 0.95)', offset: down / (down + back), easing: land },
+          { transform: 'none' },
+        ],
+        { duration: down + back, delay }
+      );
+      card.animate({ '--glint': [0, 1] } as PropertyIndexedKeyframes, {
+        duration: 630,
+        easing: 'ease-out',
+        delay: delay + down,
+        pseudoElement: '::after',
+      });
+    } catch {
+      // No press on this engine; the refresh itself still happens.
+    }
+  });
+}
 
 interface PanelDemoProps {
   id: string;
@@ -66,6 +109,7 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
       return;
     }
     setRefreshing(true);
+    pressCards(document.getElementById(id));
     pending.current = window.setTimeout(() => {
       const at = Date.now();
       setBase({ at, age: 0 });
@@ -83,7 +127,9 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
       tabIndex={-1}
       className={classes.panel}
     >
-      <div className={classes.toolbar}>
+      {/* `--place` is where each piece starts in the entrance: the header, each
+          card in turn, then the commands, as `MenuPanelView` orders them. */}
+      <div className={classes.toolbar} style={{ '--place': 0 } as CSSProperties}>
         <button
           type="button"
           className={classes.stamp}
@@ -127,11 +173,14 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
         </button>
       </div>
 
-      {state.agents.map((agent) => (
-        <AgentCard key={agent.agent} agent={agent} onClose={onClose} />
+      {state.agents.map((agent, i) => (
+        <AgentCard key={agent.agent} agent={agent} place={i + 1} onClose={onClose} />
       ))}
 
-      <div className={classes.commands}>
+      <div
+        className={classes.commands}
+        style={{ '--place': state.agents.length + 2 } as CSSProperties}
+      >
         <Link href="/docs/the-window" className={classes.command} onClick={onClose}>
           <IconLayoutGrid size={12} stroke={1.8} className={classes.commandIcon} />
           <span className={classes.commandTitle}>Open Lancetta…</span>
@@ -152,10 +201,22 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
 }
 
 /** `ReadingCard`: the mark, the plan, one row per window, then what refused and what can undo it. */
-function AgentCard({ agent, onClose }: { agent: PanelAgent; onClose: () => void }) {
+function AgentCard({
+  agent,
+  place,
+  onClose,
+}: {
+  agent: PanelAgent;
+  place: number;
+  onClose: () => void;
+}) {
   const Mark = agent.agent === 'codex' ? CodexMark : ClaudeMark;
   return (
-    <div className={classes.card} style={{ '--tint': agentTint[agent.agent] } as CSSProperties}>
+    <div
+      className={classes.card}
+      data-panel-card
+      style={{ '--tint': agentTint[agent.agent], '--place': place } as CSSProperties}
+    >
       <div className={classes.cardHead}>
         <span className={classes.glyph} aria-hidden>
           <Mark size={17} />
@@ -209,7 +270,10 @@ function Meter({ row }: { row: PanelRow }) {
   const fill = row.percent === null ? null : Math.min(100, Math.max(0, row.percent));
   return (
     <>
-      <span className={classes.percent}>{row.percent === null ? '—' : `${row.percent}%`}</span>
+      {/* The figures roll up out of zeros as their card lands (`RollingNumberText`). */}
+      <span className={classes.percent}>
+        {row.percent === null ? '—' : <ScrollNumber value={`${row.percent}%`} />}
+      </span>
       <span className={classes.window}>{row.label}</span>
       <span
         className={classes.track}
@@ -220,7 +284,7 @@ function Meter({ row }: { row: PanelRow }) {
       </span>
       <span className={classes.reset}>
         {row.reset && <ResetMark size={9} />}
-        {row.reset}
+        {row.reset && <ScrollNumber value={row.reset} />}
       </span>
       {row.pace && (
         <span className={classes.pace} data-urgent={row.pace.urgent ?? false}>

@@ -6,6 +6,7 @@ import { TextAnimate } from '@gfazioli/mantine-text-animate';
 import { IconArrowRight, IconBook2, IconGauge } from '@tabler/icons-react';
 import { Button, Container, Group, Image, Stack, Text, Title } from '@mantine/core';
 import config from '@/config';
+import { ScrollNumber } from '../Motion/ScrollNumber';
 import { ReleaseCadence } from '../ReleaseCadence/ReleaseCadence';
 import {
   fallbackReleaseCadence,
@@ -340,9 +341,11 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
 
                 {frame.figures && (
                   <div className={classes.figures}>
-                    {frame.figures.map((figure) => (
+                    {frame.figures.map((figure, i) => (
                       <div key={figure.label} className={classes.figure}>
-                        <span className={classes.figureValue}>{figure.value}</span>
+                        <span className={classes.figureValue}>
+                          <ScrollNumber value={figure.value} delay={i * 150} />
+                        </span>
                         <span className={classes.figureLabel}>{figure.label}</span>
                       </div>
                     ))}
