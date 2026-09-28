@@ -50,8 +50,7 @@ const techPills = [
 export function BuiltForMacSection() {
   // One scope for the whole block: the heading lifts in, the pills pop one after
   // another, and the line under them follows the last.
-  const { ref, revealed } = useReveal<HTMLDivElement>();
-  const scope = revealScope(revealed);
+  const reveal = useReveal<HTMLDivElement>();
   return (
     <Box pos="relative" py={80} className="lan-feather" style={{ overflow: 'hidden' }}>
       {/*
@@ -77,13 +76,7 @@ export function BuiltForMacSection() {
         <Scene.Noise opacity={0.018} />
       </Scene>
       <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
-        <Stack
-          ref={ref}
-          align="center"
-          gap="md"
-          className={scope.className}
-          data-revealed={scope['data-revealed']}
-        >
+        <Stack ref={reveal.ref} align="center" gap="md" {...revealScope(reveal)}>
           <Text
             {...revealItem('rise')}
             size="sm"

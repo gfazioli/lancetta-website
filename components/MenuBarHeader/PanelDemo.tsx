@@ -13,6 +13,7 @@ import {
   IconSettings,
 } from '@tabler/icons-react';
 import { ScrollNumber } from '../Motion/ScrollNumber';
+import { springFor } from '../Motion/springs';
 import { ClaudeMark, CodexMark, ResetMark } from './AgentMark';
 import {
   agentTint,
@@ -26,6 +27,9 @@ import classes from './PanelDemo.module.css';
 /** Long enough to read "Refreshing…", short enough not to feel like a network. */
 const REFRESH_MS = 900;
 
+/** The spring a pressed card lands back on: the entrance's, `--lan-panel-land`. */
+const LAND = springFor('--lan-panel-land');
+
 /**
  * A refresh PRESSES the cards, as `CardEntrance.press` does in the app: a quick
  * dip, the landing spring back, and the light round the rim again -- the
@@ -35,23 +39,22 @@ const REFRESH_MS = 900;
  *
  * Web Animations rather than CSS, because a CSS animation cannot be started
  * again without starting the entrance again. An engine that cannot run a
- * `linear()` easing or animate a registered property simply does not press.
+ * `linear()` easing throws, and that card does not press; one that cannot
+ * animate a registered property presses without the light.
  */
 function pressCards(panel: HTMLElement | null) {
   if (!panel || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     return;
   }
   panel.querySelectorAll<HTMLElement>('[data-panel-card]').forEach((card, i) => {
-    const style = getComputedStyle(card);
-    const land = style.getPropertyValue('--lan-panel-land').trim() || 'ease-out';
-    const back = Number.parseFloat(style.getPropertyValue('--lan-panel-land-duration')) || 879;
+    const back = LAND.ms;
     const down = 77;
     const delay = 35 * (i + 1);
     try {
       card.animate(
         [
           { transform: 'none', easing: 'ease-out' },
-          { transform: 'scale(0.98, 0.95)', offset: down / (down + back), easing: land },
+          { transform: 'scale(0.98, 0.95)', offset: down / (down + back), easing: LAND.easing },
           { transform: 'none' },
         ],
         { duration: down + back, delay }
@@ -272,7 +275,7 @@ function Meter({ row }: { row: PanelRow }) {
     <>
       {/* The figures roll up out of zeros as their card lands (`RollingNumberText`). */}
       <span className={classes.percent}>
-        {row.percent === null ? '—' : <ScrollNumber value={`${row.percent}%`} />}
+        {row.percent === null ? '—' : <ScrollNumber value={`${row.percent}%`} on="mount" />}
       </span>
       <span className={classes.window}>{row.label}</span>
       <span
@@ -284,7 +287,7 @@ function Meter({ row }: { row: PanelRow }) {
       </span>
       <span className={classes.reset}>
         {row.reset && <ResetMark size={9} />}
-        {row.reset && <ScrollNumber value={row.reset} />}
+        {row.reset && <ScrollNumber value={row.reset} on="mount" />}
       </span>
       {row.pace && (
         <span className={classes.pace} data-urgent={row.pace.urgent ?? false}>

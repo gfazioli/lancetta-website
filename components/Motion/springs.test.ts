@@ -1,6 +1,6 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { APP_PACE, sample, settle, spr, springs, springsCss } from './springs';
+import { APP_PACE, sample, settle, spr, springFor, springs, springsCss } from './springs';
 
 describe('the film spring', () => {
   it('samples netfox.app’s landing spring to the digit', () => {
@@ -32,6 +32,18 @@ describe('the film spring', () => {
 
   it('plays the app’s springs at its pace: 0.7 of the film’s time', () => {
     expect(settle(1.4 / APP_PACE, 0.5) / settle(1.4, 0.5)).toBeCloseTo(APP_PACE, 6);
+  });
+
+  it('hands Web Animations the same spring the stylesheet runs, in milliseconds', () => {
+    // The panel's press used to read this back out of the CSS, where the
+    // minifier serves `879ms` as `.879s`: the spring-back lasted under 1 ms.
+    const land = springFor('--lan-panel-land');
+    expect(land.ms).toBe(879);
+    const css = readFileSync(join(__dirname, '../../theme/global.css'), 'utf8');
+    const block = css.split('--lan-panel-land: linear(')[1]?.split(');')[0] ?? '';
+    const stops = block.split(',').map((stop) => stop.trim());
+    expect(land.easing).toBe(`linear(${stops.join(', ')})`);
+    expect(() => springFor('--lan-nothing')).toThrow();
   });
 });
 

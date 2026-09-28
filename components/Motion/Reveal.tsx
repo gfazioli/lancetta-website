@@ -7,10 +7,14 @@ import classes from './Motion.module.css';
 /** How an item arrives. See Motion.module.css for each starting pose. */
 export type RevealVariant = 'morph' | 'rise' | 'pop';
 
-/** Props that make an element a scope: the thing the observer watches. */
-export function revealScope(revealed: boolean) {
+/**
+ * Props that make an element a scope: the thing the observer watches. Pass it
+ * what `useReveal` returned; see there for what armed and revealed mean.
+ */
+export function revealScope({ armed, revealed }: { armed: boolean; revealed: boolean }) {
   return {
     className: classes.scope,
+    'data-armed': armed ? '' : undefined,
     'data-revealed': revealed ? '' : undefined,
   };
 }
@@ -49,8 +53,8 @@ export function Reveal({
   children,
   ...rest
 }: RevealProps) {
-  const { ref, revealed } = useReveal<HTMLDivElement>();
-  const scope = revealScope(revealed);
+  const reveal = useReveal<HTMLDivElement>();
+  const scope = revealScope(reveal);
   const item = revealItem(variant, delay);
   const corner =
     radius === undefined
@@ -60,9 +64,10 @@ export function Reveal({
         } as CSSProperties);
   return (
     <div
-      ref={ref}
+      ref={reveal.ref}
       {...rest}
       data-reveal={item['data-reveal']}
+      data-armed={scope['data-armed']}
       data-revealed={scope['data-revealed']}
       className={[scope.className, item.className, className].filter(Boolean).join(' ')}
       style={{ ...item.style, ...corner, ...style }}

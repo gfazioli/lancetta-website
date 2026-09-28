@@ -6,7 +6,8 @@
  *   node scripts/shot.mjs <url> <out-prefix> [--width 1440] [--height 900]
  *                                            [--at 0,0.25,0.6] [--find "text"]
  *                                            [--eval "<expression>"]
- *                                            [--click "<selector>"] [--rate 0.1]
+ *                                            [--click "<selector>" ...] [--between 1500]
+ *                                            [--rate 0.1]
  *                                            [--frames 12 --every 250] [--no-wake]
  *
  * With no `--at` it writes ONE full-page `<prefix>.png`. With `--at` it writes
@@ -35,8 +36,8 @@
  *   straight after load shows blank bands; this scrolls the page once so every
  *   observer fires, then goes where it was asked to.
  *
- * `--eval` reads the page at each `--at` position instead of, or as well as,
- * photographing it — the geometry a capture cannot give you as a number. Use
+ * `--eval` reads the page at each `--at` position (after the strip, with
+ * `--frames`) instead of, or as well as, photographing it — the geometry a capture cannot give you as a number. Use
  * THIS rather than `scripts/pageeval.swift` whenever a transition is involved:
  * that one is a WKWebView whose animation clock never advances, so a property
  * under `transition:` is frozen at the value it had when the transition began.
@@ -59,7 +60,10 @@
  *   `LANCETTA_SLOWMO`. A capture takes about a tenth of a second, so a 0.3 s
  *   spring is two frames at full speed and thirty at 0.1.
  * - `--click "<selector>"` clicks the first match before the frames start: the
- *   header's reading (`button[aria-haspopup="dialog"]`) opens the panel.
+ *   header's reading (`button[aria-haspopup="dialog"]`) opens the panel. Give
+ *   it more than once and each is clicked in turn, `--between MS` apart (1500
+ *   by default, wall clock, so allow for `--rate`): the panel, then its
+ *   Refresh, films the press rather than the entrance.
  *
  * And `--no-wake`, without which none of that can see a reveal: the default
  * scrolls the whole page once to wake the lazy backgrounds, which is exactly
@@ -80,6 +84,11 @@ function flag(name) {
   return i >= 0 ? rest[i + 1] : undefined;
 }
 
+/** Every value of a flag that may repeat, in order. */
+function flags(name) {
+  return rest.flatMap((value, i) => (value === name ? [rest[i + 1]] : []));
+}
+
 if (!url || !prefix) {
   console.error(
     'usage: node scripts/shot.mjs <url> <out-prefix> [--width 1440] [--height 900] [--at 0,0.5] [--find "text"]'
@@ -91,7 +100,8 @@ const width = Number(flag('--width') ?? 1440);
 const height = Number(flag('--height') ?? 900);
 const find = flag('--find');
 const evaluate = flag('--eval');
-const click = flag('--click');
+const clicks = flags('--click');
+const between = Number(flag('--between') ?? 1500);
 const rate = Number(flag('--rate') ?? 1);
 const frames = Number(flag('--frames') ?? 0);
 const every = Number(flag('--every') ?? 200);
@@ -244,17 +254,39 @@ try {
     return file;
   }
 
-  // `--frames`: a strip of viewport captures from this moment on.
+  // `--frames`: a strip of viewport captures from this moment on. The time
+  // printed is MEASURED, when each capture was asked for: one takes about
+  // 100 ms, so an `--every` shorter than that falls behind its plan. Under
+  // `--rate` the page's own clock is beside it.
   async function strip(stem) {
+    const t0 = Date.now();
     for (let k = 0; k < frames; k++) {
       const started = Date.now();
       const file = await capture(`${stem}-f${String(k).padStart(2, '0')}.png`);
-      console.log(`${file}  t=${k === 0 ? 0 : Math.round(k * every)}ms`);
+      const t = started - t0;
+      console.log(`${file}  t=${t}ms${rate === 1 ? '' : `  page=${Math.round(t * rate)}ms`}`);
       await sleep(Math.max(0, every - (Date.now() - started)));
     }
   }
 
-  if (click) {
+  // `--eval`, printed under the capture (or the strip) it belongs to.
+  async function readPage() {
+    if (!evaluate) {
+      return;
+    }
+    const read = await send(
+      'Runtime.evaluate',
+      // `awaitPromise`, so an expression can wait for a transition to land.
+      { expression: evaluate, awaitPromise: true, returnByValue: true },
+      sessionId
+    );
+    console.log(`  eval: ${JSON.stringify(read.result.value ?? read.result.description)}`);
+  }
+
+  for (const [n, click] of clicks.entries()) {
+    if (n > 0) {
+      await sleep(between);
+    }
     const clicked = await send(
       'Runtime.evaluate',
       {
@@ -307,22 +339,15 @@ try {
       if (frames > 0) {
         console.log(`at ${fraction}: y=${y}/${max}`);
         await strip(`${prefix}-at-${fraction}`);
-        continue;
+      } else {
+        const file = await capture(`${prefix}-at-${fraction}.png`);
+        console.log(`${file}  ${width}x${height}  y=${y}/${max}`);
       }
-      const file = await capture(`${prefix}-at-${fraction}.png`);
-      console.log(`${file}  ${width}x${height}  y=${y}/${max}`);
-      if (evaluate) {
-        const read = await send(
-          'Runtime.evaluate',
-          // \`awaitPromise\`, so an expression can wait for a transition to land.
-          { expression: evaluate, awaitPromise: true, returnByValue: true },
-          sessionId
-        );
-        console.log(`  eval: ${JSON.stringify(read.result.value ?? read.result.description)}`);
-      }
+      await readPage();
     }
   } else if (frames > 0) {
     await strip(prefix);
+    await readPage();
   } else {
     const { contentSize } = await send('Page.getLayoutMetrics', {}, sessionId);
     const full = Math.ceil(contentSize.height);

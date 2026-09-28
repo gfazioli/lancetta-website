@@ -106,6 +106,22 @@ export function sample({ f, zeta }: Spring, points = 48) {
   return { ms: Math.round(duration * 1000), stops, overshoot: (peak - 1) * 100 };
 }
 
+/**
+ * A spring for Web Animations, which cannot read a custom property: its
+ * duration in ms and its `linear()`, straight from the source the stylesheet
+ * is generated from. Parsing the stylesheet instead is how the panel's press
+ * lost its spring: minified, `879ms` is served as `.879s`, and `parseFloat`
+ * read that as 0.879 ms.
+ */
+export function springFor(name: string) {
+  const spring = springs.find((candidate) => candidate.name === name);
+  if (!spring) {
+    throw new Error(`No spring named ${name}`);
+  }
+  const { ms, stops } = sample(spring);
+  return { ms, easing: `linear(${stops.join(', ')})` };
+}
+
 /** The block `theme/global.css` carries between its `springs` markers. */
 export function springsCss(): string {
   const lines = springs.flatMap((spring) => {
