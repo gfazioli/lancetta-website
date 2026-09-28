@@ -37,7 +37,8 @@
  *   observer fires, then goes where it was asked to.
  *
  * `--eval` reads the page at each `--at` position (after the strip, with
- * `--frames`) instead of, or as well as, photographing it — the geometry a capture cannot give you as a number. Use
+ * `--frames`, and once after a full-page capture) instead of, or as well as,
+ * photographing it — the geometry a capture cannot give you as a number. Use
  * THIS rather than `scripts/pageeval.swift` whenever a transition is involved:
  * that one is a WKWebView whose animation clock never advances, so a property
  * under `transition:` is frozen at the value it had when the transition began.
@@ -57,8 +58,8 @@
  *   ...): at each `--at` fraction, or after `--click`.
  * - `--rate R` slows every CSS animation, transition and Web Animation in the
  *   page by R (DevTools' Animation.setPlaybackRate) -- the page's own
- *   `LANCETTA_SLOWMO`. A capture takes about a tenth of a second, so a 0.3 s
- *   spring is two frames at full speed and thirty at 0.1.
+ *   `LANCETTA_SLOWMO`. A capture takes 130-175 ms at 1440x900, so a 0.3 s
+ *   spring is two frames at full speed and about twenty at 0.1.
  * - `--click "<selector>"` clicks the first match before the frames start: the
  *   header's reading (`button[aria-haspopup="dialog"]`) opens the panel. Give
  *   it more than once and each is clicked in turn, `--between MS` apart (1500
@@ -232,7 +233,10 @@ try {
       expression: `(async () => {
         const h = document.documentElement.scrollHeight;
         if (${wake}) {
-          for (let y = 0; y < h; y += 700) { window.scrollTo({ top: y, behavior: 'instant' }); await new Promise(r => setTimeout(r, 50)); }
+          // Half a viewport a step, so every element is inside the viewport at
+          // some stop: 700px steps skipped short elements on a phone-sized one.
+          const step = Math.max(100, Math.floor(window.innerHeight / 2));
+          for (let y = 0; y < h; y += step) { window.scrollTo({ top: y, behavior: 'instant' }); await new Promise(r => setTimeout(r, 50)); }
           window.scrollTo({ top: 0, behavior: 'instant' });
           await new Promise(r => setTimeout(r, 500));
         }
@@ -353,6 +357,7 @@ try {
     const full = Math.ceil(contentSize.height);
     const file = await capture(`${prefix}.png`, { x: 0, y: 0, width, height: full, scale: 1 });
     console.log(`${file}  ${width}x${full}`);
+    await readPage();
   }
 
   console.log(`  scheme=${scheme.result.value}  document height=${woken.result.value}`);

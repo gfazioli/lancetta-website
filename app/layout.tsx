@@ -69,9 +69,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { nextraLayout, head } = config;
 
   return (
+    // `data-scroll-behavior`: the stylesheet makes <html> scroll smoothly (for
+    // the page's own anchors), and without this attribute Next 16 keeps that
+    // on a route change too. Coming home from a docs page then mounted the
+    // page near its bottom and scrolled it to the top for 1.5 s -- past every
+    // section, firing each one-shot reveal out of sight, and measuring the
+    // hero as off screen, so its figures rolled from zeros in front of the
+    // reader. With it, Next jumps before any effect reads the scroll.
     <html
       lang="en"
       dir="ltr"
+      data-scroll-behavior="smooth"
       {...mantineHtmlProps}
       className={`${display.variable} ${body.variable}`}
     >

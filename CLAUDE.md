@@ -867,8 +867,10 @@ panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
   the icon's own rim, cyan and magenta: the app's white vanishes on a white
   card. `--glint` is a registered `@property` in `theme/global.css`, or it
   could not be animated.
-- **The hero is not animated**, on purpose: its first screenshot is the LCP
-  (see *Seeing the page*), and nothing on screen at mount is ever armed (below).
+- **The hero's copy and its picture are not animated**, on purpose: its first
+  screenshot is the LCP (see *Seeing the page*), and nothing on screen at mount
+  is ever armed (below). The figures under its frames do roll, because at
+  1440x900 the page mounts with all of them below the fold.
 - **The panel** (`PanelDemo.module.css`, end of file) plays the app's entrance
   at the app's pace (`Motion.pace` 0.7): the header and the commands rise, the
   cards land in `MenuPanelView`'s order with white light round the rim, the
@@ -897,6 +899,20 @@ snaps rather than animates. What is on screen at mount never moves.
 `threshold` is 0: at 0.15 a scope taller than about six viewports can never
 fire, and the FAQ is that at 500% zoom.
 
+**So the scroll at mount has to be the final one, and `<html>` carries
+`data-scroll-behavior="smooth"` for that.** The stylesheet scrolls `<html>`
+smoothly, for the page's own anchors, and Next 16 keeps that across a route
+change unless the attribute is there. Measured from `/docs/faq` at 900 with a
+click on the logo: the home mounted at 9177 and took 1.6 s to scroll to the top.
+That armed the hero's release count, which then rolled from zeros in front of
+the reader, and fired 37 reveals out of sight on the way up. With the
+attribute, the home mounts at 0: the count stays at rest and nothing is
+revealed until the reader scrolls. Next jumps in a layout effect, before any
+`useEffect` reads the scroll. On the home page `/#roadmap` and the other
+anchors still scroll smoothly: Next leaves a hash-only change alone. The 1.6 s scroll to the
+top predates the reveals (lancetta.app on `main` did the same), and the three
+sibling sites carry the same smooth scroll without the attribute.
+
 **The springs are generated, never typed.** `components/Motion/springs.ts`
 samples the films' closed-form spring into `linear()` stops, each with the
 duration its envelope takes to fall under 0.4%, and `springs.test.ts` fails when
@@ -913,7 +929,9 @@ before the first frame), `--rate 0.25` to slow the page's animations, `--frames
 10 --every 350` for the strip, `--at <fraction>` for a section and `--click
 'button[aria-haspopup="dialog"]'` for the panel; `--eval` runs after the strip,
 and the times printed beside the frames are measured, not planned. A capture
-takes about a tenth of a second, so at full speed a 0.3 s spring is two frames.
+takes 130-175 ms at 1440x900, so at full speed a 0.3 s spring is two frames. The
+wake steps half a viewport at a time; at 700 px it skipped short elements on a
+phone-sized viewport and left them armed.
 
 ## The release-notes page has THREE states, and the middle one was missing
 
