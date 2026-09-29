@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 import { Stack, Text, Title } from '@mantine/core';
+import { Reveal } from '../Motion/Reveal';
 import classes from './SectionHeading.module.css';
 
 /*
@@ -11,6 +12,10 @@ import classes from './SectionHeading.module.css';
  * one that gives a page of centred bands somewhere for the eye to start a
  * line. `center` is for the statement bands, where the copy is the whole
  * section and a split would leave the title talking to an empty column.
+ *
+ * Either way, a heading that is below the fold when the page loads lifts into
+ * place the first time it scrolls into view (`Reveal`, `rise`); one already on
+ * screen stays as it was drawn.
  */
 export function SectionHeading({
   eyebrow,
@@ -40,22 +45,24 @@ export function SectionHeading({
 
   if (align === 'center') {
     return (
-      <Stack align="center" gap="md" mb={mb}>
-        {eyebrowNode}
-        <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} c={titleColor}>
-          {title}
-        </Title>
-        {lead && (
-          <Text c={leadColor} ta="center" size="lg" maw={620} lh={1.6}>
-            {lead}
-          </Text>
-        )}
-      </Stack>
+      <Reveal variant="rise" style={{ marginBottom: mb }}>
+        <Stack align="center" gap="md">
+          {eyebrowNode}
+          <Title order={2} ta="center" fz={{ base: 32, sm: 42 }} c={titleColor}>
+            {title}
+          </Title>
+          {lead && (
+            <Text c={leadColor} ta="center" size="lg" maw={620} lh={1.6}>
+              {lead}
+            </Text>
+          )}
+        </Stack>
+      </Reveal>
     );
   }
 
   return (
-    <div className={classes.split} style={{ marginBottom: mb }}>
+    <Reveal variant="rise" className={classes.split} style={{ marginBottom: mb }}>
       <div>
         {eyebrowNode}
         <Title
@@ -74,6 +81,6 @@ export function SectionHeading({
           {lead}
         </Text>
       )}
-    </div>
+    </Reveal>
   );
 }

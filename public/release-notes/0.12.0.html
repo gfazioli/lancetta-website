@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.12.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.12.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Two new ways to read what Lancetta already keeps — every agent side by side, and the week that just ended — and a command line for anything else that wants the numbers.</p>
+<h2>Both agents, side by side</h2>
+<p>The Overview's <strong>Quota Used</strong> card now draws every agent on one row: its 5-hour and 7-day windows next to each other, each with the figure, the bar, the time to the reset and, when there is something worth saying, where the window is heading at this pace. A model with a weekly limit of its own is drawn under its agent.</p>
+<p>It gives the numbers and never a verdict. Whether one agent can take over what the other is in the middle of is yours to know, so the card never says which one to use.</p>
+<h2>Last week</h2>
+<p>Under it, a <strong>Last week</strong> card: the week that just ended, for each agent — each agent's own weekly window, not a calendar week, so Claude's and Codex's lines each say which days they cover.</p>
+<ul>
+<li><strong>Weekly</strong> — when the window ran out and when it was back, or the highest reading of it, and when the provider emptied it early if it did.</li>
+<li><strong>5-hour</strong> — how many 5-hour windows reached 100%, and how long they held you up in all.</li>
+<li><strong>Not seen</strong> — how much of the week had no reading at all. A night the Mac spent asleep is a gap, never a zero.</li>
+</ul>
+<p>Once there is a whole week before it, one line compares the two. Until Lancetta has watched a week from its start, the card says when the first whole one ends instead of passing a few days off as a week. It says what happened, never what you should have done about it.</p>
+<h2>A command line</h2>
+<p><code class="notranslate">Lancetta usage --json</code> prints what Lancetta last read for each agent as one JSON document — for a tmux status line, SketchyBar, a desk display, or a script.</p>
+<p>It never reads an agent itself: no keychain, no dialog, no request to either account. The app rewrites the document after every read, every reading carries its own <code class="notranslate">observedAt</code>, and the document its <code class="notranslate">writtenAt</code>, so a consumer can tell a held number from a fresh one. Run from a shell, the binary never starts a second copy of the app. The document, field by field, and the exit codes: <a href="https://lancetta.app/docs/command-line" rel="nofollow">lancetta.app/docs/command-line</a>.</p>
+<h2>Smaller things</h2>
+<ul>
+<li><strong>A locked keychain is no longer a click.</strong> When the keychain holding Claude Code's sign-in is locked, the card says so and Lancetta reads again by itself once you unlock it; <strong>Refresh now</strong> tries straight away.</li>
+<li><strong>Numbers follow your region.</strong> Token counts, the Usage card's change and the pace rate use your region's format (<code class="notranslate">351,6M</code> in Italy, <code class="notranslate">351.6M</code> in the US), and every surface writes them in the digits 0 to 9, whatever numbering system the region uses.</li>
+<li><strong>Counting down, the pace line speaks in what is left.</strong> With <em>Count down what is left</em> on: <em>40% left, 2h00m in · at this pace empty by 11:20, 1h40m early</em>. The free-reset question does the same.</li>
+<li><strong>A refused Claude sign-in no longer slows the next recovery.</strong> An expired or refused sign-in used to lengthen the wait after the account's next pause, from seconds to minutes; and Lancetta no longer retries once a second when its own back-off and the account's pause disagreed.</li>
+<li><strong>An absurd token count can no longer crash the app.</strong> A count outside 0 to a trillion, in Codex's history or in a Claude Code transcript, is left out rather than added up.</li>
+</ul>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.12.0.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later.</p>
+</body>
+</html>

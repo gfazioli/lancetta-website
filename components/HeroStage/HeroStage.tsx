@@ -6,6 +6,9 @@ import { TextAnimate } from '@gfazioli/mantine-text-animate';
 import { IconArrowRight, IconBook2, IconGauge } from '@tabler/icons-react';
 import { Button, Container, Group, Image, Stack, Text, Title } from '@mantine/core';
 import config from '@/config';
+import { Reveal, revealItem, revealScope } from '../Motion/Reveal';
+import { ScrollNumber } from '../Motion/ScrollNumber';
+import { useReveal } from '../Motion/useReveal';
 import { ReleaseCadence } from '../ReleaseCadence/ReleaseCadence';
 import {
   fallbackReleaseCadence,
@@ -142,16 +145,16 @@ const frames: Frame[] = [
      * ONE frame for the window since 2026-09-25, where there were three — this
      * one, "The history." (the Usage pane) and "Live, or seen a moment ago."
      * (Limits) — to shorten the page; the feature row below names both, and
-     * the docs carry their pictures. Not a pane switcher in one box: the Limits
-     * capture is 1800x1400 against 1800x1256 for the other two, so the window
-     * would visibly grow on the switch, which is the complaint the Screenshots
-     * section of CLAUDE.md records twice. Re-shoot the set first.
+     * the docs carry their pictures. The four panes were re-shot as ONE set on
+     * 2026-09-27, all 2080x1440 (the window's default 1040x720), so a pane
+     * switcher would no longer change the window's size; one frame stays for
+     * the page's length, not for the pictures.
      */
     src: '/screenshot-window-overview.png',
-    alt: 'The Lancetta window: the daily token series for both agents side by side, and both agents’ quota bars underneath',
+    alt: 'The Lancetta window: the daily token series for both agents side by side, and underneath, each agent’s 5-hour and 7-day windows on one row',
     eyebrow: 'When a glance is not enough',
     title: 'The window.',
-    body: 'Command-O for the rest: daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, and the processes the agents have left running.',
+    body: 'Command-O for the rest: daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, and the processes the agents have left running.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
   },
@@ -165,7 +168,7 @@ const HERO_SHOT = {
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
   const released = config.app.released;
   /*
-   * NOTHING HERE WATCHES THE SCROLL any more, and the absence is the point.
+   * NOTHING HERE DRIVES THE HEADER any more, and the absence is the point.
    *
    * An IntersectionObserver used to hand the header's status item whichever
    * section was crossing the middle of the viewport, so the bar always quoted
@@ -173,7 +176,9 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
    * readings went past on one pass down this page, and a number changing in a
    * header while the reader is somewhere else entirely looks like a defect
    * rather than a demonstration (user, 2026-09-22). The bar holds ONE reading
-   * now and only its turn moves, on its own timer — `MenuBarReading.tsx`.
+   * now and only its turn moves, on its own timer — `MenuBarReading.tsx`. The
+   * frames' own observers (`FrameSection`) play each part's entrance once, and
+   * nothing they see leaves the frame.
    */
 
   const wash = (
@@ -314,49 +319,136 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
         />
 
         <div className={classes.frames}>
-          {frames.map((frame) => (
-            <section
-              key={frame.title}
-              className={classes.frame}
-              data-textonly={!frame.src}
-              aria-label={frame.title}
-            >
-              {frame.src && (
-                <div className={classes.frameShot}>
-                  <Image src={frame.src} alt={frame.alt} className={classes.shot} />
-                </div>
-              )}
-
-              <div className={classes.frameCopy}>
-                <Text className={classes.eyebrow} data-next={frame.next}>
-                  {frame.eyebrow}
-                </Text>
-                <Text className={classes.frameTitle} fz={{ base: 26, md: 34 }} lh={1.15} mt={8}>
-                  {frame.title}
-                </Text>
-                <Text c="dimmed" fz="lg" lh={1.6} mt={12}>
-                  {frame.body}
-                </Text>
-
-                {frame.figures && (
-                  <div className={classes.figures}>
-                    {frame.figures.map((figure) => (
-                      <div key={figure.label} className={classes.figure}>
-                        <span className={classes.figureValue}>{figure.value}</span>
-                        <span className={classes.figureLabel}>{figure.label}</span>
-                      </div>
-                    ))}
-                  </div>
-                )}
-
-                <Link href={frame.href} className={classes.frameLink}>
-                  {frame.linkLabel}
-                </Link>
-              </div>
-            </section>
+          {frames.map((frame, i) => (
+            <FrameSection key={frame.title} frame={frame} side={i % 2 === 0 ? 'left' : 'right'} />
           ))}
         </div>
       </Container>
     </section>
+  );
+}
+
+/**
+ * One frame, revealed on the way into view as netfox.app's tour is (user,
+ * 2026-09-28: *"anima anche le immagini e i copytext, come fatto sul sito web
+ * di netfox, non solo i numeri"*): the picture comes in from the side it sits
+ * on, the copy rises, and the figures pop in, their numbers rolling up from
+ * zero.
+ *
+ * Each of the three watches for itself, where netfox.app's frame watches for
+ * all of them. Measured by scrolling at 750px/s: when a reveal fired by the
+ * frame went off, its copy was 136px below the fold of a 390x844 phone (one
+ * column there, the copy under the picture) and its figures 424px below; at
+ * 1440x900 the figures were 241px below. They moved before they were on
+ * screen, unless the reader scrolled fast enough to meet them.
+ *
+ * So side by side the order is not fixed: the taller of the picture and the
+ * copy has its top higher and starts first. Scrolling at 200px/s, a copy
+ * started anywhere from 110 ms before its picture to 606 ms after it. Each
+ * part moves where the reader is looking, which is the point; the copy's 140
+ * ms only orders the two when they cross the line together.
+ *
+ * The frame with no picture is a card, and lands whole as the page's cards do:
+ * its copy rises with it rather than watching for itself, which let an empty
+ * bordered card land a quarter of a second before its text.
+ *
+ * `side` does two jobs, where the picture sits (the stylesheet orders the grid
+ * on `data-side`) and where it comes in from, so in two columns the two cannot
+ * disagree. In one column every picture is centred, and they keep alternating.
+ * It counts every frame, the card included, as the grid's `:nth-child` did, so
+ * the layout is the one the page already had.
+ */
+function FrameSection({ frame, side }: { frame: Frame; side: 'left' | 'right' }) {
+  const reveal = useReveal<HTMLElement>();
+  const card = frame.src ? undefined : { ...revealScope(reveal), item: revealItem('morph') };
+  const rise = revealItem('rise', 140);
+  const copy = (
+    <>
+      <Text className={classes.eyebrow} data-next={frame.next}>
+        {frame.eyebrow}
+      </Text>
+      <Text className={classes.frameTitle} fz={{ base: 26, md: 34 }} lh={1.15} mt={8}>
+        {frame.title}
+      </Text>
+      <Text c="dimmed" fz="lg" lh={1.6} mt={12}>
+        {frame.body}
+      </Text>
+
+      {frame.figures && <Figures figures={frame.figures} />}
+
+      <Link href={frame.href} className={classes.frameLink}>
+        {frame.linkLabel}
+      </Link>
+    </>
+  );
+
+  return (
+    <section
+      ref={card ? reveal.ref : undefined}
+      className={[classes.frame, card?.className, card?.item.className].filter(Boolean).join(' ')}
+      data-armed={card?.['data-armed']}
+      data-revealed={card?.['data-revealed']}
+      data-reveal={card?.item['data-reveal']}
+      style={card?.item.style}
+      data-side={side}
+      data-textonly={!frame.src}
+      aria-label={frame.title}
+    >
+      {frame.src && (
+        <Reveal variant={side} className={classes.frameShot}>
+          <Image src={frame.src} alt={frame.alt} className={classes.shot} />
+        </Reveal>
+      )}
+
+      {card ? (
+        <div
+          className={`${classes.frameCopy} ${rise.className}`}
+          data-reveal={rise['data-reveal']}
+          style={rise.style}
+        >
+          {copy}
+        </div>
+      ) : (
+        <Reveal variant="rise" delay={140} className={classes.frameCopy}>
+          {copy}
+        </Reveal>
+      )}
+    </section>
+  );
+}
+
+/**
+ * A frame's figures, popping in one after another as the row comes into view.
+ * Each number rolls a beat after its figure starts to grow; it waits for its
+ * own way into view too (`ScrollNumber`), which comes a few pixels later.
+ */
+function Figures({ figures }: { figures: NonNullable<Frame['figures']> }) {
+  const reveal = useReveal<HTMLDivElement>();
+  const scope = revealScope(reveal);
+
+  return (
+    <div
+      ref={reveal.ref}
+      className={`${classes.figures} ${scope.className}`}
+      data-armed={scope['data-armed']}
+      data-revealed={scope['data-revealed']}
+    >
+      {figures.map((figure, k) => {
+        const pop = revealItem('pop', k * 140);
+        return (
+          <div
+            key={figure.label}
+            className={`${classes.figure} ${pop.className}`}
+            data-reveal={pop['data-reveal']}
+            style={pop.style}
+          >
+            <span className={classes.figureValue}>
+              <ScrollNumber value={figure.value} delay={140 + k * 140} />
+            </span>
+            <span className={classes.figureLabel}>{figure.label}</span>
+          </div>
+        );
+      })}
+    </div>
   );
 }

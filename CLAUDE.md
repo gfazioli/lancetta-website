@@ -329,17 +329,31 @@ see.
 window and Settings, and a hover on the notch for the island.
 
 Published today: the menu in both appearances, the island collapsed and open,
-the window's Overview, Usage, Limits and Processes panes, and every Settings
+the window's Overview, Usage, Limits and Processes panes plus the Overview
+scrolled to Last week, and every Settings
 pane: General, Appearance, Notch, Agents, both agent pages, Updates and About.
 
 **The four window panes are ONE SET, shot at ONE window size, in one run.** The
 hero showed them in the same box, one per frame, cross-fading in place, so a
 capture of a different size was drawn at a different scale -- and the reader saw
-the window change size as they scrolled. It was reported twice. **The set is
-broken again today**: the Limits pane re-shot on 2026-09-23 is 1800x1400 against
-1800x1256 for Overview and Usage, which is why the hero now carries Overview
-alone and has no pane switcher (2026-09-25). Re-shoot all four before putting
-two of them in one box again. The three panes
+the window change size as they scrolled. It was reported twice. It broke once
+more when the Limits pane alone was re-shot on 2026-09-23 (1800x1400 against
+1800x1256), which is why the hero carries Overview alone (2026-09-25). **The
+whole set was re-shot in one run on 2026-09-27**, at the window's DEFAULT size
+(1040x720 points, 2080x1440 pixels), one launch per pane:
+
+    APP_LANG=en_GB LANCETTA_CAPTURE=1 APP_DEFAULTS="-claudeAccountConnected 0" \
+      ../Lancetta/scripts/app.sh up light "" "" <overview|usage|limits|processes>
+    ../Lancetta/scripts/app.sh window Lancetta <out.png>
+
+with `LANCETTA_DEMO_TREES=1` added for Processes. A fifth capture,
+`screenshot-window-last-week.png`, is the Overview scrolled down to Quota Used
+and Last week: the scroll is set through the scroll bar's accessibility value
+(`set value of scroll bar 1 of scroll area 1 of group 2 of window "Lancetta"` to
+0.70, by pid through System Events), so nothing moved the pointer. The window
+is always dark, whatever `up light` says; the launch leaves the app frontmost,
+so the traffic lights are drawn active. Compressed with ImageOptim's `oxipng -o
+4 --strip safe`, which keeps the Display P3 profile. The three panes
 published before 2026-09-19 were 588 points tall and the app will not open below
 **628** any more, so they showed a window that can no longer exist; padding them
 onto a common canvas fixed the scale and left the windows visibly different
@@ -822,6 +836,120 @@ window's edge it widened the page to 1675px on a 1440px window.
 `components/SectionHeading` is left by default — title left, lead right,
 bottom-aligned — and `center` for the statement bands. Its `tone="onDark"` has
 no caller since the plate bands went; leave it until something needs it again.
+
+## Motion: the page reveals itself, and the panel moves like the app
+
+Asked for on 2026-09-28, *"come abbiamo fatto ieri sul sito web di netfox,
+aggiungi delle animazioni sfruttando l'interceptor quando gli elementi sono
+visibili scrollando la pagina giù e anche qui dove ci sono delle cifre numeriche
+aggiungi lo scroll dei numeri, insieme a qualche morph"* -- and the copy of the
+panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
+`components/Motion`, cross-ported from netfox.app's #77:
+
+- **Reveals** (`Reveal`, `revealScope` / `revealItem`, `useReveal`): one
+  IntersectionObserver per scope, one-shot. Every `SectionHeading` rises; cards
+  MORPH (squashed and low, then the landing spring) staggered 120 ms; the pills
+  pop; the feature marquee, the CTA and the FAQ rise. The problem cards lift
+  on hover with a transform of their own, so they are wrapped rather than given
+  the props and the two transforms never fight; the roadmap cards are wrapped
+  because `StepCard` passes nothing through. A wrapper has no radius, so it
+  takes the card's through `radius`.
+- **Figures roll** (`ScrollNumber`): the hero's figures, the problem's three
+  readings, the cost measurement and its control (inline too), the release
+  count -- which sits in the hero, so it rolls only on a screen short enough to
+  start it below the fold. The text is only ever the value -- the digits that
+  roll are generated content. What sits between digits is ONE run ("% left"),
+  so its letters keep their kerning, and it needs `white-space: pre`, or the
+  flex row collapses its leading space.
+- **The light is on the rim**, not across the face: two opposite corners, top
+  right and bottom left, the same as the app and Netfox since 2026-09-28 (user:
+  *"solo sui bordi top-right / bottom-left opposti"*). On this LIGHT page it is
+  the icon's own rim, cyan and magenta: the app's white vanishes on a white
+  card. `--glint` is a registered `@property` in `theme/global.css`, or it
+  could not be animated.
+- **The hero's opening is not animated**, on purpose: its first screenshot is
+  the LCP (see *Seeing the page*), and nothing on screen at mount is ever armed
+  (below). **Its frames are** (user, *"anima anche le immagini e i copytext,
+  come fatto sul sito web di netfox, non solo i numeri"*): each picture comes
+  in from the side it sits on (`left` / `right`), the copy rises, the figures
+  pop and their numbers roll, and the frame with no picture lands as a card,
+  its copy rising with it. One value, `data-side`, both orders the grid and
+  picks the direction, so in two columns a picture cannot come in from the
+  wrong side; in one column every picture is centred and they alternate.
+  - **Each part watches for itself**, where netfox.app's frame watches for all
+    of them. Scrolled at 750px/s, a reveal fired by the frame found the copy
+    136px below the fold on a 390x844 phone and the figures 424px below; at
+    1440x900 the figures were 241px below. With a scope per part, every part
+    starts at the reveal line, measured on both. So scopes nest here (the
+    figures inside the copy): an item waits for every scope above it. The
+    price is that side by side the order is not fixed: the taller part's top
+    is higher and goes first, and at 200px/s a copy started from 110 ms before
+    its picture to 606 ms after it.
+  - **`.hero` clips on x.** A picture coming in from the right waits 80px past
+    its column while armed, and that made the page 64px wider at 1024 and at
+    390, where a phone widened its layout viewport to 454. `overflow-x: clip`
+    makes no scroll container, so nothing else about the page changes.
+- **The panel** (`PanelDemo.module.css`, end of file) plays the app's entrance
+  at the app's pace (`Motion.pace` 0.7): the header and the commands rise, the
+  cards land in `MenuPanelView`'s order with white light round the rim, the
+  figures roll out of zeros after the app's hold with every digit together and
+  no overshoot (`numericText` on `.smooth`), and the bars fill. It is mounted
+  on open, so every opening is a new entrance, and its figures roll on mount
+  (`on="mount"`): a short screen cannot scroll to the lower rows, because a
+  scroll closes the panel. Refresh PRESSES the cards (Web Animations, since a
+  CSS animation cannot restart without the entrance) and never rolls a figure
+  back through zero, as in the app. The press takes its spring from
+  `springFor`, never from the stylesheet: minified, `879ms` is served as
+  `.879s`, and `parseFloat` made the spring-back last under a millisecond.
+
+**Nothing is hidden until a script has found it off screen.** The first cut
+hid everything from the first paint, as netfox.app does, behind `@media
+(scripting: enabled)`. The review of #59 caught what that costs here: the hero's
+release count painted *"00 releases since April 2026"* on every load until the
+bundle had hydrated, and a chunk that fails to load or throws would have left
+every reveal at opacity 0 and every figure at zeros -- the class this page has
+already shipped once, as the pinned stage an iPad saw as *"you cannot see
+anything"* (*The one job*, above). So a scope has three states (`useReveal`):
+at REST it is the served HTML; after mount, one that is entirely off screen is
+ARMED -- `data-armed`, its starting pose, taken where nobody sees it; and it is
+REVEALED on the way into view. Only a revealed item has a transition, so arming
+snaps rather than animates. What is on screen at mount never moves.
+`threshold` is 0: at 0.15 a scope taller than about six viewports can never
+fire, and the FAQ is that at 500% zoom.
+
+**So the scroll at mount has to be the final one, and `<html>` carries
+`data-scroll-behavior="smooth"` for that.** The stylesheet scrolls `<html>`
+smoothly, for the page's own anchors, and Next 16 keeps that across a route
+change unless the attribute is there. Measured from `/docs/faq` at 900 with a
+click on the logo: the home mounted at 9177 and took 1.6 s to scroll to the top.
+That armed the hero's release count, which then rolled from zeros in front of
+the reader, and fired 37 reveals out of sight on the way up. With the
+attribute, the home mounts at 0: the count stays at rest and nothing is
+revealed until the reader scrolls. Next jumps in a layout effect, before any
+`useEffect` reads the scroll. On the home page `/#roadmap` and the other
+anchors still scroll smoothly: Next leaves a hash-only change alone. The 1.6 s scroll to the
+top predates the reveals (lancetta.app on `main` did the same), and the three
+sibling sites carry the same smooth scroll without the attribute.
+
+**The springs are generated, never typed.** `components/Motion/springs.ts`
+samples the films' closed-form spring into `linear()` stops, each with the
+duration its envelope takes to fall under 0.4%, and `springs.test.ts` fails when
+`theme/global.css` (between its `springs:begin` / `springs:end` markers) does
+not carry exactly what it generates -- mutated by hand to prove it fails. The
+page runs the film's own tempo (a page is read once, as a film is watched once);
+the `--lan-panel-*` ones are the app's, at its pace. The positive control: the
+same generator reproduces netfox.app's three curves to the last digit.
+
+Everything moves only on a screen, once a script has armed it, and without
+Reduce Motion; otherwise it is simply there. **To see it**, `scripts/shot.mjs`
+films it: `--no-wake` (or the page-wide wake scroll fires every one-shot reveal
+before the first frame), `--rate 0.25` to slow the page's animations, `--frames
+10 --every 350` for the strip, `--at <fraction>` for a section and `--click
+'button[aria-haspopup="dialog"]'` for the panel; `--eval` runs after the strip,
+and the times printed beside the frames are measured, not planned. A capture
+takes 130-175 ms at 1440x900, so at full speed a 0.3 s spring is two frames. The
+wake steps half a viewport at a time; at 700 px it skipped short elements on a
+phone-sized viewport and left them armed.
 
 ## The release-notes page has THREE states, and the middle one was missing
 

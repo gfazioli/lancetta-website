@@ -119,6 +119,17 @@
 
 /* `PanelCard`: a step above the canvas, with a hairline that is not a border. */
 .card {
+  /*
+   * For the entrance (at the end of this file): the app's hold, then this
+   * card's own place, so its figures roll as it lands -- every digit together
+   * and without an overshoot, as `numericText` on `.smooth` does.
+   */
+  --reveal-delay: calc(400ms * 0.7 + var(--at));
+  --roll-duration: var(--lan-panel-roll-duration);
+  --roll-easing: var(--lan-panel-roll);
+  --roll-stagger: 0ms;
+
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 7px;
@@ -225,6 +236,8 @@
   box-shadow:
     inset 0 0 0 0.5px rgb(255 255 255 / 28%),
     0 1px 6px color-mix(in srgb, var(--tint) 55%, transparent);
+  /* The spring overshoots by 3%; the app clamps the fill to its groove. */
+  max-width: 100%;
 }
 
 .reset {
@@ -364,5 +377,111 @@
 @media (prefers-reduced-motion: reduce) {
   .spin {
     animation: none;
+  }
+}
+
+/*
+ * The entrance, as the app plays it (`Motion.swift`) and at its pace
+ * (`Motion.pace`, 0.7 of the film's time): the header and the commands RISE,
+ * each card LANDS -- squashed from below and a little low, then an elastic
+ * spring -- with the light catching its rim at the top-right and bottom-left
+ * corners, and a card's figures roll up out of zeros and its bars fill as it
+ * lands, after the app's hold. Each piece starts at its `--place`:
+ * `MotionPlan.stagger`, 60 ms and then 80 ms a place. The springs are
+ * `--lan-panel-*` in theme/global.css, sampled from the formula the app runs.
+ *
+ * The panel is mounted when it opens, so every opening is a new entrance --
+ * the same as the app, where the panel lands every time it comes back from
+ * away. Under Reduce Motion none of it runs and everything is simply there.
+ */
+.toolbar,
+.card,
+.commands {
+  --at: calc((60ms + 80ms * min(var(--place, 0), 8)) * 0.7);
+}
+
+/*
+ * The light: a ring (the padding is the stroke, the mask cuts the rest) lit
+ * from two opposite corners, white on this dark card as in the app
+ * (`EdgeGlint`), reaching 70 points: the app's cap, which both cards are tall
+ * enough to take (60% of their short side is over it). `--glint` is
+ * registered in theme/global.css; the opacity is its sine, dark at both ends,
+ * behind `@supports` as on the page's cards (Motion.module.css says why).
+ */
+@supports (opacity: sin(0)) {
+  .card::after {
+    --reach: calc(70px * (0.45 + 0.55 * var(--glint)));
+
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    pointer-events: none;
+    content: '';
+    background:
+      radial-gradient(circle var(--reach) at 100% 0, rgb(255 255 255 / 80%), transparent),
+      radial-gradient(circle var(--reach) at 0 100%, rgb(255 255 255 / 80%), transparent);
+    opacity: sin(calc(var(--glint) * 180deg));
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .toolbar,
+  .commands {
+    animation: panel-rise var(--lan-panel-rise-duration) var(--lan-panel-rise) var(--at) both;
+  }
+
+  .card {
+    transform-origin: 50% 100%;
+    animation:
+      panel-land var(--lan-panel-land-duration) var(--lan-panel-land) var(--at) both,
+      panel-fade calc(500ms * 0.7) ease-out var(--at) both;
+  }
+
+  .card::after {
+    animation: panel-glint calc(900ms * 0.7) ease-out calc(var(--at) + 150ms * 0.7) both;
+  }
+
+  .fill {
+    animation: panel-fill var(--lan-panel-fill-duration) var(--lan-panel-fill) var(--reveal-delay)
+      both;
+  }
+}
+
+@keyframes panel-rise {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+}
+
+@keyframes panel-land {
+  from {
+    transform: translate3d(0, 20px, 0) scale(0.9, 0.7);
+  }
+}
+
+@keyframes panel-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+@keyframes panel-fill {
+  from {
+    width: 0;
+  }
+}
+
+@keyframes panel-glint {
+  from {
+    --glint: 0;
+  }
+
+  to {
+    --glint: 1;
   }
 }
