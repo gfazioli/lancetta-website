@@ -1,5 +1,6 @@
 'use client';
 
+import NextImage from 'next/image';
 import Link from 'next/link';
 import { Scene } from '@gfazioli/mantine-scene';
 import { TextAnimate } from '@gfazioli/mantine-text-animate';
@@ -52,6 +53,9 @@ interface Frame {
   /** Absent for a `next` section: a promise does not get a screenshot. */
   src?: string;
   alt?: string;
+  /** The file's own pixel size, so the picture holds its place while it loads. */
+  width?: number;
+  height?: number;
   eyebrow: string;
   title: string;
   body: string;
@@ -86,6 +90,8 @@ interface Frame {
 const frames: Frame[] = [
   {
     src: '/screenshot-pace.png',
+    width: 716,
+    height: 280,
     alt: 'A Lancetta card for Claude: the five-hour window at 3% with the line “3% in 31m · at this pace 29% by reset” under it, the weekly window at 6% with “6% in 4 days · at this pace 9% by reset”, and its separate Fable limit at 0%',
     eyebrow: 'What nothing else can say',
     title: 'The number you can already see is not the useful one.',
@@ -119,6 +125,8 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-processes.png',
+    width: 2080,
+    height: 1440,
     alt: 'The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total',
     eyebrow: 'What nothing else reaps',
     title: 'Nobody ever closes them.',
@@ -133,6 +141,8 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-notch-open.png',
+    width: 804,
+    height: 441,
     alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, and both windows as bars',
     eyebrow: 'Under the notch',
     title: 'The island.',
@@ -151,6 +161,8 @@ const frames: Frame[] = [
      * the page's length, not for the pictures.
      */
     src: '/screenshot-window-overview.png',
+    width: 2080,
+    height: 1440,
     alt: 'The Lancetta window: the daily token series for both agents side by side, and underneath, each agent’s 5-hour and 7-day windows on one row',
     eyebrow: 'When a glance is not enough',
     title: 'The window.',
@@ -162,6 +174,8 @@ const frames: Frame[] = [
 
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
+  width: 760,
+  height: 714,
   alt: 'The Lancetta panel: how fresh the numbers are across the top, then Claude Code and Codex, each window with its bar and the time it resets. Claude’s lines say where each window ends at the current rate; Codex, spent for the week, shows the free reset it holds, with a Use… button',
 };
 
@@ -311,10 +325,21 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
           </Stack>
         </div>
 
+        {/*
+          The page's largest paint, so it goes through next/image: WebP at the
+          size it is drawn (560px, or the column on a phone) instead of the
+          95 KB PNG, eager and high priority. `priority` is deprecated in
+          Next 16 in favour of exactly these two.
+        */}
         <Image
+          component={NextImage}
           src={HERO_SHOT.src}
           alt={HERO_SHOT.alt}
+          width={HERO_SHOT.width}
+          height={HERO_SHOT.height}
+          sizes="(max-width: 36em) 100vw, 560px"
           className={classes.openingShot}
+          loading="eager"
           fetchPriority="high"
         />
 
@@ -394,9 +419,26 @@ function FrameSection({ frame, side }: { frame: Frame; side: 'left' | 'right' })
       data-textonly={!frame.src}
       aria-label={frame.title}
     >
+      {/*
+        Every frame is below the fold. As plain <img>s React preloaded all four
+        at the top of the document, so their 595 KB of PNG (the 249 KB window
+        among them) competed with the hero for bandwidth: on Lighthouse's phone
+        the hero's own 95 KB took 4.3 s to arrive (2026-09-29). Lazy, and WebP
+        at the drawn size; the dimensions hold the place, so arriving late
+        moves nothing.
+      */}
       {frame.src && (
         <Reveal variant={side} className={classes.frameShot}>
-          <Image src={frame.src} alt={frame.alt} className={classes.shot} />
+          <Image
+            component={NextImage}
+            src={frame.src}
+            alt={frame.alt ?? ''}
+            width={frame.width}
+            height={frame.height}
+            sizes="(max-width: 62em) 100vw, 548px"
+            loading="lazy"
+            className={classes.shot}
+          />
         </Reveal>
       )}
 
