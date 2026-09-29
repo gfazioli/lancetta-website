@@ -76,6 +76,19 @@ A green tick is a tree something can still reach. An orange triangle is an **orp
 
 The pane counts a tree's whole descent rather than the three processes its own documentation describes: `invoice-parser` above has four children, and a real one was measured holding eleven.
 
+## Pull to refresh
+
+On macOS 27 you can pull any pane down to refresh it, the way you would in Mail. Each pane reads again what it shows:
+
+| Pane | What a pull reads again |
+| --- | --- |
+| **Overview** | the quotas and the process trees, as **Refresh now** does, then the token history and Last week |
+| **Usage** | the token history, with Codex asked again |
+| **Limits** | the quotas and the process trees, as **Refresh now** does |
+| **Processes** | the process trees, and nothing else: asking the agents from there would spend their reads on numbers that are not on screen |
+
+The spinner holds for a couple of seconds at most and lets go; the reading carries on underneath, and the cards it reads again press as the numbers land. A second pull while the first refresh is still out starts nothing new: it waits for that one rather than throwing its answers away. The sidebar is for choosing a pane, so pulling it does nothing. On any version of macOS, **Refresh now** (⌘R), in the panel or in the window's Agents menu, still reads the quotas and the trees.
+
 ## Why the window is dark
 
 Because it always is. The window has one appearance rather than following the system, the same call Netfox makes — the surface is a dense instrument panel of bars and charts, and the palette is part of reading it. The menu, which sits in the menu bar and has to belong there, follows the system appearance like everything else in the menu bar.

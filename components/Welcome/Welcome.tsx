@@ -241,16 +241,16 @@ const today: Step[] = [
     color: 'grape',
     state: 'today',
   },
-];
-
-const ahead: Step[] = [
   {
     icon: IconDeviceLaptop,
     title: 'Everyone else’s Mac',
-    body: 'It will stop assuming the machine it was built on: where it found each agent, where it looked, and a way to point it at one by hand.',
+    body: 'Where it found each agent, every place it looked, and a way to point it at the Codex you want.',
     color: 'pink',
-    state: 'soon',
+    state: 'today',
   },
+];
+
+const ahead: Step[] = [
   {
     icon: IconSunrise,
     title: 'When to start',
