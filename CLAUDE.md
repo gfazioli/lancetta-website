@@ -235,7 +235,8 @@ Three surfaces the theme does not reach, each for its own reason:
 | the docs headings | Nextra renders MDX headings itself, with its own Tailwind classes | `app/global.css`, `main[data-pagefind-body]` |
 
 That last selector was **read off the served markup**, not guessed, and it is
-docs-only by construction: the home page has no `<main>` at all. `h1` and `h2`
+docs-only by construction: only Nextra's docs `<main>` carries
+`data-pagefind-body`, and the home page's `<main>` (since #63) does not. `h1` and `h2`
 only — below that a one-weight serif at body size stops separating a heading
 from the paragraph under it, so the hierarchy hands over from *face* to
 *weight* at `h3`.
