@@ -6,7 +6,8 @@ const withBundleAnalyzer = bundleAnalyzer({
 });
 
 const withNextra = nextra({
-  latex: true,
+  // No `latex`: nothing on the site is math, and it bundled KaTeX into the MDX
+  // compiler that the release notes' fallback loads.
   search: {
     codeblocks: false
   },
