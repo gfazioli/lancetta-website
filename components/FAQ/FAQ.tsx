@@ -51,6 +51,12 @@ export const faqItems: { value: string; question: string; answer: ReactNode }[] 
       'Codex and Claude Code today. A new agent needs code that can read its quota without spending any, which is the whole constraint — so agents arrive with the app rather than being added by hand in Settings.',
   },
   {
+    value: 'not-found',
+    question: 'Lancetta says it can’t find Codex, but Codex is installed. Why?',
+    answer:
+      'An app opened from the Finder inherits almost no PATH, so Lancetta looks for Codex itself: in the places installers use, and then by asking your shell. A Codex installed somewhere else looks exactly like one that is not installed — so Settings › Sources lists every place Lancetta looked and what was there, and lets you choose the codex binary yourself. A binary you choose is the only one Lancetta runs.',
+  },
+  {
     value: 'different',
     question: 'How is it different from the other quota monitors?',
     answer:

@@ -15,12 +15,6 @@ The readings are already being kept. The step is reasoning across them instead o
 
 **Done when** it can say, on a Monday morning and before you have spent anything, roughly how far into the day the five-hour window will carry you — and be right often enough that the sentence is worth reading. That is a higher bar than the pace line had to clear, because a projection made before there is any evidence is a forecast rather than arithmetic, and a forecast that is wrong twice stops being read. If it cannot clear it, it says nothing, the way every other case that cannot support a projection already does.
 
-## Everyone else's Mac
-
-The discovery UI and the Sources pane. This is the version where the app stops assuming one machine, and it is a bigger step than it looks. Connecting Claude is already one click and a macOS dialog, not a script.
-
-Half of this arrived early: the app already ships signed, notarized and downloadable, so the updater in it has a feed with something at the other end.
-
 ---
 
 ## Not planned
@@ -32,6 +26,20 @@ Half of this arrived early: the app already ships signed, notarized and download
 ---
 
 ## Already shipped
+
+### v0.13 — everyone else's Mac
+
+*Shipped 2026-09-29.*
+
+**Where each agent is read from.** Lancetta used to find Codex where the Mac it was built on keeps it. Settings now has a Sources pane: the binary each agent is read from and how it was found, every place Lancetta looked for Codex and what was there, and a way to choose the binary by hand. A binary you choose is kept as you chose it and is the only one Lancetta runs, until you clear it. See [Sources](/docs/settings#sources).
+
+**Pull to refresh.** On macOS 27, pull any pane of the window down and it reads again what it shows, as in Mail. See [Pull to refresh](/docs/the-window#pull-to-refresh).
+
+**It moves.** The panel and the window land their cards, roll their figures up and grow the chart, and a refresh presses the cards it reads again. With Reduce Motion on, everything simply appears.
+
+**The current macOS look.** Settings and the window now draw the controls of the macOS they run on; on macOS 27 they had been drawn as on macOS 15.
+
+**And one account at a time.** Last week and the pace line follow the Codex account you are signed in to, so switching accounts no longer mixes the two.
 
 ### v0.12 — the week that just ended
 

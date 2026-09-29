@@ -5,7 +5,7 @@ description: "Lancetta's Settings: the refresh interval, counting down what is l
 
 # Settings
 
-⌘, from the panel, or the gear at its top. Six panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
+⌘, from the panel, or the gear at its top. Seven panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
 
 ![Lancetta's Settings, on the General pane: the refresh interval and counting down what is left, the two advice switches, and the alert switches beneath them](/screenshot-settings-general.png)
 
@@ -77,7 +77,7 @@ A row opens on a click anywhere, and drags from anywhere. The grip on the left s
 - **Watch this agent** — off, it keeps no card in the menu and no cell in the bar. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
 - **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width. A refusal is shown regardless: when this agent is refused, its mark and a dead lamp take a turn in the bar even with this off, because the bar's rule is alarm first.
 - **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
-- **How it is wired** — which route that agent's numbers arrive by, so a card that is not updating tells you where to look. The panel says it too: a Claude card still read through the status-line file carries a line saying so, and a Connect button beside it.
+- **How it is wired** — the line under the agent's name says which route its numbers arrive by, so a card that is not updating tells you where to look. The panel says it too: a Claude card still read through the status-line file carries a line saying so, and a Connect button beside it. [Sources](#sources) has the detail, and for Codex a way to choose the binary.
 - **Notify me about this agent** — off, Lancetta sends nothing about it: not a refusal, not a suggestion. The two agents are used differently and the answer differs with them; what the menu bar draws is unaffected.
 - **Tell me when a free reset arrives** (Codex only) — a notification when Codex's account grants a reset credit, with what it resets and when it lapses; on by default. It lives here rather than under General because only Codex has credits, and a switch in General would read as a promise about every agent. See [A free reset](/docs/the-menu#a-free-reset).
 - **Account** (Claude only) — **Connect** reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left, reading it the way Claude Code does, so there is normally nothing to approve. **Disconnect** stops it. What that click does and does not do is spelled out in [Getting Started](/docs/getting-started#claude-code).
@@ -91,6 +91,22 @@ The same page for Codex, where the line under the name says which executable it 
 Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
 
 Visibility is stored as the set of agents you have **hidden**, rather than the set you have shown. An agent added in a later version is therefore absent from that set and is visible by default; stored the other way round, every new agent would ship invisible and read as broken until somebody found the setting. The same rule applies to the order: an agent the stored order has never heard of lands last, never nowhere.
+
+## Sources
+
+Where each agent's numbers come from, and where Lancetta looked for them.
+
+{/* The screenshot is shot from the release build; until then the image would fail the build.
+![Lancetta's Settings, on the Sources pane: Codex read from /opt/homebrew/bin/codex, found in Homebrew, with the version it answers; a Choose… button and a field to paste a path; the list of every place Lancetta looked, with what was there; and Claude read from the account, with the status-line file and when it was last written](/screenshot-settings-sources.png) */}
+
+An app launched from the Finder inherits almost no `PATH`, so Lancetta looks for Codex itself: in the places installers put it — Homebrew, `~/.local/bin`, Bun, Volta, MacPorts — and then by asking your shell, the way a terminal would. **An agent that is installed and not found looks exactly like one that is not installed**, so this pane shows every place Lancetta looked and what was there. When Codex isn't found, its card in the panel says so and opens this pane.
+
+- **Reading** — the binary Lancetta runs, how it was found, and the version it answers. A binary that is found and will not run says so, with the reason.
+- **Use a specific binary** — for a codex Lancetta does not find, or when you have two and want the other one. **Choose…** opens a file panel that shows hidden folders; you can also paste what `which codex` prints in a terminal, or pick **Use** beside a second copy in the list. The path is kept as you chose it: Homebrew's `/opt/homebrew/bin/codex` stays valid across upgrades, while the folder it points into does not.
+- **A binary you choose is the only one Lancetta runs**, for the quota and for a free reset alike. If it goes — deleted, or moved by an update — the card says so and offers this pane, rather than quietly reading some other copy. **Clear** goes back to finding Codex by itself.
+- **Where Lancetta looked** — every place, in the order it looks, with what was there: used, found, not there, not a command, or what your shell answered.
+
+Claude isn't read from a binary. The pane says whether Lancetta reads your Claude account or the status-line file, and when that file was last written; Connect and Disconnect stay on Claude's page under Agents.
 
 ## Updates
 

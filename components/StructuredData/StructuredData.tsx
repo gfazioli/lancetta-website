@@ -117,6 +117,11 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
       'Codex and Claude Code today. A new agent needs code that can read its quota without spending any, which is the whole constraint — so agents arrive with the app rather than being added by hand in Settings.',
   },
   {
+    question: 'Lancetta says it can’t find Codex, but Codex is installed. Why?',
+    answer:
+      'An app opened from the Finder inherits almost no PATH, so Lancetta looks for Codex itself: in the places installers use, and then by asking your shell. A Codex installed somewhere else looks exactly like one that is not installed — so Settings › Sources lists every place Lancetta looked and what was there, and lets you choose the codex binary yourself. A binary you choose is the only one Lancetta runs.',
+  },
+  {
     question: 'How is it different from the other quota monitors?',
     answer:
       'Advice about a quota needs three things: the ceiling (what your real limit is), the flow (what you have spent), and the series (how that percentage moved over time). The good tools in this space have the first two. The series is the one nobody keeps — a monitor that reads your transcripts has no way to learn the ceiling at all and infers it from your own highest previous block, and one that covers dozens of providers cannot store a series per provider per window and stay maintainable. Lancetta watches two agents instead of dozens and keeps the series for both, which is the only reason it can say where this pace lands against the percentage your account actually reports rather than an inferred one. It is also the part that cannot be added later: history only accumulates forward.',
