@@ -866,7 +866,10 @@ panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
   *"solo sui bordi top-right / bottom-left opposti"*). On this LIGHT page it is
   the icon's own rim, cyan and magenta: the app's white vanishes on a white
   card. `--glint` is a registered `@property` in `theme/global.css`, or it
-  could not be animated.
+  could not be animated. Since 2026-09-29 it is a glow held just inside the
+  edge, not a 1.5px ring on it (user, choosing findergit.app's version:
+  *"interno e sfumato"*): inset shadows on a layer 3px in, a tight core and a
+  wide bloom per corner, reach 104px. The panel's copy keeps the app's ring.
 - **The hero's opening is not animated**, on purpose: its first screenshot is
   the LCP (see *Seeing the page*), and nothing on screen at mount is ever armed
   (below). **Its frames are** (user, *"anima anche le immagini e i copytext,
