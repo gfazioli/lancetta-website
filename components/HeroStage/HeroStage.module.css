@@ -110,8 +110,16 @@
   align-items: center;
 }
 
+/*
+ * `width: 100%` under the cap, not `auto`. The shot comes through next/image,
+ * whose srcset is described in widths: on a 3x phone the browser picks the
+ * 1200w candidate, the optimizer cannot upscale the 760px file, and an `auto`
+ * width then reads the picture as 760 / (1200 / 390) = 247px wide instead of
+ * the column's 358 (measured 2026-09-29). With the width given, the file's
+ * size decides the pixels and never the layout.
+ */
 .openingShot {
-  width: auto;
+  width: 100%;
   max-width: min(100%, rem(560px));
   height: auto;
   margin-inline: auto;
