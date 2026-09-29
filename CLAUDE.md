@@ -1044,6 +1044,26 @@ Check a page the way a crawler gets it: `curl -A Googlebot` and count words in
 `<main>` with the scripts stripped. A number under a few hundred on a page that
 looks full in the browser is this class of defect.
 
+## Performance and SEO: what the pages cost, measured
+
+Audited 2026-09-29 with `~/Lavoro/GitHub/claude-global/scripts/site-audit/`.
+- The always-on rule `website-changes-measure-performance-and-seo` says when to run it: every significant change.
+- The workspace's `.claude/rules/websites.md` holds what the four sites share.
+
+Local production builds of `main` and the branch, measured with Lighthouse mobile and devtools throttling, base and branch passes alternating:
+- **Home: LCP 3.16–3.17 → 2.85–2.87 s, perf 85–87 → 90, 1,808 → 739 KiB, CLS 0.055 → 0.**
+  - The hero shot is the LCP. It goes through next/image as WebP at the size drawn: the 95 KB PNG became 17 KB.
+  - The four frames below it are lazy WebP, no longer preloaded from the `<head>`: 595 KB of PNG became 43 KB.
+- **JavaScript: 755 → 352 KiB on every page.** The MDX compiler had been in each page's bundle.
+- **At rest for 10 s: 862 ms of main thread and 600 style recalcs → 82 ms and 52.** The cadence dot and the "Next" sticker now pulse on the compositor.
+- **SEO:**
+  - the home page is in a `<main>`;
+  - `/docs/release-notes` has its h1;
+  - nine descriptions fit a snippet: the home page's and eight docs pages'.
+- **The fonts stay as they are.** Four latin woff2 files (157 KiB) are preloaded on every page, and the two italics are about 79 KiB of that. Not preloading the italics is a typography call.
+- **`.openingShot` is `width: 100%` under its cap, not `auto`.** With next/image's width-described srcset, `auto` drew the phone hero at 247 px instead of 358. The optimizer does not upscale the 760 px file, and the browser read the candidate's density.
+- **Compare early passes with early passes.** The first paint landed at about 2.0 or 3.7 s on the same build, in clusters. `/docs/the-window` on this branch painted late in all six passes of one sitting, then early in two of three in the next.
+
 ## Tooling
 
 oxfmt (`.oxfmtrc.json`), oxlint + stylelint, TypeScript 6, **Yarn 4**. Do not
