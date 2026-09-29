@@ -10,7 +10,7 @@ export default {
       template: '%s | Lancetta',
     },
     description:
-      'A native macOS menu-bar monitor for Codex and Claude Code. See both quota windows, the plan each account is on, and how old every reading is — without spending a single token to find out.',
+      "A native macOS menu-bar monitor for Codex and Claude Code: both quota windows, each account's plan and how old every reading is, without spending a token.",
     metadataBase: new URL('https://lancetta.app/'),
     keywords: [
       'Lancetta',
