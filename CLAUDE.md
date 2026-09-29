@@ -875,7 +875,8 @@ panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
   so its letters keep their kerning, and it needs `white-space: pre`, or the
   flex row collapses its leading space.
 - **The light is on the rim**, not across the face: two opposite corners, top
-  right and bottom left, the same as the app and Netfox since 2026-09-28 (user:
+  right and bottom left, the same as the Lancetta and Netfox APPS since 2026-09-28
+  (netfox.app, the site, took it with netfox-website#80) (user:
   *"solo sui bordi top-right / bottom-left opposti"*). On this LIGHT page it is
   the icon's own rim, cyan and magenta: the app's white vanishes on a white
   card. `--glint` is a registered `@property` in `theme/global.css`, or it
@@ -941,8 +942,10 @@ attribute, the home mounts at 0: the count stays at rest and nothing is
 revealed until the reader scrolls. Next jumps in a layout effect, before any
 `useEffect` reads the scroll. On the home page `/#roadmap` and the other
 anchors still scroll smoothly: Next leaves a hash-only change alone. The 1.6 s scroll to the
-top predates the reveals (lancetta.app on `main` did the same), and the three
-sibling sites carry the same smooth scroll without the attribute.
+top predates the reveals (lancetta.app on `main` did the same). findergit.app
+carries the attribute too, netfox.app took it with netfox-website#80 along with
+the rest of these fixes, and vicenda.app, which has no scroll reveals, still
+scrolls smoothly without it.
 
 **The springs are generated, never typed.** `components/Motion/springs.ts`
 samples the films' closed-form spring into `linear()` stops, each with the
