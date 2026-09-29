@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import useSWR from 'swr';
 
-import { compileReleaseBodies } from './load-releases';
-
 export interface Author {
   login: string;
   id: number;
@@ -100,6 +98,14 @@ export function useReleaseNotes(initial: Release[] = []) {
 
       const fetchReleases = async () => {
         try {
+          // Imported here, on the fallback, and nowhere else in the browser: the
+          // module brings nextra's MDX compiler, and a static import put it in the
+          // client JavaScript of EVERY page, a 1.5 MB chunk (456 KB compressed)
+          // that the home page downloaded and never ran (2026-09-29). The build
+          // compiles the releases on the server, so this runs only when it could
+          // not. Inside the `try`, so a chunk that fails to load still ends in
+          // `ready`.
+          const { compileReleaseBodies } = await import('./load-releases');
           setCompiledReleases(await compileReleaseBodies(data.releases ?? []));
         } finally {
           // In a `finally` on purpose. The skeleton is not a state this page may
