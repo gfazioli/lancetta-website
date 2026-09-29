@@ -331,7 +331,8 @@ window and Settings, and a hover on the notch for the island.
 Published today: the menu in both appearances, the island collapsed and open,
 the window's Overview, Usage, Limits and Processes panes plus the Overview
 scrolled to Last week, and every Settings
-pane: General, Appearance, Notch, Agents, both agent pages, Updates and About.
+pane: General, Appearance, Notch, Agents, both agent pages, Sources, Updates and
+About.
 
 **The four window panes are ONE SET, shot at ONE window size, in one run.** The
 hero showed them in the same box, one per frame, cross-fading in place, so a
@@ -388,6 +389,18 @@ was reshot on 2026-09-18 from the INSTALLED 0.3.1 with
 `../Lancetta/scripts/settings-shots.sh`, one launch per pane through the
 `LANCETTA_OPEN` hatch, because the dev bundle is ad-hoc signed and would ask for
 the keychain item again while the shipped build already holds the grant.
+
+**Re-shot on 2026-09-29 from the published 0.13.0**, which draws macOS 27's own
+controls where every earlier set had 15's. It was not installed yet, so the app
+came out of the release DMG into a scratch folder and the script took it as its
+second argument (`settings-shots.sh <out> <app>`): the user's copy in
+`/Applications` stayed as it was, and the Developer ID copy still read the sign-in
+with no dialog. **Check the traffic lights of every frame before publishing.**
+Three of that run's nine came out INACTIVE, with grey buttons and dimmed
+switches that read as off, because another session was shooting FinderGit on the
+same screen and its app took focus back between launches. Nothing in the
+script's output says so. The red button at (52, 52) in the 2x frame reads about
+`(225, 103, 91)` when the window is key.
 
 **A capture with a BAKED SHADOW is a smudge on a light page, and the site is
 light.** The app's captures are taken against a dark desktop, where a soft

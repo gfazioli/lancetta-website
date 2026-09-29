@@ -96,8 +96,7 @@ Visibility is stored as the set of agents you have **hidden**, rather than the s
 
 Where each agent's numbers come from, and where Lancetta looked for them.
 
-{/* The screenshot is shot from the release build; until then the image would fail the build.
-![Lancetta's Settings, on the Sources pane: Codex read from /opt/homebrew/bin/codex, found in Homebrew, with the version it answers; a Choose… button and a field to paste a path; the list of every place Lancetta looked, with what was there; and Claude read from the account, with the status-line file and when it was last written](/screenshot-settings-sources.png) */}
+![Lancetta's Settings, on the Sources pane: Codex read from /opt/homebrew/bin/codex, found in Homebrew, with the version it answers; a Choose… button and a field to paste a path; and the list of every place Lancetta looked, with what was there](/screenshot-settings-sources.png)
 
 An app launched from the Finder inherits almost no `PATH`, so Lancetta looks for Codex itself: in the places installers put it — Homebrew, `~/.local/bin`, Bun, Volta, MacPorts — and then by asking your shell, the way a terminal would. **An agent that is installed and not found looks exactly like one that is not installed**, so this pane shows every place Lancetta looked and what was there. When Codex isn't found, its card in the panel says so and opens this pane.
 
