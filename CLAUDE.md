@@ -412,8 +412,8 @@ The earlier set had 15's. Two things the re-shoot turned up:
 - **The Processes pane of 0.13.0 opened straight on it can draw its list empty**
   under a card counting four trees (Lancetta#85: SwiftUI drew the list inside the
   setter's willSet). That frame was taken from #85's build, whose pane otherwise
-  draws exactly what 0.13.0 does. Until a release carries #85, shoot Processes from
-  a build that has it.
+  draws exactly what 0.13.0 does. 0.13.1 (2026-09-30) carries #85, so shoot
+  Processes from 0.13.1 or later, never from a 0.13.0 build.
 
 **A capture with a BAKED SHADOW is a smudge on a light page, and the site is
 light.** The app's captures are taken against a dark desktop, where a soft
