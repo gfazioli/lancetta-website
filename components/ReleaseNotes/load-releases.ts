@@ -1,6 +1,6 @@
 import { compileMdx } from 'nextra/compile';
 import config from '@/config';
-import { formatReleaseDate } from './format-release-date';
+import { plainRelease } from './plain-release';
 import type { Release } from './use-release-notes';
 
 /**
@@ -33,18 +33,13 @@ export async function compileReleaseBodies(
 ): Promise<Release[]> {
   return Promise.all(
     releases.map(async (release) => {
-      const rawBody = release.body ?? '';
-      const common = {
-        ...release,
-        rawBody,
-        displayDate: formatReleaseDate(release.published_at, release.created_at),
-      };
+      const plain = plainRelease(release);
       try {
-        return { ...common, body: await compile(rawBody, MARKDOWN) };
+        return { ...plain, body: await compile(plain.rawBody ?? '', MARKDOWN) };
       } catch {
         // Shown as plain text rather than dropped. A release nobody can read is
         // still better than a release nobody is told about.
-        return { ...common, body: null };
+        return plain;
       }
     })
   );

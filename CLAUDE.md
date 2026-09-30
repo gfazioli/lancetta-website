@@ -1003,6 +1003,11 @@ costs only its own formatting (the release is shown as plain text), and
 `setReady` sits in a `finally`: the skeleton is not a state this page may end
 in. `compileReleaseBodies` takes the compiler as an argument precisely so the
 failing branch is testable without asking jsdom to load nextra's compiler.
+Since #63 the hook loads that compiler on demand, so its chunk can fail to load
+as a whole. Then every fetched release is shown as plain text, through the same
+`plainRelease` a single bad body goes through. Left empty, the page said "No
+release notes yet" over releases it held (CodeRabbit, on #63).
+`use-release-notes.fallback.test.ts` drives it with a module factory that throws.
 
 **The sibling sites carried the un-fixed shape** until 2026-09-24, when the
 build-time compile below made the `try` a requirement: `findergit-website` and
