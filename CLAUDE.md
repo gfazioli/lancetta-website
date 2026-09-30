@@ -1078,7 +1078,10 @@ Local production builds of `main` and the branch, measured with Lighthouse mobil
   - the home page is in a `<main>`;
   - `/docs/release-notes` has its h1;
   - nine descriptions fit a snippet: the home page's and eight docs pages'.
-- **The fonts stay as they are.** Four latin woff2 files (157 KiB) are preloaded on every page, and the two italics are about 79 KiB of that. Not preloading the italics is a typography call.
+- **The italics are not preloaded** (2026-09-30). Four latin woff2 files (157 KiB) were preloaded on every page, and the two italics were 79 KiB of that. The home page draws no italic, and no page draws the serif one. Each italic is now its own `next/font` call with `preload: false`, in the same family; `app/layout.tsx` says why that holds. Measured the same way, base and branch alternating:
+  - home: 740 → 662 KiB, fonts 157 → 78 KiB. Outside the 3.7 s cluster (below), LCP 2.83–2.87 → 2.12–2.23 s and perf 90 → 96–97;
+  - `/docs/alerts`, the most italic in a first screen: 664 → 613 KiB, early passes 2.20 → 1.96 s, CLS 0 → 0.001. Six docs pages show italic in their first screen, and there it swaps in when its file lands;
+  - every `<em>` is drawn with the same face on both builds, `SourceSans3-Italic`, read with CDP's platform fonts, so nothing is synthesised.
 - **`.openingShot` is `width: 100%` under its cap, not `auto`.** With next/image's width-described srcset, `auto` drew the phone hero at 247 px instead of 358. The optimizer does not upscale the 760 px file, and the browser read the candidate's density.
 - **Compare early passes with early passes.** The first paint landed at about 2.0 or 3.7 s on the same build, in clusters. `/docs/the-window` on this branch painted late in all six passes of one sitting, then early in two of three in the next.
 

@@ -47,19 +47,50 @@ import './global.css';
  *
  * Italic on both: MDX prose uses <em>, and a synthesised oblique on a serif is
  * the same failure as a synthesised bold, at a shallower angle.
+ *
+ * BUT THE ITALICS ARE NOT PRELOADED. `preload` belongs to a call, not to a
+ * style, so each italic is a call of its own with it off, and a page fetches
+ * it when it first draws italic. Preloaded, the two were 79 KB fetched at the
+ * highest priority on every page, beside the two files the first paint needs,
+ * while the home page draws no italic at all, the docs draw only the sans one,
+ * and no page in the sitemap sets the serif in italic (measured 2026-09-30).
+ *
+ * The two calls still make ONE family, because next/font names a face by its
+ * family alone: the built CSS declares "Source Serif 4" for both, so an <em>
+ * under `--font-display` finds its cut. Both classes set that variable to the
+ * same value; the italic one is on <html> only so that the call is used, as
+ * its faces reach the page either way (a build without it still had them).
+ * After a Next upgrade, check the built CSS still has one family name for
+ * both styles.
  */
 const display = Source_Serif_4({
   subsets: ['latin'],
-  style: ['normal', 'italic'],
+  style: 'normal',
   variable: '--font-display',
   display: 'swap',
 });
 
+const displayItalic = Source_Serif_4({
+  subsets: ['latin'],
+  style: 'italic',
+  variable: '--font-display',
+  display: 'swap',
+  preload: false,
+});
+
 const body = Source_Sans_3({
   subsets: ['latin'],
-  style: ['normal', 'italic'],
+  style: 'normal',
   variable: '--font-body',
   display: 'swap',
+});
+
+const bodyItalic = Source_Sans_3({
+  subsets: ['latin'],
+  style: 'italic',
+  variable: '--font-body',
+  display: 'swap',
+  preload: false,
 });
 
 export const metadata = config.metadata;
@@ -81,7 +112,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       dir="ltr"
       data-scroll-behavior="smooth"
       {...mantineHtmlProps}
-      className={`${display.variable} ${body.variable}`}
+      className={`${display.variable} ${displayItalic.variable} ${body.variable} ${bodyItalic.variable}`}
     >
       <Head>
         {/*
