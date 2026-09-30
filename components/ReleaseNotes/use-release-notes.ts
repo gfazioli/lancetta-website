@@ -98,6 +98,12 @@ export function useReleaseNotes(initial: Release[] = []) {
       }
 
       const releases: Release[] = Array.isArray(data.releases) ? data.releases : [];
+      if (releases.length === 0) {
+        // Nothing to compile, so the compiler's 1.3 MB chunk is not fetched to compile it.
+        setCompiledReleases([]);
+        setReady(true);
+        return;
+      }
       const fetchReleases = async () => {
         try {
           // Imported here, on the fallback, and nowhere else in the browser: the
@@ -108,11 +114,14 @@ export function useReleaseNotes(initial: Release[] = []) {
           // not.
           const { compileReleaseBodies } = await import('./load-releases');
           setCompiledReleases(await compileReleaseBodies(releases));
-        } catch {
+        } catch (err) {
           // The chunk did not load. The releases were fetched all the same, so they
           // are shown as the text GitHub published, as one body that will not
           // compile already is. Left empty, the page said "No release notes yet"
-          // over releases it held (CodeRabbit on #63).
+          // over releases it held (CodeRabbit on #63). Said in the console, since
+          // nothing on the page says the formatting is missing.
+          // eslint-disable-next-line no-console
+          console.warn('[release-notes] the compiler did not load; showing plain text', err);
           setCompiledReleases(releases.map(plainRelease));
         } finally {
           // In a `finally` on purpose. The skeleton is not a state this page may
