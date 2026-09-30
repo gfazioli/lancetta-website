@@ -157,9 +157,7 @@ the icon's *third* bar.
 (`…/Il mio Drive/Brand/Lancetta/logo.png` and `logo-flat.png`, 2026-09-18;
 user: *"il logo che ti avevo dato è sbagliato"*) and now live in
 `../Lancetta/Brand/`, where `../Lancetta/scripts/icons.sh` generates every icon
-in `public/` from them (the favicon section below has the details). The window
-screenshots still carry the previous icon in their sidebar until they are
-re-shot.
+in `public/` from them (the favicon section below has the details).
 
 Read the icon top-down. The first probe read the bitmap bottom-up and had
 every bar upside down, which is why `theme.ts` names where on the icon each
@@ -402,6 +400,20 @@ switches that read as off, because another session was shooting FinderGit on the
 same screen and its app took focus back between launches. Nothing in the
 script's output says so. The red button at (52, 52) in the 2x frame reads about
 `(225, 103, 91)` when the window is key.
+
+**The window set was re-shot on 2026-09-30 from 0.13.0**, with the command above,
+at 2080x1440, so its buttons and chrome are macOS 27's too. In the Overview window
+the three buttons are at (32, 32), (78, 32) and (124, 32) in the 2x frame, and read
+about `(242, 93, 84)`, `(252, 192, 0)` and `(51, 193, 0)` when the window is key.
+The earlier set had 15's. Two things the re-shoot turned up:
+- **A figure rolls when a reading lands.** Captured in the middle of it, the digit
+  is shown mid-roll. Look at the figures of every frame, and capture again a few
+  seconds later.
+- **The Processes pane of 0.13.0 opened straight on it can draw its list empty**
+  under a card counting four trees (Lancetta#85: SwiftUI drew the list inside the
+  setter's willSet). That frame was taken from #85's build, whose pane otherwise
+  draws exactly what 0.13.0 does. Until a release carries #85, shoot Processes from
+  a build that has it.
 
 **A capture with a BAKED SHADOW is a smudge on a light page, and the site is
 light.** The app's captures are taken against a dark desktop, where a soft
