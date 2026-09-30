@@ -35,7 +35,7 @@ export async function compileReleaseBodies(
     releases.map(async (release) => {
       const plain = plainRelease(release);
       try {
-        return { ...plain, body: await compile(plain.rawBody ?? '', MARKDOWN) };
+        return { ...plain, body: await compile(plain.rawBody, MARKDOWN) };
       } catch {
         // Shown as plain text rather than dropped. A release nobody can read is
         // still better than a release nobody is told about.
