@@ -292,17 +292,40 @@ export function ScrollGuide() {
     if (!row || typeof IntersectionObserver === 'undefined') {
       return undefined;
     }
-    const observer = new IntersectionObserver((entries) => {
-      const entry = entries[entries.length - 1];
-      page.rowVisible = entry.isIntersecting;
+    const saw = (visible: boolean, bottom: number) => {
+      page.rowVisible = visible;
       // Above the window counts: a page reloaded halfway down has passed it.
-      page.reached = entry.isIntersecting || entry.boundingClientRect.bottom <= 0;
-      if (!entry.isIntersecting) {
+      page.reached = visible || bottom <= 0;
+      if (!visible) {
         setBubble(false);
       }
       sync();
+    };
+    const observer = new IntersectionObserver((entries) => {
+      const entry = entries[entries.length - 1];
+      saw(entry.isIntersecting, entry.boundingClientRect.bottom);
     });
     observer.observe(row);
+    // An observer reports a CHANGE in what is visible, and a jump straight
+    // past the row -- from below the window to above it, never on screen in
+    // between -- is none: an anchor in the product bar, a restored scroll or
+    // a fast smooth scroll left a phone reader past the hero with no
+    // character at all (found by the findergit.app port, measured there and
+    // on netfox.app with `scrollTo` 3200 at 1440 x 900). So the row is also
+    // measured once the scroll settles, and acted on only if that disagrees
+    // with what the observer last said.
+    let settle: number | undefined;
+    const scrolled = () => {
+      window.clearTimeout(settle);
+      settle = window.setTimeout(() => {
+        const { top, bottom } = row.getBoundingClientRect();
+        const visible = bottom > 0 && top < window.innerHeight;
+        if (visible !== page.rowVisible || (visible || bottom <= 0) !== page.reached) {
+          saw(visible, bottom);
+        }
+      }, STILL_MS);
+    };
+    window.addEventListener('scroll', scrolled, { passive: true });
     const resized = () => {
       page.heroRoom = panelHintFits();
       sync();
@@ -310,6 +333,8 @@ export function ScrollGuide() {
     window.addEventListener('resize', resized);
     return () => {
       observer.disconnect();
+      window.clearTimeout(settle);
+      window.removeEventListener('scroll', scrolled);
       window.removeEventListener('resize', resized);
     };
   }, [sync, setBubble]);

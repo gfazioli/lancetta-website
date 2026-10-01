@@ -18,6 +18,9 @@ describe('ScrollGuide', () => {
   let watches: { callback: IntersectionObserverCallback; targets: Element[] }[];
   let opened: number;
   let unregister: () => void;
+  // Where the row is, for what measures it rather than waiting for its
+  // observer: kept in step with what the observer reports.
+  let rowRect: Partial<DOMRect>;
   // Swapped, never spied: a spy on the setup's `matchMedia` mock replaces that
   // mock's own implementation, and `restoreAllMocks` does not give it back, so
   // one test's phone stayed a phone for every test after it.
@@ -45,6 +48,12 @@ describe('ScrollGuide', () => {
         this.targets = [];
       }
     } as unknown as typeof IntersectionObserver;
+    rowRect = { top: 1190, bottom: 1200 };
+    jest.spyOn(Element.prototype, 'getBoundingClientRect').mockImplementation(function rect(
+      this: Element
+    ) {
+      return (this.hasAttribute('data-guide-anchor') ? rowRect : {}) as DOMRect;
+    });
     // Rendered, as far as the focus handoff can tell.
     jest.spyOn(Element.prototype, 'getClientRects').mockReturnValue([{}] as unknown as DOMRectList);
     jest.useFakeTimers();
@@ -101,10 +110,13 @@ describe('ScrollGuide', () => {
           )
         )
     );
-  const rowOnScreen = () =>
-    fire(row(), { isIntersecting: true, boundingClientRect: { bottom: 400 } as DOMRectReadOnly });
-  const rowPassed = () =>
-    fire(row(), { isIntersecting: false, boundingClientRect: { bottom: -10 } as DOMRectReadOnly });
+  const rowAt = (top: number) => {
+    rowRect = { top, bottom: top + 10 };
+    return { boundingClientRect: rowRect as DOMRectReadOnly };
+  };
+  const rowOnScreen = () => fire(row(), { isIntersecting: true, ...rowAt(390) });
+  const rowBelow = () => fire(row(), { isIntersecting: false, ...rowAt(1190) });
+  const rowPassed = () => fire(row(), { isIntersecting: false, ...rowAt(-20) });
   const cardShowing = (ratio: number) =>
     fire(sponsors(), { isIntersecting: ratio > 0, intersectionRatio: ratio });
 
@@ -127,6 +139,21 @@ describe('ScrollGuide', () => {
     rowOnScreen();
     wait(10_000);
     expect(corner()).toBeNull();
+  });
+
+  it('comes to the corner after a jump straight past the row, which no observer reports', () => {
+    render(<Page />);
+    wait(DELAY_MS);
+    rowBelow();
+    // From below the window to above it with no frame in between: an anchor
+    // in the product bar, a restored scroll position. Only the scroll says so.
+    rowAt(-2000);
+    act(() => {
+      window.dispatchEvent(new Event('scroll'));
+    });
+    expect(corner()).toBeNull();
+    wait(STILL_MS);
+    expect(corner()).toHaveAttribute('data-phase', 'arriving');
   });
 
   it('comes to the corner once the row is scrolled past, and leaves when it is back', () => {

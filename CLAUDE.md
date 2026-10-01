@@ -911,6 +911,14 @@ fox*, holds the reasons this port kept.
   (*"Tap the reading up there — it opens the real panel."*, itself a button)
   once the row is in view, and folds it after 8 s or once the row is scrolled
   past. Nothing it says on its own is announced.
+- **A jump straight past the row is measured, not observed.** An
+  IntersectionObserver reports a change in what is visible, and a jump from
+  below the window to above it with no frame in between (an anchor in the
+  product bar on a phone, a restored scroll, a smooth scroll fast enough to step
+  over a row this short) is none: the corner one never came. The row is also
+  measured once each scroll settles (`STILL_MS`) and acted on only when that
+  disagrees with the observer. Found by the findergit.app port the same day and
+  fixed on all three sites; the test for it is red without the fix.
 - **At the footer it stands on the Support card** (`#sponsors`, positioned for
   it) and says the FAQ's own line, *"Lancetta is free. If you find it useful,
   consider sponsoring the project."*, so it makes no new claim. On the home page
