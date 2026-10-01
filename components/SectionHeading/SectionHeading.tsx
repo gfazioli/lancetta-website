@@ -15,7 +15,7 @@ import classes from './SectionHeading.module.css';
  *
  * Either way, a heading that is below the fold when the page loads lifts into
  * place the first time it scrolls into view (`Reveal`, `rise`); one already on
- * screen stays as it was drawn.
+ * screen lifts the same way from the first paint.
  */
 export function SectionHeading({
   eyebrow,
