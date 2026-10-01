@@ -167,6 +167,11 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
       'macOS 15 (Sequoia) or later. The notch panel needs a Mac that has a notch; on any other Mac that pane is hidden entirely, and the menu-bar item works the same everywhere.',
   },
   {
+    question: 'Which languages does Lancetta speak?',
+    answer:
+      'English, Italian, French, German, Spanish, Portuguese and Dutch. Lancetta follows your Mac’s language — there is no switch in the app; to use another one, reorder your preferred languages in System Settings › General › Language & Region. The report you copy for an issue and the command line’s output stay in English, so whoever reads them can.',
+  },
+  {
     question: 'Are those the real Codex and Claude logos?',
     answer:
       'They are the vendors’ own marks, drawn from vector data so they stay sharp at any size, and used nominatively — to name the products Lancetta reads. Lancetta is not affiliated with, or endorsed by, OpenAI or Anthropic, and one switch in Settings replaces the whole menu with neutral system symbols.',

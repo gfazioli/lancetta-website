@@ -76,7 +76,7 @@ If Lancetta has not read anything since it was installed, the command says so on
 | `blocked`, `blockedBucket` | Whether the account refused, and the bucket that did when it has a name worth saying. Read this before the percentages: a refused account can still show a comfortable one. |
 | `models` | Windows the account reports for one model each: `id`, `label`, `group`, `usedPercent`, `resetsAt`. Empty when none are reported, which is always the case on the status-line route. |
 | `resetCreditsAvailable` | Codex's free resets; `null` for an agent that has none. |
-| `problem` | Why there is no reading, as the entry in [Troubleshooting](/docs/troubleshooting): `code`, `title`, `message`, `detail`, and `state` — `true` for a state that clears by itself or waits for a click, `false` for a fault. |
+| `problem` | Why there is no reading, as the entry in [Troubleshooting](/docs/troubleshooting): `code`, `title`, `message`, `detail`, and `state` — `true` for a state that clears by itself or waits for a click, `false` for a fault. `title` and `message` are in English whatever language Lancetta speaks; a script matches on `code`. |
 
 Three rules hold everywhere in it:
 
