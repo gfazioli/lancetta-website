@@ -900,8 +900,7 @@ panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
   takes the card's through `radius`.
 - **Figures roll** (`ScrollNumber`): the hero's figures, the problem's three
   readings, the cost measurement and its control (inline too), the release
-  count -- which sits in the hero, so it rolls only on a screen short enough to
-  start it below the fold. The text is only ever the value -- the digits that
+  count, which sits in the hero. The text is only ever the value -- the digits that
   roll are generated content. What sits between digits is ONE run ("% left"),
   so its letters keep their kerning, and it needs `white-space: pre`, or the
   flex row collapses its leading space.
@@ -916,8 +915,9 @@ panel re-simulated to match the app's own motion (Lancetta#75). All of it is in
   *"interno e sfumato"*): inset shadows on a layer 3px in, a tight core and a
   wide bloom per corner, reach 104px. The panel's copy keeps the app's ring.
 - **The hero's opening is not animated**, on purpose: its first screenshot is
-  the LCP (see *Seeing the page*), and nothing on screen at mount is ever armed
-  (below). **Its frames are** (user, *"anima anche le immagini e i copytext,
+  the LCP (see *Seeing the page*), so it is no reveal item at all: what is on
+  screen at mount does play its entrance from the first paint (below), and
+  this would delay the LCP by the hold and the fade. **Its frames are** (user, *"anima anche le immagini e i copytext,
   come fatto sul sito web di netfox, non solo i numeri"*): each picture comes
   in from the side it sits on (`left` / `right`), the copy rises, the figures
   pop and their numbers roll, and the frame with no picture lands as a card,
@@ -961,7 +961,21 @@ anything"* (*The one job*, above). So a scope has three states (`useReveal`):
 at REST it is the served HTML; after mount, one that is entirely off screen is
 ARMED -- `data-armed`, its starting pose, taken where nobody sees it; and it is
 REVEALED on the way into view. Only a revealed item has a transition, so arming
-snaps rather than animates. What is on screen at mount never moves.
+snaps rather than animates.
+
+**What is on screen from the start comes in too, by CSS alone** (2026-10-01,
+the user: *"dovrebbero vedersi anche quando l'elemento è già visibile
+dall'inizio"*, seen on a 27-inch display stood upright, where the frames and
+the sections under them sat still). An item at REST plays its entrance once
+from the first paint, after `--reveal-hold` (400 ms) and its own delay, on the
+transition's curves, and the odometer rolls the same way, on a host's swapped
+curve and stagger where it has them. The keyframes name only the starting pose
+(`from`) and fill only `backwards`, so they end on the layout whether or not a
+script ever runs -- this is not the first cut above, which waited on one --
+and arming sets `animation: none`, so a script that runs takes an item over
+and a revealed one never plays both; the copy of the panel mounts armed and
+never plays it. `Motion.css.test.ts` holds that shape and keeps the keyframe
+poses equal to the armed rules' (the same design and test as netfox.app's).
 `threshold` is 0: at 0.15 a scope taller than about six viewports can never
 fire, and the FAQ is that at 500% zoom.
 
@@ -972,8 +986,8 @@ change unless the attribute is there. Measured from `/docs/faq` at 900 with a
 click on the logo: the home mounted at 9177 and took 1.6 s to scroll to the top.
 That armed the hero's release count, which then rolled from zeros in front of
 the reader, and fired 37 reveals out of sight on the way up. With the
-attribute, the home mounts at 0: the count stays at rest and nothing is
-revealed until the reader scrolls. Next jumps in a layout effect, before any
+attribute, the home mounts at 0: what is on screen plays its entrance from the
+first paint and nothing is revealed out of sight. Next jumps in a layout effect, before any
 `useEffect` reads the scroll. On the home page `/#roadmap` and the other
 anchors still scroll smoothly: Next leaves a hash-only change alone. The 1.6 s scroll to the
 top predates the reveals (lancetta.app on `main` did the same). findergit.app
