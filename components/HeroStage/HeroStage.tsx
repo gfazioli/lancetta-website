@@ -272,7 +272,10 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
             budget to type in.
           </Text>
 
-          <Group mt="lg" gap="sm" className={classes.actions}>
+          {/* Marked for the character: under the bar while this row is in
+              view (`PanelHint`), in the corner once it is scrolled past
+              (`ScrollGuide`). */}
+          <Group mt="lg" gap="sm" className={classes.actions} data-guide-anchor="">
             {released ? (
               <Button
                 href="/download"

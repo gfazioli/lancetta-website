@@ -1,0 +1,311 @@
+/*
+ * The character that follows the home page (`ScrollGuide`): in the corner of
+ * the window, and standing on the footer's Support card. Ported from
+ * netfox.app's `Mascot.module.css`, in this page's light: the bubbles are
+ * `PanelHint`'s, white with the hairline ring and its shadow.
+ *
+ * The home page's only, never the docs': the one under the bar keeps its own
+ * stylesheet (`PanelHint.module.css`), and the sprite has none
+ * (`Mascot.tsx`), so no page but this one loads a byte of what is here.
+ */
+
+/* Pixels per cell: four in the corner and on the card, three on a phone, as
+   under the bar; whole pixels, so every edge stays on the grid. */
+.corner,
+.card {
+  --cell: 4px;
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    --cell: 3px;
+  }
+}
+
+.sprite {
+  display: block;
+  width: calc(var(--cell) * 17);
+  height: auto;
+}
+
+/* Two leg frames, alternating while it walks. */
+.stepA {
+  animation: step-a 320ms steps(1) infinite;
+}
+
+.stepB {
+  animation: step-b 320ms steps(1) infinite;
+}
+
+@keyframes step-a {
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes step-b {
+  0% {
+    opacity: 0;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+/*
+ * In the corner of the window. Above the page's sections and below the bar's
+ * dock (z-index 40, which holds the panel) and anything Mantine opens over the
+ * page, so the panel it opens is never under it.
+ */
+.corner {
+  position: fixed;
+  right: max(rem(16px), env(safe-area-inset-right));
+  bottom: max(rem(16px), env(safe-area-inset-bottom));
+  z-index: 10;
+  transition:
+    opacity 240ms ease,
+    transform 240ms ease;
+}
+
+.corner[data-phase='leaving'] {
+  opacity: 0;
+  transform: translateX(rem(24px));
+  pointer-events: none;
+}
+
+/* A block, not the button's default inline-block, which sits on a line box's
+   baseline a few pixels above where it was put (netfox.app measured 7 px). */
+.walker {
+  position: relative;
+  display: block;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  filter: drop-shadow(0 3px 4px rgb(10 14 32 / 25%));
+}
+
+.walker:focus-visible {
+  outline: 2px solid var(--lan-accent);
+  outline-offset: 4px;
+}
+
+/* In from the right edge of the window, slowing to a stop. `both`, as under
+   the bar: an engine that never runs it shows nothing mid-walk. */
+.corner[data-phase='arriving'] .walker {
+  animation: corner-in 900ms cubic-bezier(0.22, 0.61, 0.36, 1) both;
+}
+
+/* While the page scrolls it walks: the legs are the sprite's, the bob is here,
+   on the button, so the drawing's own hop is not restarted when it stops. */
+.corner[data-moving] .walker {
+  animation: bob 320ms steps(1) infinite;
+}
+
+/* One hop as it arrives, then still. Every effect here ends. */
+.corner[data-phase='here'] .sprite,
+.card[data-phase='here'] .sprite {
+  animation: hop 420ms ease-out 1;
+}
+
+@keyframes corner-in {
+  from {
+    transform: translateX(calc(100% + rem(40px)));
+  }
+
+  to {
+    transform: none;
+  }
+}
+
+@keyframes bob {
+  50% {
+    transform: translateY(rem(-2px));
+  }
+}
+
+@keyframes hop {
+  40% {
+    transform: translateY(rem(-7px));
+  }
+}
+
+/*
+ * Its sentence in the corner, on a phone: above it and flush with its right
+ * edge, the tail down at its head. No wider than the window leaves.
+ */
+.cornerBubble {
+  position: absolute;
+  right: 0;
+  bottom: calc(100% + rem(10px));
+  display: flex;
+  align-items: flex-start;
+  gap: rem(4px);
+  width: max-content;
+  max-width: min(rem(250px), calc(100vw - rem(32px)));
+  padding: rem(8px) rem(6px) rem(8px) rem(12px);
+  border-radius: rem(12px);
+  background: #fff;
+  box-shadow:
+    0 0 0 1px var(--lan-line),
+    0 10px 28px -12px rgb(10 14 32 / 35%);
+  animation: pop-up 220ms ease-out both;
+  transform-origin: bottom right;
+}
+
+.cornerBubble::before {
+  position: absolute;
+  right: calc(var(--cell) * 8.5 - rem(5px));
+  bottom: rem(-5px);
+  width: rem(10px);
+  height: rem(10px);
+  border-right: 1px solid var(--lan-line);
+  border-bottom: 1px solid var(--lan-line);
+  background: #fff;
+  content: '';
+  transform: rotate(45deg);
+}
+
+@keyframes pop-up {
+  from {
+    opacity: 0;
+    transform: translateY(rem(6px)) scale(0.96);
+  }
+}
+
+.say {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--mantine-color-text);
+  font: inherit;
+  font-size: rem(13px);
+  line-height: 1.4;
+  text-align: left;
+  cursor: pointer;
+}
+
+.say:focus-visible,
+.dismiss:focus-visible {
+  outline: 2px solid var(--lan-accent);
+  outline-offset: 2px;
+  border-radius: rem(4px);
+}
+
+.dismiss {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: rem(20px);
+  height: rem(20px);
+  padding: 0;
+  border: 0;
+  border-radius: rem(6px);
+  background: none;
+  color: var(--mantine-color-gray-6);
+  cursor: pointer;
+}
+
+.dismiss:hover {
+  background: var(--mantine-color-gray-1);
+  color: var(--mantine-color-text);
+}
+
+/*
+ * On the Support card: standing on its top edge near the right, its bubble to
+ * its left, the raised arm reaching up toward it. `MantineFooter.module.css`
+ * makes the card the box this is placed in.
+ */
+.card {
+  position: absolute;
+  right: rem(28px);
+  bottom: 100%;
+  transition: opacity 240ms ease;
+}
+
+.card[data-phase='leaving'] {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.sitter {
+  position: relative;
+  display: block;
+  filter: drop-shadow(0 3px 4px rgb(10 14 32 / 25%));
+}
+
+.card[data-phase='arriving'] .sitter {
+  animation: card-in 420ms cubic-bezier(0.3, 0.7, 0.3, 1) both;
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(rem(14px));
+  }
+}
+
+.cardBubble {
+  position: absolute;
+  top: rem(-4px);
+  right: calc(100% + rem(10px));
+  display: flex;
+  align-items: flex-start;
+  gap: rem(4px);
+  width: max-content;
+  max-width: min(rem(300px), calc(100vw - rem(150px)));
+  padding: rem(8px) rem(6px) rem(8px) rem(12px);
+  border-radius: rem(12px);
+  background: #fff;
+  box-shadow:
+    0 0 0 1px var(--lan-line),
+    0 10px 28px -12px rgb(10 14 32 / 35%);
+  animation: pop-up 220ms ease-out both;
+  transform-origin: top right;
+}
+
+.cardBubble::before {
+  position: absolute;
+  top: rem(12px);
+  right: rem(-5px);
+  width: rem(10px);
+  height: rem(10px);
+  border-top: 1px solid var(--lan-line);
+  border-right: 1px solid var(--lan-line);
+  background: #fff;
+  content: '';
+  transform: rotate(45deg);
+}
+
+.cardLine {
+  margin: 0;
+  color: var(--mantine-color-text);
+  font-size: rem(13px);
+  line-height: 1.4;
+  text-align: left;
+}
+
+/* As specific as the rules they undo, and after them. */
+@media (prefers-reduced-motion: reduce) {
+  .stepA,
+  .stepB,
+  .corner,
+  .card,
+  .cornerBubble,
+  .cardBubble,
+  .corner[data-phase] .walker,
+  .corner[data-moving] .walker,
+  .card[data-phase] .sitter,
+  .corner[data-phase] .sprite,
+  .card[data-phase] .sprite {
+    transition: none;
+    animation: none;
+  }
+}
+
+@media print {
+  .corner,
+  .card {
+    display: none;
+  }
+}

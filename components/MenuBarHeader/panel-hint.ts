@@ -10,8 +10,9 @@
  *
  * In square cells, 17 wide and 13 tall, standing (`#` plate, `e` eye, `p`
  * pupil, `o` `t` `v` the three bars). This grid is GENERATED from the
- * rectangles in `PanelHint.tsx`, not drawn beside them; redraw it the same way
- * if the sprite changes:
+ * rectangles in `components/Mascot/Mascot.tsx` (in `PanelHint.tsx` until the
+ * character learnt to follow the scroll), not drawn beside them; redraw it the
+ * same way if the sprite changes:
  *
  *     ....##########...
  *     ...############..
