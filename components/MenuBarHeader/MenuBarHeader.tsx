@@ -8,6 +8,7 @@ import { Search } from 'nextra/components';
 import { IconMenu2 } from '@tabler/icons-react';
 import config from '@/config';
 import { Logo } from '../Logo/Logo';
+import { PANEL_OPENER_ATTRIBUTE, registerPanelOpener } from '../Mascot/guide';
 import { MenuBarReading } from './MenuBarReading';
 import { isSamePageHashInMobileNav } from './mobile-nav-hash';
 import { panelDemo } from './panel-demo';
@@ -142,6 +143,11 @@ export function MenuBarHeader() {
       if (panelRef.current?.contains(target) || readingRef.current?.contains(target)) {
         return;
       }
+      // The character in the corner opens the panel too (`ScrollGuide`): a
+      // click on it is one more way in, not a click elsewhere.
+      if (target instanceof Element && target.closest(`[${PANEL_OPENER_ATTRIBUTE}]`)) {
+        return;
+      }
       if (!pinned) {
         setPanelOpen(false);
       }
@@ -171,6 +177,10 @@ export function MenuBarHeader() {
   useEffect(() => {
     setPanelOpen(false);
   }, [pathname]);
+
+  // The one opener the character in the home page's corner asks (`guide.ts`):
+  // the open state is this bar's, on every page, and the corner only asks.
+  useEffect(() => registerPanelOpener(() => setPanelOpen(true)), []);
 
   const released = config.app.released;
 

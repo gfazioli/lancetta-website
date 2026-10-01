@@ -863,19 +863,70 @@ scrolla la pagina, la finestrella si dovrebbe chiudere comunque"*).
 
 `PanelHint` is what makes it findable: the app icon with eyes and legs walks
 in under the bar, points at the reading and says what it does — on the home
-page only, never on a phone (its bubble covered the headline there), and on
-EVERY load. It came once per browser until 2026-09-24 (`lancetta.panelDemo.opened`
-in localStorage), and the user took that out: *"facciamolo apparire sempre ad
-ogni reload della pagina"*. What it remembers now is a ref, so for the life of
-the page only: opened or dismissed, it does not walk in again on a link back to
-the home page, and a reload brings it back. Browsers that opened the panel
-before then still carry the old key; nothing reads it, and `PanelHint.test.tsx`
-sets it to prove so.
+page only, never on a phone (its bubble covered the headline there; the one in
+the corner says it there, below), and on EVERY load. It came once per browser
+until 2026-09-24 (`lancetta.panelDemo.opened` in localStorage), and the user
+took that out: *"facciamolo apparire sempre ad ogni reload della pagina"*. What
+it remembers now is module state in `components/Mascot/guide.ts`, so for the
+life of the page only: opened or dismissed, it does not walk in again on a link
+back to the home page, and a reload brings it back. Browsers that opened the
+panel before then still carry the old key; nothing reads it, and
+`PanelHint.test.tsx` sets it to prove so.
 **The character is ours on purpose.** The first sketch was Claude Code's pixel
 mascot, and a vendor's character inviting clicks on this app reads as an
 endorsement it never gave — the same line the trademark notice draws for the
 marks. Its walk is in a lane clipped sideways only: translated past the
 window's edge it widened the page to 1675px on a 1440px window.
+
+### The character follows the scroll, as netfox.app's fox does
+
+Asked for on 2026-10-01: *"vorrei che allineassi la presenza e i movimenti
+delle mascotte su Lancetta e Findergit, come fatto per Netfox - molto carino il
+fatto che su netfox la mascotte rimane sempre visibile e poi suggerisca il
+'support' nel footer"*. Ported from netfox-website's `ScrollGuide`, `guide.ts`
+and the corner half of its `Mascot.module.css`; that site's CLAUDE.md, *The
+fox*, holds the reasons this port kept.
+
+- **One character in three places** (`components/Mascot`): under the bar
+  (`PanelHint`), in the window's corner and on the footer's Support card (both
+  `ScrollGuide`, the home page's only). The sprite is `Mascot.tsx`, out of
+  `PanelHint.tsx`, and has no stylesheet: each host passes the classes that walk
+  it. Dismissing it anywhere sends it away from all three (`guide.ts`).
+- **Under the bar while the hero's row of buttons is in view.** The row carries
+  `data-guide-anchor` (`HeroStage`). Scrolled past, the hint fades out and the
+  corner one walks in; back up, the corner one leaves and the hint returns
+  standing and pointing, with no second walk. A page reloaded below the row gets
+  no hint until the reader scrolls up to it. Once the panel has been opened the
+  hint is done for the page's life, and the corner one is the character on
+  screen at the top too: one always visible, never two.
+- **In the corner** (fixed, bottom right, 4 px a cell, 3 on a phone) it walks
+  while the page scrolls (`data-moving`) and stands when it stops; a click on it
+  opens the panel, as the hint does. The header owns the panel's state, so the
+  corner asks through `openPanel()`, which `MenuBarHeader` registers; and its
+  box carries `data-panel-opener`, which the header's outside-click close lets
+  be: without it, by the handler's own logic, a click on the corner with the
+  panel open would close it on `pointerdown` and open it again on `click`,
+  drawing a fresh panel. Measured with it: two clicks, the same panel element.
+- **On a phone** the hint never comes, so the corner one says its sentence
+  (*"Tap the reading up there — it opens the real panel."*, itself a button)
+  once the row is in view, and folds it after 8 s or once the row is scrolled
+  past. Nothing it says on its own is announced.
+- **At the footer it stands on the Support card** (`#sponsors`, positioned for
+  it) and says the FAQ's own line, *"Lancetta is free. If you find it useful,
+  consider sponsoring the project."*, so it makes no new claim. On the home page
+  the card has 112 px above it instead of 56 (`body:has(.lan-home)`), as on
+  netfox.app. Measured at 1440, 1024 and 390: its bubble covers no footer link.
+- **Measured on the built page** at 1440x900, 1024x768 and 390x844: the hint
+  and the corner never both standing (one fades out as the other comes),
+  `scrollWidth == clientWidth` through every walk, the panel still open 1.5 s
+  after a click on the corner, and a tap on the phone's sentence opening it.
+- **The home page must never import `PanelHint.tsx`.** It did, for three
+  constants, and that pulled `PanelHint.module.css` into the page's CSS order as
+  well as the layout's: Turbopack split the shared stylesheet to keep both
+  orders, 4 stylesheets on main and 5 on the branch, on the docs too (one more
+  render-blocking request on every page). The constants moved to `guide.ts` and
+  the count went back to 4. Count `<link rel="stylesheet">` on `/` and on a docs
+  page after any change to what the home page imports.
 
 `components/SectionHeading` is left by default — title left, lead right,
 bottom-aligned — and `center` for the statement bands. Its `tone="onDark"` has

@@ -50,6 +50,7 @@ import {
 import { SectionHeading } from '../SectionHeading/SectionHeading';
 import { ShareButtons } from '../ShareButtons/ShareButtons';
 import { SolutionSection } from '../SolutionSection/SolutionSection';
+import { ScrollGuide } from '../Mascot/ScrollGuide';
 import classes from './Welcome.module.css';
 
 /*
@@ -301,7 +302,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
   const released = config.app.released;
 
   return (
-    <div className={classes.home}>
+    <div className={`lan-home ${classes.home}`}>
       {/*
         The hero is the product demonstrated: a pinned stage hanging off the
         menu bar in the header, one frame per surface, the copy at the bottom.
@@ -501,6 +502,9 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           </Box>
         </Reveal>
       </Container>
+
+      {/* The character, past the hero: in the corner, then on the Support card. */}
+      <ScrollGuide />
     </div>
   );
 }
