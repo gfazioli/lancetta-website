@@ -468,12 +468,18 @@ PNG says it is in the wrong language. `settings-shots.sh` pins `en_GB` for its o
 launches; every other capture takes `APP_LANG=en_GB`.
 
 **What the site says about languages comes from the app.** The list is
-`../Lancetta/scripts/i18n/i18n.py langs` plus English, and what stays English on
-purpose -- the copied report, `usage --json`, the log -- is `../Lancetta/CLAUDE.md`,
-*Languages*. Its carriers here: the FAQ and its JSON-LD mirror, the `7 Languages`
-pill and the line under it in `BuiltForMacSection`, Getting Started's *Your
-language*, the roadmap's v0.14, and one sentence each in Troubleshooting and the
-command-line page. A language added to the app is a grep for `Dutch` here.
+`../Lancetta/scripts/i18n/i18n.py langs` plus English. Its carriers here: the FAQ
+and its JSON-LD mirror, the `7 Languages` pill and the line under it in
+`BuiltForMacSection`, Getting Started's *Your language*, the roadmap's v0.14, and
+one sentence each in Troubleshooting (a code is the same in every language) and the
+command-line page (`title` and `message` are English). A language added to the app
+is a grep for `Dutch` here.
+
+**Do not say the copied report is English** until Lancetta#95 lands: its own lines
+are, but an error's text that macOS writes (CLAUDE-10's offline message, a file that
+will not read) comes in the Mac's language since the app shipped its `.lproj`, and
+that text is the report's evidence. The first draft of this change said it in four
+places and a check against the source took it back out.
 
 Two capture traps, both paid for on 2026-09-17 and both fixed in the app repo's
 scripts rather than here: the menu lookup answered with the **notch island**
