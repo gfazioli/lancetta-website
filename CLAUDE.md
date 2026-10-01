@@ -475,11 +475,12 @@ one sentence each in Troubleshooting (a code is the same in every language) and 
 command-line page (`title` and `message` are English). A language added to the app
 is a grep for `Dutch` here.
 
-**Do not say the copied report is English** until Lancetta#95 lands: its own lines
-are, but an error's text that macOS writes (CLAUDE-10's offline message, a file that
-will not read) comes in the Mac's language since the app shipped its `.lproj`, and
-that text is the report's evidence. The first draft of this change said it in four
-places and a check against the source took it back out.
+**The copied report is English since v0.14, and only because of Lancetta#96.** An
+error's text that macOS writes (CLAUDE-10's offline message, a file that will not
+read) comes in the Mac's language once the app ships its `.lproj`, and that text was
+the report's evidence; #96 builds evidence through `L10n.evidence` and the app's gate
+refuses `localizedDescription`. The FAQ, its JSON-LD and Troubleshooting say the
+report is English; if that gate ever goes, so do those three sentences.
 
 Two capture traps, both paid for on 2026-09-17 and both fixed in the app repo's
 scripts rather than here: the menu lookup answered with the **notch island**
