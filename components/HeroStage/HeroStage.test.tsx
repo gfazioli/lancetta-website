@@ -31,11 +31,10 @@ describe('HeroStage frames', () => {
         return [];
       }
     } as unknown as typeof IntersectionObserver;
-    // Every frame below the fold when the page mounts, as at 1440x900.
-    jest.spyOn(Element.prototype, 'getBoundingClientRect').mockReturnValue({
-      top: window.innerHeight + 40,
-      bottom: window.innerHeight + 240,
-    } as DOMRect);
+    // Every frame below the fold when the page mounts, as at 1440x900: laid
+    // out there, which is what the hook reads (`layoutBox`).
+    jest.spyOn(HTMLElement.prototype, 'offsetTop', 'get').mockReturnValue(window.innerHeight + 40);
+    jest.spyOn(HTMLElement.prototype, 'offsetHeight', 'get').mockReturnValue(200);
   });
 
   afterEach(() => {

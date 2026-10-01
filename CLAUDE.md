@@ -1034,7 +1034,7 @@ script ever runs -- this is not the first cut above, which waited on one --
 and arming sets `animation: none`, so a script that runs takes an item over
 and a revealed one never plays both; the copy of the panel mounts armed and
 never plays it. `Motion.css.test.ts` holds that shape and keeps the keyframe
-poses equal to the armed rules' (the same design and test as netfox.app's).
+poses equal to the armed rules' (the same design and test as netfox.app's). At mount `useReveal` reads where a scope is LAID OUT (`layoutBox`: its offsets), never `getBoundingClientRect`, because during the hold an item at rest is drawn in its starting pose, 48 px down and squashed for a card: a card showing its top few dozen pixels at the bottom of the window measured as off screen, was armed and stayed blank until a scroll (Codex on netfox-website#87). A sweep of 36 heights from 1000 to 2575 at 1440 wide found 5 such scopes on netfox.app before the fix (up to 57 px showing, at 1440x1855), and after it none on any of the three sites, 40 window sizes each.
 `threshold` is 0: at 0.15 a scope taller than about six viewports can never
 fire, and the FAQ is that at 500% zoom.
 
