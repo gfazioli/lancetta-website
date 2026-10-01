@@ -459,10 +459,21 @@ line names `/opt/homebrew/bin/codex` and nothing under the home directory, and
 Claude's names no path at all on the account route. On a Mac where `codex` lives
 under `~`, the Codex page is not publishable.
 
-**`APP_LANG=en_GB` is not optional.** The app ships no localised strings and
-still renders dates and numbers through the system locale, so captured on an
-Italian Mac the usage chart's axis reads `ven sab dom` and the token total reads
-`107.226.026`. Nothing about the resulting PNG says it is in the wrong language.
+**`APP_LANG=en_GB` is not optional.** Before v0.14 the app shipped no localised
+strings and still rendered dates and numbers through the system locale, so captured
+on an Italian Mac the usage chart's axis read `ven sab dom` and the token total
+`107.226.026`. Since v0.14 it speaks seven languages and follows the Mac's, so the
+same capture comes out in Italian from the title down. Nothing about the resulting
+PNG says it is in the wrong language. `settings-shots.sh` pins `en_GB` for its own
+launches; every other capture takes `APP_LANG=en_GB`.
+
+**What the site says about languages comes from the app.** The list is
+`../Lancetta/scripts/i18n/i18n.py langs` plus English, and what stays English on
+purpose -- the copied report, `usage --json`, the log -- is `../Lancetta/CLAUDE.md`,
+*Languages*. Its carriers here: the FAQ and its JSON-LD mirror, the `7 Languages`
+pill and the line under it in `BuiltForMacSection`, Getting Started's *Your
+language*, the roadmap's v0.14, and one sentence each in Troubleshooting and the
+command-line page. A language added to the app is a grep for `Dutch` here.
 
 Two capture traps, both paid for on 2026-09-17 and both fixed in the app repo's
 scripts rather than here: the menu lookup answered with the **notch island**
