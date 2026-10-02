@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.15.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.15.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>The pace line now tells you how long you can keep going like this, and the early-warning notification and the window it opens finally say the same thing.</p>
+<h2>How long you can keep going</h2>
+<p><strong>The line under each bar says when you would run out, in amber:</strong> <em>at this rate you run out in 2h00m</em>. It works from the last hour or so of your readings, pauses included, and it appears only when that moment comes before the window resets and within a few hours. Slow down and it moves out; stop and it goes away. That is what <em>at this rate</em> means.</p>
+<ul>
+<li><strong>One row says it: the window that would stop you first.</strong> When the weekly window would run out before the 5-hour one, the 5-hour row keeps quiet, and the other way round. Nothing is said once you are already stopped.</li>
+<li><strong>A model's own weekly limit says its own</strong>, under its row, so a week of one model running out shows up while there is still time.</li>
+<li><strong>Otherwise the line says what the window has used and for how long</strong>: <em>60% in 2h00m</em>, or <em>93% in 6d19h</em>, with the weekly window now read in days and hours.</li>
+<li><strong>The old projection is gone.</strong> <em>At this pace 96% by reset</em> only restated the bar, and <em>full by Wednesday afternoon</em> spread one afternoon's work over the nights before it.</li>
+<li><strong>Limits says what the line rests on</strong>: the rate, the time it was measured over, and how many readings of the window there are.</li>
+</ul>
+<h2>The notification and the window agree</h2>
+<p><strong>"Will run out early" still reads the window's average so far</strong>, which is the right rate for a warning days ahead, since the days ahead hold nights and pauses too. When it fires, <strong>Limits now shows the same sentence under that window's line</strong>: <em>At this pace it is spent by Tuesday morning, and it does not reset until Thursday afternoon.</em> With <strong>Only when a window would run out early</strong> on, the line stays visible in that case too.</p>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.15.0.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later.</p>
+</body>
+</html>
