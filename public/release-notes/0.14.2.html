@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.14.2 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.14.2</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Update checks that run at launch, a sturdier usage history, and a few controls that no longer lag behind.</p>
+<h2>Check for updates on launch</h2>
+<p><strong>With both update checks on, the one at launch never ran.</strong> Lancetta asked for it while the updater was still starting up, and the request was turned away, so a new version showed up only with the daily check or from <strong>Check for Updates…</strong>. The launch check now waits until the updater is ready.</p>
+<h2>A sturdier usage history</h2>
+<ul>
+<li><strong>Two copies of Lancetta no longer lose each other's lines.</strong> Each reading is appended in a single write, so two copies writing the history at once (an installed one beside a test build) keep every line.</li>
+<li><strong>A line cut short costs that line alone.</strong> A reading half-written by a full disk used to leave the whole history unreadable; now only that line is skipped, and the next one starts on a line of its own.</li>
+<li><strong>The pace line keeps going when a reading cannot be saved</strong>, and the reading is written on a later poll.</li>
+<li><strong>A change to the Mac's clock no longer shortens or stretches the pause</strong> between reads of the Claude account.</li>
+</ul>
+<h2>Controls that keep up</h2>
+<ul>
+<li><strong>Open Lancetta at login</strong> goes back to how it really is when macOS refuses the change.</li>
+<li><strong>Check for Updates…</strong> is no longer left greyed out.</li>
+<li><strong>The reading under the notch</strong> grows to show a model's own bar instead of cutting off its last row.</li>
+<li><strong>Processes and Usage are translated.</strong> The process rows read in your language, one child included, and the Usage card's caption is no longer English.</li>
+</ul>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.14.2.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later.</p>
+</body>
+</html>
