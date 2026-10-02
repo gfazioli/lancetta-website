@@ -19,9 +19,10 @@ Lancetta has no account, no server and no telemetry. **Nothing you do in it leav
 
 Two things in this app are not read-only, and each one happens only after a question you answer.
 
-**Reclaim** stops background processes. Three rules bound it, and all three are in the code rather than in this paragraph:
+**Reclaim** stops background processes. Four rules bound it, and all four are in the code rather than in this paragraph:
 
-- only a Codex broker **whose working directory no longer exists** is ever a candidate — one whose directory is unknown is never treated as gone;
+- only a Codex broker **whose working directory no longer exists** is ever a candidate — one whose directory is unknown, or in a folder Lancetta is not allowed to look into, is never treated as gone;
+- it **looks again just before it stops anything**: a broker is signalled only if it is still the same broker for the same missing directory;
 - it **shows you the list first**, and the confirmation puts Cancel on the default key;
 - it signals the broker, which closes its own tree. It does not touch anything else.
 
