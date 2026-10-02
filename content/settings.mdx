@@ -23,9 +23,9 @@ Whichever you pick, the bars are filled with **the number that is shown**, and e
 
 The quarter-second is not a round number for its own sake: a pointer on its way to another app's menu-bar item crosses ours in a few dozen milliseconds, and a panel that opened on the way past would be in the way every time.
 
-**Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone, how long it has been open, and where that rate lands. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything.
+**Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone and how long it has been open, and, when your recent rate would empty a window before it resets, when — on the window that would stop you first. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything.
 
-**Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there and turns amber when the window would empty before it resets. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
+**Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there, and turns amber when it says when you would run out. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
 
 ### Alerts
 
@@ -35,7 +35,7 @@ The switches for what Lancetta says first, which is deliberately little: the per
 
 **Alerts** — what the account reported: it refused you or a window is spent, it is ready again, or its reading has stopped moving.
 
-**Suggestions** — what the series implies: a window heading for empty before it resets, with the reset named beside it. It follows the pace line above, because it is the same projection said louder.
+**Suggestions** — what the series implies: a window heading for empty before it resets, at its average so far, with the reset named beside it — which is why it can warn days ahead, where the pace line speaks of your recent rate. It follows the pace line's switch, which is where advice is turned on or off.
 
 **Sound when you are out** and **Sound when you can start again** — one of macOS's own sounds, or none. Only these two moments carry a sound: the work stopping, and the work being possible again.
 
