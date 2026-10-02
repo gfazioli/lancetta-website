@@ -32,7 +32,7 @@ Claude · max 20×                    seen 7s ago
 
 ```
  4%   5h   ▓░░░░░░░░░░░░░░░   ↻ 3h29m
-           4% in 1h30m · at this pace 13% by reset
+           4% in 1h30m
 55%   7d   ▓▓▓▓▓▓░░░░░░░░░░   ↻ 4d06h
 100%  Fable ▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓   ↻ 4d06h
 ```
@@ -78,29 +78,52 @@ The agents appear in **the order you put them in**, set by dragging in [Settings
 
 ## The pace line
 
-Under the bar it belongs to, a caption saying where that window ends at the rate
-you are going:
+Under the bar it belongs to, a caption saying how much of that window has gone and
+how long it has been open:
 
 ```
-55% in 2 days · at this pace full by Wednesday afternoon
+60% in 2h00m
+93% in 6d19h
 ```
 
-With [Count down what is left](/docs/settings#general) on, it speaks in what is left, like the figure above it: *52% left, 3 days in · at this pace empty by Wednesday afternoon*.
+And when the rate you have been working at would empty the window before it
+resets, it says when, in amber:
+
+```
+60% in 2h00m · at this rate you run out in 2h00m
+```
+
+With [Count down what is left](/docs/settings#general) on, it speaks in what is left, like the figure above it: *40% left, 2h00m in · at this rate you run out in 2h00m*.
 
 This is the part the percentage cannot tell you. The number is on your menu bar
-all day, so you already know when it is getting low; what you cannot see is
-whether **this** pace empties the window before it resets. The line is always
-there, in the same place, and the only thing that changes is its colour: it turns
-orange when the window would run out early. A line that only ever appears in
-trouble is a line nobody has learnt to read by the time it matters.
+all day, so you already know when it is getting low; what you cannot see is how
+long you can keep going **like this**. "Like this" is your recent rate — about the
+last hour, pauses included — not the window's average, which spreads one afternoon
+over the nights and idle days before it. The distance is rounded to ten minutes,
+half hours past the first hour, and under ten minutes it says *a few minutes*.
+
+It is said on **one** row: the window that would stop you first. When the 5-hour
+window runs out before the weekly one would, the weekly row shows its figures
+alone, and the other way round. A limit one model has of its own never says it,
+since running it out does not stop the agent. And nothing is said once the agent
+has already stopped.
+
+It is an extrapolation of your own readings, not a prediction, and it says
+nothing until there is enough to extrapolate from: half an hour of readings at
+least, a figure that has moved by more than a point or two in that time and moved
+lately, a fresh reading, and a moment before the window resets and within five
+hours. If you slow down, it moves out, and if you stop, it goes away: that is what
+*at this rate* means. The small line under it in [Limits](/docs/the-window#limits)
+says what it rests on — the rate, the time it was measured over, and how many
+readings of the window there are.
 
 It comes from the series Lancetta keeps of its own readings, so it costs nothing
-extra to say. Two things it will not do. It will not speak about the weekly
-window until this Mac has watched that window actually turn over at least once —
-what a bucket does at its own edge is a fact about your account, not an
-assumption worth shipping. And if you want the number and nothing else, one
-switch in [Settings](/docs/settings#general) keeps the line for the case where
-there is something to do about it and hides it otherwise.
+extra to say. The weekly row says nothing until this Mac has watched that window
+actually turn over at least once — what a bucket does at its own edge is a fact
+about your account, not an assumption worth shipping — except to say when you
+would run out, which comes before any reset. And if you want the number and
+nothing else, one switch in [Settings](/docs/settings#general) keeps the line for
+the moments it says when you would run out, and hides it otherwise.
 
 When a window has refused you outright, the card says so under the rows, in the
 window's own name.

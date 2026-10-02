@@ -95,7 +95,7 @@ const frames: Frame[] = [
     alt: 'A Lancetta card for Claude: the five-hour window at 3% with the line “3% in 31m · at this pace 29% by reset” under it, the weekly window at 6% with “6% in 4 days · at this pace 9% by reset”, and its separate Fable limit at 0%',
     eyebrow: 'What nothing else can say',
     title: 'The number you can already see is not the useful one.',
-    body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is whether this pace empties the window before it resets. Lancetta says it under the bar, in the same place every time — amber only when the window would run out early.',
+    body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is how long you can keep going like this. Lancetta says it under the bar — “at this rate you run out in 2h00m”, in amber — whenever it would happen before the window resets.',
     figures: [
       { value: '7 days', label: 'the window that actually hurts' },
       { value: '1,890', label: 'readings that settled the rule' },
