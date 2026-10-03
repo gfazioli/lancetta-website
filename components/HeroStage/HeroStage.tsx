@@ -92,7 +92,7 @@ const frames: Frame[] = [
     src: '/screenshot-pace.png',
     width: 716,
     height: 280,
-    alt: 'A Lancetta card for Claude: the five-hour window at 3% with the line “3% in 31m · at this pace 29% by reset” under it, the weekly window at 6% with “6% in 4 days · at this pace 9% by reset”, and its separate Fable limit at 0%',
+    alt: 'A Lancetta card for Claude: the five-hour window at 8% with the line “8% in 4h33m” under it, the weekly window at 8% with “8% in 21h53m”, and its separate Fable limit at 0%',
     eyebrow: 'What nothing else can say',
     title: 'The number you can already see is not the useful one.',
     body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is how long you can keep going like this. Lancetta says it under the bar — “at this rate you run out in 2h00m”, in amber — whenever it would happen before the window resets.',
@@ -175,8 +175,8 @@ const frames: Frame[] = [
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
   width: 760,
-  height: 714,
-  alt: 'The Lancetta panel: how fresh the numbers are across the top, then Claude Code and Codex, each window with its bar and the time it resets. Claude’s lines say where each window ends at the current rate; Codex, spent for the week, shows the free reset it holds, with a Use… button',
+  height: 710,
+  alt: 'The Lancetta panel: how fresh the numbers are across the top, then Claude Code and Codex, each window with its bar and the time it resets. Under Claude’s bars, how much each window has used and over how long, then its separate Fable limit; under Codex’s, that nothing has been used in the last few hours, and the free reset it holds, with a Use… button',
 };
 
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
