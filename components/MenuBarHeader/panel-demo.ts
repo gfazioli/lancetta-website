@@ -100,7 +100,7 @@ export function refreshLabel(ageSeconds: number, refreshing = false) {
 
 /** The panel in the hero's menu screenshot, row for row. */
 export const panelDemo: PanelState = {
-  updatedAgo: 16,
+  updatedAgo: 42,
   agents: [
     {
       agent: 'claude',
@@ -109,17 +109,17 @@ export const panelDemo: PanelState = {
       rows: [
         {
           label: '5h',
-          percent: 10,
-          reset: '47m',
-          pace: { text: '10% in 4h12m' },
+          percent: 8,
+          reset: '25m',
+          pace: { text: '8% in 4h33m' },
         },
         {
           label: '7d',
-          percent: 3,
-          reset: '2d03h',
-          pace: { text: '3% in 4d' },
+          percent: 8,
+          reset: '6d02h',
+          pace: { text: '8% in 21h53m' },
         },
-        { label: 'Fable', percent: 0, reset: '2d03h' },
+        { label: 'Fable', percent: 0, reset: '6d02h' },
       ],
     },
     {
@@ -127,13 +127,17 @@ export const panelDemo: PanelState = {
       name: 'Codex',
       plan: 'plus',
       rows: [
-        { label: '5h', percent: 0, reset: '4h59m' },
-        { label: '7d', percent: 100, reset: '5h44m' },
+        {
+          label: '5h',
+          percent: 2,
+          reset: '1h04m',
+          pace: { text: '2% used · nothing in the last 3h53m' },
+        },
+        { label: '7d', percent: 0, reset: '6d20h' },
       ],
-      exhausted: 'codex exhausted',
       credit: {
-        label: '1 free reset · until 22 Oct',
-        detail: 'Full reset (Weekly + 5 hr) · granted 22 September · valid until 22 October',
+        label: '1 free reset · until 29 Oct',
+        detail: 'Full reset (Weekly + 5 hr) · granted 29 September · valid until 29 October',
         resettable: true,
       },
     },

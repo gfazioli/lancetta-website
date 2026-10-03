@@ -415,6 +415,39 @@ The earlier set had 15's. Two things the re-shoot turned up:
   draws exactly what 0.13.0 does. 0.13.1 (2026-09-30) carries #85, so shoot
   Processes from 0.13.1 or later, never from a 0.13.0 build.
 
+**Re-shot on 2026-10-03 from the INSTALLED 0.15.1, on the account route**, when
+0.15.0 changed the pace line and every frame quoting it went stale: the panel, the
+Claude card cut out of it (`screenshot-pace.png`), and the whole window set. The
+dev bundle's status-line route (the command above) draws Connect Claude Code… and
+no Fable row on Claude's card, so the panel and the window came from
+`/Applications/Lancetta.app`, launched with `-AppleLanguages "(en_GB)"` and quit
+and relaunched plain afterwards. Three things that run paid for:
+- **One launch per pane reads Claude's account once per launch, and it answers
+  429.** Six launches in two minutes left every frame saying *Claude's account
+  asked for a pause*, and the Limits pane then draws no Claude card at all. So the
+  window set is ONE launch (`LANCETTA_OVERVIEW=overview`, `LANCETTA_DEMO_TREES=1`,
+  `LANCETTA_CAPTURE=1`), waited on until the real `usage.json` shows a Claude
+  reading newer than the launch, with the panes switched by clicking the sidebar
+  rows by coordinate (window origin + (100, 236 / 279 / 322 / 366) points: the rows
+  have no accessibility titles) after checking the app is frontmost, and the
+  pointer put back. Quit the user's copy first: two copies polling one account
+  is what brings the 429 on.
+- **The panel is a second launch, without `LANCETTA_DEMO_TREES`**: with it, the
+  panel draws the invented trees' strip. Its first click on the status item may
+  not open the panel, and one opened straight after can photograph as empty navy
+  (the cards still in their hidden pose): open it again, wait four seconds, check
+  the picture.
+- **The pace crop is the panel's Claude card**, 716x280 from (22, 72) in the 2x
+  capture, with the outside of its 24px rounded corners cleared to transparent,
+  as the published one was. With real numbers the pace line is calm; the amber
+  stop cannot be summoned from a real account, only from the demo agents, which
+  are not publishable.
+
+The frames went through ImageOptim.app (the workspace's always-on rule), which
+writes a 256-colour palette here: the seven frames take 404 KB, against 2.14 MB
+as captured and 1.29 MB for the oxipng set they replaced, and nothing shows at full
+size.
+
 **A capture with a BAKED SHADOW is a smudge on a light page, and the site is
 light.** The app's captures are taken against a dark desktop, where a soft
 shadow around the object is what makes it sit on something. Measured on the
