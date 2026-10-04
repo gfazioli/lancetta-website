@@ -469,8 +469,11 @@ a capture in two ways, each fixed by hand:
   -workingHoursOn YES"`), never in the user's own defaults.
 
 **Compare a snapshot's pixels with the published set's in ONE colour space.** The
-snapshot is tagged Display P3 and the published frames are sRGB (ImageOptim
-converts), so the raw values differ by the conversion alone: the snapshot's red
+snapshot is tagged Display P3 and the published frames are sRGB: ImageOptim.app
+converts the pixels to sRGB and then drops the profile (measured the same day on a
+Display P3 test file, whose `(200, 100, 80)` came out stored as `(215, 93, 73)`,
+that colour's sRGB value, with no profile left). So the raw values differ by the
+conversion alone: the snapshot's red
 button read `(225, 103, 91)` against the published `(244, 91, 80)` and looked
 desaturated, while the published button converted to P3 read `(226, 101, 87)`,
 the same colour. Pasting the published buttons in as raw values would have made
