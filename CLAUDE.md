@@ -331,7 +331,9 @@ Published today: the menu in both appearances, the island collapsed and open,
 the window's Overview, Usage, Limits and Processes panes plus the Overview
 scrolled to Last week, and every Settings
 pane: General, Appearance, Notch, Agents, both agent pages, Sources, Updates and
-About.
+About. Two crops sit beside them: the Usage pane's Fullest 5-Hour Window card
+(`screenshot-fullest-window.png`) and the Working hours section of Settings
+(`screenshot-settings-working-hours.png`), both from 0.16.0.
 
 **The four window panes are ONE SET, shot at ONE window size, in one run.** The
 hero showed them in the same box, one per frame, cross-fading in place, so a
@@ -442,6 +444,37 @@ and relaunched plain afterwards. Three things that run paid for:
   as the published one was. With real numbers the pace line is calm; the amber
   stop cannot be summoned from a real account, only from the demo agents, which
   are not publishable.
+
+**The Usage pane and its two crops were re-shot on 2026-10-04 for 0.16.0, from a
+background job whose captures all failed**: `screencapture -l` answered *could
+not create image from window* for every window, sandboxed or not, including the
+one window on the active Space (a full-screen terminal), whose name
+`CGWindowListCopyWindowInfo` still read. A window on ANOTHER Space fails the same
+way with every grant in place, so list `.optionOnScreenOnly` first and capture
+something in it before concluding anything about permissions. So the frames came
+from the app's own snapshot hatch (debug builds, `LANCETTA_SIGNALS=1`
+and `kill -URG <pid>`, which draws each open window into a PNG in
+`LANCETTA_SNAPSHOT`; `../Lancetta/CLAUDE.md` has it). What it draws differs from
+a capture in two ways, each fixed by hand:
+- **No rounded corners.** The window frame was masked to a 34 px radius at 2x,
+  which is what the published set measures (the top row turns opaque at x=34,
+  the diagonal at 10). The card crops take the card's own radius: 32 px for a
+  window card (`Theme.Radius.card`, 16 pt), 24 px for a Settings group.
+- **Content below the fold is not drawn.** The Fullest card was shot from a
+  throwaway build with it moved to the top of the pane, and the Working hours
+  section the same way in Settings, with `makeFirstResponder(nil)` before the
+  snapshot: at the top of the pane the hour field took focus and drew selected.
+  Working hours are off by default, so they were switched on for that one process
+  in the argument domain (`APP_DEFAULTS="-claudeAccountConnected 0
+  -workingHoursOn YES"`), never in the user's own defaults.
+
+**Compare a snapshot's pixels with the published set's in ONE colour space.** The
+snapshot is tagged Display P3 and the published frames are sRGB (ImageOptim
+converts), so the raw values differ by the conversion alone: the snapshot's red
+button read `(225, 103, 91)` against the published `(244, 91, 80)` and looked
+desaturated, while the published button converted to P3 read `(226, 101, 87)`,
+the same colour. Pasting the published buttons in as raw values would have made
+them oversaturated after ImageOptim, at `(255, 83, 80)`.
 
 The frames went through ImageOptim.app (the workspace's always-on rule), which
 writes a 256-colour palette here: the seven frames take 404 KB, against 2.14 MB
