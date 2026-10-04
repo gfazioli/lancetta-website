@@ -41,6 +41,15 @@ The switches for what Lancetta says first, which is deliberately little: the per
 
 **Also say when a window passes** — *Never* by default, because this one announces the number already in your menu bar. Kept for a hard threshold; each level is said once per window, going up, and again after the window resets.
 
+### Working hours
+
+**Use your working hours** — off by default. The hours and days you usually work, which Lancetta uses for two things and nothing else:
+
+- **The [pace line](/docs/the-menu#the-pace-line) stops at the end of your day.** At five, with your day ending at six, *you run out in 2h40m* is about a rate you will have stopped by then, so it is not said. Outside your hours the line is unchanged: if you are still working at nine at night, you are working, and it still warns you.
+- **Quiet notifications outside these hours** — on once the hours are. Outside them a notification goes straight to Notification Centre, with no banner and no sound. Nothing is lost: it is there when you come back.
+
+**Hours** — a start and an end, read on the clock, so nine to six stays nine to six on the days the clock changes. An end before the start runs past midnight: 22:00 to 6:00 is one night, and it counts as the day it starts on. **Days** — the days a working day can start on, in your region's week order. With none ticked, the working hours change nothing.
+
 **Open Lancetta at login** — off by default. It binds to macOS's own login-item status rather than to a copy of it, so the switch reflects what the system actually has registered.
 
 **Show the support window at launch** — off by default. Opens About + Support when Lancetta starts. Netfox ships the same switch on; here it is off, because this app opens at login, and a window at every login is the thing a menu-bar app exists to avoid.

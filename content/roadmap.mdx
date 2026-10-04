@@ -11,9 +11,11 @@ Nothing here is a promise, and nothing ahead is numbered or dated: the order cha
 
 Today the pace line reasons from the last hour: if you carry on like this, when you run out. It is honest arithmetic and it has a blind spot — it does not know that you start at nine, that Thursday is your long day, or that you never touch it at the weekend. So it can tell you where *this* afternoon lands and not what a normal one costs you.
 
-The readings are already being kept. The step is reasoning across them instead of inside one window: a working-hours setting, so the app knows which hours are yours; an average across your own days; and then the two sentences that need both — **when to start**, and **when you will probably stop**.
+The readings are already being kept, and two pieces of this step shipped in 0.16: a **working-hours setting**, so the app knows which hours are yours, and **each day's fullest 5-hour window** in the Usage pane — the history the advice would be drawn from. What is still to come is the advice itself: an average across your own days, and the two sentences that need it — **when to start**, and **when you will probably stop**.
 
 **Done when** it can say, on a Monday morning and before you have spent anything, roughly how far into the day the five-hour window will carry you — and be right often enough that the sentence is worth reading. That is a higher bar than the pace line had to clear, because a projection made before there is any evidence is a forecast rather than arithmetic, and a forecast that is wrong twice stops being read. If it cannot clear it, it says nothing, the way every other case that cannot support a projection already does.
+
+**Measured before it was built, and not there yet.** On 4 October 2026 six ways of making that Monday-morning forecast were replayed over two and a half weeks of one Mac's readings: the average of the days before, their median, weekdays apart from weekends, the same weekday, the day before, and an hour-by-hour profile that was even given the real time each window opened. None did better than a single fixed number chosen afterwards, which is what a forecast that knows nothing about the day amounts to. The best was 6.5 points off on Claude against 5.4 for the fixed number, and 23.3 against 20.5 on Codex; neither of Codex's two run-outs — one of them from nothing to empty in eighteen minutes — was foreseen by any of the six, and two days of the same weekday differed as much as any two days. So for now it says nothing, as promised above. The replay runs again once there are more weeks of readings, and the sentence ships only if it clears the bar.
 
 ---
 
@@ -26,6 +28,14 @@ The readings are already being kept. The step is reasoning across them instead o
 ---
 
 ## Already shipped
+
+### v0.16 — your hours, and your days
+
+*Shipped 2026-10-04.*
+
+**Working hours.** In Settings › General, the hours and days you usually work, off until you set them. Once your day has ended the pace line no longer says when you would run out, and outside your hours notifications can arrive quietly in Notification Centre, with no banner and no sound. See [Working hours](/docs/settings#working-hours).
+
+**Each day's fullest 5-hour window.** A new card in the Usage pane: for every day, how full each agent's fullest 5-hour window got, and on how many days one ran out. See [Usage](/docs/the-window#usage).
 
 ### v0.15 — how long you can keep going
 

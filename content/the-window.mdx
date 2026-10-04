@@ -41,7 +41,9 @@ It needs one whole week. Until Lancetta has read a week from its start, the card
 
 ![The Usage pane: thirty days of tokens for both agents side by side, with the lifetime total, the best day and the streaks underneath](/screenshot-window-usage.png)
 
-The same chart over **7, 30 or 90 days**, and the totals underneath: lifetime tokens, the best single day, how many days have been recorded at all, the current and longest streaks, and the longest single turn.
+The same chart over **7, 30 or 90 days**, the fullest 5-hour window of each day under it, and the totals underneath: lifetime tokens, the best single day, how many days have been recorded at all, the current and longest streaks, and the longest single turn.
+
+**The fullest 5-hour window of each day.** For every day in the range, how full each agent's fullest 5-hour window got, drawn against the whole window: the faint column behind each bar is 100%. Above the chart, each agent's fullest day in the range and how many days a window ran out. It comes from the readings Lancetta keeps on this Mac rather than from either agent, so a day starts at four in the morning — a window opened at half past midnight is the evening before carrying on — and a day with no column had no window used, or Lancetta was not running: the readings cannot tell the two apart, and the caption says so. With [Count down what is left](/docs/settings#general) on, it shows the least that was left instead. It says what happened and nothing about tomorrow; why there is no forecast yet is on [the roadmap](/docs/roadmap#advice-from-your-own-history).
 
 Two things about this chart are worth knowing, because both would otherwise read as bugs.
 
@@ -83,7 +85,7 @@ On macOS 27 you can pull any pane down to refresh it, the way you would in Mail.
 | Pane | What a pull reads again |
 | --- | --- |
 | **Overview** | the quotas and the process trees, as **Refresh now** does, then the token history and Last week |
-| **Usage** | the token history, with Codex asked again |
+| **Usage** | the token history, with Codex asked again, and the 5-hour windows |
 | **Limits** | the quotas and the process trees, as **Refresh now** does |
 | **Processes** | the process trees, and nothing else: asking the agents from there would spend their reads on numbers that are not on screen |
 
