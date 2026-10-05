@@ -159,7 +159,7 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
   {
     question: 'Does anything leave my Mac?',
     answer:
-      'No. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server and no telemetry — nothing is sent anywhere.',
+      'Nothing about you or what you do. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make, the update check you turn on, and a sponsor picture in About. The privacy page lists each one.',
   },
   {
     question: 'What macOS version do I need?',

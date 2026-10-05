@@ -1,18 +1,20 @@
 ---
 title: "Privacy: what it reads, writes and sends"
-description: "What Lancetta reads, what it writes, and what it sends — which is nothing. No account, no server, no telemetry."
+description: "What Lancetta reads, what it writes, and the few requests it makes. No account, no server of ours, no telemetry."
 ---
+
+import config from "@/config";
 
 # Privacy
 
-Lancetta has no account, no server and no telemetry. **Nothing you do in it leaves your Mac.**
+Lancetta has no account, no server of ours and no telemetry. **Nothing you do in it is reported to anyone**; the few requests it makes are listed under [What it sends](#what-it-sends).
 
 ## What it reads
 
-- **Codex** — an account read, on your machine, over the agent's own local interface. It returns your rate-limit percentages, reset times and plan, how many free resets the account holds (and, once per new count, what each is called and when it lapses), and — separately, when the window is open — your token totals per day. It does not return, and Lancetta does not read, the contents of any session.
-- **Claude Code** — once you connect it, the sign-in Claude Code keeps in your keychain, read and never renewed (the refresh token beside it is never read at all), and with it one account read: your rate-limit percentages and reset times. Or, if you set that up instead, one file on your disk written by your own status-line command.
+- **Codex** — an account read, asked of the Codex CLI on your machine over its own local interface; the CLI fetches the figures from OpenAI with its own sign-in. It returns your rate-limit percentages, reset times and plan, how many free resets the account holds (and, once per new count, what each is called and when it lapses), and — separately, when the window is open — your token totals per day. It does not return, and Lancetta does not read, the contents of any session.
+- **Claude Code** — once you connect it, the sign-in Claude Code keeps in your keychain, read and never renewed (the refresh token in the same item is never kept or used), and with it one account read: your rate-limit percentages and reset times. Or, if you set that up instead, one file on your disk written by your own status-line command.
 - **Claude Code's transcripts, for the token chart** — the files Claude Code keeps under `~/.claude/projects`, searched for the usage block on each reply. Lancetta keeps the message's id, its time and its token counts, and nothing else: the text of your prompts and answers is never extracted, stored or sent. Only the files that changed since the last look are read again.
-- **Your plan** — read from the account metadata the agent already keeps locally.
+- **Your plan** — from the same account reads, or, when Claude Code is followed through its status line, from the account metadata Claude Code keeps on your Mac.
 - **The process table** — the same list `ps` gives you, to find the background trees the agents have left running. It reads their command lines, argument by argument, which is where the working directory each one was started for lives. That directory is shown to you in the window; it is never sent anywhere.
 
 ## What it does
@@ -37,7 +39,7 @@ Two things in this app are not read-only, and each one happens only after a ques
 Four things, all on this Mac:
 
 - **Your own preferences** — the refresh interval, the colours and order you gave the agents, which ones are hidden, what each one shows in the menu bar, the notch switch, whether you count up or down, and how many free resets it last saw, so that a new one can be announced — in the standard macOS preferences location for the app.
-- **The series of its own readings**, in `~/Library/Application Support/Lancetta/history.jsonl`: for each reading, when it was taken, which agent, both windows' percentages and resets, the plan, the route it arrived by and the free resets held. It is what the pace line reasons from, and it never leaves your Mac.
+- **The series of its own readings**, in `~/Library/Application Support/Lancetta/history.jsonl`: for each reading, when it was taken, which agent, both windows' percentages and resets, the plan, the route it arrived by and the free resets held. Each line also carries a short salted hash of the account, so two accounts' series never mix; the salt is in `history.salt` beside it. Past 4 MB the series rolls over into `history.1.jsonl`. It is what the pace line reasons from, and it never leaves your Mac.
 - **A cache of Claude's token counts**, `claude-usage-cache.json` beside it: per transcript file, its size and date and the tokens of each reply by day, so the chart does not re-read every transcript each time. File paths and numbers, never text.
 - **The last reading of each agent**, `usage.json` beside it: what [`Lancetta usage --json`](/docs/command-line) prints — each agent's numbers, the plan, the route they came by, and the problem when there is one, whose detail can name a file in your home folder or quote the error an agent returned. Rewritten after every read; nothing reads it but that command and whatever you point at it.
 
@@ -47,14 +49,35 @@ Deleting that folder costs you the series the pace line learns from; the cache a
 
 There is no analytics call and no crash reporter. Lancetta has never had either and will not get one.
 
-Two requests, and both are named here. **The Claude account read**, once you connect it: the same request Claude Code's own `/usage` makes, to Anthropic, carrying the sign-in Claude Code keeps — and nothing else. It stops the moment you disconnect. **The update check**, which fetches a signed release feed — nothing else, and nothing about you. Both automatic forms of it are **off until you turn them on** in [Settings → Updates](/docs/settings#updates): a silent check when the app starts, and the update framework's own schedule. **Check for Updates Now…** makes the same request when you ask for it.
+Every request it makes is named here:
 
-That is the whole list. There is no account, no server, and nothing that reports what you did.
+- **The Claude account read**, once you connect it: the same request Claude Code's own `/usage` makes, to Anthropic, carrying the sign-in Claude Code keeps and the app's version. It stops the moment you disconnect.
+- **The Codex readings**, while Codex is shown: Lancetta asks the Codex CLI on your Mac, and the CLI fetches your rate limits from OpenAI with its own sign-in, as it does for itself. Hide Codex in Settings to stop them.
+- **The update check**, which fetches a signed release feed from this website and carries the app's version. Both automatic forms of it are **off until you turn them on** in [Settings → Updates](/docs/settings#updates): a silent check when the app starts, and the update framework's own schedule, which asks you once, on the second launch. **Check for Updates Now…** makes the same request when you ask for it. When there is a new version, its notes come from this website and its download from GitHub.
+- **The About window** shows a sponsor's picture, which is loaded from GitHub.
+
+That is the whole list. There is no account, no server of ours, and nothing that reports what you did.
 
 ## Why reading costs nothing
 
 Not a privacy point exactly, but it is usually the next question: Lancetta never sends a prompt to a model to find out how much quota is left. That would be a model turn, it would cost tokens on every poll, and it would send something. See [How it reads each agent](/docs/how-it-reads).
 
+## Who is responsible
+
+The data controller is **{config.legal.owner}** ({config.legal.brand}), an independent software developer in Italy, VAT number {`IT${config.legal.vatNumber}`}. Write to [hello@undolog.com](mailto:hello@undolog.com) about anything on this page. See also the [Legal notice](/docs/legal).
+
 ## This website
 
-The site records anonymous page-view analytics through its host, and nothing else. There is no sign-up, no newsletter form and no third-party tracker.
+- **No cookies, no tracking.** The site sets no cookies and does not follow you across other sites.
+- **Visit statistics.** Visits are counted by privacy-friendly analytics that use no cookies and build no profile of you: pages viewed, the referring site, country, and browser or device type, in aggregate.
+- **Server logs.** The hosting provider that serves these pages, and the app's update checks, processes your IP address and the details of each request to deliver the site and keep it secure, and keeps them for a limited time.
+- **GitHub.** The sponsor pictures at the bottom of every page are loaded from GitHub, which therefore sees your IP address. Downloads also come from GitHub.
+- **Links.** The newsletter lives on Substack, sponsorships go through GitHub Sponsors and donations through Stripe. If you use them, their own privacy policies apply.
+
+There is no sign-up and no form.
+
+## Why, and your rights
+
+We process the little personal data described here to run and protect the site and the app, and to answer you when you write: our legitimate interest, or the service you asked for. The hosting and download providers may process it outside the European Union, including in the United States, under the safeguards the GDPR requires.
+
+Under the GDPR you can ask to access, correct or delete your personal data, to restrict or object to its processing, and to receive it in a portable format: write to [hello@undolog.com](mailto:hello@undolog.com). You can also lodge a complaint with the Italian data protection authority, the [Garante per la protezione dei dati personali](https://www.garanteprivacy.it/).
