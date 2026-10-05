@@ -56,4 +56,6 @@ export default {
   roadmap: nav(IconMap2, 'What’s next', 'grape'),
   faq: nav(IconHelpCircle, 'FAQ', 'lancetta'),
   'release-notes': '',
+  // Reached from the footer's last line on every page, never from the sidebar.
+  legal: { display: 'hidden', theme: { pagination: false } },
 };

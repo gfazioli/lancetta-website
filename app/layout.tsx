@@ -162,7 +162,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             navbar={<MenuBarHeader />}
             pageMap={pageMap}
             docsRepositoryBase={nextraLayout.docsRepositoryBase}
-            footer={<MantineFooter />}
+            footer={<MantineFooter year={new Date().getFullYear()} />}
             sidebar={nextraLayout.sidebar}
             darkMode={false}
             nextThemes={{ defaultTheme: 'light', forcedTheme: 'light' }}
