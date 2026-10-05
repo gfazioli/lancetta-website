@@ -13,7 +13,7 @@ Lancetta has no account, no server and no telemetry. **Nothing you do in it leav
 - **Claude Code** — once you connect it, the sign-in Claude Code keeps in your keychain, read and never renewed (the refresh token beside it is never read at all), and with it one account read: your rate-limit percentages and reset times. Or, if you set that up instead, one file on your disk written by your own status-line command.
 - **Claude Code's transcripts, for the token chart** — the files Claude Code keeps under `~/.claude/projects`, searched for the usage block on each reply. Lancetta keeps the message's id, its time and its token counts, and nothing else: the text of your prompts and answers is never extracted, stored or sent. Only the files that changed since the last look are read again.
 - **Your plan** — read from the account metadata the agent already keeps locally.
-- **The process table** — the same list `ps` gives you, to find the background trees the agents have left running. It reads their command lines, which is where the working directory each one was started for lives. That directory is shown to you in the window; it is never sent anywhere.
+- **The process table** — the same list `ps` gives you, to find the background trees the agents have left running. It reads their command lines, argument by argument, which is where the working directory each one was started for lives. That directory is shown to you in the window; it is never sent anywhere.
 
 ## What it does
 

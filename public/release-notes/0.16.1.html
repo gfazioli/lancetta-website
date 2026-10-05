@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.16.1 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.16.1</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Three fixes: Reclaim, a free reset that wasn't one, and Codex found somewhere else.</p>
+<h2>Reclaim reads the whole folder</h2>
+<p><strong>A background tree in a folder with " -- " in its name is no longer taken for one whose folder is gone.</strong> Lancetta found each tree's folder in the process list, which joins a command's arguments with spaces and quotes nothing. A folder named like that was read cut short, as a path that does not exist, and that is exactly what makes a tree an orphan. So Reclaim could stop a session that was still working there, and the check made just before stopping it read the folder the same way.</p>
+<ul>
+<li><strong>Each folder is now read whole.</strong> Lancetta reads every background tree's arguments from macOS one by one, so a space or a " -- " in a name stays part of it.</li>
+<li><strong>A folder it cannot read is never gone.</strong> A tree whose arguments cannot be read has no folder as far as Lancetta knows, and an unknown folder is never treated as missing.</li>
+</ul>
+<h2>No free reset from another account</h2>
+<p><strong>Signing in to another Codex account while Lancetta was not running no longer announces a free reset.</strong> Lancetta remembers how many reset credits it last saw, so that a credit granted while it was closed is still announced. That count did not say which account it belonged to, so the new account's credits were compared with the old one's, and any difference was announced as a grant. The count now carries which account it belongs to, and another account's credits are counted from where they are.</p>
+<h2>Codex in another place, same account</h2>
+<p><strong>If Codex turns up in another place on your Mac, Lancetta now keeps what it knew about your account</strong>, as long as Codex names the same one: its readings, the free-reset count and last week's recap. Before, any new path was treated as another account and all of that started over.</p>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.16.1.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later.</p>
+</body>
+</html>

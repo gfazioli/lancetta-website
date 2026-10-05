@@ -38,7 +38,7 @@ Reaped: **28 → 4 processes, 2680 → 436 MB.** 2.24 GB returned.
 Three things keep it that way, and each one is a way the obvious version would have been wrong:
 
 - **A broker with no working directory in its arguments is never an orphan.** Unknown is not gone, and that is the one place where being wrong ends somebody's running session.
-- **The directory is read to the end of its argument, not to the first space.** A folder whose name contains a space would otherwise be truncated to a path that does not exist — and *the path does not exist* is precisely the orphan test. The naive parse turns a live tree into a target.
+- **The directory is read as its own argument, whole.** The process list joins a command's arguments with spaces and quotes nothing, so a folder whose name holds a space, or “ -- ”, came back cut to a path that does not exist — and *the path does not exist* is precisely the orphan test. Lancetta reads each broker's arguments from macOS one by one instead, so the folder is exactly the one it was given. The naive parse turns a live tree into a target.
 - **Stopping one means signalling the broker, never its children.** Its own handler tears the tree down cleanly; measured, the whole tree was gone in under a tenth of a second and the live trees were untouched.
 
 ## What it looks like
