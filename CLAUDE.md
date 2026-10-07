@@ -330,7 +330,7 @@ window and Settings, and a hover on the notch for the island.
 Published today: the menu in both appearances, the island collapsed and open,
 the window's Overview, Usage, Limits and Processes panes plus the Overview
 scrolled to Last week, and every Settings
-pane: General, Appearance, Notch, Agents, both agent pages, Sources, Updates and
+pane: General, Agents, Notifications, Appearance, both agent pages, Sources, Updates and
 About. Two crops sit beside them: the Usage pane's Fullest 5-Hour Window card
 (`screenshot-fullest-window.png`) and the Working hours section of Settings
 (`screenshot-settings-working-hours.png`), both from 0.16.0.
