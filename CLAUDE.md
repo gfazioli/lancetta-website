@@ -396,7 +396,13 @@ controls where every earlier set had 15's. It was not installed yet, so the app
 came out of the release DMG into a scratch folder and the script took it as its
 second argument (`settings-shots.sh <out> <app>`): the user's copy in
 `/Applications` stayed as it was, and the Developer ID copy still read the sign-in
-with no dialog. **Check the traffic lights of every frame before publishing.**
+with no dialog. **Re-shot on 2026-10-07 from the released 0.17.0**, for the Notifications pane and the
+new sidebar: the app copied out of the release DMG into a scratch folder and given to
+`settings-shots.sh` as its second argument, the user's copy left alone. A first run
+from the dev build came out with 8 of 9 frames INACTIVE (red light 56,61,75 against
+244,79,70): a launch from a background session cannot take the focus while somebody
+is working in another app. The run that shipped asked for a minute hands off, and all
+nine came out active. **Check the traffic lights of every frame before publishing.**
 Three of that run's nine came out INACTIVE, with grey buttons and dimmed
 switches that read as off, because another session was shooting FinderGit on the
 same screen and its app took focus back between launches. Nothing in the
