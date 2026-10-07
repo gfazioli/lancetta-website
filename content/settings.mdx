@@ -5,7 +5,7 @@ description: "Lancetta's Settings: the refresh interval, counting down what is l
 
 # Settings
 
-⌘, from the panel, or the gear at its top. Eight panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
+⌘, from the panel, or the gear at its top. Seven panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
 
 ![Lancetta's Settings, on the General pane: the refresh interval and counting down what is left, the two advice switches, and the menu bar's rotation and hover switches beneath them](/screenshot-settings-general.png)
 
@@ -34,6 +34,36 @@ The quarter-second is not a round number for its own sake: a pointer on its way 
 **Show the support window at launch** — off by default. Opens About + Support when Lancetta starts. Netfox ships the same switch on; here it is off, because this app opens at login, and a window at every login is the thing a menu-bar app exists to avoid.
 
 **Show the icon in the Dock** — off by default, which means Lancetta is an accessory app with nothing in the Dock. Note what that setting does *not* control: a Dock icon appears while [the window](/docs/the-window) is open whatever this is set to, because a window needs its app to be a normal one to have its own menu bar and to come forward when asked. This switch decides whether the icon stays there the rest of the time.
+
+## Agents
+
+A list with a page per agent, the way System Settings does accounts and devices.
+
+![Lancetta's Settings, on the Agents pane: Claude and Codex as two rows, each with a grip to drag it and a chevron to open it](/screenshot-settings-agents.png)
+
+**The list is where the order is set** — drag a row and everything follows it: the menu, the window, the island, and the turn each agent takes in the menu bar. There is one sort, in one place, so no surface can have an order of its own. Before this existed Codex was always first, for no better reason than being first in an array; an order nobody chose is still an order somebody has to live with.
+
+A row opens on a click anywhere, and drags from anywhere. The grip on the left says it can be dragged — it is the affordance, not the only handle.
+
+**Each agent's page** carries:
+
+- **Colour** — the tint its bars are drawn in, everywhere: the panel, the window, the island, and the token chart if the data is that agent's. A colour you set is a colour you expect to see. There is a Reset beside it.
+- **Watch this agent** — off, it keeps no card in the menu and no cell in the bar. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
+- **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width. A refusal is shown regardless: when this agent is refused, its mark and a dead lamp take a turn in the bar even with this off, because the bar's rule is alarm first.
+- **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
+- **How it is wired** — the line under the agent's name says which route its numbers arrive by, so a card that is not updating tells you where to look. The panel says it too: a Claude card still read through the status-line file carries a line saying so, and a Connect button beside it. [Sources](#sources) has the detail, and for Codex a way to choose the binary.
+- **Notifications** — whether Lancetta speaks about this agent is on the [Notifications](#per-agent) pane, beside the other agents.
+- **Account** (Claude only) — **Connect** reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left, reading it the way Claude Code does, so there is normally nothing to approve. **Disconnect** stops it. What that click does and does not do is spelled out in [Getting Started](/docs/getting-started#claude-code).
+
+![Claude's page in Lancetta's Settings: colour, Watch this agent, Show in the menu bar, the three bar fields, and the Account section reading the quota from the Claude account, with a Disconnect button](/screenshot-settings-agent-claude.png)
+
+The same page for Codex, where the line under the name says which executable it reads:
+
+![Codex's page in Lancetta's Settings: the wiring line reads /opt/homebrew/bin/codex app-server on demand, then colour, Watch this agent, Show in the menu bar and the three bar fields](/screenshot-settings-agent-codex.png)
+
+Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
+
+Visibility is stored as the set of agents you have **hidden**, rather than the set you have shown. An agent added in a later version is therefore absent from that set and is visible by default; stored the other way round, every new agent would ship invisible and read as broken until somebody found the setting. The same rule applies to the order: an agent the stored order has never heard of lands last, never nowhere.
 
 ## Notifications
 
@@ -70,45 +100,13 @@ One switch per agent, each with its mark: off, Lancetta sends nothing about that
 
 ## Appearance
 
-![Lancetta's Settings, on the Appearance pane: one switch, Use the agents' own logos](/screenshot-settings-appearance.png)
+![Lancetta's Settings, on the Appearance pane: Use the agents' own logos under Marks, and on a Mac with a notch, Show the reading under the notch](/screenshot-settings-appearance.png)
 
 **Marks** — the agents' own artwork, or neutral system symbols. The marks are drawn from vector path data rather than bundled as images, so they stay sharp at any row height.
 
-## Notch
+### Notch
 
-![Lancetta's Settings, on the Notch pane: one switch, Show the reading under the notch](/screenshot-settings-notch.png)
-
-One switch, and the pane only exists on a Mac that has a notch. Hidden rather than shown dead: a pane whose feature can never run reads as broken. See [The Notch](/docs/the-notch).
-
-## Agents
-
-A list with a page per agent, the way System Settings does accounts and devices.
-
-![Lancetta's Settings, on the Agents pane: Claude and Codex as two rows, each with a grip to drag it and a chevron to open it](/screenshot-settings-agents.png)
-
-**The list is where the order is set** — drag a row and everything follows it: the menu, the window, the island, and the turn each agent takes in the menu bar. There is one sort, in one place, so no surface can have an order of its own. Before this existed Codex was always first, for no better reason than being first in an array; an order nobody chose is still an order somebody has to live with.
-
-A row opens on a click anywhere, and drags from anywhere. The grip on the left says it can be dragged — it is the affordance, not the only handle.
-
-**Each agent's page** carries:
-
-- **Colour** — the tint its bars are drawn in, everywhere: the panel, the window, the island, and the token chart if the data is that agent's. A colour you set is a colour you expect to see. There is a Reset beside it.
-- **Watch this agent** — off, it keeps no card in the menu and no cell in the bar. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
-- **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width. A refusal is shown regardless: when this agent is refused, its mark and a dead lamp take a turn in the bar even with this off, because the bar's rule is alarm first.
-- **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
-- **How it is wired** — the line under the agent's name says which route its numbers arrive by, so a card that is not updating tells you where to look. The panel says it too: a Claude card still read through the status-line file carries a line saying so, and a Connect button beside it. [Sources](#sources) has the detail, and for Codex a way to choose the binary.
-- **Notifications** — whether Lancetta speaks about this agent is on the [Notifications](#per-agent) pane, beside the other agents.
-- **Account** (Claude only) — **Connect** reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left, reading it the way Claude Code does, so there is normally nothing to approve. **Disconnect** stops it. What that click does and does not do is spelled out in [Getting Started](/docs/getting-started#claude-code).
-
-![Claude's page in Lancetta's Settings: colour, Watch this agent, Show in the menu bar, the three bar fields, and the Account section reading the quota from the Claude account, with a Disconnect button](/screenshot-settings-agent-claude.png)
-
-The same page for Codex, where the line under the name says which executable it reads:
-
-![Codex's page in Lancetta's Settings: the wiring line reads /opt/homebrew/bin/codex app-server on demand, then colour, Watch this agent, Show in the menu bar and the three bar fields](/screenshot-settings-agent-codex.png)
-
-Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
-
-Visibility is stored as the set of agents you have **hidden**, rather than the set you have shown. An agent added in a later version is therefore absent from that set and is visible by default; stored the other way round, every new agent would ship invisible and read as broken until somebody found the setting. The same rule applies to the order: an agent the stored order has never heard of lands last, never nowhere.
+**Show the reading under the notch** — only on a Mac that has a notch; elsewhere the section is not drawn at all. Hidden rather than shown dead: a setting whose feature can never run reads as broken. See [The Notch](/docs/the-notch).
 
 ## Sources
 
