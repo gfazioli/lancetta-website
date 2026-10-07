@@ -1,13 +1,13 @@
 ---
 title: "Settings reference"
-description: "Lancetta's Settings: the refresh interval, counting down what is left, what each agent shows in the menu bar and in what order, colours, marks and the notch."
+description: "Lancetta's Settings: the refresh interval, counting down what is left, notifications and your working hours, each agent's colour and order, and the notch."
 ---
 
 # Settings
 
-⌘, from the panel, or the gear at its top. Seven panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
+⌘, from the panel, or the gear at its top. Eight panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
 
-![Lancetta's Settings, on the General pane: the refresh interval and counting down what is left, the two advice switches, and the alert switches beneath them](/screenshot-settings-general.png)
+![Lancetta's Settings, on the General pane: the refresh interval and counting down what is left, the two advice switches, and the menu bar's rotation and hover switches beneath them](/screenshot-settings-general.png)
 
 ## General
 
@@ -19,27 +19,39 @@ It applies to Claude too once it is connected, with a floor: the account is aske
 
 Whichever you pick, the bars are filled with **the number that is shown**, and every label that names the quantity follows it. That sounds like a detail and is not: a card headed *Quota left* over a bar filled with what was used is the exact defect this app was built in response to, and the app has written it twice by accident since.
 
-**Open the menu on hover** — off by default. On, pointing at Lancetta in the menu bar opens the panel after a quarter of a second, with no click; it closes when the pointer leaves it. Opening it this way deliberately **does not take the keyboard**, so nothing is pulled out of whatever you are typing in — which also means the panel's shortcuts are not live yet. Click the item and the panel is yours: it takes the keyboard, its shortcuts work, and it stays open until you click away, exactly as a clicked-open panel always did. Clicking a row inside it works either way.
-
-The quarter-second is not a round number for its own sake: a pointer on its way to another app's menu-bar item crosses ours in a few dozen milliseconds, and a panel that opened on the way past would be in the way every time.
-
 **Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone and how long it has been open, and, when your recent rate would empty a window before it resets, when — on the window that would stop you first. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything.
 
 **Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there, and turns amber when it says when you would run out. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
 
-### Alerts
+**Suggestions**, on the [Notifications](#notifications) pane, follow the first of these two: with the line off, they are off too.
 
-The switches for what Lancetta says first, which is deliberately little: the percentage is already on your menu bar, so a notification is for what the bar cannot show. The whole of it is on [its own page](/docs/alerts); the controls are:
+**Rotate agents every** — with more than one agent in the menu bar they take turns, cross-fading. The item holds a fixed width at the widest of them so its neighbours never shift. With one agent in the bar there is nothing to rotate, and the control is disabled rather than silently doing nothing.
+
+**Open the menu on hover** — off by default. On, pointing at Lancetta in the menu bar opens the panel after a quarter of a second, with no click; it closes when the pointer leaves it. Opening it this way deliberately **does not take the keyboard**, so nothing is pulled out of whatever you are typing in — which also means the panel's shortcuts are not live yet. Click the item and the panel is yours: it takes the keyboard, its shortcuts work, and it stays open until you click away, exactly as a clicked-open panel always did. Clicking a row inside it works either way.
+
+The quarter-second is not a round number for its own sake: a pointer on its way to another app's menu-bar item crosses ours in a few dozen milliseconds, and a panel that opened on the way past would be in the way every time.
+
+**Open Lancetta at login** — off by default. It binds to macOS's own login-item status rather than to a copy of it, so the switch reflects what the system actually has registered.
+
+**Show the support window at launch** — off by default. Opens About + Support when Lancetta starts. Netfox ships the same switch on; here it is off, because this app opens at login, and a window at every login is the thing a menu-bar app exists to avoid.
+
+**Show the icon in the Dock** — off by default, which means Lancetta is an accessory app with nothing in the Dock. Note what that setting does *not* control: a Dock icon appears while [the window](/docs/the-window) is open whatever this is set to, because a window needs its app to be a normal one to have its own menu bar and to come forward when asked. This switch decides whether the icon stays there the rest of the time.
+
+## Notifications
+
+{/* ![Lancetta's Settings, on the Notifications pane: Let Lancetta speak first, Alerts, Suggestions and Also say when a window passes, then the two sounds, the working hours and the switch for each agent](/screenshot-settings-notifications.png) */}
+
+What Lancetta says first, which is deliberately little: the percentage is already on your menu bar, so a notification is for what the bar cannot show. The whole of it is on [its own page](/docs/alerts); the controls are all here:
 
 **Let Lancetta speak first** — on by default. macOS asks whether Lancetta may notify you the first time there is something worth saying, not now and not at launch.
 
 **Alerts** — what the account reported: it refused you or a window is spent, it is ready again, or its reading has stopped moving.
 
-**Suggestions** — what the series implies: a window heading for empty before it resets, at its average so far, with the reset named beside it — which is why it can warn days ahead, where the pace line speaks of your recent rate. It follows the pace line's switch, which is where advice is turned on or off.
-
-**Sound when you are out** and **Sound when you can start again** — one of macOS's own sounds, or none. Only these two moments carry a sound: the work stopping, and the work being possible again.
+**Suggestions** — what the series implies: a window heading for empty before it resets, at its average so far, with the reset named beside it — which is why it can warn days ahead, where the pace line speaks of your recent rate. It follows the pace line's switch, under [General](#general), which is where advice is turned on or off.
 
 **Also say when a window passes** — *Never* by default, because this one announces the number already in your menu bar. Kept for a hard threshold; each level is said once per window, going up, and again after the window resets.
+
+**Sound when you are out** and **Sound when you can start again** — one of macOS's own sounds, or none. Only these two moments carry a sound: the work stopping, and the work being possible again.
 
 ### Working hours
 
@@ -52,13 +64,11 @@ The switches for what Lancetta says first, which is deliberately little: the per
 
 **Hours** — a start and an end, read on the clock, so nine to six stays nine to six on the days the clock changes. An end before the start runs past midnight: 22:00 to 6:00 is one night, and it counts as the day it starts on. **Days** — the days a working day can start on, in your region's week order. With none ticked, the working hours change nothing.
 
-**Open Lancetta at login** — off by default. It binds to macOS's own login-item status rather than to a copy of it, so the switch reflects what the system actually has registered.
+### Per agent
 
-**Show the support window at launch** — off by default. Opens About + Support when Lancetta starts. Netfox ships the same switch on; here it is off, because this app opens at login, and a window at every login is the thing a menu-bar app exists to avoid.
+One switch per agent, each with its mark: off, Lancetta sends nothing about that agent — not a refusal, not a suggestion — and what the menu bar draws is unaffected. The two agents are used differently and the answer can differ with them.
 
-**Show the icon in the Dock** — off by default, which means Lancetta is an accessory app with nothing in the Dock. Note what that setting does *not* control: a Dock icon appears while [the window](/docs/the-window) is open whatever this is set to, because a window needs its app to be a normal one to have its own menu bar and to come forward when asked. This switch decides whether the icon stays there the rest of the time.
-
-**Rotate agents every** — with more than one agent in the menu bar they take turns, cross-fading. The item holds a fixed width at the widest of them so its neighbours never shift. With one agent in the bar there is nothing to rotate, and the control is disabled rather than silently doing nothing.
+**Tell me when a free reset arrives** (Codex only) sits under Codex's row: a notification when Codex's account grants a reset credit, with what it resets and when it lapses; on by default. It is Codex's own row because only Codex has credits, and a switch above every agent would read as a promise that each one has them. See [A free reset](/docs/the-menu#a-free-reset).
 
 ## Appearance
 
@@ -89,15 +99,14 @@ A row opens on a click anywhere, and drags from anywhere. The grip on the left s
 - **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width. A refusal is shown regardless: when this agent is refused, its mark and a dead lamp take a turn in the bar even with this off, because the bar's rule is alarm first.
 - **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
 - **How it is wired** — the line under the agent's name says which route its numbers arrive by, so a card that is not updating tells you where to look. The panel says it too: a Claude card still read through the status-line file carries a line saying so, and a Connect button beside it. [Sources](#sources) has the detail, and for Codex a way to choose the binary.
-- **Notify me about this agent** — off, Lancetta sends nothing about it: not a refusal, not a suggestion. The two agents are used differently and the answer differs with them; what the menu bar draws is unaffected.
-- **Tell me when a free reset arrives** (Codex only) — a notification when Codex's account grants a reset credit, with what it resets and when it lapses; on by default. It lives here rather than under General because only Codex has credits, and a switch in General would read as a promise about every agent. See [A free reset](/docs/the-menu#a-free-reset).
+- **Notifications** — whether Lancetta speaks about this agent is on the [Notifications](#per-agent) pane, beside the other agents.
 - **Account** (Claude only) — **Connect** reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left, reading it the way Claude Code does, so there is normally nothing to approve. **Disconnect** stops it. What that click does and does not do is spelled out in [Getting Started](/docs/getting-started#claude-code).
 
-![Claude's page in Lancetta's Settings: colour, Watch this agent, Show in the menu bar, the three bar fields, Notify me about this agent, and the Account section reading the quota from the Claude account, with a Disconnect button](/screenshot-settings-agent-claude.png)
+![Claude's page in Lancetta's Settings: colour, Watch this agent, Show in the menu bar, the three bar fields, and the Account section reading the quota from the Claude account, with a Disconnect button](/screenshot-settings-agent-claude.png)
 
 The same page for Codex, where the line under the name says which executable it reads:
 
-![Codex's page in Lancetta's Settings: the wiring line reads /opt/homebrew/bin/codex app-server on demand, then colour, Watch this agent, Show in the menu bar and the three bar fields, and under Notifications, Notify me about this agent and Tell me when a free reset arrives](/screenshot-settings-agent-codex.png)
+![Codex's page in Lancetta's Settings: the wiring line reads /opt/homebrew/bin/codex app-server on demand, then colour, Watch this agent, Show in the menu bar and the three bar fields](/screenshot-settings-agent-codex.png)
 
 Agents arrive **with the app**, not by being added by hand. A source is code that knows how to read one tool's quota *without spending any*, which is the whole constraint — there is nothing useful a text field could accept.
 
