@@ -164,7 +164,7 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
   {
     question: 'What macOS version do I need?',
     answer:
-      'macOS 15 (Sequoia) or later. The notch panel needs a Mac that has a notch; on any other Mac that pane is hidden entirely, and the menu-bar item works the same everywhere.',
+      'macOS 15 (Sequoia) or later. The notch panel needs a Mac that has a notch; on any other Mac the island never appears, and the menu-bar item works the same everywhere.',
   },
   {
     question: 'Which languages does Lancetta speak?',

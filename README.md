@@ -62,7 +62,7 @@ The defect that started the project was a status line rendering an unknown as `0
 
 - macOS 15 (Sequoia) or later
 - Codex, Claude Code, or both. Lancetta finds them itself — a GUI app on macOS inherits almost no `PATH`, so it looks in the places these tools actually install to rather than assuming a shell.
-- The notch panel needs a Mac that has a notch. On every other Mac that pane is hidden entirely and the menu-bar item behaves identically.
+- The notch panel needs a Mac that has a notch. On every other Mac the island never appears and the menu-bar item behaves identically.
 
 ## Documentation
 
