@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.17.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.17.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Settings, reorganised: everything Lancetta tells you is in one place.</p>
+<h2>A Notifications pane</h2>
+<p><strong>What Lancetta tells you now has a pane of its own: Settings › Notifications.</strong> Until now those switches were split three ways: the alerts, suggestions and sounds sat in General between the reading and the menu bar, your working hours sat below them, and the switch that mutes an agent was on that agent's own page. The new pane holds them in this order:</p>
+<ul>
+<li><strong>Let Lancetta speak first, Alerts, Suggestions</strong> and <strong>Also say when a window passes</strong>, as before.</li>
+<li><strong>Sounds</strong>: the one for when you are out, and the one for when you can start again.</li>
+<li><strong>Working hours</strong>: your hours and days, and whether notifications go quietly to Notification Centre outside them. They still tell the line under each bar when your day ends.</li>
+<li><strong>Per agent</strong>: one switch per agent, with its mark. Under Codex, indented, the switch for a free reset arriving: only Codex has reset credits, so it sits under Codex rather than above every agent.</li>
+</ul>
+<p>Suggestions follow the line under each bar, whose switch stays in General: when that line is off, the Suggestions switch says so, and where. Each agent's page now says where its notifications went, with a link to the pane.</p>
+<h2>A sidebar ordered by what you set up</h2>
+<p><strong>General, Agents, Notifications and Appearance, then Sources and Updates.</strong> What Lancetta reads and shows comes first, then the agents it watches, then what it tells you about them, then how it looks. Sources and Updates, the panes you open when something is wrong or new, come last.</p>
+<ul>
+<li><strong>Appearance now holds the reading under the notch.</strong> Appearance and Notch were one switch each, so the notch's switch is a Notch section of Appearance, shown only on a Mac that has a notch.</li>
+<li><strong>General is shorter</strong>: Reading, Advice, Menu bar (rotating the agents, and opening the menu on hover, which had a section of its own) and Startup.</li>
+</ul>
+<h2>Smaller things</h2>
+<ul>
+<li><strong>The back and forward arrows at the top of Settings are easier to see.</strong> They are now the system's own back-and-forward control, and a dimmed arrow no longer all but disappears.</li>
+<li><strong>Searching Settings finds a few rows it used to miss</strong>: rotating the agents, opening the menu on hover, and showing an agent in the menu bar. It no longer offers a row that did not exist.</li>
+<li><strong>Dutch</strong>: Alerts and Notifications no longer share one word.</li>
+</ul>
+<p>Nothing you had set changes: every switch keeps its value, only its place is new.</p>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.17.0.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later.</p>
+</body>
+</html>
