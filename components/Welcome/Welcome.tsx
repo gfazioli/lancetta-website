@@ -39,6 +39,7 @@ import {
 import config from '@/config';
 import { BuiltForMacSection } from '../BuiltForMacSection/BuiltForMacSection';
 import { CostsNothingSection } from '../CostsNothingSection/CostsNothingSection';
+import { DiscordCallToAction } from '../Discord/DiscordCallToAction';
 import { FAQ } from '../FAQ/FAQ';
 import { Reveal } from '../Motion/Reveal';
 import { HeroStage } from '../HeroStage/HeroStage';
@@ -502,6 +503,9 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           </Box>
         </Reveal>
       </Container>
+
+      {/* Community: the Discord server, for what the FAQ did not answer */}
+      <DiscordCallToAction />
 
       {/* The character, past the hero: in the corner, then on the Support card. */}
       <ScrollGuide />

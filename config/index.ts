@@ -110,6 +110,18 @@ export default {
     // page rather than on nothing.
     downloadUrl: 'https://github.com/gfazioli/lancetta-website/releases/latest',
   },
+  // The community's home since 2026-10-08: the Undolog Discord server, shared
+  // by FinderGit, Netfox, Lancetta and octoscope. The invite never expires.
+  // The Undolog Slack it replaces is being retired: link nothing there. Every page
+  // reads the invite from here, except `content/faq.mdx`, whose plain markdown
+  // link is what gets the docs' link style.
+  community: {
+    discord: 'https://discord.gg/rdWu5yFCR6',
+    // The app version current when the server opened. The home page's "Just
+    // opened" badge decays from it (`isRecent`): gone two minor releases on,
+    // with no one having to remember it.
+    discordSince: '0.17.0',
+  },
   // Who publishes the site, as Italian law asks every VAT-registered owner to
   // say: the VAT number on the home page (art. 35 DPR 633/72), and name,
   // contact and VAT number reachable from every page (art. 7 D.Lgs. 70/2003).

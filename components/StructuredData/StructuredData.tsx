@@ -181,6 +181,11 @@ const FAQ_ENTRIES: { question: string; answer: string }[] = [
     answer: 'Lancetta is free. If you find it useful, consider sponsoring the project.',
   },
   {
+    question: 'Is there a Lancetta community?',
+    answer:
+      'Yes, on Discord, where Lancetta and its sibling apps live: get help, suggest features, vote on what comes next and talk directly with the maker.',
+  },
+  {
     question: 'Where do I download it?',
     answer:
       'The download button takes you straight to the latest DMG. It is signed with an Apple Developer ID and notarized by Apple, so it opens without the detour Gatekeeper puts unsigned apps through, and it updates itself from then on. What’s next says what has shipped and what is being built, and every build is on the releases page.',

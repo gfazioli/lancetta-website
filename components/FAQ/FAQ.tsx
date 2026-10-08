@@ -10,6 +10,7 @@ import {
   type Icon,
 } from '@tabler/icons-react';
 import { Accordion, Anchor, Text } from '@mantine/core';
+import { discordLinkProps } from '@/components/Discord/discord';
 import classes from './FAQ.module.css';
 
 /*
@@ -132,6 +133,20 @@ export const faqItems: { value: string; question: string; answer: ReactNode }[] 
           sponsoring the project
         </Anchor>
         .
+      </>
+    ),
+  },
+  {
+    value: 'community',
+    question: 'Is there a Lancetta community?',
+    answer: (
+      <>
+        Yes, on{' '}
+        <Anchor {...discordLinkProps} size="sm">
+          Discord
+        </Anchor>
+        , where Lancetta and its sibling apps live: get help, suggest features, vote on what comes
+        next and talk directly with the maker.
       </>
     ),
   },

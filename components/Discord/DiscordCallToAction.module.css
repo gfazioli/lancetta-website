@@ -1,0 +1,64 @@
+/*
+ * The footer's sponsor card, on the same white and hairline, with one light of
+ * Discord's blurple from the top-left corner. Painted once: no layer moves.
+ */
+.card {
+  /* DISCORD_BLURPLE in discord.ts; CSS cannot read a TS constant. */
+  --blurple: #5865f2;
+
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: rem(24px);
+  padding: rem(28px) rem(32px);
+  border: 1px solid var(--lan-line);
+  border-radius: var(--mantine-radius-lg);
+  background:
+    radial-gradient(
+      120% 160% at 0% 0%,
+      color-mix(in srgb, var(--blurple) 12%, transparent),
+      transparent 55%
+    ),
+    var(--lan-surface);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    grid-template-columns: minmax(0, 1fr);
+    justify-items: center;
+    padding: rem(24px) rem(20px);
+    text-align: center;
+  }
+}
+
+.mark {
+  display: grid;
+  place-items: center;
+  width: rem(64px);
+  height: rem(64px);
+  border-radius: var(--mantine-radius-lg);
+  background: var(--blurple);
+  color: var(--mantine-color-white);
+}
+
+/*
+ * 560 rather than findergit.app's 520: this title is the serif display face,
+ * and at 30px it and its badge (about 537px together) wrapped the badge under
+ * the title in 520.
+ */
+.copy {
+  max-width: rem(560px);
+}
+
+.heading {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: rem(10px);
+
+  @media (max-width: $mantine-breakpoint-sm) {
+    justify-content: center;
+  }
+}
+
+.button {
+  white-space: nowrap;
+}
