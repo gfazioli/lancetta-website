@@ -454,6 +454,27 @@ button.reading {
   }
 }
 
+/*
+ * The Discord status item: a round button in Discord's blurple, as tall as the
+ * one action beside it. White on #5865f2 is 4.6:1.
+ */
+.discord {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: rem(28px);
+  height: rem(28px);
+  border-radius: 999px;
+  background-color: #5865f2;
+  color: #fff;
+  transition: transform 160ms ease;
+}
+
+.discord:hover {
+  transform: translateY(-1px);
+}
+
 .burger {
   display: none;
   align-items: center;
@@ -487,7 +508,8 @@ button.reading {
   .bar,
   .menu,
   .reading,
-  .cta {
+  .cta,
+  .discord {
     transition: none;
   }
 

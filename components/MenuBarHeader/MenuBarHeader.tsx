@@ -5,8 +5,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { setMenu } from 'nextra-theme-docs';
 import { Search } from 'nextra/components';
-import { IconMenu2 } from '@tabler/icons-react';
+import { Tooltip } from '@mantine/core';
+import { IconBrandDiscordFilled, IconMenu2 } from '@tabler/icons-react';
 import config from '@/config';
+import { discordLinkProps } from '../Discord/discord';
 import { Logo } from '../Logo/Logo';
 import { PANEL_OPENER_ATTRIBUTE, registerPanelOpener } from '../Mascot/guide';
 import { MenuBarReading } from './MenuBarReading';
@@ -225,6 +227,15 @@ export function MenuBarHeader() {
           <div className={classes.search}>
             <Search />
           </div>
+          {/*
+            One more status item, in Discord's own blurple: the community's
+            home since 2026-10-08, given room while it is new.
+          */}
+          <Tooltip label="Join us on Discord" withArrow>
+            <a {...discordLinkProps} className={classes.discord} aria-label="Join us on Discord">
+              <IconBrandDiscordFilled size={16} />
+            </a>
+          </Tooltip>
           <Link href={released ? '/download' : '/docs'} className={classes.cta}>
             {released ? 'Download' : 'Read the docs'}
           </Link>

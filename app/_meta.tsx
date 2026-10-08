@@ -1,5 +1,6 @@
 import { Group } from '@mantine/core';
-import { IconCoffee, IconHeartFilled } from '@tabler/icons-react';
+import { IconBrandDiscordFilled, IconCoffee, IconHeartFilled } from '@tabler/icons-react';
+import config from '@/config';
 
 /*
  * The global navigation is about the PRODUCT, in the order a visitor asks:
@@ -43,6 +44,18 @@ export default {
     title: 'Support',
     type: 'menu',
     items: {
+      // First: the community's home since 2026-10-08. It opens in a new tab,
+      // but with no arrow: Nextra draws that only after a string title, and an
+      // icon makes this one JSX, as with the sponsor and coffee items.
+      discord: {
+        title: (
+          <Group component="span" gap={8} wrap="nowrap" align="center">
+            <IconBrandDiscordFilled size={16} />
+            Discord
+          </Group>
+        ),
+        href: config.community.discord,
+      },
       releases: {
         title: 'Releases',
         href: 'https://github.com/gfazioli/lancetta-website/releases',
@@ -53,7 +66,8 @@ export default {
       },
       // The GitHub Sponsors page itself. This was `#sponsors`, which scrolled
       // to the footer's sponsor card, one step short of the page where
-      // sponsoring happens. External, so Nextra adds its arrow like the coffee.
+      // sponsoring happens. External, but with no arrow: Nextra draws it only
+      // after a string title (seen 2026-10-08 on findergit.app, the coffee's too).
       sponsor: {
         title: (
           <Group component="span" gap={8} wrap="nowrap" align="center">
