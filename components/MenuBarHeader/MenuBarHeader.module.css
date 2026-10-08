@@ -41,8 +41,9 @@
  * Three columns, not a flex row: `minmax(0, 1fr) auto minmax(0, 1fr)` puts the
  * reading on the bar's centre line whatever the two sides weigh, which is what
  * makes the menu drop from it dead centre. Measured at 1440: the left group
- * (mark + menus) is 460px and the right (search + action) 368, against 498 of
- * column each, so it fits with room — and the menus had to move to the LEFT
+ * (mark + menus) is 460px and the right (search + Discord + action) 389 since
+ * the Discord item (2026-10-08; 368 before it), against 497 of column each,
+ * so it fits with room — and the menus had to move to the LEFT
  * for that, beside the mark. Right of a centred item there is 498px, and menus
  * plus search plus action is 708.
  */
@@ -473,6 +474,13 @@ button.reading {
 
 .discord:hover {
   transform: translateY(-1px);
+}
+
+/* Where the one action is hidden, so is this: it must not stand in for it. */
+@media (max-width: $mantine-breakpoint-xs) {
+  .discord {
+    display: none;
+  }
 }
 
 .burger {
