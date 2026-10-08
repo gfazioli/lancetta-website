@@ -277,6 +277,30 @@
   transform: rotate(45deg);
 }
 
+/*
+ * On a phone the line wraps to three rows, and a bubble hung from the top of
+ * the character reached down to the card's title: 29px into the card at 320
+ * and 360 (measured on lancetta.app, 2026-10-08, as on findergit.app and
+ * netfox.app, which covered theirs). There it hangs from its bottom instead,
+ * 4px above the card's edge, and grows up into the 112px the home page leaves
+ * above the card; the tail stays at the face, 13 cells up from the feet. It
+ * may also reach nearer the left edge, 8px short of it, so it takes fewer
+ * rows.
+ */
+@media (max-width: $mantine-breakpoint-sm) {
+  .cardBubble {
+    top: auto;
+    bottom: rem(4px);
+    max-width: min(rem(300px), calc(100vw - rem(62px) - var(--cell) * 17));
+    transform-origin: bottom right;
+  }
+
+  .cardBubble::before {
+    top: auto;
+    bottom: calc(var(--cell) * 13 - rem(22px));
+  }
+}
+
 .cardLine {
   margin: 0;
   color: var(--mantine-color-text);
