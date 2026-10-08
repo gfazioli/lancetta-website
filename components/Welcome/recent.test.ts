@@ -32,10 +32,11 @@ describe('isRecent', () => {
     expect(isRecent('0.38.0', '')).toBe(false);
   });
 
-  // The four cards that were still "New" 25 releases later, with the versions
-  // that introduced them: this is the case the helper exists for.
-  it('takes the sticker off the June and July features at 0.38.0', () => {
-    expect(isRecent('0.13.0', '0.38.0')).toBe(false); // Overview, Account, star alerts
-    expect(isRecent('0.18.0', '0.38.0')).toBe(false); // localization
+  // The case it is used for here: the Discord call to action's "Just opened",
+  // from `config.community.discordSince` (0.17.0, when the server opened).
+  it('takes "Just opened" off the Discord call to action at 0.20.0', () => {
+    expect(isRecent('0.17.0', '0.17.0')).toBe(true);
+    expect(isRecent('0.17.0', '0.19.4')).toBe(true);
+    expect(isRecent('0.17.0', '0.20.0')).toBe(false);
   });
 });

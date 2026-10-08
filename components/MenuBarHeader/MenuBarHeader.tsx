@@ -229,7 +229,8 @@ export function MenuBarHeader() {
           </div>
           {/*
             One more status item, in Discord's own blurple: the community's
-            home since 2026-10-08, given room while it is new.
+            home since 2026-10-08. Hidden on a phone with the one action
+            beside it, so it never becomes the bar's only action there.
           */}
           <Tooltip label="Join us on Discord" withArrow>
             <a {...discordLinkProps} className={classes.discord} aria-label="Join us on Discord">
