@@ -13,8 +13,8 @@
  * layout put them: that is the served HTML, and it is what stays if the
  * scripts never run, so a blocked chunk or a runtime error costs the motion and
  * never the content. This page has been blank on an iPad once already, from a
- * stage that held its copy at opacity 0 until an effect ran (CLAUDE.md, *The
- * one job*). Once mounted, a scope entirely off screen is ARMED
+ * stage that held its copy at opacity 0 until an effect ran (the comment at the
+ * top of `HeroStage.tsx`). Once mounted, a scope entirely off screen is ARMED
  * (`data-armed`): its items snap to their starting pose where nobody can see
  * them do it. The first time it comes into view it is REVEALED
  * (`data-revealed`), and they spring to where the layout put them.
