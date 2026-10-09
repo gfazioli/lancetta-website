@@ -90,7 +90,7 @@ line names `/opt/homebrew/bin/codex` and nothing under the home directory, and
 Claude's names no path at all on the account route. On a Mac where `codex` lives
 under `~`, the Codex page is not publishable.
 
-**Every capture takes `APP_LANG=en_GB`** (`settings-shots.sh` pins it itself): the app follows the Mac's language and nothing in a PNG says it is the wrong one. What the site says about languages comes from `../Lancetta/scripts/i18n/i18n.py langs` plus English; a language added to the app is a grep for `Dutch` here. The FAQ, its JSON-LD and Troubleshooting say the copied report is English only because of the app's `L10n.evidence` gate (Lancetta#96): if it goes, so do those sentences.
+**Every capture takes `APP_LANG=en_GB`** (`settings-shots.sh` pins it itself): the app follows the Mac's language and nothing in a PNG says it is the wrong one. What the site says about languages comes from `../Lancetta/scripts/i18n/i18n.py langs` plus English; a language added to the app is a grep for `Dutch` here. The FAQ, its JSON-LD and Troubleshooting say the copied report is English only because of the app's `L10n.evidence` gate: if it goes, so do those sentences.
 
 ## The repository's own metadata, which git does not carry
 
@@ -102,7 +102,7 @@ The GitHub **social preview** has no API and no `gh` field: it is uploaded by ha
 
 ## The one job, and the order that argues for it
 
-The copy is built around **one job: what you can still use, how long it lasts, and when it comes back.** A new feature goes under it, never beside it. Showing no money is a claim, not an omission. The `h1` names only shipped things; when-to-start and anything learnt from an average across days are said only as `Next` + future tense + a roadmap entry. The order of `frames` in `HeroStage.tsx` is the argument (its comment and Lancetta#24 say why): changing it is an editorial act.
+The copy is built around **one job: what you can still use, how long it lasts, and when it comes back.** A new feature goes under it, never beside it. Showing no money is a claim, not an omission. The `h1` names only shipped things; when-to-start and anything learnt from an average across days are said only as `Next` + future tense + a roadmap entry. The order of `frames` in `HeroStage.tsx` is the argument (its comment says why): changing it is an editorial act.
 
 ### The hero is ordinary flow
 
