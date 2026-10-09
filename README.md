@@ -10,7 +10,7 @@
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/status-v0.1%20in%20progress-8D78F5" alt="v0.1 in progress" />
+  <a href="https://github.com/gfazioli/lancetta-website/releases/latest"><img src="https://img.shields.io/github/v/release/gfazioli/lancetta-website?label=release&color=8D78F5" alt="Latest release" /></a>
   <a href="https://www.apple.com/macos/"><img src="https://img.shields.io/badge/macOS-15%2B-2FBFA8" alt="macOS 15+" /></a>
   <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-E8833A" alt="MIT License" /></a>
 </p>
@@ -56,7 +56,7 @@ The defect that started the project was a status line rendering an unknown as `0
 
 ## Status
 
-**Not released yet.** v0.1 is being built, and it now carries more than it was scoped to: the menu, both agents, both windows, the notch island, the app window with the daily token chart, and the process reaper are real. The notifications and the updater are not. The first build will appear on this repository's [Releases](https://github.com/gfazioli/lancetta-website/releases) page.
+**Released.** Download the newest build from [lancetta.app/download](https://lancetta.app/download) or this repository's [Releases](https://github.com/gfazioli/lancetta-website/releases) page; later versions arrive through the app's built-in updater. What each version changed is in the [release notes](https://lancetta.app/docs/release-notes), and what comes next is on the [roadmap](https://lancetta.app/docs/roadmap).
 
 ## Requirements
 
@@ -106,11 +106,11 @@ If `yarn <cmd>` answers `command not found: next` / `oxfmt`, the Yarn PATH shim 
 
 ### Brand
 
-The palette is the app icon's, **sampled rather than picked** — the bars, the plate and its neon rim were read off the 1254px master with a CoreGraphics probe, and `theme.ts` carries the map. The plate's azure, navy and violet and the rim's cyan and magenta are the page-level tokens in `theme/global.css`; every band and glow on the site is built from them, and the dark scheme's greys are cut on the plate's navy rather than on a neutral.
+The palette is the app icon's, **sampled rather than picked** — the bars, the plate and its neon rim were read off the 1254px master with a CoreGraphics probe, and `theme.ts` carries the map. The plate's azure, navy and violet and the rim's cyan and magenta are the page-level tokens in `theme/global.css`; every band and glow on the site is built from them, and the greys are cut on the plate's navy rather than on a neutral.
 
 The brand accent is deliberately the icon's **third** bar. The other two hues already mean *which agent* inside the app — teal is Codex, orange is Claude Code — so the site keeps those semantic and takes its accent from the one the app spends on no agent. An accent borrowed from an agent hue would disagree with every screenshot on the page.
 
-`public/favicon.svg` is a different drawing on purpose: the gradient icon does not survive 16px — measured, its bars get 66 pixels between them and its glow smears the rest — so the tab gets the icon's **flat** variant, redrawn as vector and full bleed. Details in its own comment and in [`CLAUDE.md`](CLAUDE.md).
+`public/favicon.svg` is a different drawing on purpose: the gradient icon does not survive 16px — measured, its bars get 66 pixels between them and its glow smears the rest — so the tab gets the icon's **flat** variant, redrawn as vector and full bleed. Details in the comment at the top of [`public/favicon.svg`](public/favicon.svg).
 
 ## Licence
 
