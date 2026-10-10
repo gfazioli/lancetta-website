@@ -16,10 +16,12 @@ Lancetta has no account, no server of ours and no telemetry. **Nothing you do in
 - **Claude Code's transcripts, for the token chart** — the files Claude Code keeps under `~/.claude/projects`, searched for the usage block on each reply. Lancetta keeps the message's id, its time and its token counts, and nothing else: the text of your prompts and answers is never extracted, stored or sent. Only the files that changed since the last look are read again.
 - **Your plan** — from the same account reads, or, when Claude Code is followed through its status line, from the account metadata Claude Code keeps on your Mac.
 - **The process table** — the same list `ps` gives you, to find the background trees the agents have left running. It reads their command lines, argument by argument, which is where the working directory each one was started for lives. That directory is shown to you in the window; it is never sent anywhere.
+- **Your agents' instruction files, for [Maintenance](/docs/maintenance)** — CLAUDE.md, AGENTS.md, GEMINI.md, rules, skills, commands, subagents, settings and memory, in each repository Claude Code has worked in and the folders above it, in `~/.claude`, `~/.codex` and `~/.gemini`, and your organisation's managed CLAUDE.md in `/Library/Application Support/ClaudeCode` when there is one. Which repositories those are comes from the transcripts under `~/.claude/projects`, of which it reads only the folder each session started in. It runs `git` in those repositories to know what is committed, and asks your own Claude Code (`claude agents`) for the background sessions it has finished with. The files are read to be counted and checked, on this Mac; what is in them goes nowhere unless you copy the findings or hand them to Claude Code.
+- **The effort your agents are set to, for the [suggestions](/docs/suggestions)** — `effortLevel` in `~/.claude/settings.json` and `model_reasoning_effort` in `~/.codex/config.toml`, so a suggestion can say which effort it would lower. Read, never changed.
 
 ## What it does
 
-Two things in this app are not read-only, and each one happens only after a question you answer.
+A few things in this app are not read-only, and each one happens only after you have seen what it will do and said yes.
 
 **Reclaim** stops background processes. Four rules bound it, and all four are in the code rather than in this paragraph:
 
@@ -33,6 +35,14 @@ Two things in this app are not read-only, and each one happens only after a ques
 - it is offered only while the account says you hold one and a window has something to reset;
 - the question names the credit, when each window would come back on its own and when the credit lapses, and puts Cancel on the default key;
 - it is asked through the Codex CLI on your Mac, the same way every Codex reading is, and a retry after a lost answer repeats the same request instead of spending a second credit.
+
+**A Maintenance fix** writes to your own files: an import added or corrected in an instruction file, a line at the end of a MEMORY.md, an entry in a `.gitignore` with `git rm --cached` beside it, or a new `.gemini/settings.json`. It shows every line it would add or remove before anything is written, writes only on **Apply**, and only if every file is still exactly what the preview showed; if anything fails halfway, everything it wrote is put back.
+
+**Move to Trash…** moves a file no agent uses to the Trash, where the Finder can put it back. It is offered only for such files, and the file is read again just before it moves.
+
+**Removing background sessions** asks your own Claude Code to do it, one `claude rm` per session, after a confirmation that names what it frees. Claude Code refuses on its own to remove a session that holds work not pushed.
+
+**Fix with Claude Code** starts your own Claude Code in Terminal, in the file's repository and in plan mode, with a first message Lancetta wrote, through a one-time script in the temporary folder that deletes itself. From then on it is your session: Claude Code edits nothing until you approve its plan.
 
 ## What it writes
 
@@ -57,6 +67,8 @@ Every request it makes is named here:
 - **The About window** shows a sponsor's picture, which is loaded from GitHub.
 
 That is the whole list. There is no account, no server of ours, and nothing that reports what you did.
+
+**Fix with Claude Code** is not on it because it is not a request Lancetta makes: it hands a prompt to your own Claude Code, which then works as it always does, with your sign-in, and sends what any session of yours sends.
 
 ## Why reading costs nothing
 

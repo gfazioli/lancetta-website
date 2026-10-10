@@ -1,0 +1,136 @@
+---
+title: "Suggestions: when to push on, slow down or switch"
+description: "How Lancetta turns each agent's readings into advice: spend a window before it goes unused, slow down before an agent stops, switch, and see what each rests on."
+---
+
+# Suggestions
+
+A percentage tells you what is gone. What you want to know is what to do next: whether to start the long task now, whether to slow down, whether to move the work to the other agent. Lancetta works that out from what it has measured — every reading of each agent's windows, how fast they have been moving, the free resets you hold, the effort each agent is set to, and what your agents load at every start — and says it as a suggestion.
+
+No model is asked. Every suggestion is worked out on your Mac, in plain arithmetic over the readings, and every one shows what it rests on, so you can weigh it before you act on it.
+
+![A Lancetta suggestion in green: Codex has room, 88% of this 5-hour window is unused and it resets in 39m; spend it, start the long task now; Lancetta keeps watching the pace, and warns you in time; resting on 5 hours, 12% used, it resets at 15:16, and 7 days, 20% used](/screenshot-suggestion-room.png)
+
+## What a suggestion says
+
+Each one has four parts, always in this order:
+
+- **What is happening**, in one sentence with its numbers: *"At this pace Claude stops in 51m, then waits 1h18m for its reset."*
+- **What to do about it**, one short step each, the most useful first.
+- **What it rests on**, in smaller type: the window, how much of it is used, the rate and how many readings it was measured from.
+- **At most one button**, when there is something the app can do for you: **Use a reset…** (it asks first, and says what it would spend), **Reclaim…** (it lists what it will close before it closes anything), or **Open Maintenance…**.
+
+Its colour says how much it asks of you:
+
+- **Red** — an agent has stopped, or will within the hour at this pace.
+- **Amber** — something that costs you later: a stop a few hours off, a week running out early, a free reset lapsing within two days, a start that loads more than Claude Code warns at.
+- **Green** — room to spend.
+- **Blue** — housekeeping: the rest of what Maintenance found, memory held by processes nobody can use.
+
+The most urgent comes first, and within one colour, the one that happens soonest.
+
+## When to push on
+
+A window that resets with most of it unused is quota gone for good, and the percentage on your menu bar is no help: 12% looks like good news. Lancetta says it the other way:
+
+> **Codex has room: 88% of this 5-hour window is unused, and it resets in 39m.**
+> Spend it: start the long task now.
+> Raise the effort if the task deserves it.
+> Lancetta keeps watching the pace, and warns you in time.
+
+It appears for a **5-hour window** that resets within the next 45 minutes with no more than 30% of it used, and for a **week** that resets within the next day and a half with no more than 60% used — *"The week of Codex resets tomorrow morning with 55% unused"*, with *"No need to hold back: give it the heavy tasks before then."*
+
+Three things have to hold first, because encouragement that sends you into a wall is worse than none:
+
+- **The other window has room too.** A 5-hour window with plenty left is no reason to push an agent whose week is at 85%: the week would stop you first. Below 70% used in the other window, and, for the week, no stop coming on the 5-hour one.
+- **The week is not running out early.** An agent heading for an early end of its week gets [that suggestion](#the-week) instead.
+- **The reading is fresh**, from the last half hour: room seen an hour ago may be gone.
+
+*"Raise the effort"* appears only when the agent is not already set to a high one.
+
+## When to slow down
+
+![A Lancetta suggestion in red: at this pace Claude stops in 51m, then waits 1h18m for its reset; lower the effort, it is set to xhigh; give routine work to a lighter model; there is no free reset to fall back on; move the next tasks to Codex, 88% of its 5-hour window and 80% of its week are left; resting on 5 hours, 82% used, 21% an hour over the last 1h00m, from 14 readings](/screenshot-suggestion-stop.png)
+
+**An agent will stop before its window resets.** At the rate the window has moved over about the last hour, it runs out before the reset — and the suggestion names both moments, because the gap between them is the time you would lose:
+
+> **At this pace Claude stops in 51m, then waits 1h18m for its reset.**
+
+It is red within the hour and amber further off. It is said only when the numbers support it: the figure has to have moved recently, the reading has to be fresh, and the stop has to fall within the next five hours, since a rate carried through the night says nothing true about tomorrow. It is the projection the [pace line](/docs/the-menu#the-pace-line) draws under the bar, said as advice. What it suggests is under [What helps](#what-helps).
+
+**An agent has stopped.** Its window is spent, or the account refused it:
+
+> **Claude has stopped until 16:40, in 2h10m.**
+> Move the next tasks to Codex: 72% of its 5-hour window and 64% of its week are left.
+> Meanwhile, plan, review or write: work that needs no agent.
+
+The time is that of the window that keeps it stopped longest. If the account gives no time, it says so — *"has stopped, and no time is given for its return"*, or *"is refusing requests"* — rather than borrowing the other window's. When you hold a free reset, the first step is *"Use a free reset to start again now."*, with the **Use a reset…** button beside it.
+
+## The week
+
+A 5-hour window that runs out costs a coffee break. A week that runs out on a Tuesday costs days, and it is the one a percentage cannot warn you about, because 60% on a Monday looks fine. Lancetta watches the week's own average since it began, nights and idle days included:
+
+> **At this pace the week of Codex runs out Thursday afternoon, 2d10h before it resets.**
+> Keep Codex for the work only it can do.
+
+It rests on *"2.1% an hour on average since the week began, 64% used."* It appears only once your Mac has watched that window turn over at least once, for the same reason the pace line waits: a week projected from its first afternoon is a guess.
+
+**A free reset about to lapse** is advice of the same kind — something that costs you later if you do nothing:
+
+> **Your free Codex reset expires Thursday morning.**
+> Use one the next time a window is spent, before it lapses.
+
+Amber within two days of the lapse, blue within the week. A stopped agent does not get it: its suggestion already offers the reset.
+
+## What helps
+
+The steps under a stop or a week running out come from what Lancetta can see about that agent and the others, most useful first:
+
+- **"Lower the effort: it is set to xhigh."** — only when the agent's own settings set a high default effort (high, xhigh or max). It is read from the agent's settings, so it is the effort a new session starts at, not one a running session may have changed.
+- **"Give routine work to a lighter model."**
+- **Your free resets:** *"You hold a free reset: use it when it stops."*, or *"There is no free reset to fall back on: keep what is left for what matters most."*
+- **"Move the next tasks to Codex: 88% of its 5-hour window and 80% of its week are left."** — only when another agent really has room: at least a quarter left in both windows, read within the last hour, and not heading for a stop of its own. With two candidates, the one with more of its 5-hour window left. With none, the step is *"Or pause it, and plan, review or write in the meantime."*
+- For a week, **"Keep Claude for the work only it can do."**, ahead of the move.
+
+## What it rests on
+
+Lancetta cannot know whether two agents are interchangeable for the task in front of you, or whether today's work deserves the expensive model. So it does not pretend to: every suggestion carries the figures it was made from, in the same words the rest of the app uses —
+
+> 5 hours: 82% used, 21% an hour over the last 1h00m, from 14 readings.
+
+— and a suggestion that does not fit your task is visibly built on numbers you can weigh. The same honesty decides when one appears at all: a stop needs a recent rate, a week running out needs a watched turn-over, encouragement needs a fresh reading and room in both windows. Where the data does not support a sentence, there is no sentence.
+
+## Your setup, and what the agents leave behind
+
+Two suggestions are not about the quota:
+
+- **"Maintenance found 4 warnings in your agents' setup."** — from the [Maintenance](/docs/maintenance) scan of the files your agents read before every session, with *"Each says what to change: fixing them trims what every session loads, and the tokens with it."* and **Open Maintenance…**. Amber when a start loads more than Claude Code warns at, with a step to trim it first.
+- **"3 orphaned Codex trees hold 1.05 GB."** — [background processes](/docs/memory) started for folders that no longer exist, with *"Reclaim the memory: nothing can reconnect to them."* and **Reclaim…**.
+
+## When there is nothing to suggest
+
+The list is replaced by one line, in green, that is itself advice:
+
+> Nothing to adjust: every agent has room, and Lancetta is watching the pace.
+
+It claims room only where the readings show it — a quarter or more left in both windows of every agent, read recently. Otherwise it says *"Nothing to suggest right now: Lancetta is watching the pace."*
+
+## Where they appear
+
+- **[The panel](/docs/the-menu)** opens on them, before any figure. Up to three, the most urgent open and the others by their title; click one to open it, and the one before closes. Beyond three, a line under them — *"2 more suggestions in Lancetta"* — opens the window.
+- **[The window](/docs/the-window)**: the Overview starts with all of them, open.
+- **[The notch](/docs/the-notch)**: an agent that has stopped, or will within the hour, turns its bar red, and the open island ends on the most urgent suggestion about an agent, with its first step. Room to spend stays out of the notch: it is read at a glance, and a nudge there every five hours would be noise.
+
+They are worked out again every half minute as well as at every reading, so a countdown never runs past its own moment.
+
+## Notifications
+
+Three of them are worth a banner, because each is about to happen while you are not looking at the panel:
+
+- an agent that will **stop within the hour**;
+- **room about to go unused**, in a window you have spent something in (an untouched window turning over is nobody working, and a banner about it every five hours would be noise);
+- a **free reset lapsing within two days**.
+
+The banner's title is the suggestion's, and under it are its first two steps. Each is said once per window: the same stop at the next reading is not news, the next window's is. Clicking it opens the Overview of [the window](/docs/the-window), where every suggestion is. A stop hours away, a stopped agent and the housekeeping stay in the app; a week running out early and an agent with nothing left have [alerts](/docs/alerts) of their own, which carry the same steps.
+
+They are the **Suggestions** switch in [Settings › Notifications](/docs/settings#notifications), which also follows **Show where each window ends** under General: the advice is the louder form of that line.

@@ -1,32 +1,38 @@
 ---
-title: "The window: usage chart, limits and processes"
-description: "Lancetta's window: four panes, Overview, Usage, Limits and Processes, with the daily token chart, the quota bars and the process trees agents leave behind."
+title: "The window: every suggestion, and what each one rests on"
+description: "Lancetta's window: every suggestion first, then five panes of cards that open in place: Overview, Usage, Limits, Processes and Maintenance."
 ---
 
 # The Window
 
-The menu answers *how much is left*. The window answers everything that does not fit in a menu: how much has been spent over weeks, what each window is doing in detail, and what the agents have left running.
+The panel gives you the three most urgent suggestions and the numbers in brief. The window has room for all of it: **every suggestion, open**, and then what each one rests on. It shows how much has been spent over weeks, what each window is doing in detail, what the agents have left running, and what they read before they start.
 
 **Open Lancetta…** (⌘O) from the menu bar.
 
 ![The Lancetta window on its Overview: four suggestions first (Claude stops in 51m at this pace, Codex has room, Maintenance found 4 warnings, 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, with Usage open on the week’s tokens](/screenshot-window-overview.png)
 
-It is a normal window and it closes like one. Closing it quits nothing — the menu-bar item is always the way back.
+Five panes, in the sidebar: **Overview**, **Usage**, **Limits**, **Processes** and **Maintenance**. Each pane is a row of cards: a card shows one figure and a line under it, and **a click opens its details under it**, joined to it, while a second click closes them. One card is open at a time in each pane, and each pane remembers which one.
+
+The window opens where you left it, at the size you left it. The first time, it opens at 1200 by 800 points. It is a normal window and it closes like one. Closing it quits nothing, and the menu-bar item is always the way back.
 
 **A Dock icon appears while it is open**, and goes again when you close it. That is not an oversight: a window needs its app to be a normal one to get a menu bar of its own and to come forward when you ask for it, and a normal app has a Dock icon. At rest, with no window open, Lancetta is back to being an accessory with nothing in the Dock. If you would rather it stayed in the Dock the whole time, [one switch](/docs/settings#general) does that.
 
 ## Overview
 
-Four cards, in the order you would ask the questions in:
+**Every suggestion first, all of them open**, in the order the panel uses: the most urgent first. What each one is and when it appears is on [Suggestions](/docs/suggestions). With nothing to suggest, one line says so, and says whether the readings show room in every window.
 
-- **Total Usage** — tokens over the last seven days, one bar per agent per day, with a chooser for either agent alone or both.
-- **Quota Used** — every agent on one row, its 5-hour and 7-day windows side by side: the figure, the bar, the time to the reset and, when there is something worth saying, when your recent rate would run the window out. A model with a weekly limit of its own is drawn under its agent. It gives the numbers and never a verdict — whether one agent can take over what the other is in the middle of is yours to know. The title follows the setting that decides what the bars are filled with, so it reads *Quota Left* when you are counting down.
-- **Last week** — the week that just ended, per agent. See [below](#last-week).
-- **Processes** — how many background trees are running, what they are holding, and how many of them nothing will ever close.
+Under them, a card for each of the other four panes, with what that pane would tell you first:
+
+- **Usage**: the tokens of the last seven days. Opened, the week's chart, one bar per agent per day, with a chooser for either agent alone or both.
+- **Limits**: the fullest window of any agent, and when it resets. Opened, **Quota Used**, every agent on one row with its 5-hour and 7-day windows side by side: the figure, the bar, the time to the reset and, when there is something worth saying, when your recent rate would run the window out. A model with a weekly limit of its own is drawn under its agent. The title follows the setting that decides what the bars are filled with, so it reads *Quota Left* when you are counting down. Under it is **Last week**.
+- **Processes**: how many background trees are running, and what they hold, or, when some are orphaned, what the orphans hold.
+- **Maintenance**: how many warnings the scan found, and how much the heaviest start loads.
+
+The arrow in a card's corner opens that pane.
 
 ### Last week
 
-![The Overview scrolled down: Quota Used, with Claude's and Codex's 5-hour and 7-day windows side by side, and under it Last week, which gives each agent the days its week covered, its highest weekly reading and when the window reset early, how often the 5-hour window was spent and for how long, and how much of the week had no reading](/screenshot-window-last-week.png)
+Open the **Limits** card on the Overview, and under Quota Used is the week that just ended.
 
 Lancetta keeps a record of the quota it reads — each change, and a line every fifteen minutes while nothing moves — so it can tell you what the week that just ended did. Each agent's own **weekly window**, not a calendar week: Claude's and Codex's turn over on different days, so each agent's lines say which days they cover.
 
@@ -35,19 +41,29 @@ Lancetta keeps a record of the quota it reads — each change, and a line every 
 - **Not seen** — how much of the week had no reading at all: the Mac asleep, the app quit, or the agent not answering. Time nobody read is said as such and never counted as a quiet hour.
 - One line against **the week before**, once there is a whole one to compare with.
 
-It needs one whole week. Until Lancetta has read a week from its start, the card says when the first whole one ends rather than passing a few days off as a week. Codex's week begins with your first request after a reset, so a Codex you have not touched shows *No quota used from … to …* — and only when Lancetta read it often enough to know, up to the last time it did. It says what happened and never what you should have done about it. It is a card and not a notification on purpose: nothing in a look back is urgent.
+It needs one whole week. Until Lancetta has read a week from its start, the card says when the first whole one ends rather than passing a few days off as a week. Codex's week begins with your first request after a reset, so a Codex you have not touched shows *No quota used from … to …* — and only when Lancetta read it often enough to know, up to the last time it did. It is a card and not a notification on purpose: nothing in a look back is urgent.
+
+{/* The Last week picture (`/screenshot-window-last-week.png`) showed the Overview of
+    0.17: Quota Used and Last week as cards of their own. Since 0.50 both are inside
+    the Limits card, and the picture is to be re-shot with that card open. */}
 
 ## Usage
 
 ![The Usage pane: three cards (the tokens of the last 30 days, the fullest 5-hour window at 100% and how many days it ran out, Codex’s lifetime total), and Total Usage open under them: thirty days of tokens for both agents side by side](/screenshot-window-usage.png)
 
-The same chart over **7, 30 or 90 days**, the fullest 5-hour window of each day under it, and the totals underneath: lifetime tokens, the best single day, how many days have been recorded at all, the current and longest streaks, and the longest single turn.
+Three cards:
 
-![The Fullest 5-Hour Window card: for each of thirty days, a Codex bar and a Claude bar against a faint column that stands for the whole window, each agent's fullest day above the chart with how many days its window ran out, and the caption saying a day runs from four in the morning](/screenshot-fullest-window.png)
+- **Total Usage**: the tokens of the range, and, opened, the chart over **7, 30 or 90 days**, with the totals underneath.
+- **Fullest 5-Hour Window**: the fullest any agent's 5-hour window got in the range, and on how many days one ran out.
+- **Codex**: what Codex keeps of its whole history: lifetime tokens, the best single day, how many days have been recorded at all, the current and longest streaks, and the longest single turn. It is there only when Codex has a history to give.
 
-**The fullest 5-hour window of each day.** For every day in the range, how full each agent's fullest 5-hour window got, drawn against the whole window: the faint column behind each bar is 100%. Above the chart, each agent's fullest day in the range and how many days a window ran out. It comes from the readings Lancetta keeps on this Mac rather than from either agent, so a day starts at four in the morning — a window opened at half past midnight is the evening before carrying on — and a day with no column had no window used, or Lancetta was not running: the readings cannot tell the two apart, and the caption says so. With [Count down what is left](/docs/settings#general) on, it shows the least that was left instead. It says what happened and nothing about tomorrow; why there is no forecast yet is on [the roadmap](/docs/roadmap#advice-from-your-own-history).
+{/* The Fullest 5-Hour Window picture (`/screenshot-fullest-window.png`) showed the
+    0.16 card on its own. Since 0.50 it opens from a card of the Usage pane, and the
+    picture is to be re-shot with that card open. */}
 
-Two things about this chart are worth knowing, because both would otherwise read as bugs.
+**The fullest 5-hour window of each day.** Open its card and, for every day in the range, how full each agent's fullest 5-hour window got, drawn against the whole window: the faint column behind each bar is 100%. Above the chart, each agent's fullest day in the range and how many days a window ran out. It comes from the readings Lancetta keeps on this Mac rather than from either agent, so a day starts at four in the morning — a window opened at half past midnight is the evening before carrying on — and a day with no column had no window used, or Lancetta was not running: the readings cannot tell the two apart, and the caption says so. With [Count down what is left](/docs/settings#general) on, the card shows the least that was left instead. It says what happened; what to do about the hours you usually work is still to come, on [the roadmap](/docs/roadmap#advice-from-your-own-history).
+
+Two things about the token chart are worth knowing, because both would otherwise read as bugs.
 
 **The two series do not come from the same place, and the caption says so.** Codex keeps the whole token history and gives it away free — one bucket per day used, and the buckets sum to the lifetime figure exactly, so it is the complete series rather than a window onto it. **Claude Code publishes no counterpart at all**: its payload carries two percentages and two reset instants and nothing else. So Claude's column is rebuilt from Claude Code's own transcripts on your Mac, which is honest about two limits the caption states — sessions on another machine are not in it, and cache reads are left out, because they re-send the same context every turn and would be 98% of the total.
 
@@ -59,12 +75,12 @@ The percentage beside the total compares those days with **the same length of ti
 
 ![The Limits pane: a card per agent, Claude at 82% and Codex at 20%, and Claude’s open under them: its 5-hour window with the pace line under it (at this rate it runs out in 50m, before the reset), its 7-day window, and the Fable model’s own weekly limit, counted separately](/screenshot-window-limits.png)
 
-One card per agent, and this is where the asymmetry between the two is on screen rather than in a footnote:
+A card per agent, with the fuller of its two windows and when it resets. Opened, the agent in full, and this is where the asymmetry between the two is on screen rather than in a footnote:
 
 - **Codex** is marked **live** — it can be asked, so the reading is as current as the last poll.
 - **Claude** is marked **seen *n* ago** whenever its reading is not fresh: through the status-line file always, because that reading cannot be asked for; through the account only while the account is asking for a pause and the card is holding the last reading it got. Either way the card shows the age instead of pretending to a freshness it does not have.
 
-Under that, both windows: the percentage, the bar, and when it rolls over. A window with no reading shows `—`, never `0%`. See [How it reads each agent](/docs/how-it-reads).
+Under that, both windows: the percentage, the bar, when it rolls over, and the [pace line](/docs/the-menu#the-pace-line) under the window it is about. A window with no reading shows `—`, never `0%`. See [How it reads each agent](/docs/how-it-reads).
 
 When Codex holds a free reset, the same row the panel draws sits at the foot of its card — *1 free reset · until 29 Oct*, with **Use…** — and the notification about a new one opens here. See [A free reset](/docs/the-menu#a-free-reset).
 
@@ -74,11 +90,17 @@ Under those, when your account keeps one, **its own weekly limit, counted separa
 
 ![The Processes pane: 4 Codex trees holding 1.45 GB, 3 of them orphaned holding 1.05 GB, and the list open under them: each tree with the directory it was started for, what it holds, its children and its pid, the three orphans marked with a warning](/screenshot-window-processes.png)
 
-Every Codex background tree on the machine, with the directory it was started for, what it is holding, and whether anything can still reach it.
+Two cards: **Codex trees**, every Codex background tree on the machine and what they hold between them, and **Orphaned**, the ones nothing can reach. Open the first for the whole list: each tree with the directory it was started for, what it is holding, its children and its pid. Open the second for the orphans alone, with what they hold and the **Reclaim…** button.
 
-A green tick is a tree something can still reach. An orange triangle is an **orphan** — its working directory is gone, so nothing will ever shut it down, and it will hold that memory until the Mac is restarted. The line above the list adds them up, and the **Reclaim…** button is only live when there is something to reclaim. It lists what it will close before closing anything. The full story is on [The processes they leave behind](/docs/memory).
+A green tick is a tree something can still reach. An orange triangle is an **orphan** — its working directory is gone, so nothing will ever shut it down, and it will hold that memory until the Mac is restarted. **Reclaim…** is only live when there is something to reclaim, and it lists what it will close before closing anything. While there are orphans, a suggestion says so at the top of the Overview, with the same button. The full story is on [The processes they leave behind](/docs/memory).
 
 The pane counts a tree's whole descent rather than the three processes its own documentation describes: `invoice-parser` above has four children, and a real one was measured holding eleven.
+
+## Maintenance
+
+![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, the heaviest start loading 6,983 of the 120,000 characters at which Claude Code warns, and the Instructions card open on the files that need fixing: a long CLAUDE.md, an AGENTS.md that Claude Code skips, a personal file committed to git, and a CLAUDE.md with a suggestion](/screenshot-window-maintenance.png)
+
+What your coding agents read before they start, and what it costs: CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory, in every repository Claude Code has worked in and the folders above it. Each finding says why it matters and how to fix it. A fix that needs no choosing is shown in full before it is applied, and the rest opens in Claude Code. Everything this pane checks, and what it changes, is on [Maintenance](/docs/maintenance).
 
 ## Pull to refresh
 
@@ -90,9 +112,10 @@ On macOS 27 you can pull any pane down to refresh it, the way you would in Mail.
 | **Usage** | the token history, with Codex asked again, and the 5-hour windows |
 | **Limits** | the quotas and the process trees, as **Refresh now** does |
 | **Processes** | the process trees, and nothing else: asking the agents from there would spend their reads on numbers that are not on screen |
+| **Maintenance** | where Claude Code has worked, and every agent file there |
 
 The spinner holds for a couple of seconds at most and lets go; the reading carries on underneath, and the cards it reads again press as the numbers land. A second pull while the first refresh is still out starts nothing new: it waits for that one rather than throwing its answers away. The sidebar is for choosing a pane, so pulling it does nothing. On any version of macOS, **Refresh now** (⌘R), in the panel or in the window's Agents menu, still reads the quotas and the trees.
 
 ## Why the window is dark
 
-Because it always is. The window has one appearance rather than following the system, the same call Netfox makes — the surface is a dense instrument panel of bars and charts, and the palette is part of reading it. The menu, which sits in the menu bar and has to belong there, follows the system appearance like everything else in the menu bar.
+Because it always is. The window has one appearance rather than following the system, the same call Netfox makes — the surface is a dense instrument panel of bars and charts, and the palette is part of reading it. The panel is always dark for the same reason. Only the item in the menu bar follows the system appearance, because it has to belong among the other items there.
