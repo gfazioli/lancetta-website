@@ -174,8 +174,9 @@ export const panelDemo: PanelState = {
       id: 'stop.Claude',
       kind: 'stop',
       tone: 'warning',
-      title: 'At this pace Claude stops in 51m, then waits 1h19m for its reset.',
+      title: 'At this pace Claude stops in 51m, then waits 1h18m for its reset.',
       steps: [
+        'Lower the effort: it is set to xhigh.',
         'Give routine work to a lighter model.',
         'There is no free reset to fall back on: keep what is left for what matters most.',
         'Move the next tasks to Codex: 88% of its 5-hour window and 80% of its week are left.',
@@ -189,7 +190,6 @@ export const panelDemo: PanelState = {
       title: 'Codex has room: 88% of this 5-hour window is unused, and it resets in 40m.',
       steps: [
         'Spend it: start the long task now.',
-        'Raise the effort if the task deserves it.',
         'Lancetta keeps watching the pace, and warns you in time.',
       ],
       basis: '5 hours: 12% used, it resets at 16:40. 7 days: 20% used.',
@@ -198,11 +198,11 @@ export const panelDemo: PanelState = {
       id: 'maintenance',
       kind: 'maintenance',
       tone: 'info',
-      title: 'Maintenance found 6 warnings in your agents\u2019 setup.',
+      title: 'Maintenance found 4 warnings in your agents\u2019 setup.',
       steps: [
         'Each says what to change: fixing them trims what every session loads, and the tokens with it.',
       ],
-      basis: 'The heaviest start loads 61% of the size Claude Code warns at.',
+      basis: 'The heaviest start loads 6% of the size Claude Code warns at.',
       action: { label: 'Open Maintenance\u2026', href: '/docs/maintenance' },
     },
   ],
@@ -245,8 +245,8 @@ export const panelDemo: PanelState = {
     {
       pane: 'maintenance',
       title: 'Maintenance',
-      value: '6',
-      footnote: 'warnings \u00b7 heaviest start 61%',
+      value: '4',
+      footnote: 'warnings \u00b7 heaviest start 6%',
       tint: '#FF9F0A',
       href: '/docs/maintenance',
       detail: [
