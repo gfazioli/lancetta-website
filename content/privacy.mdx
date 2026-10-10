@@ -46,7 +46,7 @@ A few things in this app are not read-only, and each one happens only after you 
 
 ## What it writes
 
-Four things, all on this Mac:
+Of its own, four things, all on this Mac (what a Maintenance fix, Move to Trash or a removed session changes in your files is the action you chose, under [What it does](#what-it-does)):
 
 - **Your own preferences** — the refresh interval, the colours and order you gave the agents, which ones are hidden, what each one shows in the menu bar, the notch switch, whether you count up or down, and how many free resets it last saw, so that a new one can be announced — in the standard macOS preferences location for the app.
 - **The series of its own readings**, in `~/Library/Application Support/Lancetta/history.jsonl`: for each reading, when it was taken, which agent, both windows' percentages and resets, the plan, the route it arrived by and the free resets held. Each line also carries a short salted hash of the account, so two accounts' series never mix; the salt is in `history.salt` beside it. Past 4 MB the series rolls over into `history.1.jsonl`. It is what the pace line reasons from, and it never leaves your Mac.

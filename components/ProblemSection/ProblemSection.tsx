@@ -53,7 +53,7 @@ const readings = [
 
 export function ProblemSection() {
   return (
-    <Box py={80} className={`lan-feather ${classes.sectionBand}`}>
+    <Box py={80}>
       <Container size="lg">
         <SectionHeading
           eyebrow="Why the numbers matter"

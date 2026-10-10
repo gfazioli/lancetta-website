@@ -1,6 +1,14 @@
 'use client';
 
-import { Fragment, useEffect, useRef, useState, type CSSProperties, type Ref } from 'react';
+import {
+  Fragment,
+  useEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+  type Ref,
+} from 'react';
 import Link from 'next/link';
 import {
   IconAlertOctagonFilled,
@@ -14,7 +22,6 @@ import {
   IconPin,
   IconPinFilled,
   IconPower,
-  IconRotate,
   IconSettings,
   IconTools,
 } from '@tabler/icons-react';
@@ -26,7 +33,6 @@ import {
   agentTint,
   refreshLabel,
   toneColor,
-  type PaneTile,
   type PanelAgent,
   type PanelRow,
   type PanelState,
@@ -90,10 +96,57 @@ interface PanelDemoProps {
   panelRef?: Ref<HTMLDivElement>;
 }
 
-/** A card of the deck: an agent's, or a pane's. */
-type Tile = { kind: 'agent'; agent: PanelAgent } | { kind: 'pane'; pane: PaneTile };
+/** A card of the deck, an agent's or a pane's, in the one shape the deck draws (`DeckTile`). */
+interface Face {
+  key: string;
+  name: string;
+  tint: string;
+  href: string;
+  value: string;
+  /** The line under the figure; `reset`, when there is one, follows it behind the reset mark. */
+  footnote: string;
+  reset?: string;
+  glyph: ReactNode;
+  /** What the card opens on: an agent's windows, or a pane's few lines. */
+  agent?: PanelAgent;
+  detail?: string[];
+}
 
-const tileKey = (tile: Tile) => (tile.kind === 'agent' ? tile.agent.agent : tile.pane.pane);
+/** Agents first, then the panes, as `PanelDeck.tiles` orders them. */
+function deckFaces(state: PanelState): Face[] {
+  return [
+    ...state.agents.map((agent) => {
+      const Mark = agent.agent === 'codex' ? CodexMark : ClaudeMark;
+      const headline = agentHeadline(agent);
+      return {
+        key: agent.agent,
+        name: agent.name,
+        tint: agentTint[agent.agent],
+        href: '/docs/the-window',
+        value: headline.value,
+        footnote: headline.window,
+        reset: headline.reset,
+        glyph: <Mark size={15} />,
+        agent,
+      };
+    }),
+    ...state.panes.map((pane) => ({
+      key: pane.pane,
+      name: pane.title,
+      tint: pane.tint,
+      href: pane.href,
+      value: pane.value,
+      footnote: pane.footnote,
+      glyph:
+        pane.pane === 'usage' ? (
+          <IconChartBar size={14} stroke={2.4} />
+        ) : (
+          <IconTools size={14} stroke={2.4} />
+        ),
+      detail: pane.detail,
+    })),
+  ];
+}
 
 /**
  * The app's status panel, drawn in the page. See `panel-demo.ts` for where each
@@ -143,14 +196,11 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
   };
 
   const suggestions = state.suggestions.slice(0, 3);
-  const tiles: Tile[] = [
-    ...state.agents.map((agent) => ({ kind: 'agent' as const, agent })),
-    ...state.panes.map((pane) => ({ kind: 'pane' as const, pane })),
-  ];
+  const faces = deckFaces(state);
   // Two columns, as `PanelDeck` lays them: a card's details open under its row.
-  const rows: Tile[][] = [];
-  for (let i = 0; i < tiles.length; i += 2) {
-    rows.push(tiles.slice(i, i + 2));
+  const rows: Face[][] = [];
+  for (let i = 0; i < faces.length; i += 2) {
+    rows.push(faces.slice(i, i + 2));
   }
 
   return (
@@ -224,27 +274,28 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
 
       <div className={classes.deck}>
         {rows.map((row, r) => {
-          const open = row.find((tile) => tileKey(tile) === opened);
+          const openAt = row.findIndex((face) => face.key === opened);
           return (
             <Fragment key={r}>
-              {row.map((tile, c) => (
+              {row.map((face, c) => (
                 <DeckCard
-                  key={tileKey(tile)}
-                  tile={tile}
+                  key={face.key}
+                  face={face}
                   place={2 + r * 2 + c}
-                  open={open === tile}
-                  side={c === 0 ? 'left' : 'right'}
-                  onToggle={() => setOpened(opened === tileKey(tile) ? null : tileKey(tile))}
+                  open={c === openAt}
+                  onToggle={() => setOpened(opened === face.key ? null : face.key)}
                   onClose={onClose}
                 />
               ))}
-              {open && <DeckDetail tile={open} side={row[0] === open ? 'left' : 'right'} />}
+              {openAt >= 0 && (
+                <DeckDetail face={row[openAt]} side={openAt === 0 ? 'left' : 'right'} />
+              )}
             </Fragment>
           );
         })}
       </div>
 
-      <div className={classes.commands} style={{ '--place': 2 + tiles.length } as CSSProperties}>
+      <div className={classes.commands} style={{ '--place': 2 + faces.length } as CSSProperties}>
         <Link href="/docs/the-window" className={classes.command} onClick={onClose}>
           <IconLayoutGrid size={12} stroke={1.8} className={classes.commandIcon} />
           <span className={classes.commandTitle}>Open Lancetta…</span>
@@ -262,6 +313,12 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
       </div>
     </div>
   );
+}
+
+/** The chevron a card or a suggestion shows: up while it is open. */
+function Chevron({ open }: { open: boolean }) {
+  const Icon = open ? IconChevronUp : IconChevronDown;
+  return <Icon size={11} stroke={2.4} className={classes.chevron} aria-hidden />;
 }
 
 /** `Guidance.Item.symbol`, in the tabler set. */
@@ -294,7 +351,6 @@ function SuggestionCard({
     <div
       className={classes.suggestion}
       data-panel-card
-      data-expanded={expanded}
       style={{ '--tint': toneColor[item.tone] } as CSSProperties}
     >
       <button
@@ -308,12 +364,7 @@ function SuggestionCard({
           <SuggestionGlyph item={item} />
         </span>
         <span className={classes.suggestionTitle}>{item.title}</span>
-        {collapsible &&
-          (expanded ? (
-            <IconChevronUp size={11} stroke={2.4} className={classes.chevron} aria-hidden />
-          ) : (
-            <IconChevronDown size={11} stroke={2.4} className={classes.chevron} aria-hidden />
-          ))}
+        {collapsible && <Chevron open={expanded} />}
       </button>
       {expanded && (
         <>
@@ -338,67 +389,53 @@ function SuggestionCard({
 
 /** `DeckTile` at the panel's size: the glyph and the name, the figure, a line under it. */
 function DeckCard({
-  tile,
+  face,
   place,
   open,
-  side,
   onToggle,
   onClose,
 }: {
-  tile: Tile;
+  face: Face;
   place: number;
   open: boolean;
-  side: 'left' | 'right';
   onToggle: () => void;
   onClose: () => void;
 }) {
-  const face =
-    tile.kind === 'agent'
-      ? {
-          name: tile.agent.name,
-          tint: agentTint[tile.agent.agent],
-          href: '/docs/the-window',
-          ...agentHeadline(tile.agent),
-        }
-      : {
-          name: tile.pane.title,
-          tint: tile.pane.tint,
-          href: tile.pane.href,
-          value: tile.pane.value,
-          footnote: tile.pane.footnote,
-        };
   return (
     <div
       className={classes.tile}
       data-panel-card
       data-open={open}
-      data-side={side}
       style={{ '--tint': face.tint, '--place': place } as CSSProperties}
     >
       <button
         type="button"
         className={classes.tileFace}
         aria-expanded={open}
-        aria-label={`${face.name}: ${face.value}, ${face.footnote}`}
+        aria-label={`${face.name}: ${face.value}, ${face.footnote}${face.reset ? ` ${face.reset}` : ''}`}
         onClick={onToggle}
       >
         <span className={classes.tileHead}>
           <span className={classes.tileGlyph} aria-hidden>
-            <TileGlyph tile={tile} />
+            {face.glyph}
           </span>
           <span className={classes.tileName}>{face.name}</span>
           <span className={classes.spacer} />
           <span className={classes.tileArrowRoom} />
-          {open ? (
-            <IconChevronUp size={11} stroke={2.4} className={classes.chevron} aria-hidden />
-          ) : (
-            <IconChevronDown size={11} stroke={2.4} className={classes.chevron} aria-hidden />
-          )}
+          <Chevron open={open} />
         </span>
         <span className={classes.tileValue}>
           <ScrollNumber value={face.value} on="mount" />
         </span>
-        <span className={classes.tileFootnote}>{face.footnote}</span>
+        <span className={classes.tileFootnote}>
+          {face.reset ? `${face.footnote} · ` : face.footnote}
+          {face.reset && (
+            <span className={classes.footReset}>
+              <ResetMark size={9} />
+              {face.reset}
+            </span>
+          )}
+        </span>
       </button>
       <Link
         href={face.href}
@@ -413,27 +450,18 @@ function DeckCard({
   );
 }
 
-function TileGlyph({ tile }: { tile: Tile }) {
-  if (tile.kind === 'agent') {
-    const Mark = tile.agent.agent === 'codex' ? CodexMark : ClaudeMark;
-    return <Mark size={15} />;
-  }
-  return tile.pane.pane === 'usage' ? (
-    <IconChartBar size={14} stroke={2.4} />
-  ) : (
-    <IconTools size={14} stroke={2.4} />
-  );
-}
-
 /** An open card's details, under its row and joined to it (`CardDeck`'s detail). */
-function DeckDetail({ tile, side }: { tile: Tile; side: 'left' | 'right' }) {
-  const tint = tile.kind === 'agent' ? agentTint[tile.agent.agent] : tile.pane.tint;
+function DeckDetail({ face, side }: { face: Face; side: 'left' | 'right' }) {
   return (
-    <div className={classes.detail} data-side={side} style={{ '--tint': tint } as CSSProperties}>
-      {tile.kind === 'agent' ? (
-        <AgentDetail agent={tile.agent} />
+    <div
+      className={classes.detail}
+      data-side={side}
+      style={{ '--tint': face.tint } as CSSProperties}
+    >
+      {face.agent ? (
+        <AgentDetail agent={face.agent} />
       ) : (
-        tile.pane.detail.map((line) => (
+        face.detail?.map((line) => (
           <p key={line} className={classes.detailLine}>
             {line}
           </p>
@@ -443,7 +471,7 @@ function DeckDetail({ tile, side }: { tile: Tile; side: 'left' | 'right' }) {
   );
 }
 
-/** `ReadingCard`'s body: the plan, one row per window, then a free reset. */
+/** `ReadingCard`'s body: the plan, then one row per window. */
 function AgentDetail({ agent }: { agent: PanelAgent }) {
   return (
     <>
@@ -459,22 +487,6 @@ function AgentDetail({ agent }: { agent: PanelAgent }) {
           <Meter key={row.label} row={row} />
         ))}
       </div>
-
-      {agent.exhausted && (
-        <div className={classes.exhausted}>
-          <IconAlertOctagonFilled size={12} aria-hidden />
-          {agent.exhausted}
-        </div>
-      )}
-
-      {agent.credit && (
-        <div className={classes.credit} title={agent.credit.detail}>
-          <span className={classes.creditIcon} aria-hidden>
-            <IconRotate size={8} stroke={3} />
-          </span>
-          <span className={classes.creditLabel}>{agent.credit.label}</span>
-        </div>
-      )}
     </>
   );
 }

@@ -57,8 +57,8 @@ export function BuiltForMacSection() {
   // another, and the line under them follows the last.
   const reveal = useReveal<HTMLDivElement>();
   return (
-    <Box pos="relative" py={80} className="lan-feather" style={{ overflow: 'hidden' }}>
-      <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
+    <Box py={80}>
+      <Container size="lg">
         <Stack ref={reveal.ref} align="center" gap="md" {...revealScope(reveal)}>
           <Text
             {...revealItem('rise')}

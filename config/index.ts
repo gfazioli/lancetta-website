@@ -1,11 +1,10 @@
 export default {
   metadata: {
     title: {
-      // 57 characters — inside the 50–60 OG/SERP sweet spot. "Menu-Bar"
-      // and "Coding Agents" both pull weight in the click decision: the
-      // first says where it lives, the second who it watches. "Quota"
-      // carries the search intent, and it is the ONE job: the reaper is a
-      // feature, and neither the title nor the description sells it.
+      // 51 characters, inside the 50–60 OG/SERP sweet spot. "Quota" carries
+      // the search intent, "Guidance" what the app does with it (0.50.0:
+      // it guides, it does not monitor), and naming Codex and Claude Code
+      // says who it is for in the words people search with.
       default: 'Lancetta — Quota Guidance for Codex and Claude Code',
       template: '%s | Lancetta',
     },

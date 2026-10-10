@@ -320,8 +320,8 @@
 }
 
 /*
- * The dial's box: the first screen, not the pinned stage's whole height, so
- * the scale sits where the eye lands. The light under it is the Scene's.
+ * The dial's box: the first screen, not the hero's whole height, so the scale
+ * sits where the eye lands. The light under it is the Scene's.
  */
 .dialBox {
   position: absolute;
@@ -377,6 +377,14 @@
     );
   mask-composite: intersect;
 
+  /* The hairline the ticks stand on. */
+  background: radial-gradient(
+    closest-side,
+    transparent calc(100% - rem(19px)),
+    var(--lan-line-strong) calc(100% - rem(18px)),
+    transparent calc(100% - rem(17px))
+  );
+
   /* Seen, never in the way of the headline it sits behind. */
   opacity: 0.55;
   animation: lan-dial 2.2s var(--lan-spring) 0.35s both;
@@ -388,50 +396,44 @@
   }
 }
 
-/* The scale: a tick every 3 degrees, a long one every 15, on a hairline. */
+/*
+ * The scale: a tick every 3 degrees and a long one every 15. ONE recipe for
+ * the drawn ticks (`::before` the short ones, `::after` the long ones) and the
+ * lit ones (`.dialLit`), so a lit tick always lands on a drawn one: retune the
+ * scale here, by its four variables, and both follow.
+ */
 .dial::before,
-.dial::after {
+.dial::after,
+.dialLit {
+  --ticks-every: 3deg;
+  --ticks-width: 0.12deg;
+  --ticks-depth: rem(19px);
+  --ticks-ink: var(--lan-line-strong);
+
   content: '';
   position: absolute;
   inset: 0;
   border-radius: 50%;
-}
-
-.dial::before {
-  background:
-    radial-gradient(
-      closest-side,
-      transparent calc(100% - rem(19px)),
-      color-mix(in srgb, var(--lan-ink) 14%, transparent) calc(100% - rem(18px)),
-      transparent calc(100% - rem(17px))
-    ),
-    repeating-conic-gradient(
-      from -0.06deg,
-      color-mix(in srgb, var(--lan-ink) 16%, transparent) 0 0.12deg,
-      transparent 0.12deg 3deg
-    );
-  mask-image: radial-gradient(
-    closest-side,
-    transparent calc(100% - rem(19px)),
-    #000 calc(100% - rem(19px)),
-    #000 calc(100% - rem(4px)),
-    transparent calc(100% - rem(4px))
-  );
-}
-
-.dial::after {
   background: repeating-conic-gradient(
-    from -0.12deg,
-    color-mix(in srgb, var(--lan-ink) 30%, transparent) 0 0.24deg,
-    transparent 0.24deg 15deg
+    from calc(var(--ticks-width) / -2),
+    var(--ticks-ink) 0 var(--ticks-width),
+    transparent var(--ticks-width) var(--ticks-every)
   );
   mask-image: radial-gradient(
     closest-side,
-    transparent calc(100% - rem(34px)),
-    #000 calc(100% - rem(34px)),
+    transparent calc(100% - var(--ticks-depth)),
+    #000 calc(100% - var(--ticks-depth)),
     #000 calc(100% - rem(4px)),
     transparent calc(100% - rem(4px))
   );
+}
+
+.dial::after,
+.dialLit[data-ticks='major'] {
+  --ticks-every: 15deg;
+  --ticks-width: 0.24deg;
+  --ticks-depth: rem(34px);
+  --ticks-ink: color-mix(in srgb, var(--lan-ink) 30%, transparent);
 }
 
 /* The reading: the brand's gradient on a band inside the scale, up to the hand. */
@@ -455,22 +457,11 @@
   );
 }
 
-/* The ticks the hand has passed, lit in the brand's violet: the same two scales,
-   cut to the reading by a conic mask. */
+/* The ticks the hand has passed, lit in the brand's violet: the scale's own
+   recipe, cut to the reading by a conic mask. */
 .dialLit {
-  --ticks-every: 3deg;
-  --ticks-width: 0.12deg;
-  --ticks-depth: rem(19px);
   --ticks-ink: color-mix(in srgb, var(--lan-violet) 45%, transparent);
 
-  position: absolute;
-  inset: 0;
-  border-radius: 50%;
-  background: repeating-conic-gradient(
-    from calc(var(--ticks-width) / -2),
-    var(--ticks-ink) 0 var(--ticks-width),
-    transparent var(--ticks-width) var(--ticks-every)
-  );
   mask-image:
     conic-gradient(from var(--dial-start), #000 var(--lan-dial), transparent var(--lan-dial)),
     radial-gradient(
@@ -484,9 +475,6 @@
 }
 
 .dialLit[data-ticks='major'] {
-  --ticks-every: 15deg;
-  --ticks-width: 0.24deg;
-  --ticks-depth: rem(34px);
   --ticks-ink: color-mix(in srgb, var(--lan-violet) 75%, transparent);
 }
 

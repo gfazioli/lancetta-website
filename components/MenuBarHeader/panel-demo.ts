@@ -44,10 +44,6 @@ export interface PanelAgent {
   /** The plan chip beside the name. */
   plan?: string;
   rows: PanelRow[];
-  /** "codex exhausted": the bucket that refused, named. */
-  exhausted?: string;
-  /** Free resets the account has granted (Codex only). */
-  credit?: { label: string; detail: string; resettable: boolean };
 }
 
 /** `Guidance.Tone`: red for an agent that stops, amber for a cost later, green for room. */
@@ -130,16 +126,24 @@ export function shortDuration(seconds: number): string {
  * is the fuller of the two windows and the line under it that window's name
  * and its reset; a model's own week is not a candidate, as in the app.
  */
-export function agentHeadline(agent: PanelAgent) {
+export function agentHeadline(agent: PanelAgent): {
+  value: string;
+  window: string;
+  reset?: string;
+} {
   const windows = agent.rows.filter(
-    (row) => (row.label === '5h' || row.label === '7d') && row.percent !== null
+    (row): row is PanelRow & { percent: number } =>
+      (row.label === '5h' || row.label === '7d') && row.percent !== null
   );
   if (windows.length === 0) {
-    return { value: '\u2014', footnote: '' };
+    return { value: '\u2014', window: '' };
   }
-  const top = windows.reduce((a, b) => ((b.percent ?? 0) > (a.percent ?? 0) ? b : a));
-  const name = top.label === '5h' ? '5 hours' : '7 days';
-  return { value: `${top.percent}%`, footnote: `${name} \u00b7 \u21bb ${top.reset}` };
+  const top = windows.reduce((a, b) => (b.percent > a.percent ? b : a));
+  return {
+    value: `${top.percent}%`,
+    window: top.label === '5h' ? '5 hours' : '7 days',
+    reset: top.reset,
+  };
 }
 
 /**
@@ -187,7 +191,7 @@ export const panelDemo: PanelState = {
       id: 'room.Codex',
       kind: 'room',
       tone: 'encourage',
-      title: 'Codex has room: 88% of this 5-hour window is unused, and it resets in 40m.',
+      title: 'Codex has room: 88% of this 5-hour window is unused, and it resets in 39m.',
       steps: [
         'Spend it: start the long task now.',
         'Lancetta keeps watching the pace, and warns you in time.',
@@ -215,7 +219,7 @@ export const panelDemo: PanelState = {
         {
           label: '5h',
           percent: 82,
-          reset: '2h10m',
+          reset: '2h09m',
           pace: { text: 'at this rate you run out in 51m', urgent: true },
         },
         { label: '7d', percent: 41, reset: '4d18h' },
@@ -227,7 +231,7 @@ export const panelDemo: PanelState = {
       name: 'Codex',
       plan: 'plus',
       rows: [
-        { label: '5h', percent: 12, reset: '40m', pace: { text: '12% in 4h20m' } },
+        { label: '5h', percent: 12, reset: '39m', pace: { text: '12% in 4h21m' } },
         { label: '7d', percent: 20, reset: '4d06h' },
       ],
     },
@@ -238,7 +242,7 @@ export const panelDemo: PanelState = {
       title: 'Usage',
       value: '142.8M',
       footnote: 'tokens, last 7 days',
-      tint: '#4C8AFF',
+      tint: toneColor.info,
       href: '/docs/the-window',
       detail: ['Daily tokens for both agents over 7, 30 or 90 days, in the window.'],
     },

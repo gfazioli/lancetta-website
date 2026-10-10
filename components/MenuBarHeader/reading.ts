@@ -1,3 +1,5 @@
+import { panelDemo } from './panel-demo';
+
 /**
  * What the menu-bar item in the header shows, and the lamp's bands.
  *
@@ -56,13 +58,15 @@ export function ledBand(percent: number): LedBand {
 
 /**
  * The reading the header quotes, for both agents, because the bar shows them in
- * turn. It is read OFF the menu screenshot in the hero, so the thing at the top
- * of the page and the picture under it tell one story.
+ * turn: each agent's 5-hour window in the panel it opens (`panel-demo.ts`),
+ * which is the hero's menu screenshot, so the thing at the top of the page and
+ * the picture under it tell one story. Read off that panel rather than written
+ * twice.
  *
- * ILLUSTRATION, not a claim: one developer's numbers on one afternoon. Every
+ * ILLUSTRATION, not a claim: the app's capture cast on one afternoon. Every
  * figure the prose states comes from the measurement table in CLAUDE.md instead.
  */
-export const barReading: AgentReading[] = [
-  { agent: 'claude', percent: 82, resets: '2h10m' },
-  { agent: 'codex', percent: 12, resets: '40m' },
-];
+export const barReading: AgentReading[] = panelDemo.agents.map((agent) => {
+  const five = agent.rows.find((row) => row.label === '5h');
+  return { agent: agent.agent, percent: five?.percent ?? 0, resets: five?.reset ?? '' };
+});

@@ -67,6 +67,9 @@ interface Frame {
   next?: boolean;
 }
 
+/** The window's panes are one set at one size: the 1200x800-point window, at 2x. */
+const WINDOW_SHOT = { width: 2400, height: 1600 };
+
 /**
  * THE ORDER IS THE ARGUMENT, and it changed on 2026-09-20 (user: *"mettendo
  * l'accento subito su cosa differenzia Lancetta dagli altri concorrenti -
@@ -79,18 +82,11 @@ interface Frame {
  * to advise from. So those two lead, and the surfaces that every monitor has
  * — a menu, an island, a window, a chart — come after them.
  *
- * Since 0.50.0 the frames are the suggestions, which grew out of the pace line
- * the first one used to show: each decision's picture is that suggestion's own
- * card, cropped from the panel of the app's capture cast, and Maintenance has a
- * frame of its own, on the fixture home's pane.
- *
- * The ADVICE goes first since v0.4, and that is the revisit this comment used
- * to ask for. It was second, behind the reaper, for one reason that was not
- * editorial: the advice did not ship, so the page's first claim below the fold
- * would have been a promise rather than a number. The pace line ships in v0.4,
- * so the deeper moat leads and the frame has a screenshot like any other.
- * (The alerts shipped in v0.5 and have a page of their own; a notification is
- * not a frame here because a banner has no screenshot worth a hero.)
+ * Since 0.50.0 the frames are the decisions themselves (see the comment in
+ * the array): each one's picture is that suggestion's own card, cropped from
+ * the panel of the app's capture cast, and Maintenance shows the fixture
+ * home's pane. A notification is not a frame: a banner has no screenshot
+ * worth a hero, and the alerts have a page of their own.
  */
 const frames: Frame[] = [
   /*
@@ -142,8 +138,7 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-maintenance.png',
-    width: 2400,
-    height: 1600,
+    ...WINDOW_SHOT,
     alt: 'The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, the heaviest start (design-system) at 6,983 of the 120,000 characters where Claude Code warns, and the Instructions card open on the files that need fixing: an over-long CLAUDE.md, an AGENTS.md that Claude Code skips, a CLAUDE.local.md committed to git',
     eyebrow: 'How they are set up',
     title: 'The tokens every session pays for.',
@@ -154,8 +149,7 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-processes.png',
-    width: 2400,
-    height: 1600,
+    ...WINDOW_SHOT,
     alt: 'The Processes pane: 4 Codex trees holding 1.45 GB, 3 of them orphaned holding 1.05 GB, and the list open under them: each tree with the directory it was started for, what it holds, its children and its pid, the three orphans marked with a warning',
     eyebrow: 'What they leave behind',
     title: 'Nobody ever closes them.',
@@ -181,8 +175,7 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-overview.png',
-    width: 2400,
-    height: 1600,
+    ...WINDOW_SHOT,
     alt: 'The Lancetta window on its Overview: four suggestions first (Claude stops in 51m at this pace, Codex has room, Maintenance found 4 warnings, 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, with Usage open on the week’s tokens',
     eyebrow: 'When you want the reasons',
     title: 'The window.',
@@ -254,22 +247,17 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
       <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
         <div className={classes.opening}>
           {/*
-            THE THREE LINES MUST NOT WRAP AT 390px, and that is a hard
-            constraint rather than a preference: 20 characters is the length
-            known to fit, and these are 17, 18 and 19. Lengthen one and
-            re-shoot at 390 before believing it — the display face is a serif
-            now, which sets wider than the grotesque this budget was measured
-            against.
+            20 characters is the length known to fit one line at 390px: the
+            first two lines are 19 and 17. The third is 24 and wraps there onto
+            two, by word (see `by` below), which was judged at 390 and kept.
+            Lengthen a line and look at 390 before believing it.
 
-            Each line is a QUESTION THE APP ANSWERS TODAY, and that is what
-            makes it a headline rather than a promise. "What you can use" is
-            the model's own weekly window, drawn since v0.6 and in the island
-            since v0.7; "how long it lasts" is the pace line, v0.4; "when it
-            comes back" is the reset on every bar plus the alert that fires
-            when a window you were blocked on has reopened, v0.5. What is NOT
-            here, and must not creep in until it ships: when to START, and
-            anything learnt from an average across days. The projection is the
-            current window's own rate.
+            Each line names a DECISION THE APP MAKES WITH YOU TODAY (0.50.0):
+            pushing on is the "room" suggestion, slowing down "stop" and
+            "week", switching agents the step that names the other agent while
+            it has room. What must not creep in until it ships: when to START,
+            and anything learnt from an average across days. Today a
+            suggestion reasons from the current window's own rate.
           */}
           <Title className={classes.title}>
             <span className={classes.titleLine}>Push on, slow down,</span>
