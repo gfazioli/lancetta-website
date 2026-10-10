@@ -2,6 +2,7 @@
 
 import NextImage from 'next/image';
 import Link from 'next/link';
+import { Scene } from '@gfazioli/mantine-scene';
 import { TextAnimate } from '@gfazioli/mantine-text-animate';
 import { IconArrowRight, IconBook2, IconGauge } from '@tabler/icons-react';
 import { Button, Container, Group, Image, Stack, Text, Title } from '@mantine/core';
@@ -205,18 +206,32 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
    * nothing they see leaves the frame.
    */
 
-  // Two soft lights on a white page, not a wash over all of it: the
-  // brand's violet behind the product, and the two agents' own colours low in
-  // the corners. Plain gradients, painted by the browser with the page.
+  // The icon's light across the hero, and the dial over it (see `.dial`).
   const wash = (
-    <div className={classes.wash} aria-hidden="true">
-      <div className={classes.dial}>
-        <span className={classes.dialArc} />
-        <span className={classes.dialLit} data-ticks="minor" />
-        <span className={classes.dialLit} data-ticks="major" />
-        <span className={classes.dialHand} />
+    <>
+      <Scene lazy>
+        <Scene.Mesh
+          stops={[
+            { color: '#13D1FB', position: '10% 6%', spread: 48 },
+            { color: '#824BFC', position: '86% 26%', spread: 52 },
+            { color: '#B117C5', position: '64% 92%', spread: 40 },
+          ]}
+          opacity={0.13}
+        />
+        <Scene.Glow color="#13D1FB" size={560} blur={160} opacity={0.14} top="2%" left="12%" />
+        <Scene.Glow color="#824BFC" size={520} blur={160} opacity={0.16} top="8%" left="78%" />
+        <Scene.Glow color="#B117C5" size={420} blur={150} opacity={0.1} top="76%" left="58%" />
+        <Scene.DotGrid color="gray" opacity={0.1} spacing={32} />
+      </Scene>
+      <div className={classes.dialBox} aria-hidden="true">
+        <div className={classes.dial}>
+          <span className={classes.dialArc} />
+          <span className={classes.dialLit} data-ticks="minor" />
+          <span className={classes.dialLit} data-ticks="major" />
+          <span className={classes.dialHand} />
+        </div>
       </div>
-    </div>
+    </>
   );
 
   return (
