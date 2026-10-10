@@ -93,20 +93,14 @@ interface Feature {
  * it ships — a card that says "will" with no badge reads as a missing
  * feature, and a card with no "will" and a badge reads as a lie.
  *
- * THE ORDER IS LOAD-BEARING, and mirrors the hero. Since 0.50.0 the
- * decisions lead (push on, slow down, the week, what to switch to, the setup),
- * as the hero's frames do; the data they rest on comes after them, never
- * before (user, 2026-10-10: the app is not there to show consumption). Before
- * that, the order was the quota first, then the claims no competitor can make: where this pace
- * lands, that every reading carries its age, and the orphaned trees nobody
- * else reaps. The pace card joined them in v0.4, ahead of the age, because
- * the hero leads on it too — the order in the two places is one decision.
- * Reclaim
- * sat SEVENTH until 2026-09-20, behind the notch and the mark switcher, while
- * the grid opened on "both windows, both agents" — which is exactly what the
- * free, open-source, 74-provider alternative also does. A reader who knows that
- * alternative has to reach card seven before meeting a reason to prefer this
- * one. Do not sort these by feel.
+ * THE ORDER IS LOAD-BEARING, and mirrors the hero: the decisions lead (push
+ * on, slow down, the week, what to switch to, the setup), as the hero's frames
+ * do, and the data they rest on comes after them, never before (user,
+ * 2026-10-10: the app is not there to show consumption). The lesson behind it
+ * is older: until 2026-09-20 the grid opened on "both windows, both agents",
+ * which is exactly what the free, 74-provider alternative also does, and a
+ * reader who knew it met a reason to prefer this one only at card seven. Do
+ * not sort these by feel.
  */
 const features: Feature[] = [
   {
@@ -370,13 +364,13 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       <SectionRule />
       <ProblemSection />
 
-      {/* One job */}
+      {/* How it decides */}
       <SectionRule />
       <SolutionSection />
 
       {/* Features */}
       <SectionRule />
-      <Box id="features" py={80} className={`lan-feather ${classes.sectionBand}`}>
+      <Box id="features" py={80}>
         <Container size="lg">
           <SectionHeading
             eyebrow="What is in it"
@@ -493,8 +487,8 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
 
       {/* Get Started CTA */}
       <SectionRule />
-      <Box pos="relative" py={88} className={classes.auroraBand}>
-        <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
+      <Box py={88} className={classes.auroraBand}>
+        <Container size="lg">
           <Reveal variant="rise">
             <Stack align="center" gap="lg">
               <Text

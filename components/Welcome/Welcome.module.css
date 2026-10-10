@@ -6,6 +6,13 @@
  */
 .home {
   --lan-bars: var(--lan-bar-height, rem(46px));
+
+  /*
+   * The section rules are full-bleed by `100vw`, which includes a classic
+   * scrollbar's width: clipped here so they never add a horizontal scroll.
+   * `clip`, not `hidden`, so nothing inside becomes a scroll container.
+   */
+  overflow-x: clip;
 }
 
 /* Every anchor on the home page scrolls to just below the bar. */
@@ -115,21 +122,11 @@
 
 /*
  * Rounded tinted icon square with a faint matching glow and a crisp accent
- * hairline so the tile keeps a defined edge against the section wash.
+ * hairline so the tile keeps a defined edge on the white page.
  */
 .featureIcon {
   border: 1px solid color-mix(in srgb, var(--card-color) 30%, transparent);
   box-shadow: 0 6px 18px -8px color-mix(in srgb, var(--card-color) 50%, transparent);
-}
-
-/*
- * A section wash rather than a band: the icon's cyan and violet, at a few
- * percent, coming in from the top so the cards lift off the page instead of
- * sitting on a flat fill. Atmosphere, not a coloured block.
- */
-.sectionBand {
-  /* White, like the page: the rule above it is the separation now. */
-  background: none;
 }
 
 /*
@@ -324,18 +321,13 @@
 }
 
 /*
- * The closing band. It used to be the icon's PLATE — a dark slab — and
- * on a light-only page that reads as a hole rather than as depth. Same three
- * lights, on the page's own white: cyan at the top-left through violet to
- * magenta, under the 2px neon rim the icon carries. The one dark object on
- * this site is the menu bar in the header, because that is chrome; nothing
- * else pretends to be.
+ * The closing band: the hero's lights once more, on the page's own white, the
+ * icon's violet in the middle and its cyan and magenta low at the sides. It
+ * used to be the icon's dark PLATE, which on a light-only page reads as a hole
+ * rather than as depth: the one dark object on this site is the menu bar in
+ * the header, because that is chrome.
  */
 .auroraBand {
-  position: relative;
-  overflow: hidden;
-  /* The hero's lights, once more, around the last call: violet in the middle,
-     the two agents' colours low at the sides. */
   background:
     radial-gradient(
       ellipse 46% 70% at 50% 40%,
@@ -344,20 +336,12 @@
     ),
     radial-gradient(
       ellipse 34% 60% at 4% 100%,
-      color-mix(in srgb, var(--lan-claude-lit) 9%, transparent),
+      color-mix(in srgb, var(--lan-cyan) 10%, transparent),
       transparent 70%
     ),
     radial-gradient(
       ellipse 34% 60% at 96% 100%,
-      color-mix(in srgb, var(--lan-codex-lit) 9%, transparent),
+      color-mix(in srgb, var(--lan-magenta) 8%, transparent),
       transparent 70%
     );
 }
-
-/*
- * The 2px neon rim the icon carries used to sit along this band's top edge.
- * It is a good mark and a bad rule: a saturated line across the full width of
- * the page is the strongest divider on the site, drawn at exactly the join the
- * feather exists to dissolve. The band keeps the icon's three lights; it stops
- * announcing itself with a rule.
- */

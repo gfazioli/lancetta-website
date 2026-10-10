@@ -7,8 +7,8 @@
  * Colours are `Theme.swift`: canvas #131829, card #1B2137, text white /
  * #8A90A6 / #5C6278, warning #F5A524, positive #5FCFB0, accent #4C8AFF, and
  * the canvas glow is `accentDeep` #6366F5 at 26%. Each agent's colour arrives
- * as `--tint` from `agentTint`, a suggestion's as its tone (`toneColor`: danger
- * #FF6B5E, warning, positive, accent), a pane's as `OverviewSection.tint`.
+ * as `--tint` from `agentTint`, a suggestion's as its tone (`toneColor`: warning
+ * #FF6B5E, caution, encourage, info), a pane's as `OverviewSection.tint`.
  *
  * Since 0.50.0 every card is AgentsKit's deck glass (`StatGlassCard`): its
  * colour from 26% at the top to 8% at the bottom, under a hairline of light,
@@ -510,58 +510,12 @@
   color: #f5a524;
 }
 
-.exhausted {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-left: 2px;
-  color: #f5a524;
-  font-size: 11px;
-  font-weight: 500;
-}
-
-/* `CreditRow`. */
-.credit {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding-left: 2px;
-}
-
-.creditIcon {
+/* An agent card's reset, behind the same mark as the rows' (`ResetMark`). */
+.footReset {
   display: inline-flex;
-  flex-shrink: 0;
   align-items: center;
-  justify-content: center;
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  background: #5fcfb0;
-  color: #1b2137;
-}
-
-.creditLabel {
-  flex: 1;
-  overflow: hidden;
-  color: rgb(255 255 255 / 90%);
-  font-size: 11.5px;
-  font-weight: 500;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.use {
-  padding: 3px 9px;
-  border-radius: 999px;
-  background: rgb(95 207 176 / 16%);
-  color: #5fcfb0;
-  font-size: 11px;
-  font-weight: 600;
-  text-decoration: none;
-}
-
-.use:hover {
-  background: rgb(95 207 176 / 26%);
+  gap: 3px;
+  vertical-align: bottom;
 }
 
 /* The footer: `CommandRow` for the window, `IconCommand` for Quit. */
@@ -651,8 +605,7 @@
 /*
  * The light: a ring (the padding is the stroke, the mask cuts the rest) lit
  * from two opposite corners, white on this dark card as in the app
- * (`EdgeGlint`), reaching 70 points: the app's cap, which both cards are tall
- * enough to take (60% of their short side is over it). `--glint` is
+ * (`EdgeGlint`), reaching 70 points: the app's cap. `--glint` is
  * registered in theme/global.css; the opacity is its sine, dark at both ends,
  * behind `@supports` as on the page's cards (Motion.module.css says why).
  */

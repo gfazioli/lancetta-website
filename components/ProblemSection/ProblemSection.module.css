@@ -48,11 +48,6 @@
   box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--card-color) 55%, transparent);
 }
 
-/* White, like the page: the rule above the section is the separation. */
-.sectionBand {
-  background: none;
-}
-
 /* Respect users who opt out of motion: keep tint/border, drop the lift. */
 @media (prefers-reduced-motion: reduce) {
   .problemCard {

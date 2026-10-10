@@ -6,6 +6,9 @@
  * the light page instead of a slab.
  */
 .band {
+  /* The top edge is a section rule: only the bottom one dissolves. */
+  --lan-feather-top: 0;
+
   overflow: hidden;
   background: light-dark(
     radial-gradient(

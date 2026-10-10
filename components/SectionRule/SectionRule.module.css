@@ -7,9 +7,6 @@
  */
 .rule {
   position: relative;
-  /* Above the next section's feather, which would otherwise paint over the
-     lower half of each hand. */
-  z-index: 2;
   height: 0;
   margin-inline: calc(50% - 50vw);
   /* Half the content column: the hands sit at its edges. */
@@ -31,8 +28,8 @@
       var(--lan-accent) rem(2.2px) rem(4.6px),
       transparent rem(5px)
     ),
-    linear-gradient(90deg, var(--lan-accent), color-mix(in srgb, var(--lan-accent) 0%, transparent))
-      rem(9px) rem(4.5px) / rem(17px) rem(2px) no-repeat;
+    linear-gradient(90deg, var(--lan-accent), transparent) rem(9px) rem(4.5px) / rem(17px) rem(2px)
+      no-repeat;
 }
 
 /* At the content's edges, the hand pointing into the page. */

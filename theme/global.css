@@ -59,9 +59,10 @@ html {
   --lan-magenta: #b117c5;
 
   /*
-   * The page. An off-white with a breath of the icon's violet in it rather
-   * than a neutral grey, `--lan-surface` the white a card sits at, and
-   * `--lan-line` the hairline between them. `--lan-ink` is the plate's navy
+   * The page: white since 0.50.0, the sections standing on drawn rules
+   * rather than on washes (the off-white with a breath of violet it was read
+   * as a tint once the washes went), so `--lan-surface`, the white a card sits
+   * at, is the same value; `--lan-line` is the hairline between them. `--lan-ink` is the plate's navy
    * at text weight; `--lan-ink-dim` the dimmed line, 4.55:1 on the body.
    */
   --lan-body: #fff;

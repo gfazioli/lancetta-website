@@ -105,9 +105,9 @@ describe('HeroStage frames', () => {
   it('reveals the picture, the copy and the figures each on its own way into view', () => {
     // On a phone the frame is one column and these are a screen apart: fired
     // by the frame, the copy and the figures moved below the fold.
-    const { container } = render(<HeroStage />);
-    // The first frame WITH a picture: since 0.50.0 the page opens on one without.
-    const frame = container.querySelector('section[data-textonly="false"]')!;
+    render(<HeroStage />);
+    // One frame's three parts: the frame whose figures are asserted below.
+    const frame = screen.getByText('the window that actually hurts').closest('section')!;
     const picture = frame.querySelector('img')!.parentElement!;
     const copy = frame.querySelector('a')!.parentElement!;
     const figures = screen
