@@ -3,6 +3,7 @@
 import {
   Fragment,
   useEffect,
+  useMemo,
   useRef,
   useState,
   type CSSProperties,
@@ -162,7 +163,6 @@ function deckFaces(state: PanelState): Face[] {
  */
 export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: PanelDemoProps) {
   const [base, setBase] = useState(() => ({ at: Date.now(), age: state.updatedAgo }));
-  const [now, setNow] = useState(() => Date.now());
   const [refreshing, setRefreshing] = useState(false);
   // The accordion's open suggestion (`GuidanceList.expanded`): the first one.
   const [suggestion, setSuggestion] = useState(state.suggestions[0]?.id);
@@ -170,16 +170,7 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
   const [opened, setOpened] = useState<string | null>(null);
   const pending = useRef<number | undefined>(undefined);
 
-  // `TimelineView(.periodic(from: .now, by: 1))` in the app.
-  useEffect(() => {
-    const tick = window.setInterval(() => setNow(Date.now()), 1000);
-    return () => {
-      window.clearInterval(tick);
-      window.clearTimeout(pending.current);
-    };
-  }, []);
-
-  const stamp = refreshLabel(base.age + (now - base.at) / 1000, refreshing);
+  useEffect(() => () => window.clearTimeout(pending.current), []);
 
   const refresh = () => {
     if (refreshing) {
@@ -188,15 +179,14 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
     setRefreshing(true);
     pressCards(document.getElementById(id));
     pending.current = window.setTimeout(() => {
-      const at = Date.now();
-      setBase({ at, age: 0 });
-      setNow(at);
+      setBase({ at: Date.now(), age: 0 });
       setRefreshing(false);
     }, REFRESH_MS);
   };
 
   const suggestions = state.suggestions.slice(0, 3);
-  const faces = deckFaces(state);
+  // The panel's content is a constant: built once, not at every render.
+  const faces = useMemo(() => deckFaces(state), [state]);
   // Two columns, as `PanelDeck` lays them: a card's details open under its row.
   const rows: Face[][] = [];
   for (let i = 0; i < faces.length; i += 2) {
@@ -216,22 +206,7 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
           suggestions, each card in turn, then the commands, as `MenuPanelView`
           orders them. */}
       <div className={classes.toolbar} style={{ '--place': 0 } as CSSProperties}>
-        <button
-          type="button"
-          className={classes.stamp}
-          data-stale={stamp.stale}
-          onClick={refresh}
-          title="Refresh now  ⌘R"
-        >
-          <span className={classes.stampIcon} aria-hidden>
-            {refreshing ? (
-              <IconLoader2 size={11} className={classes.spin} />
-            ) : (
-              <ResetMark size={10} />
-            )}
-          </span>
-          {stamp.text}
-        </button>
+        <RefreshStamp base={base} refreshing={refreshing} onRefresh={refresh} />
         <span className={classes.spacer} />
         <Link
           href="/docs/settings"
@@ -312,6 +287,43 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
         </button>
       </div>
     </div>
+  );
+}
+
+/**
+ * `RefreshStamp`: the age of the numbers, and Refresh now when clicked. Its
+ * own component because it is the one thing that ticks, once a second
+ * (`TimelineView(.periodic(from: .now, by: 1))` in the app): the rest of the
+ * panel does not re-render with it.
+ */
+function RefreshStamp({
+  base,
+  refreshing,
+  onRefresh,
+}: {
+  base: { at: number; age: number };
+  refreshing: boolean;
+  onRefresh: () => void;
+}) {
+  const [now, setNow] = useState(() => Date.now());
+  useEffect(() => {
+    const tick = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(tick);
+  }, []);
+  const stamp = refreshLabel(base.age + (Math.max(now, base.at) - base.at) / 1000, refreshing);
+  return (
+    <button
+      type="button"
+      className={classes.stamp}
+      data-stale={stamp.stale}
+      onClick={onRefresh}
+      title="Refresh now  ⌘R"
+    >
+      <span className={classes.stampIcon} aria-hidden>
+        {refreshing ? <IconLoader2 size={11} className={classes.spin} /> : <ResetMark size={10} />}
+      </span>
+      {stamp.text}
+    </button>
   );
 }
 

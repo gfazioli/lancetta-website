@@ -336,15 +336,9 @@
  * The dial: the instrument the app is named after (a lancetta is its hand).
  * A gauge's scale arcs over the headline, its pivot far below the fold, and
  * the hand sweeps once on load with the films' spring: it overshoots, settles,
- * and leaves the brand's gradient on the scale behind it. One shot: nothing
- * moves at rest. `--lan-dial` is the reading, measured from the scale's start.
+ * and the reading lights up on the scale under it. One shot: nothing moves at
+ * rest. `--lan-dial` is the reading, measured from the scale's start.
  */
-@property --lan-dial {
-  syntax: '<angle>';
-  inherits: true;
-  initial-value: 0deg;
-}
-
 .dial {
   --dial-start: -58deg;
   /* Rests at 35 degrees right of upright: clear of the headline and the lead. */
@@ -387,12 +381,32 @@
 
   /* Seen, never in the way of the headline it sits behind. */
   opacity: 0.55;
-  animation: lan-dial 2.2s var(--lan-spring) 0.35s both;
 }
 
-@keyframes lan-dial {
+/*
+ * The sweep runs on the COMPOSITOR: the hand turns by `rotate` alone, and the
+ * reading it leaves (the band and the lit ticks, drawn at their final angle)
+ * fades in under it by opacity. Animating `--lan-dial` itself drew the band
+ * filling behind the hand, and cost a repaint of every masked layer per frame
+ * for the whole sweep, during hydration: about 100-180 ms of main thread on a
+ * fast Mac, measured. The films' spring, at 1.75x its own time: a needle is
+ * heavier than a card.
+ */
+.dialHand,
+.dialArc,
+.dialLit {
+  --dial-sweep: calc(var(--lan-spring-duration) * 1.75);
+}
+
+@keyframes lan-dial-hand {
   from {
-    --lan-dial: 0deg;
+    rotate: var(--dial-start);
+  }
+}
+
+@keyframes lan-dial-reading {
+  from {
+    opacity: 0;
   }
 }
 
@@ -495,6 +509,12 @@
     var(--lan-violet)
   );
   filter: drop-shadow(0 0 rem(6px) color-mix(in srgb, var(--lan-violet) 45%, transparent));
+  animation: lan-dial-hand var(--dial-sweep) var(--lan-spring) 0.35s both;
+}
+
+.dialArc,
+.dialLit {
+  animation: lan-dial-reading calc(var(--dial-sweep) * 0.6) ease-out 0.55s both;
 }
 
 /* On a phone a tighter dial, so the scale still arcs and the hand stays on screen. */
@@ -508,7 +528,9 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .dial {
+  .dialHand,
+  .dialArc,
+  .dialLit {
     animation: none;
   }
 }
