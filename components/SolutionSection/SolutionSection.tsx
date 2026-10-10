@@ -1,6 +1,5 @@
 'use client';
 
-import { Scene } from '@gfazioli/mantine-scene';
 import { IconArrowRight } from '@tabler/icons-react';
 import { Anchor, Box, Container, Group, Stack, Text, Title } from '@mantine/core';
 import classes from './SolutionSection.module.css';
@@ -44,19 +43,6 @@ import classes from './SolutionSection.module.css';
 export function SolutionSection() {
   return (
     <Box pos="relative" py={88} className="lan-feather" style={{ overflow: 'hidden' }}>
-      {/* The plate's light: azure from the top-left, magenta from the bottom-right. */}
-      <Scene lazy>
-        <Scene.Mesh
-          stops={[
-            { color: '#0546BF', position: '18% 22%', spread: 58 },
-            { color: '#B117C5', position: '84% 74%', spread: 50 },
-            { color: '#672AFA', position: '50% 50%', spread: 72 },
-          ]}
-          opacity={0.14}
-        />
-        <Scene.Noise opacity={0.018} />
-      </Scene>
-
       <Container size="md" pos="relative" style={{ zIndex: 1 }}>
         <Stack align="center" gap="md">
           <Text
@@ -68,30 +54,38 @@ export function SolutionSection() {
             The app
           </Text>
           <Title order={2} ta="center" fz={{ base: 32, sm: 42 }}>
-            One job, done properly
+            From a number to a next step
           </Title>
           <Text c="dimmed" ta="center" size="lg" maw={700} lh={1.6}>
-            Lancetta reads what each agent&apos;s account says is left and turns it into the three
-            answers you act on: what you can still use, how long it lasts at the pace you are going,
-            and when it comes back. It never shows a price, because a price is not a decision you
-            can make at four in the afternoon. Everything else in it exists to make those three
-            answers trustworthy: both windows for both agents, a model&apos;s own week when the plan
-            has one, the plan read from the account rather than typed in, the bucket that refused
-            named instead of averaged away, and every reading carrying its own age.
+            Lancetta reads what each agent&apos;s account says is left, and keeps every reading.
+            That series is what lets it say more than a percentage: whether this pace runs the
+            window out before it resets, which agent or model still has room, and when a window is
+            about to reset with quota unspent. It turns that into a suggestion, and every suggestion
+            names what it rests on. When there is nothing to change it says so, and that is advice
+            too: go ahead, spend it. It never shows a price, because a price is not a decision you
+            can make at four in the afternoon.
           </Text>
 
           <Stack align="center" gap={6} mt="lg" className={classes.footnote}>
             <Text c="dimmed" ta="center" size="md" maw={640} lh={1.6}>
-              Agents also leave background processes running long after they are done. Lancetta
-              lists those and closes the orphans on your say-so — a footnote to the job, not a
-              second one.
+              Agents also leave things behind: instruction files that grow with every session, and
+              background processes that outlive the work. Maintenance checks the first; the
+              Processes pane closes the orphans of the second, on your say-so.
             </Text>
-            <Anchor href="/docs/memory" size="sm" fw={600}>
-              <Group gap={4} wrap="nowrap">
-                How that works
-                <IconArrowRight size={14} />
-              </Group>
-            </Anchor>
+            <Group gap="lg" justify="center">
+              <Anchor href="/docs/maintenance" size="sm" fw={600}>
+                <Group gap={4} wrap="nowrap">
+                  What Maintenance checks
+                  <IconArrowRight size={14} />
+                </Group>
+              </Anchor>
+              <Anchor href="/docs/memory" size="sm" fw={600}>
+                <Group gap={4} wrap="nowrap">
+                  What the processes hold
+                  <IconArrowRight size={14} />
+                </Group>
+              </Anchor>
+            </Group>
           </Stack>
         </Stack>
       </Container>

@@ -318,3 +318,38 @@
     justify-content: center;
   }
 }
+
+/*
+ * The hero's light: the brand's violet behind the product, Claude's and
+ * Codex's colours low in the two corners, on the white page. Sized to the
+ * first screen, not to the pinned stage's whole height, so the light sits
+ * where the eye lands.
+ */
+.wash {
+  position: absolute;
+  inset: 0 0 auto;
+  z-index: 0;
+  height: min(rem(1100px), 120svh);
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 52% 46% at 72% 52%,
+      color-mix(in srgb, var(--lan-violet) 15%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 46% 40% at 22% 30%,
+      color-mix(in srgb, var(--lan-azure) 9%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 40% 34% at 0% 96%,
+      color-mix(in srgb, var(--lan-claude-lit) 11%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 36% 32% at 100% 96%,
+      color-mix(in srgb, var(--lan-codex-lit) 10%, transparent),
+      transparent 70%
+    );
+}

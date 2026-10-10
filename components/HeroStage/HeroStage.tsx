@@ -2,7 +2,6 @@
 
 import NextImage from 'next/image';
 import Link from 'next/link';
-import { Scene } from '@gfazioli/mantine-scene';
 import { TextAnimate } from '@gfazioli/mantine-text-animate';
 import { IconArrowRight, IconBook2, IconGauge } from '@tabler/icons-react';
 import { Button, Container, Group, Image, Stack, Text, Title } from '@mantine/core';
@@ -79,6 +78,10 @@ interface Frame {
  * to advise from. So those two lead, and the surfaces that every monitor has
  * — a menu, an island, a window, a chart — come after them.
  *
+ * Since 0.50.0 the first frame is the suggestions, which grew out of the pace
+ * line it used to show; Maintenance has a frame of its own, without a picture
+ * until the 0.50.0 set is shot.
+ *
  * The ADVICE goes first since v0.4, and that is the revisit this comment used
  * to ask for. It was second, behind the reaper, for one reason that was not
  * editorial: the advice did not ship, so the page's first claim below the fold
@@ -94,14 +97,14 @@ const frames: Frame[] = [
     height: 280,
     alt: 'A Lancetta card for Claude: the five-hour window at 8% with the line “8% in 4h33m” under it, the weekly window at 8% with “8% in 21h53m”, and its separate Fable limit at 0%',
     eyebrow: 'What nothing else can say',
-    title: 'The number you can already see is not the useful one.',
-    body: 'The percentage is on your menu bar all day, so you already know when it is getting low. What you cannot see is how long you can keep going like this. Lancetta says it under the bar — “at this rate you run out in 2h00m”, in amber — whenever it would happen before the window resets.',
+    title: 'Not a percentage. A next step.',
+    body: 'The percentage is on your menu bar all day; what it cannot tell you is what to do about it. Lancetta can, because it keeps every reading. When an agent will stop before its window resets, it says when, and what helps — a lower effort, a lighter model, the other agent while it has room. When a window is about to reset with most of it unused, it says that too: spend it. Each suggestion names the readings it rests on.',
     figures: [
       { value: '7 days', label: 'the window that actually hurts' },
       { value: '1,890', label: 'readings that settled the rule' },
     ],
-    href: '/docs/the-menu#the-pace-line',
-    linkLabel: 'How the pace line reads',
+    href: '/docs/suggestions',
+    linkLabel: 'How a suggestion is made',
   },
   {
     /*
@@ -119,9 +122,17 @@ const frames: Frame[] = [
     eyebrow: 'Next',
     next: true,
     title: 'The rhythm it has not learnt yet.',
-    body: 'Today the projection is this window\u2019s own rate, carried forward. It does not know that you start at nine, or that you never touch it at the weekend. Next, it will reason from the readings it already keeps \u2014 an average across your own days \u2014 to say when to start, and when you will probably stop.',
+    body: 'Today every suggestion reasons from this window\u2019s own rate, carried forward. It does not know that you start at nine, or that you never touch it at the weekend. Next, it will reason from the readings it already keeps \u2014 an average across your own days \u2014 to say when to start, and when you will probably stop.',
     href: '/docs/roadmap',
     linkLabel: 'What is planned, and what it has to prove',
+  },
+  {
+    eyebrow: 'Maintenance',
+    title: 'What they read before they start.',
+    body: 'Every session of a coding agent begins by reading its instruction files — CLAUDE.md, AGENTS.md, rules, skills, memory — from the repository and every folder above it. The Maintenance pane lists them, measures what loads at each start against Claude Code\u2019s own warning thresholds, and runs 20 checks, each with why it matters. A fix that needs no choosing is shown in full before it is applied; the rest opens in Claude Code, in plan mode, with the prompt already written.',
+    figures: [{ value: '20', label: 'checks, each with its reason' }],
+    href: '/docs/maintenance',
+    linkLabel: 'What Maintenance checks',
   },
   {
     src: '/screenshot-window-processes.png',
@@ -146,7 +157,7 @@ const frames: Frame[] = [
     alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, and both windows as bars',
     eyebrow: 'Under the notch',
     title: 'The island.',
-    body: 'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. Point at it and it opens.',
+    body: 'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. A bar turns red when its agent has stopped, or will within the hour. Point at it and it opens, ending on the same suggestion as the panel.',
     href: '/docs/the-notch',
     linkLabel: 'How the island works',
   },
@@ -166,7 +177,7 @@ const frames: Frame[] = [
     alt: 'The Lancetta window: the daily token series for both agents side by side, and underneath, each agent’s 5-hour and 7-day windows on one row',
     eyebrow: 'When a glance is not enough',
     title: 'The window.',
-    body: 'Command-O for the rest: daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, and the processes the agents have left running.',
+    body: 'Command-O for the rest: the same suggestions first, then daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, the processes the agents have left running, and Maintenance.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
   },
@@ -195,22 +206,10 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
    * nothing they see leaves the frame.
    */
 
-  const wash = (
-    <Scene lazy>
-      <Scene.Mesh
-        stops={[
-          { color: '#13D1FB', position: '10% 6%', spread: 48 },
-          { color: '#824BFC', position: '86% 26%', spread: 52 },
-          { color: '#B117C5', position: '64% 92%', spread: 40 },
-        ]}
-        opacity={0.13}
-      />
-      <Scene.Glow color="#13D1FB" size={560} blur={160} opacity={0.14} top="2%" left="12%" />
-      <Scene.Glow color="#824BFC" size={520} blur={160} opacity={0.16} top="8%" left="78%" />
-      <Scene.Glow color="#B117C5" size={420} blur={150} opacity={0.1} top="76%" left="58%" />
-      <Scene.DotGrid color="gray" opacity={0.1} spacing={32} />
-    </Scene>
-  );
+  // Two soft lights on a white page, not a wash over all of it: the
+  // brand's violet behind the product, and the two agents' own colours low in
+  // the corners. Plain gradients, painted by the browser with the page.
+  const wash = <div className={classes.wash} aria-hidden="true" />;
 
   return (
     <section
@@ -241,7 +240,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
             current window's own rate.
           */}
           <Title className={classes.title}>
-            <span className={classes.titleLine}>What you can use.</span>
+            <span className={classes.titleLine}>What you have left.</span>
             <span className={classes.titleLine}>How long it lasts.</span>
             <span className={classes.titleLine}>
               <TextAnimate
@@ -260,15 +259,16 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                 animateProps={{ scaleAmount: 2 }}
                 gradient={{ from: '#0D7DFA', to: '#672AFA' }}
               >
-                When it comes back.
+                What to do next.
               </TextAnimate>
             </span>
           </Title>
 
           <Text c="dimmed" fz={{ base: 'md', md: 'lg' }} lh={1.5} className={classes.lead}>
-            For Codex and Claude Code. A percentage tells you what is gone; Lancetta reads the
-            account’s own windows and says what they leave you — which model still has room, whether
-            this pace runs the window out before it resets, and when you are back. No prices, no
+            For Codex and Claude Code. Lancetta reads each account’s own windows and keeps every
+            reading, so it can say what to do with what is left: slow down before an agent stops,
+            hand routine work to a lighter model or the other agent while it has room, spend a
+            window before it resets unused. Each suggestion says what it rests on. No prices, no
             budget to type in.
           </Text>
 
