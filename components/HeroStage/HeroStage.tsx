@@ -108,7 +108,7 @@ const frames: Frame[] = [
     alt: 'A Lancetta suggestion in green: Codex has room, 88% of this 5-hour window is unused and it resets in 39m; spend it, start the long task now, and Lancetta keeps watching the pace; under it, what it rests on: 12% of the 5 hours used, 20% of the week',
     eyebrow: 'When to push on',
     title: 'Quota about to go unused. Spend it.',
-    body: 'A window that resets with most of it unused is quota gone for good, and nothing on your menu bar says so. Lancetta does: “Codex has room: 88% of this 5-hour window is unused, and it resets in 39m.” Then what to do with it — start the long task now, and raise the effort if the task deserves it — while it keeps watching the pace and warns you in time.',
+    body: 'A window that resets with most of it unused is quota gone for good, and nothing on your menu bar says so. Lancetta does: “Codex has room: 88% of this 5-hour window is unused, and it resets in 39m.” Then what to do with it: start the long task now, and raise the effort when it is set low. It keeps watching the pace, and warns you in time.',
     href: '/docs/suggestions#when-to-push-on',
     linkLabel: 'When it says to push on',
   },
