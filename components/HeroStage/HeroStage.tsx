@@ -208,7 +208,16 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
   // Two soft lights on a white page, not a wash over all of it: the
   // brand's violet behind the product, and the two agents' own colours low in
   // the corners. Plain gradients, painted by the browser with the page.
-  const wash = <div className={classes.wash} aria-hidden="true" />;
+  const wash = (
+    <div className={classes.wash} aria-hidden="true">
+      <div className={classes.dial}>
+        <span className={classes.dialArc} />
+        <span className={classes.dialLit} data-ticks="minor" />
+        <span className={classes.dialLit} data-ticks="major" />
+        <span className={classes.dialHand} />
+      </div>
+    </div>
+  );
 
   return (
     <section

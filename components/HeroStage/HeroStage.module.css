@@ -353,3 +353,174 @@
       transparent 70%
     );
 }
+
+/*
+ * The dial: the instrument the app is named after (a lancetta is its hand).
+ * A gauge's scale arcs over the headline, its pivot far below the fold, and
+ * the hand sweeps once on load with the films' spring: it overshoots, settles,
+ * and leaves the brand's gradient on the scale behind it. One shot: nothing
+ * moves at rest. `--lan-dial` is the reading, measured from the scale's start.
+ */
+@property --lan-dial {
+  syntax: '<angle>';
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.dial {
+  --dial-start: -58deg;
+  /* Rests at 35 degrees right of upright: clear of the headline and the lead. */
+  --lan-dial: 93deg;
+  --dial-size: min(rem(1760px), 240vw);
+
+  position: absolute;
+  left: 50%;
+  top: calc(var(--lan-bar-height, rem(46px)) + rem(14px));
+  width: var(--dial-size);
+  aspect-ratio: 1;
+  translate: -50% 0;
+
+  /* The scale frames the headline; by the panel it is gone. */
+  mask-image: linear-gradient(to bottom, #000 22%, transparent 36%);
+  animation: lan-dial 2.2s var(--lan-spring) 0.35s both;
+}
+
+@keyframes lan-dial {
+  from {
+    --lan-dial: 0deg;
+  }
+}
+
+/* The scale: a tick every 3 degrees, a long one every 15, on a hairline. */
+.dial::before,
+.dial::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+}
+
+.dial::before {
+  background:
+    radial-gradient(
+      closest-side,
+      transparent calc(100% - rem(19px)),
+      color-mix(in srgb, var(--lan-ink) 14%, transparent) calc(100% - rem(18px)),
+      transparent calc(100% - rem(17px))
+    ),
+    repeating-conic-gradient(
+      from -0.06deg,
+      color-mix(in srgb, var(--lan-ink) 16%, transparent) 0 0.12deg,
+      transparent 0.12deg 3deg
+    );
+  mask-image: radial-gradient(
+    closest-side,
+    transparent calc(100% - rem(19px)),
+    #000 calc(100% - rem(19px)),
+    #000 calc(100% - rem(4px)),
+    transparent calc(100% - rem(4px))
+  );
+}
+
+.dial::after {
+  background: repeating-conic-gradient(
+    from -0.12deg,
+    color-mix(in srgb, var(--lan-ink) 30%, transparent) 0 0.24deg,
+    transparent 0.24deg 15deg
+  );
+  mask-image: radial-gradient(
+    closest-side,
+    transparent calc(100% - rem(34px)),
+    #000 calc(100% - rem(34px)),
+    #000 calc(100% - rem(4px)),
+    transparent calc(100% - rem(4px))
+  );
+}
+
+/* The reading: the brand's gradient on a band inside the scale, up to the hand. */
+.dialArc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(
+    from var(--dial-start),
+    transparent 0deg,
+    color-mix(in srgb, var(--lan-azure) 16%, transparent) calc(var(--lan-dial) * 0.5),
+    color-mix(in srgb, var(--lan-violet) 30%, transparent) var(--lan-dial),
+    transparent var(--lan-dial)
+  );
+  mask-image: radial-gradient(
+    closest-side,
+    transparent calc(100% - rem(76px)),
+    #000 calc(100% - rem(44px)),
+    #000 calc(100% - rem(40px)),
+    transparent calc(100% - rem(39px))
+  );
+}
+
+/* The ticks the hand has passed, lit in the brand's violet: the same two scales,
+   cut to the reading by a conic mask. */
+.dialLit {
+  --ticks-every: 3deg;
+  --ticks-width: 0.12deg;
+  --ticks-depth: rem(19px);
+  --ticks-ink: color-mix(in srgb, var(--lan-violet) 45%, transparent);
+
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(
+    from calc(var(--ticks-width) / -2),
+    var(--ticks-ink) 0 var(--ticks-width),
+    transparent var(--ticks-width) var(--ticks-every)
+  );
+  mask-image:
+    conic-gradient(from var(--dial-start), #000 var(--lan-dial), transparent var(--lan-dial)),
+    radial-gradient(
+      closest-side,
+      transparent calc(100% - var(--ticks-depth)),
+      #000 calc(100% - var(--ticks-depth)),
+      #000 calc(100% - rem(4px)),
+      transparent calc(100% - rem(4px))
+    );
+  mask-composite: intersect;
+}
+
+.dialLit[data-ticks='major'] {
+  --ticks-every: 15deg;
+  --ticks-width: 0.24deg;
+  --ticks-depth: rem(34px);
+  --ticks-ink: color-mix(in srgb, var(--lan-violet) 75%, transparent);
+}
+
+/* The hand: from the pivot to just short of the scale, strongest at its tip. */
+.dialHand {
+  position: absolute;
+  left: calc(50% - rem(1.5px));
+  top: rem(30px);
+  width: rem(3px);
+  height: calc(50% - rem(30px));
+  border-radius: rem(2px);
+  transform-origin: 50% 100%;
+  rotate: calc(var(--dial-start) + var(--lan-dial));
+  background: linear-gradient(
+    to top,
+    transparent 62%,
+    color-mix(in srgb, var(--lan-violet) 55%, transparent) 90%,
+    var(--lan-violet)
+  );
+  filter: drop-shadow(0 0 rem(6px) color-mix(in srgb, var(--lan-violet) 45%, transparent));
+}
+
+/* On a phone a tighter dial, so the scale still arcs and the hand stays on screen. */
+@media (max-width: 48em) {
+  .dial {
+    --dial-size: 160vw;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dial {
+    animation: none;
+  }
+}
