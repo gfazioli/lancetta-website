@@ -9,13 +9,13 @@ Nothing here is a promise, and nothing ahead is numbered or dated: the order cha
 
 ## Advice from your own history
 
-Today the pace line reasons from the last hour: if you carry on like this, when you run out. It is honest arithmetic and it has a blind spot — it does not know that you start at nine, that Thursday is your long day, or that you never touch it at the weekend. So it can tell you where *this* afternoon lands and not what a normal one costs you.
+Today the suggestions reason from the last hour: if you carry on like this, when you run out, and what helps. It is honest arithmetic and it has a blind spot — it does not know that you start at nine, that Thursday is your long day, or that you never touch it at the weekend. So it can tell you where *this* afternoon lands, and what to do about it, but not what a normal one costs you.
 
-The readings are already being kept, and two pieces of this step shipped in 0.16: a **working-hours setting**, so the app knows which hours are yours, and **each day's fullest 5-hour window** in the Usage pane — the history the advice would be drawn from. What is still to come is the advice itself: an average across your own days, and the two sentences that need it — **when to start**, and **when you will probably stop**.
+The readings are already being kept, and two pieces of this step shipped in 0.16: a **working-hours setting**, so the app knows which hours are yours, and **each day's fullest 5-hour window** in the Usage pane — the history this advice would be drawn from. What is still to come is advice from your own days: an average across them, and the two sentences that need it — **when to start**, and **when you will probably stop**.
 
 **Done when** it can say, on a Monday morning and before you have spent anything, roughly how far into the day the five-hour window will carry you — and be right often enough that the sentence is worth reading. That is a higher bar than the pace line had to clear, because a projection made before there is any evidence is a forecast rather than arithmetic, and a forecast that is wrong twice stops being read. If it cannot clear it, it says nothing, the way every other case that cannot support a projection already does.
 
-**Measured before it was built, and not there yet.** On 4 October 2026 six ways of making that Monday-morning forecast were replayed over two and a half weeks of one Mac's readings: the average of the days before, their median, weekdays apart from weekends, the same weekday, the day before, and an hour-by-hour profile that was even given the real time each window opened. None did better than a single fixed number chosen afterwards, which is what a forecast that knows nothing about the day amounts to. The best was 6.5 points off on Claude against 5.4 for the fixed number, and 23.3 against 20.5 on Codex; neither of Codex's two run-outs — one of them from nothing to empty in eighteen minutes — was foreseen by any of the six, and two days of the same weekday differed as much as any two days. So for now it says nothing, as promised above. The replay runs again once there are more weeks of readings, and the sentence ships only if it clears the bar.
+**Measured before it was built, and not there yet.** On 4 October 2026 six ways of making that Monday-morning forecast were replayed over two and a half weeks of one Mac's readings: the average of the days before, their median, weekdays apart from weekends, the same weekday, the day before, and an hour-by-hour profile that was even given the real time each window opened. None did better than a single fixed number chosen afterwards, which is what a forecast that knows nothing about the day amounts to. The best was 6.5 points off on Claude against 5.4 for the fixed number, and 23.3 against 20.5 on Codex; neither of Codex's two run-outs — one of them from nothing to empty in eighteen minutes — was foreseen by any of the six, and two days of the same weekday differed as much as any two days. So for now it makes no such forecast, as promised above. The replay runs again once there are more weeks of readings, and the sentence ships only if it clears the bar.
 
 ---
 
@@ -23,11 +23,23 @@ The readings are already being kept, and two pieces of this step shipped in 0.16
 
 **Asking a model how much quota is left.** It is the easiest source to write and it costs tokens on every poll. It is the one route this app will never take — see [How it reads each agent](/docs/how-it-reads).
 
-**Routing around a limit.** No proxy in the path, no failing over to a second account, and nothing firing a token at a schedule to keep a session warm. Those are real things real tools do, and wanting them is reasonable — but they are a different product. This one rests entirely on the claim that the number in front of you is the truth about your account, and a tool that spends quota to hold a connection open, or moves you to another account when the first one refuses, has quietly made that number mean something else. Lancetta tells you where you stand and gets out of the way.
+**Routing around a limit.** No proxy in the path, no failing over to a second account, and nothing firing a token at a schedule to keep a session warm. Those are real things real tools do, and wanting them is reasonable — but they are a different product. This one rests entirely on the claim that the number in front of you is the truth about your account, and a tool that spends quota to hold a connection open, or moves you to another account when the first one refuses, has quietly made that number mean something else. Lancetta tells you where you stand and what to do about it, and gets out of the way.
 
 ---
 
 ## Already shipped
+
+### v0.50 — it says what to do
+
+*Shipped 2026-10-10.*
+
+**Suggestions, first.** The panel and the window open on what to do rather than on a figure. When an agent will stop before its window resets, Lancetta says when, and what helps: a lower effort, a lighter model for routine work, the other agent while it has room. When a window is about to reset with most of it unused, it says to spend it. A week that runs out days early, a free reset about to lapse, a setup that costs every session and trees nothing can reach are suggestions too. Each one names the readings it rests on, and the ones that cannot wait arrive once as a notification. See [Suggestions](/docs/suggestions).
+
+**Maintenance.** A new pane checks the files your coding agents read before every session, such as CLAUDE.md, AGENTS.md, rules, skills and memory. It shows what they cost at each start and what is wrong in them, in 20 checks, each saying why it matters. A fix that needs no choosing is shown in full before it is applied, and the rest opens in Claude Code in plan mode. See [Maintenance](/docs/maintenance).
+
+**Cards that open in place.** The panel and every pane of the window are cards now: a click opens a card's details under it, and the arrow in its corner opens its pane. The window opens where you left it. See [The Panel](/docs/the-menu#the-cards) and [The Window](/docs/the-window).
+
+**And under the notch, the advice.** An agent that has stopped, or will within the hour, turns its bar red, and the open island ends with the same suggestion as the panel. Small text in the panel and the window is easier to read, and Settings › Updates shows whether Lancetta really checks for updates on its own. See [The Notch](/docs/the-notch).
 
 ### v0.17 — Settings, reorganised
 
@@ -85,7 +97,7 @@ The readings are already being kept, and two pieces of this step shipped in 0.16
 
 **A look back at last week.** The readings Lancetta keeps finally answer a question: under the side-by-side, the week that just ended, per agent — when each weekly window ran out and when it was back, how often the five-hour one stopped you and for how long, and how much of the week nobody read. A night the Mac spent asleep is a gap, never a zero, and until your Mac has watched a whole week it says so instead of showing part of one. See [Last week](/docs/the-window#last-week).
 
-**Both agents side by side.** The Overview shows every agent's two windows on one row, each with its reset and where it is heading — and never which agent to use. See [Overview](/docs/the-window#overview).
+**Both agents side by side.** The Overview shows every agent's two windows on one row, each with its reset and where it is heading. See [Overview](/docs/the-window#overview).
 
 **And a command line.** `Lancetta usage --json` prints what Lancetta last read for each agent, for a tmux line, SketchyBar or anything else that can run a command, without asking either agent anything itself. See [The command line](/docs/command-line).
 

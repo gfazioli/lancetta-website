@@ -1,9 +1,11 @@
 ---
 title: "Install and connect Codex and Claude Code"
-description: "Install Lancetta on macOS, connect Codex and Claude Code, and read your first quota — including what the one click for Claude does, and does not do."
+description: "Install Lancetta on macOS, connect Codex and Claude Code, and get your first suggestion — including what the one click for Claude does, and does not do."
 ---
 
 # Getting Started
+
+Lancetta tells you when and how to use your coding agents: when to push on, when to slow down, what to switch to, and what to fix in the files they load at every start. For that it needs to read each agent's quota, which costs nothing, and this page is about wiring that up.
 
 ## Requirements
 
@@ -42,9 +44,11 @@ If you would rather not hand Lancetta a keychain item, there is an older route t
 
 ## Read the panel
 
-Click the menu-bar item. You get one card per agent: the plan the account is on, then a row per window — the percentage used, a bar, and the time that window resets.
+Click the menu-bar item. The panel opens on **what to do**: up to three suggestions, the most urgent first and open, each with what helps and what it rests on. A new install has no history yet, so a suggestion about your pace waits until Lancetta has watched a window move for half an hour or so; the others can appear from the first reading. With nothing to suggest, one line says so.
 
-[What every row means →](/docs/the-menu)
+Under the suggestions there is a card for each agent and for each pane of the window. Click an agent's card for the plan the account is on and a row per window: the percentage used, a bar, and the time that window resets.
+
+[What it can suggest →](/docs/suggestions) · [What every card and row means →](/docs/the-menu)
 
 ## Your language
 
@@ -54,5 +58,6 @@ All of it follows: the panel, the island under the notch, the window, Settings, 
 
 ## And then the rest of it
 
-- On a MacBook Pro, the same reading sits under the notch and opens when you point at it — [The Notch](/docs/the-notch).
-- **Open Lancetta…** (⌘O) gives you usage over weeks, both agents in detail, and the background processes the agents have left running — [The Window](/docs/the-window).
+- On a MacBook Pro, the same reading sits under the notch, turns red when an agent has stopped or will within the hour, and opens on the same suggestion as the panel when you point at it — [The Notch](/docs/the-notch).
+- **Open Lancetta…** (⌘O) gives you every suggestion, usage over weeks, both agents in detail, and the background processes the agents have left running — [The Window](/docs/the-window).
+- The window's **Maintenance** pane checks the files your agents read before every session, and fixes what needs no choosing once you have seen the change — [Maintenance](/docs/maintenance).

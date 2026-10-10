@@ -2,6 +2,7 @@ import type { ReactNode } from 'react';
 import { Group } from '@mantine/core';
 import {
   IconBook2,
+  IconBulb,
   IconRocket,
   IconLayoutNavbar,
   IconDeviceDesktop,
@@ -15,6 +16,7 @@ import {
   IconAlertTriangle,
   IconBellRinging,
   IconTerminal2,
+  IconTools,
 } from '@tabler/icons-react';
 
 // Sidebar entry with a leading icon. The icon inherits `currentColor`, so it
@@ -40,9 +42,12 @@ export default {
   index: nav(IconBook2, 'Introduction', 'lancetta'),
   '---get-started': { type: 'separator', title: 'Get Started' },
   'getting-started': nav(IconRocket, 'Getting Started', 'orange'),
+  // What Lancetta is for comes before the surfaces that show it (0.50.0).
+  suggestions: nav(IconBulb, 'Suggestions', 'yellow'),
   'the-menu': nav(IconLayoutNavbar, 'The Panel', 'teal'),
   'the-notch': nav(IconDeviceDesktop, 'The Notch', 'violet'),
   'the-window': nav(IconAppWindow, 'The Window', 'cyan'),
+  maintenance: nav(IconTools, 'Maintenance', 'lime'),
   alerts: nav(IconBellRinging, 'Alerts', 'pink'),
   '---how-it-works': { type: 'separator', title: 'How it works' },
   'how-it-reads': nav(IconEye, 'How it reads each agent', 'blue'),

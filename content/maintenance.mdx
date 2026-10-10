@@ -1,0 +1,110 @@
+---
+title: "Maintenance: what your coding agents read before they start"
+description: "The files Claude Code, Codex and the others read before every session: what they cost at each start, 20 checks on what is wrong, and the fixes Lancetta guides."
+---
+
+# Maintenance
+
+Every session of a coding agent begins by reading its instruction files — CLAUDE.md, AGENTS.md, rules, skills, memory — and every session pays for them again, before your first prompt. They are rarely measured, and most of what goes wrong in them goes wrong silently: an import that loads nothing, a rule that loads everywhere, an AGENTS.md that Claude Code never reads.
+
+The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code when it does.
+
+![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, the heaviest start at 6,983 of the 120,000 characters at which Claude Code warns, then the Instructions, Rules, Skills and Commands & Subagents cards, and the Instructions card open on the four files that need fixing](/screenshot-window-maintenance.png)
+
+## Where it looks
+
+Lancetta keeps no list of your projects, so it asks Claude Code where it has worked. Every session Claude Code records leaves a transcript under `~/.claude/projects`, and each one names the folder the session started in: Lancetta reads that folder off each project's newest transcript, takes the repository it belongs to, and, for a session started in a workspace folder, the repositories directly inside it. A folder that is gone, outside any repository, or a second checkout of the same repository is left out.
+
+In each of those places it reads what the agents read:
+
+- **the repository** — its CLAUDE.md, AGENTS.md and GEMINI.md at any depth, Copilot's and Cursor's instructions and rules, its `.claude` folder (rules, skills, commands, subagents, settings) and `.mcp.json`;
+- **the folders above it**, which Claude Code also reads when a session starts below them;
+- **your home folder's configuration** — `~/.claude` (CLAUDE.md, rules, skills, commands, subagents, settings), `~/.codex`, `~/.gemini`, and the memory Claude Code keeps for each folder.
+
+The scan only reads, and runs nothing but `git`, which it needs to find each repository and to know what is committed in it. Lancetta looks for the `git` of Apple's developer tools, then Homebrew's; when there is none, the pane says so rather than showing an empty list.
+
+The scan runs the first time you open the panel, the window or the pane, and again when you pull the pane down or choose **Scan again**.
+
+## What loads at each start
+
+The top of the pane is a budget. Everything a session loads at launch stays in its context for the whole session, before your first word, and Claude Code warns past a size it does not document: Lancetta read the figures out of Claude Code itself. With a 200K context window it warns past **40,000 characters in one file** and **120,000 in everything a session loads at launch**; with 1M, past 150,000 for both.
+
+**Heaviest start** is the place whose sessions load the most, against that limit: the bar fills toward the point where Claude Code would warn, and a place past it is a warning. Which window you run is set in [Settings](/docs/settings#maintenance).
+
+## Warnings and suggestions
+
+Each finding is one of two kinds, and the pane says which at the top:
+
+- **A warning** is something an agent does wrong or skips today: an import that loads nothing, a rule that loads in every session, a file Claude Code never reads.
+- **A suggestion** is something that works but costs more, or helps less, than it could.
+
+Every finding carries a sentence saying what was found, with its figures, and **why it matters**: what it costs, or what an agent misses because of it.
+
+## The 20 checks
+
+| Check | What it catches |
+|---|---|
+| Instructions loaded at launch | A place whose sessions load more than Claude Code takes before it warns. Within 10% of the limit, a suggestion. |
+| One file past Claude Code's size warning | Any one file past the size Claude Code warns about at launch. |
+| Long instruction files | A CLAUDE.md, AGENTS.md, GEMINI.md or Copilot instructions file over 200 lines, the target Claude Code's docs give. |
+| Memory index past what loads | A MEMORY.md past its first 200 lines or 25 KB, the part that loads: the newest entries, at the end, never reach a session. |
+| Memory files nothing links to | A memory file no link reaches from MEMORY.md, so Claude Code finds it only by chance. |
+| AGENTS.md that Claude Code skips | An AGENTS.md Claude Code does not read, because a CLAUDE.md is in charge, holding instructions nothing it does read contains. |
+| Imports that load nothing | An `@` import of a file that is not there, written in quotes, cut short at a space, or more than four imports deep. One outside the repository, which Claude Code asks about first, is a suggestion. |
+| Frontmatter that doesn't parse | A rule, skill or command whose frontmatter is dropped: a rule then loads everywhere, a skill or a command loses its description. |
+| Rules that match no file | A rule whose path patterns match no file in the repository, so it never applies. |
+| Skills, commands and subagents missing a field | A SKILL.md over 500 lines, a skill description cut short in the listing, a skill or a command with no description, a subagent with no name or description. |
+| Paths that don't resolve | A path in backticks that leads to no file, beside the file or in any folder above it. |
+| Personal files committed to git | A CLAUDE.local.md or `.claude/settings.local.json`, which hold one person's settings, committed for everyone who clones the repository. |
+| AGENTS.md past Codex's size limit | The AGENTS.md files from the repository's root down to a folder adding up to more than Codex reads (32 KiB unless you raised it): the files past it never reach a session. |
+| Cursor rules | A Cursor rule over 500 lines, or a plain `.md` that Cursor's rules ignore. |
+| AGENTS.md that Gemini CLI skips | An AGENTS.md in a repository where Gemini CLI reads only GEMINI.md. |
+| Settings that skip every permission question | Shared settings that turn on `bypassPermissions`, or allow every shell command without a question. |
+| Credentials in committed settings | A value shaped like a credential in a committed settings file. |
+| Paragraphs repeated across repositories | The same paragraph, word for word, in the instructions of three or more repositories. |
+| Files too large to load | A file over 4 MiB, which Claude Code skips whole. |
+| Empty files | A file with nothing in it. |
+
+Each check can be switched off in [Settings](/docs/settings#maintenance), and suggestions can be hidden altogether; warnings are always shown.
+
+## Fixing what it finds
+
+Open a card, then a file: under its findings sit the ways to fix them.
+
+### When the fix needs no choosing
+
+Five kinds of finding have a fix with one right answer, and Lancetta offers to make it:
+
+| Finding | The fix |
+|---|---|
+| AGENTS.md that Claude Code skips | Add `@AGENTS.md` to the CLAUDE.md in charge, or create a CLAUDE.md that imports it. Offered only when none of AGENTS.md is loaded yet: one that copied part of it would load that part twice. |
+| An import written in quotes, or cut short at a space | Rewrite it as an import Claude Code follows, its spaces escaped. |
+| A personal file committed to git | Stop tracking it and add it to `.gitignore`. The file stays on your disk. |
+| AGENTS.md that Gemini CLI skips | Create a `.gemini/settings.json` that lists AGENTS.md, only where there is none. |
+| A memory file nothing links to | Add one line at the end of MEMORY.md, in the shape Claude Code writes its own entries, and only while the index still has room. |
+
+**Nothing is written before you have seen it.** The button opens the fix whole: what it does, what changes for the agents (an import says how many characters it adds to every launch there), and every line it adds or removes, file by file. **Apply** makes it; **Cancel** leaves everything as it was.
+
+**It is applied whole or not at all.** Every file the fix writes, or relies on without writing, must still be byte for byte what the preview showed: if anything changed on disk in the meantime, nothing is written, and the pane scans again. If something fails once it has started — git refusing, a write failing, or the file still not ignored after the change — every file written and every change to git's index is put back before the pane tells you why.
+
+### When it needs a judgement
+
+Trimming a long file, merging two that drifted apart, rewording a description: these are a judgement, and they go to an agent with you in the session. **Fix with Claude Code** opens Terminal in the file's repository and starts Claude Code there **in plan mode**, with a first message Lancetta writes: what was found, why it matters and how to go about it. Claude Code reads and proposes; it edits nothing until you approve its plan.
+
+Its menu also has **Copy Prompt**, to paste the same message into a session of your own. Without Claude Code installed, the button is **Copy Prompt for an Agent**.
+
+**Copy Findings**, at the top of the pane, puts every finding shown on the clipboard, file by file, ready for any agent.
+
+### Files no agent uses
+
+A memory file nothing links to, an empty file that keeps nothing out, a plain `.md` in Cursor's rules: these do nothing for any agent today, and only these offer **Move to Trash…**. The file is read again just before it moves, and anything changed since the scan is left alone. The Finder can put it back.
+
+## Background sessions
+
+Claude Code's background sessions keep a folder each after they end. The **Background Sessions** card lists the ones that have ended, with what each still keeps on disk, as Claude Code itself reports them when Lancetta asks it, and marks those that stopped waiting for your answer, which may hold work in progress.
+
+They are removed the way Claude Code documents, one `claude rm` each, never by deleting folders: Claude Code knows which worktree a session made, and refuses on its own to drop one that holds work not pushed. A session running again by the time you confirm is left alone, and the pane says what was removed and what was not.
+
+## In the panel and the window
+
+The figures reach the rest of the app: the panel and the window's Overview each carry a **Maintenance** card with the number of warnings and the heaviest start, and when there are warnings, [a suggestion](/docs/suggestions) at the top says so, with **Open Maintenance…** beside it.

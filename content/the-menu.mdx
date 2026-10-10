@@ -1,11 +1,11 @@
 ---
-title: "The menu-bar panel, row by row"
-description: "Every row in the Lancetta panel: the percentage, the bar, the reset time, the pace line, the plan, the freshness marker, the process strip, the menu-bar item."
+title: "The menu-bar panel: suggestions first, then the cards"
+description: "What the Lancetta panel says: the suggestions first, then a card per agent and per pane that opens in place, with each window's bar, reset and pace line, and the menu-bar item."
 ---
 
 # The Panel
 
-One card per agent, one row per window. Click a card to open [the window](/docs/the-window): it lights up under the pointer, and its own buttons — **Use…**, **Connect Claude Code…** — still do only their own thing.
+The panel opens on **what to do**: the suggestions, the most urgent first. Under them is the window in brief, a card for each agent and for each pane of the window, and each card opens its details in place. The numbers are there for when you want to check a suggestion.
 
 ![The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (lower the effort, a lighter model for routine work, no free reset to fall back on, move the next tasks to Codex) and what it rests on; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open on its 5-hour, 7-day and Fable bars, Codex at 20%, Usage and Maintenance](/screenshot-menu-dark.png)
 
@@ -18,15 +18,55 @@ to need 466 points and now needs 380.
 
 It is always dark, like the window, whatever appearance your Mac is in.
 
-## The card header
+## The suggestions
+
+Up to three, at the top, because they are what Lancetta is for. The most urgent one is open, and the others show their title: click one to open it, and the one that was open closes.
 
 ```
-Claude · max 20×                    seen 7s ago
+⛔  At this pace Claude stops in 51m, then waits 1h18m for its reset.
+    • Lower the effort: it is set to xhigh.
+    • Give routine work to a lighter model.
+    • There is no free reset to fall back on: keep what is left for what matters most.
+    • Move the next tasks to Codex: 88% of its 5-hour window and 80% of its week are left.
+    5 hours: 82% used, 21% an hour over the last 1h00m, from 14 readings.
 ```
 
-- **The mark and the name** — the agent this card is about. The marks are the vendors' own artwork; one switch in [Settings](/docs/settings#appearance) replaces them with neutral system symbols.
-- **The plan** — read from the account itself rather than typed into a setting, so it cannot drift out of date.
-- **The freshness marker** — how long ago this reading was taken, shown only when it trails the panel's own **Updated … ago** line by more than a minute and a half. The panel has one clock, at the top; a card adds its own age only when that clock would be wrong about it. Codex can be asked, so it keeps up. Claude, once connected, is asked too — at most once a minute, and straight away on Refresh now — so it keeps up while the account answers; if the account asks for a pause, the last reading stays on the card with its age. Through the status-line file instead, the reading moves only while a Claude Code session is open, so after an idle evening the card says *seen 3h17m ago* under a header saying *Updated 5s ago* — and the gap between the two is the point. That asymmetry is real and the panel shows it rather than smoothing it over — see [How it reads each agent](/docs/how-it-reads). A Claude card still on that route also says so under its bars — *From the status-line file, which moves only while a Claude Code session is open* — with a **Connect Claude Code…** button beside the sentence, because a Mac wired that way before the account route existed was never told there was a better one.
+Each one says what is happening, then what helps, then, in small type, what it rests on, so you can check it before you act. Some carry one button: **Use a reset…** for a stopped agent that holds a free reset, **Open Maintenance…**, or **Reclaim…**.
+
+The colour says how much it matters:
+
+- **red**: an agent that has stopped, or will stop within the hour, before its window resets;
+- **amber**: something that will cost you later: a stop further off than that, a week that runs out days early, a free reset that lapses within two days, or a start that loads more than Claude Code warns at;
+- **green**: room you would otherwise lose, a window about to reset mostly unused;
+- **blue**: housekeeping: what [Maintenance](/docs/maintenance) found, a free reset that lapses later in the week, or the trees nothing can reach.
+
+With more than three, a line under them says how many more there are, and opens the window, where the Overview shows them all. With nothing to suggest, one line takes their place: *Nothing to adjust: every agent has room, and Lancetta is watching the pace.* It says that only when the readings show room in every window. Otherwise the line is just *Nothing to suggest right now: Lancetta is watching the pace.*
+
+What each suggestion is, when it appears and which ones also arrive as a notification are on [Suggestions](/docs/suggestions).
+
+## The cards
+
+Under the suggestions is the window in brief. There is a card for each agent, then **Usage** and **Maintenance**, then **Processes** while background trees are running. Each card shows one figure and a line under it:
+
+- **an agent**: the fuller of its two windows and when that window resets (*82% · 5 hours · ↻ 2h09m*), with the line in amber when it is spent;
+- **Usage**: the tokens of the last seven days, for both agents together;
+- **Maintenance**: how many warnings, and how much of Claude Code's warning size the heaviest start loads;
+- **Processes**: how many Codex trees are running, and what they hold, or, when some are orphaned, what the orphans hold.
+
+**Click a card and its details open under it**, joined to it, and a second click closes them. One card is open at a time, and the panel remembers which one between launches. The **arrow** in a card's corner opens that pane of [the window](/docs/the-window) instead.
+
+An agent's card opens on its plan, its windows and anything it is waiting on: a refusal, a free reset, or a better route to its numbers. Usage opens on the week's chart, Maintenance on what the scan found, and Processes on its strip with **Reclaim**.
+
+### An agent's card, opened
+
+```
+max 20×                                  seen 7s ago
+```
+
+- **The plan**: read from the account itself rather than typed into a setting, so it cannot drift out of date.
+- **The freshness marker**: how long ago this reading was taken. It is shown only when it trails the panel's own **Updated … ago** line by more than a minute and a half. The panel has one clock, at the top, and a card adds its own age only when that clock would be wrong about it. Codex can be asked, so it keeps up. Claude, once connected, is asked too, at most once a minute and straight away on Refresh now, so it keeps up while the account answers. If the account asks for a pause, the last reading stays on the card with its age. Through the status-line file instead, the reading moves only while a Claude Code session is open. After an idle evening the card says *seen 3h17m ago* under a header saying *Updated 5s ago*, and the gap between the two is the point. That asymmetry is real and the panel shows it rather than smoothing it over; see [How it reads each agent](/docs/how-it-reads). A Claude card still on that route also says so under its bars, *From the status-line file, which moves only while a Claude Code session is open*, with a **Connect Claude Code…** button beside the sentence. A Mac wired that way before the account route existed was never told there was a better one.
+
+The mark and the name are on the card itself. The marks are the vendors' own artwork, and one switch in [Settings](/docs/settings#appearance) replaces them with neutral system symbols.
 
 ## The rows
 
@@ -40,7 +80,7 @@ Claude · max 20×                    seen 7s ago
 - **The percentage** — how much of that window is spent, or how much is left, depending on [one setting](/docs/settings#general). The bar is filled with whichever number is on screen, never with its opposite.
 - **The window** — `5h` is the rolling five-hour bucket, `7d` the weekly one. A row carrying a **model's name** instead is a weekly limit that belongs to that model alone, counted separately from the two above and sent by your account under that name. It appears only when your account has one and only once it has been used; see [How it reads each agent](/docs/how-it-reads#a-window-one-model-keeps-to-itself).
 - **The bar** — the same number, drawn, so a glance is enough. It is tinted with the colour you gave that agent.
-- **The reset** — when this window rolls over. This is the number that makes the percentage actionable: 80% with four hours to go is a different afternoon from 80% with ten minutes to go.
+- **The reset** — when this window rolls over. 80% with four hours to go is a different afternoon from 80% with ten minutes to go, which is why every suggestion about a window names its reset too.
 
 ### A free reset
 
@@ -50,7 +90,7 @@ Claude · max 20×                    seen 7s ago
 ↺ 1 free reset · until 22 Oct                  Use…
 ```
 
-When Codex's account grants you a free reset of its windows, the card says so under its bars, with the day it lapses; point at the row for what the account calls it and when it was granted. **Use…** is there only while a window has something to reset, and it never spends anything by itself: it asks first, and the question puts two dates side by side — when each window would come back **on its own**, and when the credit **lapses** — with **Cancel** as the default. A week that comes back by itself this afternoon and a credit that lasts a month are two facts, and the question shows both rather than deciding for you.
+When Codex's account grants you a free reset of its windows, its card says so under its bars, with the day it lapses; point at the row for what the account calls it and when it was granted. **Use…** is there only while a window has something to reset, and it never spends anything by itself: it asks first, and the question puts two dates side by side — when each window would come back **on its own**, and when the credit **lapses** — with **Cancel** as the default. A week that comes back by itself this afternoon and a credit that lasts a month are two facts, and the question shows both rather than deciding for you.
 
 While a credit is in hand, a spent window no longer says *nothing more until it resets*, because that has stopped being true. If the answer to a spend is lost on the way back, trying again repeats the same request, so it can never spend a second credit. After a reset the card shows the new numbers as soon as the next reading lands.
 
@@ -78,8 +118,8 @@ The agents appear in **the order you put them in**, set by dragging in [Settings
 
 ## The pace line
 
-Under the bar it belongs to, a caption saying how much of that window has gone and
-how long it has been open:
+Under the bar it belongs to, in an opened agent card, a caption saying how much of that
+window has gone and how long it has been open:
 
 ```
 60% in 2h00m
@@ -95,9 +135,10 @@ resets, it says when, in amber:
 
 With [Count down what is left](/docs/settings#general) on, it speaks in what is left, like the figure above it: *40% left, 2h00m in · at this rate you run out in 2h00m*.
 
-This is the part the percentage cannot tell you. The number is on your menu bar
-all day, so you already know when it is getting low; what you cannot see is how
-long you can keep going **like this**. "Like this" is your recent rate — about the
+This is the part the percentage cannot tell you, and the arithmetic the **slow
+down** suggestion is made from. The number is on your menu bar all day, so you
+already know when it is getting low; what you cannot see is how long you can keep
+going **like this**. "Like this" is your recent rate — about the
 last hour, pauses included — not the window's average, which spreads one afternoon
 over the nights and idle days before it. The distance is rounded to ten minutes,
 half hours past the first hour, and under ten minutes it says *a few minutes*.
@@ -143,17 +184,18 @@ window's own name.
 
 *(Those are the figures from the census that produced this feature, not a mock-up.)*
 
-One strip for the background trees the agents have left running, and a
-**Reclaim** button when some of them are serving directories that no longer
-exist. It is drawn only when there are trees to report — a permanent row of
-zeroes teaches you to stop reading that part of the panel. It shows you the list
-before it stops anything on it. See [The processes they leave behind](/docs/memory).
+The **Processes** card is there only while background trees are running, because a
+permanent card of zeroes teaches you to stop reading that part of the panel. Opened, it
+is one strip: how many trees there are and what they hold, and a **Reclaim** button
+when some of them are serving directories that no longer exist. When some are orphaned,
+a suggestion says so too, with the same button. Reclaim shows you the list before it
+stops anything on it. See [The processes they leave behind](/docs/memory).
 
 ## Limits
 
 When a window refuses you, **that window is the one you see**. Lancetta does not average the buckets into one comfortable total — an average across a refused bucket and a healthy one lands somewhere reassuring and tells you nothing about why the last request failed. In the menu bar the refusal is named: the refusing agent's cell shows its mark beside a dead lamp — black with a red edge — its window at 100%, and the time that window comes back, and the other agents keep their turns — a block on Codex is not information about Claude.
 
-When an agent cannot be read at all, the card says so in one sentence. A situation that is not a fault, such as Codex not being installed or Claude Code not signed in, is described calmly with what would change it, and with the one button that would change it. A fault is drawn red, and **Why, and what to do…** opens a window naming the code, the likely cause and the fix beside the raw evidence, with a report to copy into an issue. Every code is listed on the [Troubleshooting](/docs/troubleshooting) page.
+When an agent cannot be read at all, its card shows `—` and, opened, says why in one sentence. A situation that is not a fault, such as Codex not being installed or Claude Code not signed in, is described calmly with what would change it, and with the one button that would change it. A fault is drawn red, and **Why, and what to do…** opens a window naming the code, the likely cause and the fix beside the raw evidence, with a report to copy into an issue. Every code is listed on the [Troubleshooting](/docs/troubleshooting) page.
 
 ## Unknown is not zero
 
@@ -168,7 +210,7 @@ The strip across the top is the panel's own toolbar:
 - **Settings** (⌘,) — the gear.
 - **The pin** — see below.
 
-Along the bottom, **Open Lancetta…** (⌘O) — the same window a click on a card opens: usage over weeks, both agents in detail, and the process list; see [The Window](/docs/the-window) — and **Quit Lancetta** (⌘Q).
+Along the bottom, **Open Lancetta…** (⌘O), which opens the window on the pane it was left on: every suggestion, usage over weeks, both agents in detail, the process list and Maintenance; see [The Window](/docs/the-window). And **Quit Lancetta** (⌘Q).
 
 **Right-click** the menu-bar item for the classic menu with every command in it: Refresh Now, Open Lancetta…, Settings…, Check for Updates…, About Lancetta and Quit Lancetta. It works with the panel pinned too.
 
@@ -183,7 +225,7 @@ not the pointer leaving the item — and neither does choosing Settings or Open
 Lancetta inside it, which open their window beside it. It stays in front of
 whatever you are working in, and you can drag it away from the menu bar to wherever
 suits, by any empty part of it: beside the header, between the cards or around them.
-A card itself still opens the window when clicked.
+A card still opens and closes when clicked.
 
 **Escape still closes it.** The pin is remembered, so it opens pinned next time.
 

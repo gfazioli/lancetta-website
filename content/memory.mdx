@@ -5,7 +5,7 @@ description: "The agent processes that outlive the sessions that started them, w
 
 # The processes they leave behind
 
-Quota is what the agents cost you while you are working. This is what they cost you afterwards — and it is a footnote to Lancetta's one job, not a second one: the app exists to tell you where your quota stands, and this page is about the mess it also happens to be able to see.
+Quota is what the agents cost you while you are working. This is what they cost you afterwards, and it is one of the things Lancetta tells you to act on: when some of what they left running can never be reached again, a suggestion says so, with the button that frees it.
 
 ## What accumulates
 
@@ -45,7 +45,9 @@ Three things keep it that way, and each one is a way the obvious version would h
 
 ![The Processes pane: 4 Codex trees holding 1.45 GB, 3 of them orphaned holding 1.05 GB, and the list open under them: each tree with the directory it was started for, what it holds, its children and its pid, the three orphans marked with a warning](/screenshot-window-processes.png)
 
-The panel grows a **Processes** strip whenever there is something to say — how many trees, what they hold, and a **Reclaim** button when some of them are orphaned. It is drawn only when trees are running: a permanent row of zeroes teaches you to stop reading that part of the panel.
+When some trees are orphaned, a **suggestion** says so — *3 orphaned Codex trees hold 1.05 GB*, with *Reclaim the memory: nothing can reconnect to them* and a **Reclaim…** button. It rests on one fact, which it names: the trees were *started for folders that no longer exist*. The Overview shows it with every other suggestion. The panel shows it when it is among the three most urgent, and housekeeping comes after anything about your quota.
+
+The panel also has a **Processes** card whenever trees are running: how many, and what they hold. Opened, it is one strip with a **Reclaim** button when some are orphaned. It is not drawn when no trees are running, because a permanent card of zeroes teaches you to stop reading that part of the panel.
 
 The [window's Processes pane](/docs/the-window#processes) has the whole list: each tree, the directory it was started for, what it is holding, how many children it has.
 

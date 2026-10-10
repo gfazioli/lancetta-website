@@ -1,11 +1,11 @@
 ---
 title: "Settings reference"
-description: "Lancetta's Settings: the refresh interval, counting down what is left, notifications and your working hours, each agent's colour and order, and the notch."
+description: "Lancetta's Settings: the refresh interval, notifications and your working hours, each agent's colour and order, the notch, and what Maintenance checks."
 ---
 
 # Settings
 
-⌘, from the panel, or the gear at its top. Seven panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
+⌘, from the panel, or the gear at its top. Eight panes, and a search field that finds a setting by name when you cannot remember which pane it is in.
 
 ![Lancetta's Settings, on the General pane: the refresh interval and counting down what is left, the two advice switches, and the menu bar's rotation and hover switches beneath them](/screenshot-settings-general.png)
 
@@ -19,7 +19,7 @@ It applies to Claude too once it is connected, with a floor: the account is aske
 
 Whichever you pick, the bars are filled with **the number that is shown**, and every label that names the quantity follows it. That sounds like a detail and is not: a card headed *Quota left* over a bar filled with what was used is the exact defect this app was built in response to, and the app has written it twice by accident since.
 
-**Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone and how long it has been open, and, when your recent rate would empty a window before it resets, when — on the window that would stop you first. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything. Two settings on the [Notifications](#notifications) pane work with it: your [working hours](#working-hours) tell it when your day ends, and Suggestions are sent only while it is on.
+**Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone and how long it has been open, and, when your recent rate would empty a window before it resets, when — on the window that would stop you first. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything. Two settings on the [Notifications](#notifications) pane work with it: your [working hours](#working-hours) tell it when your day ends, and the Suggestions notifications are sent only while it is on. The [suggestions](/docs/suggestions) at the top of the panel and the window do not depend on it: advice is the app's job, and this line is one way of saying it.
 
 **Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there, and turns amber when it says when you would run out. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
 
@@ -75,7 +75,7 @@ What Lancetta says first, which is deliberately little: the percentage is alread
 
 **Alerts** — what the account reported: it refused you or a window is spent, it is ready again, or its reading has stopped moving.
 
-**Suggestions** — what the series implies: a window heading for empty before it resets, at its average so far, with the reset named beside it — which is why it can warn days ahead, where the pace line speaks of your recent rate. It follows the pace line's switch, under [General](#general), which is where advice is turned on or off.
+**Suggestions** — what Lancetta suggests while the panel is closed: an agent that will stop within the hour at this pace, with what to do instead; a window about to reset mostly unused; a free reset about to lapse; and where a week is heading, days ahead, at its average so far, with the reset named beside it. Each is said once per window. It is off while the pace line's switch, under [General](#general), is off. The [suggestions](/docs/suggestions) themselves, at the top of the panel and the window, are there either way.
 
 **Also say when a window passes** — *Never* by default, because this one announces the number already in your menu bar. Kept for a hard threshold; each level is said once per window, going up, and again after the window resets.
 
@@ -108,6 +108,26 @@ One switch per agent, each with its mark: off, Lancetta sends nothing about that
 
 **Show the reading under the notch** — only on a Mac that has a notch, since a setting whose feature can never run reads as broken. See [The Notch](/docs/the-notch).
 
+## Maintenance
+
+What the [Maintenance pane](/docs/maintenance) reads and checks. The pane's own **Settings…** button opens this page.
+
+![Lancetta's Settings, on the Maintenance pane: the context window set to 200K, with the warning sizes it means, Flag instruction files over 200 lines, then a switch for each agent whose files are read — Claude Code, Codex, Cursor, Copilot and Gemini CLI — and Include your home folder's configuration](/screenshot-settings-maintenance.png)
+
+**Context window** — 200K by default, or 1M: the context window of the model you run Claude Code with. Claude Code's startup warnings scale with it: at 200K it warns past 40,000 characters in one file and 120,000 in everything a session loads at launch; at 1M, past 150,000 for both. These figures were read out of Claude Code itself, not its docs, so a later version may move them.
+
+**Flag instruction files over 200 lines** — the target Claude Code's docs give each CLAUDE.md, applied to AGENTS.md, GEMINI.md and Copilot's instructions too, from 50 to 1,000 lines.
+
+**Agents** — Claude Code, Codex, Cursor, Copilot and Gemini CLI, a switch each: the agents whose files the pane lists and checks. A file several agents read, like AGENTS.md, stays while any of them is on. Claude Code off also hides what loads at launch, which is its own.
+
+**Include your home folder's configuration** — on by default: `~/.claude`, `~/.codex`, `~/.gemini` and the memory Claude Code keeps per folder. Off, they are neither listed nor checked, but what loads at launch still counts them: every session pays for them either way.
+
+**Show suggestions** — on by default. Off, the pane lists warnings only; warnings are always shown.
+
+**Flag a paragraph repeated in 3 repositories** — how many repositories must repeat a paragraph word for word in their instructions before it is worth keeping once, from 2 to 10.
+
+**Checks** — each of the [20 checks](/docs/maintenance#the-20-checks), with why it matters and a switch of its own. **Turn All On** appears once one of them is off.
+
 ## Sources
 
 Where each agent's numbers come from, and where Lancetta looked for them.
@@ -130,7 +150,7 @@ Three controls and the build you are running:
 ![Lancetta's Settings, on the Updates pane: Check for updates on launch, Automatically check for updates, the Check for Updates Now button, and the build stamp beside it](/screenshot-settings-updates.png)
 
 - **Check for updates on launch** — off by default. A silent check when Lancetta starts, which speaks up only if there is something to say.
-- **Automatically check for updates** — hands the schedule to the update framework, which then checks on its own cadence.
+- **Automatically check for updates** — hands the schedule to the update framework, which then checks every 24 hours by default. The switch shows what the framework will actually do: on a fresh install it reads off until you turn it on, or say yes when the framework asks, once, on the second launch.
 - **Check for Updates Now…** — the prompt, straight away.
 
 **Both automatic checks are off until you turn them on, and nothing is checked in the meantime.** Every release, and what changed in it, is on the [release notes](/docs/release-notes) page.
