@@ -1,1 +1,1 @@
-Lancetta: track and manage your AI usage. A MacBook shows the Lancetta menu-bar panel, with Claude's five-hour, weekly and Fable windows each carrying the pace it is on, and Codex spent for the week with a free reset ready to use.
+Lancetta: push on, slow down, or switch agents, and Lancetta tells you when. Beside it, the Lancetta panel hanging from the menu bar opens on its suggestions: Claude stops in 51 minutes at this pace, so lower the effort, give routine work to a lighter model and move the next tasks to Codex; Codex has room to spend; Maintenance found four warnings.
