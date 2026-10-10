@@ -1,6 +1,9 @@
 /**
  * What opens when the reading in the header is clicked: the app's own status
- * panel (`MenuPanelView.swift`), rebuilt with invented numbers.
+ * panel (`MenuPanelView.swift`), rebuilt with invented numbers. Since 0.50.0 it
+ * opens on the SUGGESTIONS (`GuidanceViews.swift`), the first open and the rest
+ * by title, then the window in brief: one card per agent and per pane
+ * (`PanelDeck`), each opening in place.
  *
  * The idea is blume.codes', whose landing page shows the product as the product
  * rather than as a picture of it. Theirs is the real UI package with mock data;
@@ -9,7 +12,10 @@
  *
  * - the numbers are the ones in the hero's menu screenshot, so the reading in
  *   the bar, the panel it opens and the picture under it tell one story
- *   (`panel-demo.test.ts` compares the bar against this file);
+ *   (`panel-demo.test.ts` compares the bar against this file). Since 0.50.0
+ *   that screenshot is the app's capture cast (`LANCETTA_DEMO_AGENT=showcase`),
+ *   posed with these same numbers, and every sentence of a suggestion is the
+ *   app's own (`Guidance.swift`) with them filled in;
  * - the two rules that decide what text appears are PORTED, not paraphrased,
  *   and tested at their edges: `shortDuration` from `Preferences.swift`, and
  *   the refresh stamp's label from `RefreshStamp` in `MenuPanelView.swift`;
@@ -44,10 +50,52 @@ export interface PanelAgent {
   credit?: { label: string; detail: string; resettable: boolean };
 }
 
+/** `Guidance.Tone`: red for an agent that stops, amber for a cost later, green for room. */
+export type Tone = 'warning' | 'caution' | 'encourage' | 'info';
+
+/** `Guidance.Tone.color`, from `Theme.swift`. */
+export const toneColor: Record<Tone, string> = {
+  warning: '#FF6B5E',
+  caution: '#F5A524',
+  encourage: '#5FCFB0',
+  info: '#4C8AFF',
+};
+
+/** What a suggestion is about, which picks its glyph (`Guidance.Item.symbol`). */
+export type SuggestionKind = 'stop' | 'room' | 'maintenance';
+
+/** One `Guidance.Item`: what is happening, what to do, and what it rests on. */
+export interface Suggestion {
+  id: string;
+  kind: SuggestionKind;
+  tone: Tone;
+  title: string;
+  steps: string[];
+  basis: string;
+  /** The one control an item carries, pointed at the page that explains it. */
+  action?: { label: string; href: string };
+}
+
+/** A pane's card in the deck (`PaneTile`): its figure and the line under it. */
+export interface PaneTile {
+  pane: 'usage' | 'maintenance';
+  title: string;
+  value: string;
+  footnote: string;
+  /** `OverviewSection.tint`. */
+  tint: string;
+  href: string;
+  /** What the card says when it is opened. */
+  detail: string[];
+}
+
 export interface PanelState {
   /** How old the numbers are when the panel opens, in seconds. */
   updatedAgo: number;
+  /** Most urgent first; the panel shows three (`GuidanceList(limit: 3)`). */
+  suggestions: Suggestion[];
   agents: PanelAgent[];
+  panes: PaneTile[];
 }
 
 /** `ClaudeSource.tintHex` and `CodexSource.tintHex`: the colours an unconfigured Mac gets. */
@@ -78,6 +126,23 @@ export function shortDuration(seconds: number): string {
 }
 
 /**
+ * What an agent's card in the deck shows: `LimitsHeadline`, ported. The figure
+ * is the fuller of the two windows and the line under it that window's name
+ * and its reset; a model's own week is not a candidate, as in the app.
+ */
+export function agentHeadline(agent: PanelAgent) {
+  const windows = agent.rows.filter(
+    (row) => (row.label === '5h' || row.label === '7d') && row.percent !== null
+  );
+  if (windows.length === 0) {
+    return { value: '\u2014', footnote: '' };
+  }
+  const top = windows.reduce((a, b) => ((b.percent ?? 0) > (a.percent ?? 0) ? b : a));
+  const name = top.label === '5h' ? '5 hours' : '7 days';
+  return { value: `${top.percent}%`, footnote: `${name} \u00b7 \u21bb ${top.reset}` };
+}
+
+/**
  * What the panel's refresh stamp says, and whether it has turned amber:
  * `RefreshStamp.label(at:)`. Amber once three polls — and at least three
  * minutes — have gone by, and 45 s is the interval an unconfigured Mac polls
@@ -98,28 +163,63 @@ export function refreshLabel(ageSeconds: number, refreshing = false) {
   return { text: `Updated ${shortDuration(age)} ago`, stale };
 }
 
-/** The panel in the hero's menu screenshot, row for row. */
+/**
+ * The panel in the hero's menu screenshot, row for row: one afternoon on which
+ * Claude is about to stop and Codex has a window about to go unused.
+ */
 export const panelDemo: PanelState = {
   updatedAgo: 42,
+  suggestions: [
+    {
+      id: 'stop.Claude',
+      kind: 'stop',
+      tone: 'warning',
+      title: 'At this pace Claude stops in 51m, then waits 1h19m for its reset.',
+      steps: [
+        'Give routine work to a lighter model.',
+        'There is no free reset to fall back on: keep what is left for what matters most.',
+        'Move the next tasks to Codex: 88% of its 5-hour window and 80% of its week are left.',
+      ],
+      basis: '5 hours: 82% used, 21% an hour over the last 1h00m, from 14 readings.',
+    },
+    {
+      id: 'room.Codex',
+      kind: 'room',
+      tone: 'encourage',
+      title: 'Codex has room: 88% of this 5-hour window is unused, and it resets in 40m.',
+      steps: [
+        'Spend it: start the long task now.',
+        'Raise the effort if the task deserves it.',
+        'Lancetta keeps watching the pace, and warns you in time.',
+      ],
+      basis: '5 hours: 12% used, it resets at 16:40. 7 days: 20% used.',
+    },
+    {
+      id: 'maintenance',
+      kind: 'maintenance',
+      tone: 'info',
+      title: 'Maintenance found 6 warnings in your agents\u2019 setup.',
+      steps: [
+        'Each says what to change: fixing them trims what every session loads, and the tokens with it.',
+      ],
+      basis: 'The heaviest start loads 61% of the size Claude Code warns at.',
+      action: { label: 'Open Maintenance\u2026', href: '/docs/maintenance' },
+    },
+  ],
   agents: [
     {
       agent: 'claude',
       name: 'Claude',
-      plan: 'max 20×',
+      plan: 'max 20\u00d7',
       rows: [
         {
           label: '5h',
-          percent: 8,
-          reset: '25m',
-          pace: { text: '8% in 4h33m' },
+          percent: 82,
+          reset: '2h10m',
+          pace: { text: 'at this rate you run out in 51m', urgent: true },
         },
-        {
-          label: '7d',
-          percent: 8,
-          reset: '6d02h',
-          pace: { text: '8% in 21h53m' },
-        },
-        { label: 'Fable', percent: 0, reset: '6d02h' },
+        { label: '7d', percent: 41, reset: '4d18h' },
+        { label: 'Fable', percent: 30, reset: '4d18h' },
       ],
     },
     {
@@ -127,19 +227,32 @@ export const panelDemo: PanelState = {
       name: 'Codex',
       plan: 'plus',
       rows: [
-        {
-          label: '5h',
-          percent: 2,
-          reset: '1h04m',
-          pace: { text: '2% used · nothing in the last 3h53m' },
-        },
-        { label: '7d', percent: 0, reset: '6d20h' },
+        { label: '5h', percent: 12, reset: '40m', pace: { text: '12% in 4h20m' } },
+        { label: '7d', percent: 20, reset: '4d06h' },
       ],
-      credit: {
-        label: '1 free reset · until 29 Oct',
-        detail: 'Full reset (Weekly + 5 hr) · granted 29 September · valid until 29 October',
-        resettable: true,
-      },
+    },
+  ],
+  panes: [
+    {
+      pane: 'usage',
+      title: 'Usage',
+      value: '142.8M',
+      footnote: 'tokens, last 7 days',
+      tint: '#4C8AFF',
+      href: '/docs/the-window',
+      detail: ['Daily tokens for both agents over 7, 30 or 90 days, in the window.'],
+    },
+    {
+      pane: 'maintenance',
+      title: 'Maintenance',
+      value: '6',
+      footnote: 'warnings \u00b7 heaviest start 61%',
+      tint: '#FF9F0A',
+      href: '/docs/maintenance',
+      detail: [
+        'What your agents load at every start, across 4 repositories, and what is wrong in it.',
+        'A fix that needs no choosing is shown in full before it is applied.',
+      ],
     },
   ],
 };
