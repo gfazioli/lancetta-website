@@ -3,8 +3,15 @@ import Foundation
 import ImageIO
 import UniformTypeIdentifiers
 
-// The share images, derived from ONE master: scripts/social-card.png, the
-// designed card (2:1, 1774x887) the user supplied on 2026-09-25.
+// The share images, derived from ONE master: scripts/social-card.png (2:1,
+// 1774x887). Since 0.50.0 (2026-10-10) the master is RENDERED from
+// scripts/social-card/card.html, which draws the app icon and the panel
+// capture (public/screenshot-menu-dark.png) beside the headline: serve the
+// repository root over HTTP (Chrome refuses a file:// URL here), then
+//   node scripts/shot.mjs http://127.0.0.1:<port>/scripts/social-card/card.html \
+//     <prefix> --width 1774 --height 887 --no-wake
+// and copy <prefix>.png over the master. Until then it was a designed card the
+// user supplied on 2026-09-25.
 //
 //   swift scripts/social.swift <site-root>
 //
