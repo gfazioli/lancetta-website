@@ -320,38 +320,16 @@
 }
 
 /*
- * The hero's light: the brand's violet behind the product, Claude's and
- * Codex's colours low in the two corners, on the white page. Sized to the
- * first screen, not to the pinned stage's whole height, so the light sits
- * where the eye lands.
+ * The dial's box: the first screen, not the pinned stage's whole height, so
+ * the scale sits where the eye lands. The light under it is the Scene's.
  */
-.wash {
+.dialBox {
   position: absolute;
   inset: 0 0 auto;
   z-index: 0;
   height: min(rem(1100px), 120svh);
+  overflow: hidden;
   pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse 52% 46% at 72% 52%,
-      color-mix(in srgb, var(--lan-violet) 15%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 46% 40% at 22% 30%,
-      color-mix(in srgb, var(--lan-azure) 9%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 40% 34% at 0% 96%,
-      color-mix(in srgb, var(--lan-claude-lit) 11%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 36% 32% at 100% 96%,
-      color-mix(in srgb, var(--lan-codex-lit) 10%, transparent),
-      transparent 70%
-    );
 }
 
 /*
@@ -375,13 +353,32 @@
 
   position: absolute;
   left: 50%;
-  top: calc(var(--lan-bar-height, rem(46px)) + rem(14px));
+  /* A clear gap under the header bar, so the scale does not hang off it. */
+  top: calc(var(--lan-bar-height, rem(46px)) + rem(38px));
   width: var(--dial-size);
   aspect-ratio: 1;
   translate: -50% 0;
 
-  /* The scale frames the headline; by the panel it is gone. */
-  mask-image: linear-gradient(to bottom, #000 22%, transparent 36%);
+  /*
+   * The scale frames the headline; by the panel it is gone. And it clears out
+   * behind the headline itself: an elliptical hole where the three lines sit,
+   * so a tick never crosses a letter and reading is never in its way.
+   */
+  --dial-hole-y: rem(118px);
+  --dial-hole-w: rem(400px);
+  --dial-hole-h: rem(150px);
+
+  mask-image:
+    linear-gradient(to bottom, #000 22%, transparent 36%),
+    radial-gradient(
+      var(--dial-hole-w) var(--dial-hole-h) at 50% var(--dial-hole-y),
+      transparent 62%,
+      #000 100%
+    );
+  mask-composite: intersect;
+
+  /* Seen, never in the way of the headline it sits behind. */
+  opacity: 0.55;
   animation: lan-dial 2.2s var(--lan-spring) 0.35s both;
 }
 
@@ -516,6 +513,9 @@
 @media (max-width: 48em) {
   .dial {
     --dial-size: 160vw;
+    --dial-hole-y: rem(80px);
+    --dial-hole-w: rem(200px);
+    --dial-hole-h: rem(120px);
   }
 }
 
