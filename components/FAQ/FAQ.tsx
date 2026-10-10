@@ -31,7 +31,7 @@ export const faqItems: { value: string; question: string; answer: ReactNode }[] 
     value: 'what',
     question: 'What is Lancetta?',
     answer:
-      'Lancetta is a native macOS menu-bar app for coding agents. It reads Codex and Claude Code, draws the 5-hour and the 7-day window for each with when it resets, and tells you what to do with what is left: slow down before an agent stops, switch while the other has room, spend a window before it resets unused — without you opening a terminal to ask.',
+      'Lancetta is a native macOS menu-bar app that tells you when and how to use your coding agents. It reads the quota of Codex and Claude Code without spending any, keeps every reading, and scans the files the agents load at every start; from those it suggests what to do next: go all in while a window has room it would lose, lower the effort or hand routine work to a lighter model before an agent stops, move to the other agent while it has room, trim a setup every session pays for.',
   },
   {
     value: 'name',
@@ -61,7 +61,7 @@ export const faqItems: { value: string; question: string; answer: ReactNode }[] 
     value: 'different',
     question: 'How is it different from the other quota monitors?',
     answer:
-      'Advice about a quota needs three things: the ceiling (what your real limit is), the flow (what you have spent), and the series (how that percentage moved over time). The good tools in this space have the first two. The series is the one nobody keeps — a monitor that reads your transcripts has no way to learn the ceiling at all and infers it from your own highest previous block, and one that covers dozens of providers cannot store a series per provider per window and stay maintainable. Lancetta watches two agents instead of dozens and keeps the series for both, which is the only reason it can say where this pace lands, and what to do about it, against the percentage your account actually reports rather than an inferred one. It is also the part that cannot be added later: history only accumulates forward.',
+      'A monitor shows you the percentage; Lancetta tells you what to do with it. Advice about a quota needs three things: the ceiling (what your real limit is), the flow (what you have spent), and the series (how that percentage moved over time). The good tools in this space have the first two. The series is the one nobody keeps — a monitor that reads your transcripts has no way to learn the ceiling at all and infers it from your own highest previous block, and one that covers dozens of providers cannot store a series per provider per window and stay maintainable. Lancetta watches two agents instead of dozens and keeps the series for both, which is the only reason it can say where this pace lands, and what to do about it, against the percentage your account actually reports rather than an inferred one. It is also the part that cannot be added later: history only accumulates forward.',
   },
   {
     value: 'suggestions',

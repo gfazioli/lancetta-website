@@ -82,8 +82,8 @@ export const MantineFooter = ({ year }: { year: number }) => {
                   things that break in a cloned site are the ones naming the
                   sibling, and a build cannot see them.
                 */}
-                Lancetta is a native macOS menu-bar app for coding agents. It shows how much of each
-                agent{'\u2019'}s quota is left, and what to do about it. Built by{' '}
+                Lancetta is a native macOS menu-bar app that tells you when and how to use your
+                coding agents, from their own quota readings. Built by{' '}
                 <Anchor fz={13} href="https://gfazioli.github.io/">
                   Undolog
                 </Anchor>

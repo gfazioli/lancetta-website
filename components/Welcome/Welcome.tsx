@@ -4,22 +4,22 @@ import type { CSSProperties } from 'react';
 import { FeatureMarquee, featureMarqueeItem } from './FeatureMarquee';
 import Link from 'next/link';
 import {
-  IconAlertTriangle,
+  IconAdjustments,
   IconArrowRight,
   IconBellRinging,
   IconBook2,
-  IconBulb,
   IconCalendarWeek,
   IconChartHistogram,
-  IconChartLine,
   IconChartPie,
   IconChecklist,
   IconClockHour4,
   IconCreditCardOff,
   IconDeviceLaptop,
   IconGauge,
+  IconHandStop,
   IconLayoutNavbar,
-  IconPalette,
+  IconListCheck,
+  IconRocket,
   IconSunrise,
   IconSunset2,
   IconTrash,
@@ -66,11 +66,11 @@ import classes from './Welcome.module.css';
 const glance = [
   {
     label: 'What it is',
-    body: 'A native macOS menu-bar app for Codex and Claude Code.',
+    body: 'A native macOS menu-bar app that tells you when and how to use Codex and Claude Code.',
   },
   {
     label: 'What it does',
-    body: 'Tells you what to do with each agent’s quota — push on, slow down, switch or spend — and tidies up after the agents: the files they read at every start, the processes they leave running.',
+    body: 'Reads each agent’s quota and keeps every reading, scans the files they load at every start, and turns both into suggestions: when to push on, when to slow down, what to switch to, what to trim.',
   },
   {
     label: 'What it costs',
@@ -94,9 +94,10 @@ interface Feature {
  * feature, and a card with no "will" and a badge reads as a lie.
  *
  * THE ORDER IS LOAD-BEARING, and mirrors the hero. Since 0.50.0 the
- * suggestions lead, as the hero's third line and first frame do, with the pace
- * they reason from right behind them; then the quota, and the claims no
- * competitor can make: where this pace
+ * decisions lead (push on, slow down, the week, what to switch to, the setup),
+ * as the hero's frames do; the data they rest on comes after them, never
+ * before (user, 2026-10-10: the app is not there to show consumption). Before
+ * that, the order was the quota first, then the claims no competitor can make: where this pace
  * lands, that every reading carries its age, and the orphaned trees nobody
  * else reaps. The pace card joined them in v0.4, ahead of the age, because
  * the hero leads on it too — the order in the two places is one decision.
@@ -109,24 +110,66 @@ interface Feature {
  */
 const features: Feature[] = [
   {
-    icon: IconBulb,
-    title: 'It says what to do next',
-    description: 'Slow down, switch or spend — and what each rests on.',
-    color: 'yellow',
-    href: '/docs/suggestions',
+    icon: IconRocket,
+    title: 'Spend what would go unused',
+    description: 'A window about to reset with room: start the long task.',
+    color: 'teal',
+    href: '/docs/suggestions#when-to-push-on',
   },
   {
-    icon: IconChartLine,
-    title: 'Where this pace lands',
-    description: 'Where each window ends at the rate you are going.',
+    icon: IconHandStop,
+    title: 'Slow down before it stops',
+    description: 'When this pace runs a window out, and what helps.',
     color: 'orange',
-    href: '/docs/the-menu#the-pace-line',
+    href: '/docs/suggestions#when-to-slow-down',
+  },
+  {
+    icon: IconCalendarWeek,
+    title: 'The week, not just the hour',
+    description: 'A weekly window that runs out days early, seen in time.',
+    color: 'grape',
+    href: '/docs/suggestions#the-week',
+  },
+  {
+    icon: IconAdjustments,
+    title: 'Which model, which effort',
+    description: 'A lighter model, a lower effort, or the other agent.',
+    color: 'blue',
+    href: '/docs/suggestions#what-helps',
+  },
+  {
+    icon: IconChecklist,
+    title: 'Your agents’ setup, checked',
+    description: 'What they load at every start, its cost, and what to fix.',
+    color: 'lime',
+    href: '/docs/maintenance',
+  },
+  {
+    icon: IconListCheck,
+    title: 'Every suggestion shows its working',
+    description: 'The readings it rests on, right under it.',
+    color: 'violet',
+    href: '/docs/suggestions#what-it-rests-on',
+  },
+  {
+    icon: IconBellRinging,
+    title: 'It speaks once',
+    description: 'A notification only for what cannot wait.',
+    color: 'pink',
+    href: '/docs/alerts',
+  },
+  {
+    icon: IconTrash,
+    title: 'Reclaim the memory',
+    description: 'Frees what agents leave running — the list first.',
+    color: 'indigo',
+    href: '/docs/memory',
   },
   {
     icon: IconGauge,
     title: 'Both windows, both agents',
-    description: 'The 5-hour and 7-day windows, with each reset.',
-    color: 'teal',
+    description: 'The 5-hour and 7-day windows it reasons from.',
+    color: 'cyan',
     href: '/docs/the-menu',
   },
   {
@@ -144,27 +187,6 @@ const features: Feature[] = [
     href: '/docs/how-it-reads',
   },
   {
-    icon: IconAlertTriangle,
-    title: 'The bucket that refused is named',
-    description: 'The window that stopped you, not an average.',
-    color: 'red',
-    href: '/docs/the-menu#limits',
-  },
-  {
-    icon: IconChecklist,
-    title: 'Your agents’ setup, checked',
-    description: 'What they read at every start, its cost, and what to fix.',
-    color: 'lime',
-    href: '/docs/maintenance',
-  },
-  {
-    icon: IconTrash,
-    title: 'Reclaim the memory',
-    description: 'Frees what agents leave running — the list first.',
-    color: 'indigo',
-    href: '/docs/memory',
-  },
-  {
     icon: IconCreditCardOff,
     title: 'Reading costs nothing',
     description: 'No model is asked, so checking costs no quota.',
@@ -174,16 +196,9 @@ const features: Feature[] = [
   {
     icon: IconLayoutNavbar,
     title: 'Under the notch',
-    description: 'On a MacBook Pro, the reading lives in the notch too.',
+    description: 'On a MacBook Pro, the advice lives in the notch too.',
     color: 'violet',
     href: '/docs/the-notch',
-  },
-  {
-    icon: IconPalette,
-    title: 'Your marks, or none',
-    description: 'Each agent’s colour and mark, or neutral symbols.',
-    color: 'orange',
-    href: '/docs/settings#appearance',
   },
   {
     icon: IconChartHistogram,
@@ -191,13 +206,6 @@ const features: Feature[] = [
     description: 'Daily tokens for both agents, over 7, 30 or 90 days.',
     color: 'cyan',
     href: '/docs/the-window',
-  },
-  {
-    icon: IconBellRinging,
-    title: 'It speaks first',
-    description: 'Only about what the menu bar cannot already show.',
-    color: 'pink',
-    href: '/docs/alerts',
   },
 ];
 
@@ -219,33 +227,54 @@ interface Step {
  * versions live on `/docs/roadmap` under *Already shipped*, which the link
  * under the grid points at.
  *
- * `today` opens with the headline's three lines — what you have left, how long
- * it lasts, what to do next — then the reset, the tidying up (Maintenance and
- * the reaper) and the rest, each a thing that SHIPS.
+ * `today` opens with the decisions the app makes with you — when to push on,
+ * when to slow down, what to switch to, how the agents are set up — then what
+ * they leave behind and what it all rests on, each a thing that SHIPS.
  * `soon` and `next` carry the badge AND the future tense, never one without
  * the other, and each is a section of `content/roadmap.mdx` that says what it
  * has to prove before it counts as finished. Add one here and it goes there too.
  */
 const today: Step[] = [
   {
-    icon: IconGauge,
-    title: 'What you have left',
-    body: 'Both windows for both agents, the week one model keeps to itself, and a free reset when Codex grants one — with the day it lapses.',
+    icon: IconRocket,
+    title: 'When to push on',
+    body: 'A window about to reset with most of it unused: spend it, and raise the effort if the task deserves it.',
+    color: 'teal',
+    state: 'today',
+  },
+  {
+    icon: IconHandStop,
+    title: 'When to slow down',
+    body: 'Before an agent stops, in the 5-hour window or in the week: when it would, and what helps.',
+    color: 'orange',
+    state: 'today',
+  },
+  {
+    icon: IconAdjustments,
+    title: 'What to switch to',
+    body: 'A lower effort, a lighter model, the free reset you hold, or the other agent while it has room.',
     color: 'blue',
     state: 'today',
   },
   {
-    icon: IconChartLine,
-    title: 'How long it lasts',
-    body: 'A line under each bar saying where that window ends at the rate you are going — amber only when it would run out before it resets.',
-    color: 'violet',
+    icon: IconChecklist,
+    title: 'How they are set up',
+    body: 'The files agents load at every start, measured and checked, with fixes you see before they are applied.',
+    color: 'lime',
     state: 'today',
   },
   {
-    icon: IconBulb,
-    title: 'What to do next',
-    body: 'Suggestions at the top of the panel and the window: slow down before an agent stops, switch while another has room, spend a window before it resets unused.',
-    color: 'teal',
+    icon: IconTrash,
+    title: 'What they leave behind',
+    body: 'The background processes agents never clean up, listed before anything is stopped — and never a live one.',
+    color: 'indigo',
+    state: 'today',
+  },
+  {
+    icon: IconGauge,
+    title: 'What it all rests on',
+    body: 'Both windows for both agents, a model’s own week, every reading dated, and the week that just ended.',
+    color: 'violet',
     state: 'today',
   },
   {
@@ -253,20 +282,6 @@ const today: Step[] = [
     title: 'When it comes back',
     body: 'The reset beside every bar, and a notification when a window that stopped you is ready again.',
     color: 'cyan',
-    state: 'today',
-  },
-  {
-    icon: IconTrash,
-    title: 'What they leave behind',
-    body: 'The files agents read at every start, measured and checked, with fixes you see first; and the background processes they never clean up, listed before anything is stopped.',
-    color: 'indigo',
-    state: 'today',
-  },
-  {
-    icon: IconCalendarWeek,
-    title: 'Last week',
-    body: 'The week that just ended: when each weekly window ran out, how often the five-hour one stopped you, and the hours nobody read.',
-    color: 'grape',
     state: 'today',
   },
   {
@@ -365,8 +380,8 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         <Container size="lg">
           <SectionHeading
             eyebrow="What is in it"
-            title="An instrument, not a dashboard"
-            lead="It has one job: tell you what you can still do, honestly, without being asked and without costing anything to ask."
+            title="A guide, not a gauge"
+            lead="It has one job: tell you what to do with your agents next, and show you why, without costing anything to ask."
           />
         </Container>
 
@@ -491,11 +506,11 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                 {released ? 'Get started' : 'Not yet'}
               </Text>
               <Title order={2} ta="center" fz={{ base: 36, sm: 48 }}>
-                Know what to do next.
+                Know when to push on.
               </Title>
               <Text c="dimmed" ta="center" size="lg" maw={520}>
                 {released
-                  ? 'Put both agents in your menu bar, and let the readings say when to push on, slow down or switch.'
+                  ? 'Put both agents in your menu bar, and let their own readings tell you when to push on, slow down or switch.'
                   : 'The first build is not out yet. What’s next says what is in it, and the releases page is where it will appear.'}
               </Text>
 

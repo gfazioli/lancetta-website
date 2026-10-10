@@ -6,11 +6,11 @@ export default {
       // first says where it lives, the second who it watches. "Quota"
       // carries the search intent, and it is the ONE job: the reaper is a
       // feature, and neither the title nor the description sells it.
-      default: 'Lancetta — Menu-Bar Quota Monitor for Coding Agents',
+      default: 'Lancetta — Quota Guidance for Codex and Claude Code',
       template: '%s | Lancetta',
     },
     description:
-      'A native macOS menu-bar app for Codex and Claude Code: both quota windows, where this pace lands, and what to do about it, without spending a token.',
+      'A native macOS menu-bar app that tells you when and how to use Codex and Claude Code (push on, slow down or switch) from their own quota readings.',
     metadataBase: new URL('https://lancetta.app/'),
     keywords: [
       'Lancetta',

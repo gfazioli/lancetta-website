@@ -56,9 +56,9 @@ export function ProblemSection() {
     <Box py={80} className={`lan-feather ${classes.sectionBand}`}>
       <Container size="lg">
         <SectionHeading
-          eyebrow="The problem"
-          title="The number was wrong. It looked right."
-          lead="A quota readout is the one kind of number nobody double-checks — you glance at it and carry on. Three separate defects stacked up in one afternoon, and every one of them produced a figure you would have believed."
+          eyebrow="Why the numbers matter"
+          title="Advice is only as good as its numbers."
+          lead="A quota readout is the one kind of number nobody double-checks, and a suggestion built on it inherits every error. Three separate defects stacked up in one afternoon, and every one of them produced a figure you would have believed."
         />
 
         <SimpleGrid cols={{ base: 1, sm: 3 }} spacing="lg">
