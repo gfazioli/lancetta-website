@@ -7,6 +7,9 @@
  */
 .rule {
   position: relative;
+  /* The hands hang half below the line: above the next section, which may be
+     positioned and paint a wash from its top edge (Costs nothing). */
+  z-index: 1;
   height: 0;
   margin-inline: calc(50% - 50vw);
   /* Half the content column: the hands sit at its edges. */
