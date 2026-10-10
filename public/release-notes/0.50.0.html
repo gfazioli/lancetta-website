@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.50.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.50.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p>Lancetta now tells you what to do, not only how much is left.</p>
+<h2>Suggestions, first</h2>
+<p><strong>The panel and the window open with suggestions, worked out on your Mac from the readings Lancetta keeps.</strong> Each one says what is happening, what to do about it, and what it rests on, so you can check it before you act:</p>
+<ul>
+<li><strong>When an agent is about to stop</strong>: when, how long it would then wait, and what helps — a lower effort (read from the agent's own settings), a lighter model for routine work, a free reset you hold, or the other agent while it has room.</li>
+<li><strong>When a week is running out early</strong>, days before it would.</li>
+<li><strong>When a window is about to reset with most of it unused</strong>: spend it, start the long task now.</li>
+<li><strong>When a free reset is about to lapse</strong>, what Maintenance found in your agents' setup, and processes nobody can use any more.</li>
+</ul>
+<p>The ones that cannot wait (an agent stopping within the hour, room about to go unused, a free reset about to lapse) also arrive once as a notification, and a click opens them in the window. When nothing needs changing, Lancetta says so.</p>
+<h2>Maintenance</h2>
+<p><strong>A new pane for the files your coding agents read before every session</strong>: CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory, in each repository Claude Code has worked in and the folders above it.</p>
+<ul>
+<li>What loads at each start, measured against the size at which Claude Code warns.</li>
+<li>20 checks, each saying why it matters.</li>
+<li>Five kinds of fix that need no choosing are shown line by line before they are applied, and applied whole or not at all. The rest opens in Claude Code, in plan mode, with the prompt written for you.</li>
+<li>Files no agent uses can go to the Trash, and Claude Code's finished background sessions can be removed.</li>
+<li>It has its own page in Settings.</li>
+</ul>
+<h2>A window of cards</h2>
+<ul>
+<li>Under its suggestions, the panel shows the window in brief: a card per agent, Usage and Maintenance, each opening in place.</li>
+<li>Every pane of the window is a deck of cards that open in place.</li>
+<li>The window opens where you left it, at 1200 × 800 the first time.</li>
+</ul>
+<h2>Under the notch</h2>
+<p>An agent that has stopped, or will within the hour, turns its bar red, and the open island ends with the same suggestion as the panel.</p>
+<h2>Smaller things</h2>
+<ul>
+<li>Small text in the panel and the window is easier to read, and closed cards no longer look disabled.</li>
+<li>Settings › Updates shows whether Lancetta really checks for updates on its own.</li>
+<li>Settings › Notifications says where a click on a notification takes you.</li>
+</ul>
+<h2>Install</h2>
+<ol>
+<li>Download <code class="notranslate">Lancetta-0.50.0.dmg</code></li>
+<li>Open the DMG and drag Lancetta into Applications</li>
+<li>Launch normally — the app is signed with Apple Developer ID and notarized by Apple</li>
+</ol>
+<h2>Requirements</h2>
+<p>macOS 15.0 or later.</p>
+</body>
+</html>
