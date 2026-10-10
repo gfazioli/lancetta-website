@@ -106,7 +106,8 @@ describe('HeroStage frames', () => {
     // On a phone the frame is one column and these are a screen apart: fired
     // by the frame, the copy and the figures moved below the fold.
     const { container } = render(<HeroStage />);
-    const frame = container.querySelector('section[data-side]')!;
+    // The first frame WITH a picture: since 0.50.0 the page opens on one without.
+    const frame = container.querySelector('section[data-textonly="false"]')!;
     const picture = frame.querySelector('img')!.parentElement!;
     const copy = frame.querySelector('a')!.parentElement!;
     const figures = screen

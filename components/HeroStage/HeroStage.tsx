@@ -91,45 +91,53 @@ interface Frame {
  * not a frame here because a banner has no screenshot worth a hero.)
  */
 const frames: Frame[] = [
+  /*
+   * ONE FRAME PER DECISION since 0.50.0 (user, 2026-10-10: Lancetta is not
+   * there to show consumption and the time to a reset; its point is to say
+   * how and when to use the agents). The quota, the pace and the reset are
+   * what a suggestion RESTS ON, so they appear inside these frames as its
+   * basis, never as the frame's subject. The quotes are the app's own
+   * sentences (`Guidance.swift`), with example values.
+   */
+  {
+    eyebrow: 'When to push on',
+    title: 'Quota about to go unused. Spend it.',
+    body: 'A window that resets with most of it unused is quota gone for good, and nothing on your menu bar says so. Lancetta does: “Claude has room: 80% of this 5-hour window is unused, and it resets in 40m.” Then what to do with it — start the long task now, raise the effort if the task deserves it — while it keeps watching the pace and warns you in time.',
+    href: '/docs/suggestions#when-to-push-on',
+    linkLabel: 'When it says to push on',
+  },
   {
     src: '/screenshot-pace.png',
     width: 716,
     height: 280,
     alt: 'A Lancetta card for Claude: the five-hour window at 8% with the line “8% in 4h33m” under it, the weekly window at 8% with “8% in 21h53m”, and its separate Fable limit at 0%',
-    eyebrow: 'What nothing else can say',
-    title: 'Not a percentage. A next step.',
-    body: 'The percentage is on your menu bar all day; what it cannot tell you is what to do about it. Lancetta can, because it keeps every reading. When an agent will stop before its window resets, it says when, and what helps — a lower effort, a lighter model, the other agent while it has room. When a window is about to reset with most of it unused, it says that too: spend it. Each suggestion names the readings it rests on.',
+    eyebrow: 'When to slow down',
+    title: 'Before it stops, not after.',
+    body: '“At this pace Claude stops in 1h10m, then waits 2h00m for its reset.” Lancetta says it while there is still time to act, with what helps: a lower effort, a lighter model for routine work, the free reset you hold, the other agent while it has room. The week is where it matters most — a weekly window run out on a Tuesday costs days, and only a series of readings sees it coming.',
     figures: [
       { value: '7 days', label: 'the window that actually hurts' },
       { value: '1,890', label: 'readings that settled the rule' },
     ],
-    href: '/docs/suggestions',
-    linkLabel: 'How a suggestion is made',
+    href: '/docs/suggestions#when-to-slow-down',
+    linkLabel: 'When it says to slow down',
   },
   {
     /*
-     * NO SCREENSHOT, ON PURPOSE. This is the only unshipped section on the
-     * page, and the rule it follows is the one the pace frame followed before
-     * v0.4: the badge on the eyebrow AND the future tense in the body, never
-     * one without the other. A promise dressed exactly like a shipped feature
-     * makes the whole page something a reader has to check.
-     *
-     * It is SECOND rather than last because the order of this array is the
-     * argument: the pace line above it is the first step of this same idea,
-     * and this is where that idea goes. What ships today is named inside the
-     * body so the two cannot be confused.
+     * NO SCREENSHOT, ON PURPOSE: the one unshipped section on the page carries
+     * the badge AND the future tense, never one without the other. It follows
+     * the two decisions above because it is where they go next.
      */
     eyebrow: 'Next',
     next: true,
-    title: 'The rhythm it has not learnt yet.',
-    body: 'Today every suggestion reasons from this window\u2019s own rate, carried forward. It does not know that you start at nine, or that you never touch it at the weekend. Next, it will reason from the readings it already keeps \u2014 an average across your own days \u2014 to say when to start, and when you will probably stop.',
+    title: 'When to start.',
+    body: 'Today a suggestion reasons from this window’s own rate, carried forward. It does not yet know that you start at nine, or that you never touch it at the weekend. Next, it will reason from an average across your own days, to say when to start, and when you will probably stop.',
     href: '/docs/roadmap',
     linkLabel: 'What is planned, and what it has to prove',
   },
   {
-    eyebrow: 'Maintenance',
-    title: 'What they read before they start.',
-    body: 'Every session of a coding agent begins by reading its instruction files — CLAUDE.md, AGENTS.md, rules, skills, memory — from the repository and every folder above it. The Maintenance pane lists them, measures what loads at each start against Claude Code\u2019s own warning thresholds, and runs 20 checks, each with why it matters. A fix that needs no choosing is shown in full before it is applied; the rest opens in Claude Code, in plan mode, with the prompt already written.',
+    eyebrow: 'How they are set up',
+    title: 'The tokens every session pays for.',
+    body: 'Before an agent does anything, it reads its instruction files — CLAUDE.md, AGENTS.md, rules, skills, memory — and every session pays for them again. Lancetta scans them in each repository Claude Code has worked in and the folders above it, measures what loads at each start against Claude Code’s own warning thresholds, and says what to fix: 20 checks, each with why it matters. A fix that needs no choosing is shown in full before it is applied; the rest opens in Claude Code, in plan mode, with the prompt already written.',
     figures: [{ value: '20', label: 'checks, each with its reason' }],
     href: '/docs/maintenance',
     linkLabel: 'What Maintenance checks',
@@ -139,9 +147,9 @@ const frames: Frame[] = [
     width: 2080,
     height: 1440,
     alt: 'The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total',
-    eyebrow: 'What nothing else reaps',
+    eyebrow: 'What they leave behind',
     title: 'Nobody ever closes them.',
-    body: 'Every folder an agent works in leaves a background tree behind, and one whose folder is gone is never shut down — not by the agent, not by the terminal, not by macOS. Lancetta is the only one of these monitors that finds them, and it shows you the list before it closes anything.',
+    body: 'Every folder an agent works in leaves a background tree behind, and one whose folder is gone is never shut down — not by the agent, not by the terminal, not by macOS. Lancetta finds them, suggests reclaiming what they hold, and shows you the list before it closes anything.',
     figures: [
       { value: '28', label: 'trees on one Mac' },
       { value: '2.68 GB', label: 'held between them' },
@@ -156,28 +164,19 @@ const frames: Frame[] = [
     height: 441,
     alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, and both windows as bars',
     eyebrow: 'Under the notch',
-    title: 'The island.',
-    body: 'On a MacBook Pro the reading also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. A bar turns red when its agent has stopped, or will within the hour. Point at it and it opens, ending on the same suggestion as the panel.',
+    title: 'The advice, at a glance.',
+    body: 'On a MacBook Pro Lancetta also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. A bar turns red when its agent has stopped, or will within the hour. Point at it and it opens on the same suggestion as the panel.',
     href: '/docs/the-notch',
     linkLabel: 'How the island works',
   },
   {
-    /*
-     * ONE frame for the window since 2026-09-25, where there were three — this
-     * one, "The history." (the Usage pane) and "Live, or seen a moment ago."
-     * (Limits) — to shorten the page; the feature row below names both, and
-     * the docs carry their pictures. The four panes were re-shot as ONE set on
-     * 2026-09-27, all 2080x1440 (the window's default 1040x720), so a pane
-     * switcher would no longer change the window's size; one frame stays for
-     * the page's length, not for the pictures.
-     */
     src: '/screenshot-window-overview.png',
     width: 2080,
     height: 1440,
     alt: 'The Lancetta window: the daily token series for both agents side by side, and underneath, each agent’s 5-hour and 7-day windows on one row',
-    eyebrow: 'When a glance is not enough',
+    eyebrow: 'When you want the reasons',
     title: 'The window.',
-    body: 'Command-O for the rest: the same suggestions first, then daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, the processes the agents have left running, and Maintenance.',
+    body: 'Command-O: the suggestions first, then everything they rest on — daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, the processes the agents left running, and Maintenance.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
   },
@@ -240,8 +239,8 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
             current window's own rate.
           */}
           <Title className={classes.title}>
-            <span className={classes.titleLine}>What you have left.</span>
-            <span className={classes.titleLine}>How long it lasts.</span>
+            <span className={classes.titleLine}>Push on, slow down,</span>
+            <span className={classes.titleLine}>or switch agents.</span>
             <span className={classes.titleLine}>
               <TextAnimate
                 animate="in"
@@ -259,17 +258,16 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
                 animateProps={{ scaleAmount: 2 }}
                 gradient={{ from: '#0D7DFA', to: '#672AFA' }}
               >
-                What to do next.
+                Lancetta tells you when.
               </TextAnimate>
             </span>
           </Title>
 
           <Text c="dimmed" fz={{ base: 'md', md: 'lg' }} lh={1.5} className={classes.lead}>
-            For Codex and Claude Code. Lancetta reads each account’s own windows and keeps every
-            reading, so it can say what to do with what is left: slow down before an agent stops,
-            hand routine work to a lighter model or the other agent while it has room, spend a
-            window before it resets unused. Each suggestion says what it rests on. No prices, no
-            budget to type in.
+            A percentage leaves the decision to you. Lancetta makes it with you: from every reading
+            of Codex and Claude Code, and a scan of what your agents load at every start, it says
+            when to go all in, when to lower the effort or hand work to a lighter model, when to
+            move to the other agent, and what to trim. Each suggestion says what it rests on.
           </Text>
 
           {/* Marked for the character: under the bar while this row is in

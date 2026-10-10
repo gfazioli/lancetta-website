@@ -51,19 +51,19 @@ export function SolutionSection() {
             tt="uppercase"
             style={{ letterSpacing: 3, color: 'var(--lan-accent)' }}
           >
-            The app
+            How it decides
           </Text>
           <Title order={2} ta="center" fz={{ base: 32, sm: 42 }}>
-            From a number to a next step
+            Every suggestion shows its working
           </Title>
           <Text c="dimmed" ta="center" size="lg" maw={700} lh={1.6}>
-            Lancetta reads what each agent&apos;s account says is left, and keeps every reading.
-            That series is what lets it say more than a percentage: whether this pace runs the
-            window out before it resets, which agent or model still has room, and when a window is
-            about to reset with quota unspent. It turns that into a suggestion, and every suggestion
-            names what it rests on. When there is nothing to change it says so, and that is advice
-            too: go ahead, spend it. It never shows a price, because a price is not a decision you
-            can make at four in the afternoon.
+            Lancetta does not ask a model what to do, and it does not guess. It works each
+            suggestion out on your Mac from what it has measured: the percentage each account
+            reports, how fast it has been moving, when the window resets, the free resets you hold,
+            the effort set in each agent, and what your instruction files load at every start. Under
+            each suggestion is what it rests on (&ldquo;5 hours: 62% used, 18% an hour over the last
+            1h00m, from 14 readings&rdquo;) so you can check it before you act. When nothing needs
+            changing it says so, and that is advice too: go ahead, use it.
           </Text>
 
           <Stack align="center" gap={6} mt="lg" className={classes.footnote}>

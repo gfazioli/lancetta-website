@@ -22,19 +22,21 @@ describe('Welcome component', () => {
     //                     HOLDS, with the reader doing the reasoning
     //   until 2026-10-10  "What you can use. How long it lasts. When it comes
     //                     back." — three things the app ANSWERS
-    //   now               two answers and what to DO about them: the
-    //                     suggestions, which lead the app since 0.50.0
+    //   now               the DECISIONS, and that the app makes them with
+    //                     you (user, 2026-10-10: Lancetta is not there to show
+    //                     consumption and the time to a reset, but how and
+    //                     when to use the agents)
     //
     // So this is not a copy test, it is the guard on the thesis. Each line has
-    // to name something that SHIPS: "what you have left" is both windows and a
-    // model's own week (v0.6), "how long it lasts" the pace line (v0.4), "what
-    // to do next" the suggestions at the top of the panel and window (0.50.0).
+    // to name something that SHIPS: pushing on is the "room" suggestion,
+    // slowing down "stop" and "week", switching agents the step that names the
+    // other agent while it has room (all in 0.50.0, `Guidance.swift`).
     // If a line ever describes when to START, or anything learnt from an
     // average across days, it has outrun the app and this test is what says so.
     const heading = screen.getByRole('heading', { level: 1 });
-    expect(heading.textContent).toContain('What you have left.');
-    expect(heading.textContent).toContain('How long it lasts.');
-    expect(heading.textContent).toContain('What to do next.');
+    expect(heading.textContent).toContain('Push on, slow down,');
+    expect(heading.textContent).toContain('or switch agents.');
+    expect(heading.textContent).toContain('Lancetta tells you when.');
   });
 
   it('answers what it is, what it does and what it costs before the first scroll', () => {
