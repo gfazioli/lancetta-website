@@ -7,7 +7,12 @@
  * Colours are `Theme.swift`: canvas #131829, card #1B2137, text white /
  * #8A90A6 / #5C6278, warning #F5A524, positive #5FCFB0, accent #4C8AFF, and
  * the canvas glow is `accentDeep` #6366F5 at 26%. Each agent's colour arrives
- * as `--tint` from `agentTint`.
+ * as `--tint` from `agentTint`, a suggestion's as its tone (`toneColor`: danger
+ * #FF6B5E, warning, positive, accent), a pane's as `OverviewSection.tint`.
+ *
+ * Since 0.50.0 every card is AgentsKit's deck glass (`StatGlassCard`): its
+ * colour from 26% at the top to 8% at the bottom, under a hairline of light,
+ * at `DashboardCard.radius` 22.
  */
 .panel {
   display: flex;
@@ -117,46 +122,288 @@
   color: #4c8aff;
 }
 
-/* `PanelCard`: a step above the canvas, with a hairline that is not a border. */
-.card {
+/* The deck glass every card wears (`StatGlassCard`, non-merged). */
+.suggestion,
+.tile,
+.detail {
   /*
    * For the entrance (at the end of this file): the app's hold, then this
    * card's own place, so its figures roll as it lands -- every digit together
    * and without an overshoot, as `numericText` on `.smooth` does.
    */
-  --reveal-delay: calc(400ms * 0.7 + var(--at));
+  --reveal-delay: calc(400ms * 0.7 + var(--at, 0ms));
   --roll-duration: var(--lan-panel-roll-duration);
   --roll-easing: var(--lan-panel-roll);
   --roll-stagger: 0ms;
 
   position: relative;
+  border-radius: 22px;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in srgb, var(--tint) 26%, transparent),
+      color-mix(in srgb, var(--tint) 8%, transparent)
+    ),
+    rgb(255 255 255 / 3%);
+  box-shadow:
+    inset 0 0 0 1px rgb(255 255 255 / 11%),
+    inset 0 1px 0 rgb(255 255 255 / 9%);
+}
+
+/* `GuidanceList`: the suggestions, most urgent first, 8 apart. */
+.suggestions {
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  padding: 10px 11px;
-  border-radius: 12px;
-  background: #1b2137;
-  box-shadow: inset 0 0 0 1px rgb(255 255 255 / 6%);
+  gap: 8px;
 }
 
-.cardHead {
+/* `GuidanceCard`: 12 by 11 of padding, 8 between its parts. */
+.suggestion {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 11px 12px;
+}
+
+.suggestionHead {
+  display: flex;
+  align-items: baseline;
+  gap: 9px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.suggestionHead:disabled {
+  cursor: default;
+}
+
+.suggestionGlyph {
+  display: inline-flex;
+  flex-shrink: 0;
+  justify-content: center;
+  width: 16px;
+  color: var(--tint);
+  transform: translateY(2px);
+}
+
+.suggestionTitle {
+  flex: 1;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.chevron {
+  flex-shrink: 0;
+  color: rgb(255 255 255 / 62%);
+}
+
+/* The steps, each behind a dot in the tone's colour, indented past the glyph. */
+.steps {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  margin: 0;
+  padding: 0 0 0 25px;
+  list-style: none;
+}
+
+.steps li {
+  position: relative;
+  padding-left: 11px;
+  color: rgb(255 255 255 / 82%);
+  font-size: 11.5px;
+  line-height: 1.3;
+}
+
+.steps li::before {
+  position: absolute;
+  top: 0.48em;
+  left: 0;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: color-mix(in srgb, var(--tint) 90%, transparent);
+  content: '';
+}
+
+/* What it rests on, faint, and the one control the item carries. */
+.basis {
   display: flex;
   align-items: center;
-  gap: 7px;
+  gap: 8px;
+  padding-left: 25px;
+  color: rgb(255 255 255 / 62%);
+  font-size: 10.5px;
+  line-height: 1.3;
 }
 
-.glyph {
+.basis > span {
+  flex: 1;
+}
+
+.action {
+  flex-shrink: 0;
+  padding: 4.5px 10px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--tint) 38%, transparent);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.action:hover {
+  background: color-mix(in srgb, var(--tint) 55%, transparent);
+}
+
+/* `PanelDeck`: two columns, 9 apart; an open card's details span both. */
+.deck {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 9px;
+}
+
+/* `DeckTile`, compact: 11 by 10 of padding, 4 between its rows. */
+.tile {
+  min-width: 0;
+}
+
+.tileFace {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  width: 100%;
+  padding: 10px 11px;
+  border: 0;
+  border-radius: inherit;
+  background: none;
+  color: #fff;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.tileHead {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.tileGlyph {
   display: inline-flex;
+  flex-shrink: 0;
+  width: 18px;
   color: var(--tint);
 }
 
-.name {
-  font-size: 13px;
+.tileName {
+  overflow: hidden;
+  color: rgb(255 255 255 / 82%);
+  font-size: 11.5px;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Room for the arrow, which sits over the card as a control of its own. */
+.tileArrowRoom {
+  flex-shrink: 0;
+  width: 21px;
+}
+
+.tileValue {
+  font-family:
+    ui-rounded,
+    'SF Pro Rounded',
+    -apple-system,
+    system-ui,
+    sans-serif;
+  font-size: 21px;
   font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+}
+
+.tileFootnote {
+  overflow: hidden;
+  color: rgb(255 255 255 / 76%);
+  font-size: 10.5px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The arrow to the pane with everything: a 19-point circle, top right. */
+.tileGo {
+  position: absolute;
+  top: 9px;
+  right: 28px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 12%);
+  color: rgb(255 255 255 / 82%);
+}
+
+.tileGo:hover {
+  background: rgb(255 255 255 / 20%);
+  color: #fff;
+}
+
+/*
+ * An open card and its details are ONE shape in the app (`CardDeck` merges
+ * them). Here the two share one flat fill in the card's colour, with no seam
+ * where they meet: the card loses its bottom corners, the details the corner
+ * under the card, and the gap between them closes.
+ */
+.tile[data-open='true'],
+.detail {
+  background: color-mix(in srgb, var(--tint) 17%, #1b2137);
+  box-shadow: none;
+}
+
+.tile[data-open='true'] {
+  margin-bottom: -9px;
+  padding-bottom: 9px;
+  border-bottom-right-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.detail {
+  display: flex;
+  grid-column: 1 / -1;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 12px 12px;
+}
+
+.detail[data-side='left'] {
+  border-top-left-radius: 0;
+}
+
+.detail[data-side='right'] {
+  border-top-right-radius: 0;
+}
+
+.detailLine {
+  margin: 0;
+  color: rgb(255 255 255 / 82%);
+  font-size: 11.5px;
+  line-height: 1.35;
 }
 
 /* `Chip`. */
 .chip {
+  align-self: flex-start;
   padding: 1.5px 6px;
   border-radius: 999px;
   background: rgb(255 255 255 / 7%);
@@ -395,7 +642,8 @@
  * away. Under Reduce Motion none of it runs and everything is simply there.
  */
 .toolbar,
-.card,
+.suggestion,
+.tile,
 .commands {
   --at: calc((60ms + 80ms * min(var(--place, 0), 8)) * 0.7);
 }
@@ -409,7 +657,7 @@
  * behind `@supports` as on the page's cards (Motion.module.css says why).
  */
 @supports (opacity: sin(0)) {
-  .card::after {
+  :is(.suggestion, .tile)::after {
     --reach: calc(70px * (0.45 + 0.55 * var(--glint)));
 
     position: absolute;
@@ -434,14 +682,15 @@
     animation: panel-rise var(--lan-panel-rise-duration) var(--lan-panel-rise) var(--at) both;
   }
 
-  .card {
+  .suggestion,
+  .tile {
     transform-origin: 50% 100%;
     animation:
       panel-land var(--lan-panel-land-duration) var(--lan-panel-land) var(--at) both,
       panel-fade calc(500ms * 0.7) ease-out var(--at) both;
   }
 
-  .card::after {
+  :is(.suggestion, .tile)::after {
     animation: panel-glint calc(900ms * 0.7) ease-out calc(var(--at) + 150ms * 0.7) both;
   }
 
