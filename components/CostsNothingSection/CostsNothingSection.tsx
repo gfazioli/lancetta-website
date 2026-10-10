@@ -1,6 +1,5 @@
 'use client';
 
-import { Scene } from '@gfazioli/mantine-scene';
 import { IconArrowRight, IconCoinOff } from '@tabler/icons-react';
 import { Box, Container, Group, Paper, Stack, Text, ThemeIcon, Title } from '@mantine/core';
 import { Reveal, revealItem } from '../Motion/Reveal';
@@ -34,13 +33,6 @@ export function CostsNothingSection() {
   const pop = revealItem('pop', 120);
   return (
     <Box id="costs-nothing" pos="relative" py={88} className={`lan-feather ${classes.band}`}>
-      {/* The rim's two ends: cyan from the top-left, magenta from the bottom-right. */}
-      <Scene lazy>
-        <Scene.Glow color="#13D1FB" size={520} blur={160} opacity={0.18} top="20%" left="12%" />
-        <Scene.Glow color="#B117C5" size={420} blur={140} opacity={0.16} top="70%" left="82%" />
-        <Scene.Noise opacity={0.02} />
-      </Scene>
-
       <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
         <Reveal variant="rise">
           <Stack align="center" gap="md" mb={40}>

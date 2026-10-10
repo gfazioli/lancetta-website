@@ -1,6 +1,5 @@
 'use client';
 
-import { Scene } from '@gfazioli/mantine-scene';
 import {
   IconBellRinging,
   IconCode,
@@ -59,28 +58,6 @@ export function BuiltForMacSection() {
   const reveal = useReveal<HTMLDivElement>();
   return (
     <Box pos="relative" py={80} className="lan-feather" style={{ overflow: 'hidden' }}>
-      {/*
-        Aurora + Mesh in the icon's own light: the rim's cyan and violet with
-        the plate's azure underneath. Same Sequoia/Tahoe atmosphere the sibling
-        sites use, cut on this icon rather than on FinderGit's blue/cyan.
-      */}
-      <Scene lazy>
-        <Scene.Mesh
-          stops={[
-            { color: '#0546BF', position: '15% 25%', spread: 60 },
-            { color: '#672AFA', position: '85% 70%', spread: 58 },
-            { color: '#0D7DFA', position: '50% 55%', spread: 75 },
-          ]}
-          opacity={0.16}
-        />
-        <Scene.Aurora
-          colors={['#13D1FB', '#0D7DFA', '#672AFA']}
-          bands={3}
-          position="top"
-          opacity={0.2}
-        />
-        <Scene.Noise opacity={0.018} />
-      </Scene>
       <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
         <Stack ref={reveal.ref} align="center" gap="md" {...revealScope(reveal)}>
           <Text

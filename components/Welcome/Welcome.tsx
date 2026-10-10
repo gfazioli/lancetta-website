@@ -3,16 +3,17 @@
 import type { CSSProperties } from 'react';
 import { FeatureMarquee, featureMarqueeItem } from './FeatureMarquee';
 import Link from 'next/link';
-import { Scene } from '@gfazioli/mantine-scene';
 import {
   IconAlertTriangle,
   IconArrowRight,
   IconBellRinging,
   IconBook2,
+  IconBulb,
   IconCalendarWeek,
   IconChartHistogram,
   IconChartLine,
   IconChartPie,
+  IconChecklist,
   IconClockHour4,
   IconCreditCardOff,
   IconDeviceLaptop,
@@ -50,6 +51,7 @@ import {
 } from '../ReleaseCadence/release-cadence';
 import { SectionHeading } from '../SectionHeading/SectionHeading';
 import { ShareButtons } from '../ShareButtons/ShareButtons';
+import { SectionRule } from '../SectionRule/SectionRule';
 import { SolutionSection } from '../SolutionSection/SolutionSection';
 import { ScrollGuide } from '../Mascot/ScrollGuide';
 import classes from './Welcome.module.css';
@@ -64,11 +66,11 @@ import classes from './Welcome.module.css';
 const glance = [
   {
     label: 'What it is',
-    body: 'A native macOS menu-bar app that watches Codex and Claude Code.',
+    body: 'A native macOS menu-bar app for Codex and Claude Code.',
   },
   {
     label: 'What it does',
-    body: 'Shows how much of each agent’s quota is left, when it comes back, and how old that number is — plus the background processes they left running.',
+    body: 'Tells you what to do with each agent’s quota — push on, slow down, switch or spend — and tidies up after the agents: the files they read at every start, the processes they leave running.',
   },
   {
     label: 'What it costs',
@@ -91,8 +93,10 @@ interface Feature {
  * it ships — a card that says "will" with no badge reads as a missing
  * feature, and a card with no "will" and a badge reads as a lie.
  *
- * THE ORDER IS LOAD-BEARING, and mirrors the hero's three lines. First the
- * promise (the quota), then the claims no competitor can make: where this pace
+ * THE ORDER IS LOAD-BEARING, and mirrors the hero. Since 0.50.0 the
+ * suggestions lead, as the hero's third line and first frame do, with the pace
+ * they reason from right behind them; then the quota, and the claims no
+ * competitor can make: where this pace
  * lands, that every reading carries its age, and the orphaned trees nobody
  * else reaps. The pace card joined them in v0.4, ahead of the age, because
  * the hero leads on it too — the order in the two places is one decision.
@@ -105,11 +109,11 @@ interface Feature {
  */
 const features: Feature[] = [
   {
-    icon: IconGauge,
-    title: 'Both windows, both agents',
-    description: 'The 5-hour and 7-day windows, with each reset.',
-    color: 'teal',
-    href: '/docs/the-menu',
+    icon: IconBulb,
+    title: 'It says what to do next',
+    description: 'Slow down, switch or spend — and what each rests on.',
+    color: 'yellow',
+    href: '/docs/suggestions',
   },
   {
     icon: IconChartLine,
@@ -117,6 +121,13 @@ const features: Feature[] = [
     description: 'Where each window ends at the rate you are going.',
     color: 'orange',
     href: '/docs/the-menu#the-pace-line',
+  },
+  {
+    icon: IconGauge,
+    title: 'Both windows, both agents',
+    description: 'The 5-hour and 7-day windows, with each reset.',
+    color: 'teal',
+    href: '/docs/the-menu',
   },
   {
     icon: IconChartPie,
@@ -138,6 +149,13 @@ const features: Feature[] = [
     description: 'The window that stopped you, not an average.',
     color: 'red',
     href: '/docs/the-menu#limits',
+  },
+  {
+    icon: IconChecklist,
+    title: 'Your agents’ setup, checked',
+    description: 'What they read at every start, its cost, and what to fix.',
+    color: 'lime',
+    href: '/docs/maintenance',
   },
   {
     icon: IconTrash,
@@ -201,8 +219,9 @@ interface Step {
  * versions live on `/docs/roadmap` under *Already shipped*, which the link
  * under the grid points at.
  *
- * `today` is the one job as the headline states it — what you can use, how
- * long it lasts, when it comes back — plus the reaper, each a thing that SHIPS.
+ * `today` opens with the headline's three lines — what you have left, how long
+ * it lasts, what to do next — then the reset, the tidying up (Maintenance and
+ * the reaper) and the rest, each a thing that SHIPS.
  * `soon` and `next` carry the badge AND the future tense, never one without
  * the other, and each is a section of `content/roadmap.mdx` that says what it
  * has to prove before it counts as finished. Add one here and it goes there too.
@@ -210,7 +229,7 @@ interface Step {
 const today: Step[] = [
   {
     icon: IconGauge,
-    title: 'What you can use',
+    title: 'What you have left',
     body: 'Both windows for both agents, the week one model keeps to itself, and a free reset when Codex grants one — with the day it lapses.',
     color: 'blue',
     state: 'today',
@@ -223,6 +242,13 @@ const today: Step[] = [
     state: 'today',
   },
   {
+    icon: IconBulb,
+    title: 'What to do next',
+    body: 'Suggestions at the top of the panel and the window: slow down before an agent stops, switch while another has room, spend a window before it resets unused.',
+    color: 'teal',
+    state: 'today',
+  },
+  {
     icon: IconBellRinging,
     title: 'When it comes back',
     body: 'The reset beside every bar, and a notification when a window that stopped you is ready again.',
@@ -232,7 +258,7 @@ const today: Step[] = [
   {
     icon: IconTrash,
     title: 'What they leave behind',
-    body: 'The background processes agents never clean up, listed before anything is stopped — and never a live one.',
+    body: 'The files agents read at every start, measured and checked, with fixes you see first; and the background processes they never clean up, listed before anything is stopped.',
     color: 'indigo',
     state: 'today',
   },
@@ -326,12 +352,15 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       </Container>
 
       {/* The Problem */}
+      <SectionRule />
       <ProblemSection />
 
       {/* One job */}
+      <SectionRule />
       <SolutionSection />
 
       {/* Features */}
+      <SectionRule />
       <Box id="features" py={80} className={`lan-feather ${classes.sectionBand}`}>
         <Container size="lg">
           <SectionHeading
@@ -396,12 +425,15 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       </Box>
 
       {/* The founding constraint */}
+      <SectionRule />
       <CostsNothingSection />
 
       {/* Built for macOS */}
+      <SectionRule />
       <BuiltForMacSection />
 
       {/* What’s next */}
+      <SectionRule />
       <Container id="roadmap" size="lg" py={80}>
         <SectionHeading
           eyebrow="Where it is going"
@@ -445,12 +477,8 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       </Container>
 
       {/* Get Started CTA */}
-      <Box pos="relative" py={88} className={`lan-feather ${classes.auroraBand}`}>
-        <Scene lazy>
-          <Scene.Glow color="#824BFC" size={520} blur={170} opacity={0.16} top="26%" left="50%" />
-          <Scene.Glow color="#13D1FB" size={380} blur={150} opacity={0.12} top="74%" left="10%" />
-          <Scene.Glow color="#B117C5" size={360} blur={150} opacity={0.1} top="40%" left="88%" />
-        </Scene>
+      <SectionRule />
+      <Box pos="relative" py={88} className={classes.auroraBand}>
         <Container size="lg" pos="relative" style={{ zIndex: 1 }}>
           <Reveal variant="rise">
             <Stack align="center" gap="lg">
@@ -463,11 +491,11 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
                 {released ? 'Get started' : 'Not yet'}
               </Text>
               <Title order={2} ta="center" fz={{ base: 36, sm: 48 }}>
-                Know where you stand.
+                Know what to do next.
               </Title>
               <Text c="dimmed" ta="center" size="lg" maw={520}>
                 {released
-                  ? 'Put both agents in your menu bar and stop reading a number you have to squint at a terminal for.'
+                  ? 'Put both agents in your menu bar, and let the readings say when to push on, slow down or switch.'
                   : 'The first build is not out yet. What’s next says what is in it, and the releases page is where it will appear.'}
               </Text>
 
@@ -495,6 +523,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
       </Box>
 
       {/* FAQ */}
+      <SectionRule />
       <Container id="faq" size="lg" py={72}>
         <SectionHeading align="center" eyebrow="FAQ" title="Frequently asked questions" mb={24} />
         <Reveal variant="rise">

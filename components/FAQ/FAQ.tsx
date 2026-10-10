@@ -31,7 +31,7 @@ export const faqItems: { value: string; question: string; answer: ReactNode }[] 
     value: 'what',
     question: 'What is Lancetta?',
     answer:
-      'Lancetta is a native macOS menu-bar app that shows how much quota your coding agents have left. It reads Codex and Claude Code, draws the 5-hour and the 7-day window for each, and tells you when each one resets — without you opening a terminal to ask.',
+      'Lancetta is a native macOS menu-bar app for coding agents. It reads Codex and Claude Code, draws the 5-hour and the 7-day window for each with when it resets, and tells you what to do with what is left: slow down before an agent stops, switch while the other has room, spend a window before it resets unused — without you opening a terminal to ask.',
   },
   {
     value: 'name',
@@ -61,7 +61,13 @@ export const faqItems: { value: string; question: string; answer: ReactNode }[] 
     value: 'different',
     question: 'How is it different from the other quota monitors?',
     answer:
-      'Advice about a quota needs three things: the ceiling (what your real limit is), the flow (what you have spent), and the series (how that percentage moved over time). The good tools in this space have the first two. The series is the one nobody keeps — a monitor that reads your transcripts has no way to learn the ceiling at all and infers it from your own highest previous block, and one that covers dozens of providers cannot store a series per provider per window and stay maintainable. Lancetta watches two agents instead of dozens and keeps the series for both, which is the only reason it can say where this pace lands against the percentage your account actually reports rather than an inferred one. It is also the part that cannot be added later: history only accumulates forward.',
+      'Advice about a quota needs three things: the ceiling (what your real limit is), the flow (what you have spent), and the series (how that percentage moved over time). The good tools in this space have the first two. The series is the one nobody keeps — a monitor that reads your transcripts has no way to learn the ceiling at all and infers it from your own highest previous block, and one that covers dozens of providers cannot store a series per provider per window and stay maintainable. Lancetta watches two agents instead of dozens and keeps the series for both, which is the only reason it can say where this pace lands, and what to do about it, against the percentage your account actually reports rather than an inferred one. It is also the part that cannot be added later: history only accumulates forward.',
+  },
+  {
+    value: 'suggestions',
+    question: 'Where do its suggestions come from?',
+    answer:
+      'From the readings Lancetta keeps, never from a model. Each one is worked out on your Mac from the percentage your account reports, the rate it has been moving at, when the window resets, whether you hold a free reset, and the effort set in the agent’s own settings, and each names what it rests on so you can check it. When nothing needs changing, it says that too. Suggestions sit at the top of the panel and of the window; the ones that cannot wait (an agent about to stop, a window about to reset with room left, a free reset about to lapse) also arrive once as a notification, which Settings › Notifications › Suggestions turns off.',
   },
   {
     value: 'refresh',
@@ -91,7 +97,7 @@ export const faqItems: { value: string; question: string; answer: ReactNode }[] 
     value: 'surfaces',
     question: 'Is Lancetta only in the menu bar?',
     answer:
-      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the daily token chart, both agents in detail, and the background processes the agents have left running. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch.',
+      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, and Maintenance, which checks the files they read at every start. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch.',
   },
   {
     value: 'memory',
@@ -100,10 +106,16 @@ export const faqItems: { value: string; question: string; answer: ReactNode }[] 
       'Coding agents leave a background process tree behind for every folder they worked in, and nothing ever reaps them: close the folder before the session ends and nothing is ever told to stop. Measured once on one Mac: 28 processes holding 2.68 GB, 12 of them serving folders that had already been deleted. Lancetta lists them and reclaims that memory on your say-so — and it always shows you what it is about to stop before it stops it.',
   },
   {
+    value: 'maintenance',
+    question: 'What does the Maintenance pane do?',
+    answer:
+      'It lists the files your coding agents read before every session (CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory) in each repository Claude Code has worked in and the folders above it, and measures what loads at each start against Claude Code’s own warning thresholds. Twenty checks say what is wrong, each with why it matters. Five kinds of finding have a fix that needs no choosing, such as importing AGENTS.md into CLAUDE.md or keeping a personal file out of git: each is shown in full before it is applied, and applied whole or not at all. The rest opens in Claude Code, in plan mode, with the prompt already written. Files no agent uses can go to the Trash.',
+  },
+  {
     value: 'privacy',
     question: 'Does anything leave my Mac?',
     answer:
-      'Not what you do with the agents. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make (to Anthropic and OpenAI, with your own sign-in), the update check you turn on, and a sponsor picture in About. The privacy page lists each one.',
+      'Not what you do with the agents. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make (to Anthropic and OpenAI, with your own sign-in), the update check you turn on, and a sponsor picture in About. Maintenance reads the agents’ instruction files where they are, and the suggestions read the effort set in Claude Code’s and Codex’s own settings; neither leaves the Mac, unless you hand a finding to Claude Code, which then works as it always does. The privacy page lists each one.',
   },
   {
     value: 'macos',

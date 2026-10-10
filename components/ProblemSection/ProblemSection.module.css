@@ -48,17 +48,9 @@
   box-shadow: 0 6px 18px -6px color-mix(in srgb, var(--card-color) 55%, transparent);
 }
 
-/* Subtle section band so the cards lift off a flat fill (mirrors
- * Welcome.module.css .sectionBand). */
+/* White, like the page: the rule above the section is the separation. */
 .sectionBand {
-  background: radial-gradient(
-    100% 70% at 50% -10%,
-    light-dark(
-      color-mix(in srgb, var(--lan-azure) 16%, transparent),
-      color-mix(in srgb, var(--lan-plate-wash) 42%, transparent)
-    ),
-    transparent 62%
-  );
+  background: none;
 }
 
 /* Respect users who opt out of motion: keep tint/border, drop the lift. */

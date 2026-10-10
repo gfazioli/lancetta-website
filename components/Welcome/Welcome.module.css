@@ -128,17 +128,8 @@
  * sitting on a flat fill. Atmosphere, not a coloured block.
  */
 .sectionBand {
-  background:
-    radial-gradient(
-      90% 60% at 18% -8%,
-      color-mix(in srgb, var(--lan-cyan) 13%, transparent),
-      transparent 60%
-    ),
-    radial-gradient(
-      90% 60% at 82% -8%,
-      color-mix(in srgb, var(--lan-violet) 12%, transparent),
-      transparent 62%
-    );
+  /* White, like the page: the rule above it is the separation now. */
+  background: none;
 }
 
 /*
@@ -343,21 +334,23 @@
 .auroraBand {
   position: relative;
   overflow: hidden;
+  /* The hero's lights, once more, around the last call: violet in the middle,
+     the two agents' colours low at the sides. */
   background:
     radial-gradient(
-      70% 120% at 12% 0%,
-      color-mix(in srgb, var(--lan-cyan) 16%, transparent),
-      transparent 62%
+      ellipse 46% 70% at 50% 40%,
+      color-mix(in srgb, var(--lan-violet) 12%, transparent),
+      transparent 72%
     ),
     radial-gradient(
-      80% 130% at 88% 20%,
-      color-mix(in srgb, var(--lan-magenta) 13%, transparent),
-      transparent 64%
+      ellipse 34% 60% at 4% 100%,
+      color-mix(in srgb, var(--lan-claude-lit) 9%, transparent),
+      transparent 70%
     ),
-    linear-gradient(
-      180deg,
-      color-mix(in srgb, var(--lan-violet) 8%, var(--lan-surface)),
-      var(--lan-body)
+    radial-gradient(
+      ellipse 34% 60% at 96% 100%,
+      color-mix(in srgb, var(--lan-codex-lit) 9%, transparent),
+      transparent 70%
     );
 }
 

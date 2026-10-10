@@ -64,7 +64,7 @@ html {
    * `--lan-line` the hairline between them. `--lan-ink` is the plate's navy
    * at text weight; `--lan-ink-dim` the dimmed line, 4.55:1 on the body.
    */
-  --lan-body: #faf8ff;
+  --lan-body: #fff;
   --lan-surface: #fff;
   --lan-line: rgb(20 27 51 / 9%);
   --lan-line-strong: rgb(20 27 51 / 16%);
