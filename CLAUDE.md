@@ -64,7 +64,7 @@ Source Serif 4 (display) + Source Sans 3 (body), via `next/font` in `app/layout.
 ## Content guidelines
 
 - All website content is in **English**.
-- The app is described as: *a native macOS menu-bar monitor for coding agents*.
+- The app is described as: *a native macOS menu-bar app that tells you when and how to use your coding agents*. Not a monitor: what it reads is the basis, never the subject.
 - Naming **Codex** and **Claude Code** is the product definition, not an
   infrastructure leak — they are what the app watches. What does not belong in
   user-facing copy is the *mechanism*: process names, wire protocols, method
@@ -84,11 +84,16 @@ Source Serif 4 (display) + Source Sans 3 (body), via `next/font` in `app/layout.
 **agent's page in Settings** carries the absolute path that agent is read from.
 On a developer's Mac both contain the home directory, and therefore the user's
 name, and often the names of their employer's repositories. Check what is in the
-frame before publishing, every time — a proper pipeline with fixture values is
-still to come. Both agent pages went out on 2026-09-18 after that read: Codex's
+frame before publishing, every time. Both agent pages went out on 2026-09-18 after that read: Codex's
 line names `/opt/homebrew/bin/codex` and nothing under the home directory, and
 Claude's names no path at all on the account route. On a Mac where `codex` lives
 under `~`, the Codex page is not publishable.
+
+The **Maintenance pane** is a third such surface: it lists the repositories
+Claude Code has worked in. Shoot it only on the app's fixture home
+(`LANCETTA_DEMO_HOME`, built by the app's `scripts/demo-home.sh`), and the
+suggestions only on its capture cast (`LANCETTA_DEMO_AGENT=showcase`), whose
+numbers `components/MenuBarHeader/panel-demo.ts` and `reading.ts` repeat.
 
 **Every capture takes `APP_LANG=en_GB`** (`settings-shots.sh` pins it itself): the app follows the Mac's language and nothing in a PNG says it is the wrong one. What the site says about languages comes from `../Lancetta/scripts/i18n/i18n.py langs` plus English; a language added to the app is a grep for `Dutch` here. The FAQ, its JSON-LD and Troubleshooting say the copied report is English only because of the app's `L10n.evidence` gate: if it goes, so do those sentences.
 
@@ -102,7 +107,7 @@ The GitHub **social preview** has no API and no `gh` field: it is uploaded by ha
 
 ## The one job, and the order that argues for it
 
-The copy is built around **one job: what you can still use, how long it lasts, and when it comes back.** A new feature goes under it, never beside it. Showing no money is a claim, not an omission. The `h1` names only shipped things; when-to-start and anything learnt from an average across days are said only as `Next` + future tense + a roadmap entry. The order of `frames` in `HeroStage.tsx` is the argument (its comment says why): changing it is an editorial act.
+**Lancetta guides; it does not show consumption** (user, 2026-10-10: *"Lancetta non ha lo scopo di mostrare il consumo e quanto manca al reset […] la killer feature di Lancetta è che usando i dati e gli scanning, fornisce una guida e dei suggerimenti su come e quando usare gli agenti"*). The copy is built around the decisions it makes with you (when to push on, when to slow down, what to switch to, how the agents are set up), and the quota, the pace and the reset appear only as what a suggestion rests on. A new feature goes under that, never beside it. Showing no money is a claim, not an omission. The `h1` names only shipped things; when-to-start and anything learnt from an average across days are said only as `Next` + future tense + a roadmap entry. The order of `frames` in `HeroStage.tsx` is the argument (its comment says why): changing it is an editorial act.
 
 ### The hero is ordinary flow
 
