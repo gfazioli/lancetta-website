@@ -79,9 +79,10 @@ interface Frame {
  * to advise from. So those two lead, and the surfaces that every monitor has
  * — a menu, an island, a window, a chart — come after them.
  *
- * Since 0.50.0 the first frame is the suggestions, which grew out of the pace
- * line it used to show; Maintenance has a frame of its own, without a picture
- * until the 0.50.0 set is shot.
+ * Since 0.50.0 the frames are the suggestions, which grew out of the pace line
+ * the first one used to show: each decision's picture is that suggestion's own
+ * card, cropped from the panel of the app's capture cast, and Maintenance has a
+ * frame of its own, on the fixture home's pane.
  *
  * The ADVICE goes first since v0.4, and that is the revisit this comment used
  * to ask for. It was second, behind the reaper, for one reason that was not
@@ -101,20 +102,24 @@ const frames: Frame[] = [
    * sentences (`Guidance.swift`), with example values.
    */
   {
+    src: '/screenshot-suggestion-room.png',
+    width: 716,
+    height: 257,
+    alt: 'A Lancetta suggestion in green: Codex has room, 88% of this 5-hour window is unused and it resets in 39m; spend it, start the long task now, and Lancetta keeps watching the pace; under it, what it rests on: 12% of the 5 hours used, 20% of the week',
     eyebrow: 'When to push on',
     title: 'Quota about to go unused. Spend it.',
-    body: 'A window that resets with most of it unused is quota gone for good, and nothing on your menu bar says so. Lancetta does: “Claude has room: 80% of this 5-hour window is unused, and it resets in 40m.” Then what to do with it — start the long task now, raise the effort if the task deserves it — while it keeps watching the pace and warns you in time.',
+    body: 'A window that resets with most of it unused is quota gone for good, and nothing on your menu bar says so. Lancetta does: “Codex has room: 88% of this 5-hour window is unused, and it resets in 39m.” Then what to do with it — start the long task now, and raise the effort if the task deserves it — while it keeps watching the pace and warns you in time.',
     href: '/docs/suggestions#when-to-push-on',
     linkLabel: 'When it says to push on',
   },
   {
-    src: '/screenshot-pace.png',
+    src: '/screenshot-suggestion-stop.png',
     width: 716,
-    height: 280,
-    alt: 'A Lancetta card for Claude: the five-hour window at 8% with the line “8% in 4h33m” under it, the weekly window at 8% with “8% in 21h53m”, and its separate Fable limit at 0%',
+    height: 386,
+    alt: 'A Lancetta suggestion in red: at this pace Claude stops in 51m, then waits 1h18m for its reset; lower the effort, give routine work to a lighter model, there is no free reset to fall back on, move the next tasks to Codex, which has 88% of its 5-hour window and 80% of its week left; under it, what it rests on: 82% of the 5 hours used, 21% an hour over the last hour, from 14 readings',
     eyebrow: 'When to slow down',
     title: 'Before it stops, not after.',
-    body: '“At this pace Claude stops in 1h10m, then waits 2h00m for its reset.” Lancetta says it while there is still time to act, with what helps: a lower effort, a lighter model for routine work, the free reset you hold, the other agent while it has room. The week is where it matters most — a weekly window run out on a Tuesday costs days, and only a series of readings sees it coming.',
+    body: '“At this pace Claude stops in 51m, then waits 1h18m for its reset.” Lancetta says it while there is still time to act, with what helps: a lower effort, a lighter model for routine work, a free reset if you hold one, the other agent while it has room. The week is where it matters most — a weekly window run out on a Tuesday costs days, and only a series of readings sees it coming.',
     figures: [
       { value: '7 days', label: 'the window that actually hurts' },
       { value: '1,890', label: 'readings that settled the rule' },
@@ -136,6 +141,10 @@ const frames: Frame[] = [
     linkLabel: 'What is planned, and what it has to prove',
   },
   {
+    src: '/screenshot-window-maintenance.png',
+    width: 2400,
+    height: 1600,
+    alt: 'The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, the heaviest start (design-system) at 6,983 of the 120,000 characters where Claude Code warns, and the Instructions card open on the files that need fixing: an over-long CLAUDE.md, an AGENTS.md that Claude Code skips, a CLAUDE.local.md committed to git',
     eyebrow: 'How they are set up',
     title: 'The tokens every session pays for.',
     body: 'Before an agent does anything, it reads its instruction files — CLAUDE.md, AGENTS.md, rules, skills, memory — and every session pays for them again. Lancetta scans them in each repository Claude Code has worked in and the folders above it, measures what loads at each start against Claude Code’s own warning thresholds, and says what to fix: 20 checks, each with why it matters. A fix that needs no choosing is shown in full before it is applied; the rest opens in Claude Code, in plan mode, with the prompt already written.',
@@ -145,9 +154,9 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-processes.png',
-    width: 2080,
-    height: 1440,
-    alt: 'The Processes pane: four Codex trees with the directory each one was started for, what it is holding and how many children it has, three of them marked as orphans, and a Reclaim button over the total',
+    width: 2400,
+    height: 1600,
+    alt: 'The Processes pane: 4 Codex trees holding 1.45 GB, 3 of them orphaned holding 1.05 GB, and the list open under them: each tree with the directory it was started for, what it holds, its children and its pid, the three orphans marked with a warning',
     eyebrow: 'What they leave behind',
     title: 'Nobody ever closes them.',
     body: 'Every folder an agent works in leaves a background tree behind, and one whose folder is gone is never shut down — not by the agent, not by the terminal, not by macOS. Lancetta finds them, suggests reclaiming what they hold, and shows you the list before it closes anything.',
@@ -162,8 +171,8 @@ const frames: Frame[] = [
   {
     src: '/screenshot-notch-open.png',
     width: 804,
-    height: 441,
-    alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, and both windows as bars',
+    height: 569,
+    alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, each window as a bar, and at the end the panel’s first suggestion: at this pace Claude stops in 51m, then waits 1h18m for its reset, lower the effort',
     eyebrow: 'Under the notch',
     title: 'The advice, at a glance.',
     body: 'On a MacBook Pro Lancetta also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. A bar turns red when its agent has stopped, or will within the hour. Point at it and it opens on the same suggestion as the panel.',
@@ -172,9 +181,9 @@ const frames: Frame[] = [
   },
   {
     src: '/screenshot-window-overview.png',
-    width: 2080,
-    height: 1440,
-    alt: 'The Lancetta window: the daily token series for both agents side by side, and underneath, each agent’s 5-hour and 7-day windows on one row',
+    width: 2400,
+    height: 1600,
+    alt: 'The Lancetta window on its Overview: four suggestions first (Claude stops in 51m at this pace, Codex has room, Maintenance found 4 warnings, 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, with Usage open on the week’s tokens',
     eyebrow: 'When you want the reasons',
     title: 'The window.',
     body: 'Command-O: the suggestions first, then everything they rest on — daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, the processes the agents left running, and Maintenance.',
@@ -186,8 +195,8 @@ const frames: Frame[] = [
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
   width: 760,
-  height: 710,
-  alt: 'The Lancetta panel: how fresh the numbers are across the top, then Claude Code and Codex, each window with its bar and the time it resets. Under Claude’s bars, how much each window has used and over how long, then its separate Fable limit; under Codex’s, that nothing has been used in the last few hours, and the free reset it holds, with a Use… button',
+  height: 1478,
+  alt: 'The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (lower the effort, a lighter model for routine work, no free reset to fall back on, move the next tasks to Codex) and what it rests on; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open on its 5-hour, 7-day and Fable bars, Codex at 20%, Usage and Maintenance',
 };
 
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
