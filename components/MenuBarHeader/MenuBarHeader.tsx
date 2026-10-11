@@ -237,7 +237,13 @@ export function MenuBarHeader() {
               <IconBrandDiscordFilled size={16} />
             </a>
           </Tooltip>
-          <Link href={released ? '/download' : '/docs'} className={classes.cta}>
+          {/*
+            Never prefetched. `/download` is a route handler that 302s to the
+            DMG on GitHub, and the bar is on screen on every page: Next fetched
+            it on every page view, the cross-origin redirect failed on CORS, and
+            each visit logged two console errors (2026-10-11).
+          */}
+          <Link href={released ? '/download' : '/docs'} prefetch={false} className={classes.cta}>
             {released ? 'Download' : 'Read the docs'}
           </Link>
           {/*
