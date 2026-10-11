@@ -434,7 +434,7 @@ export function ScrollGuide() {
   };
 
   const dismiss = (
-    <button type="button" className={classes.dismiss} aria-label="Dismiss" onClick={dismissGuide}>
+    <button type="button" className="lan-dismiss" aria-label="Dismiss" onClick={dismissGuide}>
       <IconX size={12} stroke={2.2} />
     </button>
   );

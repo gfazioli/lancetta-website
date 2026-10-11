@@ -184,38 +184,13 @@
   cursor: pointer;
 }
 
-.say:focus-visible,
-.dismiss:focus-visible {
+.say:focus-visible {
   outline: 2px solid var(--lan-accent);
   outline-offset: 2px;
   border-radius: rem(4px);
 }
 
-.dismiss {
-  display: inline-flex;
-  flex-shrink: 0;
-  align-items: center;
-  justify-content: center;
-  /*
-   * 24px, the smallest target WCAG 2.2 allows, in the 20px it always took:
-   * the negative margin gives the 4px back, so the bubble's text keeps its
-   * width and its two lines. The same rule is in PanelHint.module.css: change both.
-   */
-  width: rem(24px);
-  height: rem(24px);
-  margin: rem(-2px);
-  padding: 0;
-  border: 0;
-  border-radius: rem(6px);
-  background: none;
-  color: var(--mantine-color-gray-6);
-  cursor: pointer;
-}
-
-.dismiss:hover {
-  background: var(--mantine-color-gray-1);
-  color: var(--mantine-color-text);
-}
+/* Its dismiss button is `.lan-dismiss`, in app/global.css, shared with PanelHint. */
 
 /*
  * On the Support card: standing on its top edge near the right, its bubble to

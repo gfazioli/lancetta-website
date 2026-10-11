@@ -237,7 +237,7 @@ export function PanelHint({ enabled, open, onOpen }: PanelHintProps) {
             </button>
             <button
               type="button"
-              className={classes.dismiss}
+              className="lan-dismiss"
               aria-label="Dismiss"
               onClick={dismissGuide}
             >
