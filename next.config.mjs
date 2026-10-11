@@ -9,10 +9,10 @@ const withNextra = nextra({
   // No `latex`: nothing on the site is math, and it bundled KaTeX into the MDX
   // compiler that the release notes' fallback loads.
   search: {
-    codeblocks: false
+    codeblocks: false,
   },
   contentDirBasePath: '/docs',
-})
+});
 
 export default withNextra(
   withBundleAnalyzer({
@@ -22,9 +22,11 @@ export default withNextra(
     // does it (WebP q75 against AVIF q47, effort 3), the home page's pictures
     // came out 29-31% smaller: 186 -> 132 KiB at a phone's width, 239 -> 164
     // KiB on a Retina laptop, the panel 66.3 -> 44.5 KiB, and no difference at
-    // 2x (2026-10-11). A browser asks for one format, so the image
-    // transformations Vercel bills move to AVIF rather than double; the first
-    // request for each one encodes about half as long again.
+    // 2x (2026-10-11). Next picks the format from the browser's Accept header
+    // and caches each apart: every current browser takes AVIF, so the
+    // transformations Vercel bills move to AVIF, and a WebP is made only for
+    // one that cannot. The first request for each one encodes about half as
+    // long again.
     images: {
       formats: ['image/avif', 'image/webp'],
     },
@@ -42,4 +44,5 @@ export default withNextra(
         },
       },
     },
-  }));
+  })
+);
