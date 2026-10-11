@@ -6,6 +6,9 @@ export type DocsImageProps = ComponentProps<typeof ImageZoom>;
 /** The docs column: the viewport on a phone, 832px at most elsewhere (672px at 1024). */
 const COLUMN = 832;
 
+/** Up to here the column is the viewport. */
+const PHONE = 768;
+
 /**
  * How wide a capture is in POINTS, which is the size it is drawn at.
  *
@@ -41,10 +44,13 @@ function pointWidth(src: DocsImageProps['src']): number | undefined {
 export function DocsImage(props: DocsImageProps) {
   const points = pointWidth(props.src);
   const drawn = Math.min(points ?? COLUMN, COLUMN);
+  // Full width only while the viewport is narrower than what is drawn: a
+  // 380pt panel is 380px on a 768px tablet, not 768.
+  const fullUpTo = Math.min(points ?? PHONE, PHONE);
 
   return (
     <ImageZoom
-      sizes={`(max-width: 768px) 100vw, ${drawn}px`}
+      sizes={`(max-width: ${fullUpTo}px) 100vw, ${drawn}px`}
       {...props}
       style={points ? { maxWidth: `min(100%, ${points}px)`, ...props.style } : props.style}
     />
