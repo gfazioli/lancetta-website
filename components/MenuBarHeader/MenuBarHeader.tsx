@@ -238,14 +238,23 @@ export function MenuBarHeader() {
             </a>
           </Tooltip>
           {/*
-            Never prefetched. `/download` is a route handler that 302s to the
-            DMG on GitHub, and the bar is on screen on every page: Next fetched
-            it on every page view, the cross-origin redirect failed on CORS, and
-            each visit logged two console errors (2026-10-11).
+            A plain anchor, as the hero's and the closing section's download
+            buttons are: `/download` is a route handler that 302s to the DMG on
+            GitHub, not a page. As a next/link on a bar that is on every page,
+            it was prefetched on every page view, the cross-origin redirect
+            failed on CORS and logged two console errors; and a click fetched it
+            as RSC first, failed the same way, and only then fell back to a
+            normal navigation (2026-10-11).
           */}
-          <Link href={released ? '/download' : '/docs'} prefetch={false} className={classes.cta}>
-            {released ? 'Download' : 'Read the docs'}
-          </Link>
+          {released ? (
+            <a href="/download" className={classes.cta}>
+              Download
+            </a>
+          ) : (
+            <Link href="/docs" className={classes.cta}>
+              Read the docs
+            </Link>
+          )}
           {/*
             Nextra's own hamburger lived in the navbar this component replaced.
             `setMenu` is the store it wrote, so the sidebar that opens is
