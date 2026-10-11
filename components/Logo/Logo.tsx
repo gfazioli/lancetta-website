@@ -11,9 +11,10 @@ import { Image } from '@mantine/core';
  * gradient icon does not survive 16px. At 36px it does, so the navbar gets the
  * real thing.
  *
- * Decorative, so `alt=""`: in the bar and in the footer the name is written
- * beside it, and an alt repeating it reads "Lancetta Lancetta" to a screen
- * reader (Lighthouse's image-redundant-alt, 2026-10-11).
+ * Decorative, so `alt=""`: in the bar the name is written beside it, and an
+ * alt repeating it read "Lancetta Lancetta" to a screen reader (Lighthouse's
+ * image-redundant-alt, 2026-10-11); in the footer the paragraph under it opens
+ * with the name.
  */
 export function Logo({ size = 36 }: { size?: number }) {
   return <Image src="/brand-mark.svg" alt="" w={size} h={size} />;

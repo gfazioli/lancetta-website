@@ -1,14 +1,10 @@
 import type { ComponentProps } from 'react';
 import { ImageZoom } from 'nextra/components';
-import { useMDXComponents as getDocsMDXComponents } from 'nextra-theme-docs';
 
-type DocsImageProps = ComponentProps<typeof ImageZoom>;
+export type DocsImageProps = ComponentProps<typeof ImageZoom>;
 
 /** The docs column: the viewport on a phone, 832px at most elsewhere (672px at 1024). */
 const COLUMN = 832;
-
-/** Nextra's own paragraph, the one a Markdown image is set in. */
-const { p: DocsParagraph } = getDocsMDXComponents();
 
 /**
  * How wide a capture is in POINTS, which is the size it is drawn at.
@@ -52,26 +48,5 @@ export function DocsImage(props: DocsImageProps) {
       {...props}
       style={points ? { maxWidth: `min(100%, ${points}px)`, ...props.style } : props.style}
     />
-  );
-}
-
-/**
- * The picture a docs page opens on, when it is the page's largest paint:
- * fetched at once and first, where a Markdown image is always lazy. The panel
- * on /docs and /docs/the-menu waited for layout, its request starting at
- * ~2.0 s against 0.64 s for the same file on the home page, and mobile LCP
- * was 5.1 s (2026-10-11).
- *
- * Written in the MDX as `<LeadImage src={imported} alt="…" />`, the file
- * imported there. Two traps on the way: MDX maps only Markdown images to
- * `DocsImage`, so a literal `<img>` with an imported `src` was served as
- * `src="[object Object]"`; and a JSX element is not set in a paragraph the way
- * a Markdown image is, so without `DocsParagraph` it lost the 20px above it.
- */
-export function LeadImage(props: DocsImageProps) {
-  return (
-    <DocsParagraph>
-      <DocsImage placeholder="blur" loading="eager" fetchPriority="high" {...props} />
-    </DocsParagraph>
   );
 }
