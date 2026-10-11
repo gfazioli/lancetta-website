@@ -3,6 +3,9 @@ title: "Troubleshooting: every code and what to do"
 description: Every code Lancetta can show when an agent cannot be read, what it likely means, and what to do.
 ---
 
+import { LeadImage } from '@/components/DocsImage/LeadImage';
+import problems from '@/public/screenshot-problems.png';
+
 # Troubleshooting
 
 When Lancetta cannot read an agent, the card says so in one sentence. A situation that
@@ -11,7 +14,8 @@ described calmly with what would change it. A fault is drawn red, and **Why, and
 do…** opens a window that names the code, the likely cause and the fix beside the raw
 evidence, with **Copy report** for a bug.
 
-![The “What went wrong” window: one card per thing that cannot be read, with its code, the likely cause, what to do and the raw evidence, Refresh now and Copy report at the top, and the full catalogue of codes underneath](/screenshot-problems.png)
+{/* Not Markdown: this is the page's largest paint, and a Markdown image is lazy. */}
+<LeadImage src={problems} alt="The “What went wrong” window: one card per thing that cannot be read, with its code, the likely cause, what to do and the raw evidence, Refresh now and Copy report at the top, and the full catalogue of codes underneath" />
 
 The card at the top is whatever is wrong now; the list under it is every code the app
 can show, carried in the window as well as on this page because being offline is one of
