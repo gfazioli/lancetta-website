@@ -165,6 +165,43 @@
       linear-gradient(to top, var(--lan-body) 0, transparent var(--lan-feather-bottom, 110px));
     pointer-events: none;
   }
+
+  /*
+   * The character's two bubbles, under the bar (PanelHint) and in the corner
+   * or on the Support card (ScrollGuide), close with the same button. Here
+   * rather than in either module: a class shared through a module would make
+   * the home page load PanelHint's stylesheet, which CLAUDE.md rules out.
+   *
+   * 24px, the smallest target WCAG 2.2 allows, in the 20px it always took: the
+   * negative margin gives the 4px back, so the bubble's text keeps its width
+   * and its two lines.
+   */
+  .lan-dismiss {
+    display: inline-flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: rem(24px);
+    height: rem(24px);
+    margin: rem(-2px);
+    padding: 0;
+    border: 0;
+    border-radius: rem(6px);
+    background: none;
+    color: var(--mantine-color-gray-6);
+    cursor: pointer;
+  }
+
+  .lan-dismiss:hover {
+    background: var(--mantine-color-gray-1);
+    color: var(--mantine-color-text);
+  }
+
+  .lan-dismiss:focus-visible {
+    outline: 2px solid var(--lan-accent);
+    outline-offset: 2px;
+    border-radius: rem(4px);
+  }
 }
 
 @layer components, mantine, nextra, overwrite;
