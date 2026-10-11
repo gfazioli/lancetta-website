@@ -18,6 +18,16 @@ export default withNextra(
   withBundleAnalyzer({
     reactStrictMode: false,
     cleanDistDir: true,
+    // AVIF first, WebP for a browser that cannot take it. Encoded the way Next
+    // does it (WebP q75 against AVIF q47, effort 3), the home page's pictures
+    // came out 29-31% smaller: 186 -> 132 KiB at a phone's width, 239 -> 164
+    // KiB on a Retina laptop, the panel 66.3 -> 44.5 KiB, and no difference at
+    // 2x (2026-10-11). A browser asks for one format, so the image
+    // transformations Vercel bills move to AVIF rather than double; the first
+    // request for each one encodes about half as long again.
+    images: {
+      formats: ['image/avif', 'image/webp'],
+    },
     experimental: {
       optimizePackageImports: ['@mantine/core', '@mantine/hooks'],
     },
