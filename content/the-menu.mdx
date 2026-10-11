@@ -3,11 +3,15 @@ title: "The menu-bar panel: suggestions first, then the cards"
 description: "What the Lancetta panel says: the suggestions first, then a card per agent and per pane that opens in place, with each window's bar, reset and pace line."
 ---
 
+import { LeadImage } from '@/components/DocsImage/DocsImage';
+import panel from '@/public/screenshot-menu-dark.png';
+
 # The Panel
 
 The panel opens on **what to do**: the suggestions, the most urgent first. Under them is the window in brief, a card for each agent and for each pane of the window, and each card opens its details in place. The numbers are there for when you want to check a suggestion.
 
-![The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (lower the effort, a lighter model for routine work, no free reset to fall back on, move the next tasks to Codex) and what it rests on; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open on its 5-hour, 7-day and Fable bars, Codex at 20%, Usage and Maintenance](/screenshot-menu-dark.png)
+{/* Not Markdown: this is the page's largest paint, and a Markdown image is lazy. */}
+<LeadImage src={panel} alt="The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (lower the effort, a lighter model for routine work, no free reset to fall back on, move the next tasks to Codex) and what it rests on; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open on its 5-hour, 7-day and Fable bars, Codex at 20%, Usage and Maintenance" />
 
 It is a panel rather than a menu, and that is not decoration. A macOS menu's
 background belongs to the system: its rows can be anything, the surface behind
