@@ -79,6 +79,8 @@ Source Serif 4 (display) + Source Sans 3 (body), via `next/font` in `app/layout.
 
 `public/screenshot-*.png` are captures of the real build. How to re-shoot each set (window set, panel, crops, Settings), with its hatches and traps, is the workspace's `lancetta-screenshots` skill. Every time: the four window panes are ONE set at ONE window size; a re-shoot is when the copy beside each picture is checked against it; every frame's traffic lights are active and no figure is mid-roll.
 
+On a docs page a capture is drawn at its size in points, half its pixels (`DocsImage`). A page whose first picture is its largest paint writes it as `<LeadImage src={imported} />`, never as a Markdown image, which is always lazy (`DocsImage.tsx` says why, and the two traps on the way).
+
 **Two surfaces may not be published, and both for the same reason.** The
 **Processes pane** lists each tree by the directory it was started for, and an
 **agent's page in Settings** carries the absolute path that agent is read from.
@@ -111,7 +113,7 @@ The GitHub **social preview** has no API and no `gh` field: it is uploaded by ha
 
 ### The hero is ordinary flow
 
-Never bring back the pinned, scroll-driven stage, nor a header reading that follows the scroll (`HeroStage.tsx` and `MenuBarHeader/reading.ts` say what each cost). Measure the page's length before adding to it: `document.documentElement.scrollHeight` through `scripts/page.sh eval` at 1440 and 390 (10,018 and 13,967 after the last cut).
+Never bring back the pinned, scroll-driven stage, nor a header reading that follows the scroll (`HeroStage.tsx` and `MenuBarHeader/reading.ts` say what each cost). Measure the page's length before adding to it: `document.documentElement.scrollHeight` through `scripts/page.sh eval` at 1440 and 390 (12,601 and 17,538 on 2026-10-11, in Chrome: 26% longer than the 10,018 and 13,967 of the last cut).
 
 ### The character
 
@@ -123,7 +125,7 @@ Never bring back the pinned, scroll-driven stage, nor a header reading that foll
 
 ## Performance and SEO: the baseline
 
-What the four sites share is in the workspace's `.claude/rules/websites.md`. This site, Lighthouse mobile on local production builds (2026-09-30): home perf 96-97, LCP 2.1-2.2 s, 662 KiB, fonts 78 KiB; JS 352 KiB per page. First paint is bimodal on one build (about 2.0 or 3.7 s, in clusters): compare early passes with early passes.
+What the four sites share is in the workspace's `.claude/rules/websites.md`. This site, Lighthouse mobile on local production builds with `LH_CHROME_FLAGS=--disable-features=RenderBlockingFonts` (2026-10-11): home perf 93-95, LCP 2.39-2.50 s, 740 KiB, fonts 78 KiB; /docs and /docs/the-menu perf 95-96, LCP 2.38-2.42 s; JS 363 KiB per page. Unpinned, the first paint is bimodal on one build (about 2.0 or 3.7 s, in clusters): compare early passes with early passes.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
