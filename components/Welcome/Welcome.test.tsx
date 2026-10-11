@@ -37,6 +37,9 @@ describe('Welcome component', () => {
     expect(heading.textContent).toContain('Push on, slow down,');
     expect(heading.textContent).toContain('or switch agents.');
     expect(heading.textContent).toContain('Lancetta tells you when.');
+    // The lines are blocks: without the space closing each one, whatever reads
+    // the markup unlaid-out gets "slow down,or switch agents.Lancetta".
+    expect(heading.textContent).toContain('slow down, or switch agents. Lancetta');
   });
 
   it('answers what it is, what it does and what it costs before the first scroll', () => {
