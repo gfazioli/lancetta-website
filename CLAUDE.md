@@ -127,7 +127,7 @@ Never bring back the pinned, scroll-driven stage, nor a header reading that foll
 
 ## Performance and SEO: the baseline
 
-What the four sites share is in the workspace's `.claude/rules/websites.md`. This site, Lighthouse mobile on local production builds with `LH_CHROME_FLAGS=--disable-features=RenderBlockingFonts` (2026-10-11, per-component Mantine CSS and AVIF): home perf 97, FCP 1.89-1.93 s, LCP 2.14-2.16 s, 676 KiB, fonts 78 KiB; /docs/the-menu perf 98, LCP 2.13 s; CSS 3 sheets, 261 KB raw; JS 363 KiB per page. Unpinned, the first paint is bimodal on one build (about 2.0 or 3.7 s, in clusters): compare early passes with early passes.
+What the four sites share is in the workspace's `.claude/rules/websites.md`. This site, Lighthouse mobile on local production builds with `LH_CHROME_FLAGS=--disable-features=RenderBlockingFonts` (2026-10-11, Mantine CSS extracted from styles.css, AVIF): home perf 96-97, FCP 1.87-1.89 s, LCP 2.14-2.15 s, 676 KiB, fonts 78 KiB; /docs/the-menu perf 98, FCP 1.78-1.87 s, LCP 2.08-2.14 s; CSS 3 sheets, 265 KB raw; JS 363 KiB per page. Unpinned, the first paint is bimodal on one build (about 2.0 or 3.7 s, in clusters): compare early passes with early passes.
 
 <!-- BEGIN:nextjs-agent-rules -->
 
