@@ -27,8 +27,12 @@
    * cleared the bar and a later `padding-block` that did not know about it —
    * and the later one won by being later. 46 - 40 = 6, which is exactly how
    * far the headline's first line sat under the bar on a phone, measured.
+   *
+   * The air is a variable because the dial hangs off the same line (`.dial`)
+   * and has to move with the headline.
    */
-  padding-block: calc(var(--lan-bar-height, rem(46px)) + rem(40px)) rem(72px);
+  --hero-air: rem(40px);
+  padding-block: calc(var(--lan-bar-height, rem(46px)) + var(--hero-air)) rem(72px);
 
   /*
    * No feather at the TOP: this edge is the top of the page, so there is
@@ -46,6 +50,20 @@
    * container, so the vertical flow and the bar above are untouched.
    */
   overflow-x: clip;
+}
+
+/*
+ * More air wherever the character's hint shows (PanelHint.module.css hides it
+ * on a phone). The hint hangs at the bar + 8px and is 52px tall, so with 40px
+ * its bubble ended 18px inside the headline's first line, over "down,", on
+ * every load and for as long as it stayed: measured 2026-10-11 at every width
+ * from 768 to 1920. At 64px the line starts 6px under the bubble, and the
+ * glyphs further down still.
+ */
+@media (min-width: $mantine-breakpoint-xs) {
+  .hero {
+    --hero-air: rem(64px);
+  }
 }
 
 /* ------------------------------------------------------------- the opening */
@@ -347,8 +365,12 @@
 
   position: absolute;
   left: 50%;
-  /* A clear gap under the header bar, so the scale does not hang off it. */
-  top: calc(var(--lan-bar-height, rem(46px)) + rem(38px));
+  /*
+   * A clear gap under the header bar, so the scale does not hang off it: 2px
+   * above where the headline starts, which is what places the hole below on
+   * the three lines.
+   */
+  top: calc(var(--lan-bar-height, rem(46px)) + var(--hero-air) - rem(2px));
   width: var(--dial-size);
   aspect-ratio: 1;
   translate: -50% 0;
