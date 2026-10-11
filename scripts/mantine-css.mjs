@@ -2,9 +2,10 @@
 /**
  * mantine-css.mjs [--write | --check] -- the Mantine CSS this site renders, and only that.
  *
- * `@mantine/core/styles.css` carries every component Mantine has, 277 KB of
- * render-blocking CSS on every page, of which Chrome's coverage had a page here
- * using 11-13% (2026-10-11). This script keeps the part the site renders:
+ * `@mantine/core/styles.css` carries every component Mantine has, about 280 KB
+ * of render-blocking CSS on every page, of which Chrome's coverage had a page on
+ * lancetta.app using 11-13% (2026-10-11; the four app sites share this script).
+ * It keeps the part the site renders:
  *
  * 1. every name imported from '@mantine/core' anywhere in the site's own code,
  *    and in every dependency that itself imports '@mantine/core' (the
