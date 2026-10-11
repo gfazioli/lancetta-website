@@ -58,9 +58,10 @@
  * its bubble ended 18px inside the headline's first line, over "down,", on
  * every load and for as long as it stayed: measured 2026-10-11 at every width
  * from 768 to 1920. At 64px the line starts 6px under the bubble, and the
- * glyphs further down still.
+ * glyphs further down still. `>`, the exact complement of the hint's own
+ * `max-width`: at 36em itself the hint is hidden, and so is this.
  */
-@media (min-width: $mantine-breakpoint-xs) {
+@media (width > $mantine-breakpoint-xs) {
   .hero {
     --hero-air: rem(64px);
   }
