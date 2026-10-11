@@ -1,9 +1,12 @@
 import type { CSSProperties, ReactNode } from 'react';
 import { render } from '@/test-utils';
-import { DocsImage, LeadImage } from './DocsImage';
+import { DocsImage } from './DocsImage';
+import { LeadImage } from './LeadImage';
 
 // Nextra ships ESM that Jest does not transform. What is under test is what
 // DocsImage hands to ImageZoom, so a stand-in records exactly that.
+// LeadImage reads the paragraph through the site's own mdx-components.ts,
+// which builds its map from nextra-theme-docs: that is stood in for too.
 jest.mock(
   'nextra/components',
   () => ({
