@@ -58,11 +58,12 @@
  * its bubble ended 18px inside the headline's first line, over "down,", on
  * every load and for as long as it stayed: measured 2026-10-11 at every width
  * from 768 to 1920. At 64px the line starts 6px under the bubble, and the
- * glyphs further down still. 36.0625em is 577px, the first width past the
- * hint's own `max-width: 36em`: at 576 the hint is hidden, and so is this. A
- * plain `min-width`, because the range form drops the rule on Safari < 16.4.
+ * glyphs further down still. Written as the NEGATION of the hint's own
+ * query, so the two cannot drift apart: at 576 the hint is hidden and so is
+ * this, at 577 both apply. Not the range form `width > 36em`, which Safari
+ * before 16.4 drops.
  */
-@media (min-width: 36.0625em) {
+@media not all and (max-width: $mantine-breakpoint-xs) {
   .hero {
     --hero-air: rem(64px);
   }
