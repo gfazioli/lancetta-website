@@ -54,7 +54,7 @@ describe('DocsImage', () => {
   it('draws a Retina capture at its size in points, and asks for that width', () => {
     const img = drawn({ src: capture, alt: 'The panel' });
     expect(img.style.maxWidth).toBe('min(100%, 380px)');
-    expect(img.dataset.sizes).toBe('(max-width: 768px) 100vw, 380px');
+    expect(img.dataset.sizes).toBe('(max-width: 380px) 100vw, 380px');
   });
 
   it('caps the width it asks for at the column when the capture is wider in points', () => {
