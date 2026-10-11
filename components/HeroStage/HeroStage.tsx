@@ -258,10 +258,16 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
             it has room. What must not creep in until it ships: when to START,
             and anything learnt from an average across days. Today a
             suggestion reasons from the current window's own rate.
+
+            The space closing each line is for whatever reads the markup
+            without laying it out: the lines are blocks, so without it the
+            heading's text is "slow down,or switch agents.Lancetta". At the end
+            of a block it is never drawn. A template literal, because oxfmt
+            deletes a bare {' '}.
           */}
           <Title className={classes.title}>
-            <span className={classes.titleLine}>Push on, slow down,</span>
-            <span className={classes.titleLine}>or switch agents.</span>
+            <span className={classes.titleLine}>{`Push on, slow down, `}</span>
+            <span className={classes.titleLine}>{`or switch agents. `}</span>
             <span className={classes.titleLine}>
               <TextAnimate
                 animate="in"

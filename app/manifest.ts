@@ -9,7 +9,9 @@ import config from '@/config';
  */
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Lancetta — Menu-Bar Quota Monitor for Coding Agents',
+    // The page title, so the two cannot drift apart again: this one still
+    // called the app a "Quota Monitor" after the title had moved to guidance.
+    name: config.metadata.title.default,
     short_name: 'Lancetta',
     description: config.metadata.description,
     start_url: '/',

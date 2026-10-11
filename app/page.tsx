@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { SkipNavContent } from 'nextra/components';
 import { SoftwareApplicationJsonLd } from '@/components/StructuredData/StructuredData';
 import { fetchReleaseCadence } from '@/components/ReleaseCadence/fetch-release-cadence';
 import { Welcome } from '@/components/Welcome/Welcome';
@@ -44,10 +45,13 @@ export default async function HomePage() {
   const cadence = await fetchReleaseCadence();
 
   // In a <main>: the docs pages get one from Nextra, the home page had none,
-  // so everything on it sat in no landmark at all (2026-09-29 audit).
+  // so everything on it sat in no landmark at all (2026-09-29 audit). The
+  // skip link's target too: Nextra renders the link on every page and its
+  // target only on docs pages, so on this one it led nowhere (2026-10-11).
   return (
     <>
       <SoftwareApplicationJsonLd />
+      <SkipNavContent />
       <main>
         <Welcome cadence={cadence} />
       </main>
