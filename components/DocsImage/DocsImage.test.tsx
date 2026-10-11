@@ -61,7 +61,7 @@ describe('DocsImage', () => {
     const img = drawn({ src: { ...capture, width: 2400, height: 1600 }, alt: 'The window' });
     expect(img.style.maxWidth).toBe('min(100%, 1200px)');
     expect(img.dataset.sizes).toBe(
-      '(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc(100vw - 352px), (max-width: 1439px) calc(100vw - 608px), 832px'
+      '(max-width: 767.98px) calc(100vw - 32px), (max-width: 1279.98px) calc(100vw - 352px), (max-width: 1439.98px) calc(100vw - 608px), 832px'
     );
   });
 
@@ -77,7 +77,7 @@ describe('DocsImage', () => {
     });
     expect(icon.style.maxWidth).toBe('');
     expect(icon.dataset.sizes).toBe(
-      '(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc(100vw - 352px), (max-width: 1439px) calc(100vw - 608px), 832px'
+      '(max-width: 767.98px) calc(100vw - 32px), (max-width: 1279.98px) calc(100vw - 352px), (max-width: 1439.98px) calc(100vw - 608px), 832px'
     );
 
     const remote = drawn({ src: 'https://example.com/screenshot-x.png', alt: '' });
@@ -103,7 +103,7 @@ describe('DocsImage', () => {
 describe('docsSizes', () => {
   it('follows the column for a picture as wide as it, or wider', () => {
     expect(docsSizes()).toBe(
-      '(max-width: 767px) calc(100vw - 32px), (max-width: 1279px) calc(100vw - 352px), (max-width: 1439px) calc(100vw - 608px), 832px'
+      '(max-width: 767.98px) calc(100vw - 32px), (max-width: 1279.98px) calc(100vw - 352px), (max-width: 1439.98px) calc(100vw - 608px), 832px'
     );
     expect(docsSizes(1200)).toBe(docsSizes());
   });
@@ -111,13 +111,13 @@ describe('docsSizes', () => {
   it('gives a picture narrower than the column its own width', () => {
     expect(docsSizes(380)).toBe('(max-width: 412px) calc(100vw - 32px), 380px');
     expect(docsSizes(600)).toBe(
-      '(max-width: 632px) calc(100vw - 32px), (max-width: 767px) 600px, (max-width: 952px) calc(100vw - 352px), 600px'
+      '(max-width: 632px) calc(100vw - 32px), (max-width: 767.98px) 600px, (max-width: 952px) calc(100vw - 352px), 600px'
     );
   });
 
   it('switches from the column to the picture where they cross on a laptop', () => {
     expect(docsSizes(760)).toBe(
-      '(max-width: 767px) calc(100vw - 32px), (max-width: 1112px) calc(100vw - 352px), (max-width: 1279px) 760px, (max-width: 1368px) calc(100vw - 608px), 760px'
+      '(max-width: 767.98px) calc(100vw - 32px), (max-width: 1112px) calc(100vw - 352px), (max-width: 1279.98px) 760px, (max-width: 1368px) calc(100vw - 608px), 760px'
     );
   });
 });
