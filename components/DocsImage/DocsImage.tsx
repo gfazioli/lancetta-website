@@ -3,11 +3,51 @@ import { ImageZoom } from 'nextra/components';
 
 export type DocsImageProps = ComponentProps<typeof ImageZoom>;
 
-/** The docs column: the viewport on a phone, 832px at most elsewhere (672px at 1024). */
-const COLUMN = 832;
+/**
+ * The docs column, measured on every docs page at 700 to 1920 (2026-10-11):
+ * the viewport less 32px on a phone; less 352px once the sidebar shows, at
+ * 768; less 608px once the table of contents shows too, at 1280, and never
+ * wider than 832px. Between 1185 and 1279 it is wider than 832 (927 at 1279),
+ * which a flat `832px` under-asked for, and at 768 it is 416, not the 768 a
+ * `(max-width: 768px) 100vw` asked for.
+ */
+const PHONE_GUTTER = 32;
+const SIDEBAR = 352;
+const SIDEBAR_AND_TOC = 608;
+const COLUMN_MAX = 832;
+const SIDEBAR_FROM = 768;
+const TOC_FROM = 1280;
 
-/** Up to here the column is the viewport. */
-const PHONE = 768;
+/**
+ * `sizes` for a picture drawn at the column's width, or at `points` when it is
+ * narrower: one clause per stretch of viewport, the column's own formula
+ * while the picture fills it and its fixed width once it does not.
+ */
+export function docsSizes(points = Infinity): string {
+  const clauses: [string | null, string][] = [];
+  const stretch = (until: number, from: number, gutter: number, top: number) => {
+    // The picture fills the column until the column is wider than the picture.
+    const full = points + gutter;
+    if (points <= from - gutter) {
+      clauses.push([`(max-width: ${until - 1}px)`, `${Math.min(points, top)}px`]);
+    } else if (full < until && points < top) {
+      clauses.push([`(max-width: ${full}px)`, `calc(100vw - ${gutter}px)`]);
+      clauses.push([`(max-width: ${until - 1}px)`, `${points}px`]);
+    } else {
+      clauses.push([`(max-width: ${until - 1}px)`, `calc(100vw - ${gutter}px)`]);
+    }
+  };
+  stretch(SIDEBAR_FROM, 0, PHONE_GUTTER, Infinity);
+  stretch(TOC_FROM, SIDEBAR_FROM, SIDEBAR, Infinity);
+  stretch(COLUMN_MAX + SIDEBAR_AND_TOC, TOC_FROM, SIDEBAR_AND_TOC, COLUMN_MAX);
+  clauses.push([null, `${Math.min(points, COLUMN_MAX)}px`]);
+
+  // A clause that says what the next one says is only a longer way to say it.
+  const kept = clauses.filter(
+    ([, size], i) => i === clauses.length - 1 || clauses[i + 1][1] !== size
+  );
+  return kept.map(([media, size]) => (media ? `${media} ${size}` : size)).join(', ');
+}
 
 /**
  * How wide a capture is in POINTS, which is the size it is drawn at.
@@ -36,21 +76,16 @@ function pointWidth(src: DocsImageProps['src']): number | undefined {
  *
  * Without `sizes` the browser cannot know the column is narrower than the
  * file, and every picture on /docs/the-window came as the 3840w rendering, on
- * a phone and a laptop alike: 262 KB for its five screenshots. Told the
- * column, it takes 1080w on a laptop (120 KB), 1920w on a Retina one and 1200w
- * on a 3x phone (138 KB), measured 2026-09-29. A capture narrower than the
- * column in points says its own width instead.
+ * a phone and a laptop alike: 262 KB for its five screenshots (2026-09-29).
+ * `docsSizes` follows the column as it was measured, and a capture narrower
+ * than the column says its own width.
  */
 export function DocsImage(props: DocsImageProps) {
   const points = pointWidth(props.src);
-  const drawn = Math.min(points ?? COLUMN, COLUMN);
-  // Full width only while the viewport is narrower than what is drawn: a
-  // 380pt panel is 380px on a 768px tablet, not 768.
-  const fullUpTo = Math.min(points ?? PHONE, PHONE);
 
   return (
     <ImageZoom
-      sizes={`(max-width: ${fullUpTo}px) 100vw, ${drawn}px`}
+      sizes={docsSizes(points)}
       {...props}
       style={points ? { maxWidth: `min(100%, ${points}px)`, ...props.style } : props.style}
     />
