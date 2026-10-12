@@ -42,7 +42,7 @@ A few things in this app are not read-only, and each one happens only after you 
 
 **Removing background sessions** asks your own Claude Code to do it, one `claude rm` per session, after a confirmation that names what it frees. Claude Code refuses on its own to remove a session that holds work not pushed.
 
-**Fix with Claude Code** starts your own Claude Code in Terminal, in the file's repository and in plan mode, with a first message Lancetta wrote, through a one-time script in the temporary folder that deletes itself. From then on it is your session: Claude Code edits nothing until you approve its plan.
+**Fix with Claude Code** and **Fix with Codex** start your own agent in Terminal, in the file's repository, with a first message Lancetta wrote, through a one-time script in the temporary folder that deletes itself. From then on it is your session: Claude Code, in plan mode, edits nothing until you approve its plan; Codex is asked to wait for your OK, in a sandbox that writes only in the repository and the file's own folder.
 
 ## What it writes
 
@@ -68,7 +68,7 @@ Every request it makes is named here:
 
 That is the whole list. There is no account, no server of ours, and nothing that reports what you did.
 
-**Fix with Claude Code** is not on it because it is not a request Lancetta makes: it hands a prompt to your own Claude Code, which then works as it always does, with your sign-in, and sends what any session of yours sends.
+**Fix with Claude Code** and **Fix with Codex** are not on it because they are not requests Lancetta makes: each hands a prompt to your own agent, which then works as it always does, with your sign-in, and sends what any session of yours sends.
 
 ## Why reading costs nothing
 
