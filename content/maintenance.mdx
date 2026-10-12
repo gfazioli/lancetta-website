@@ -7,7 +7,7 @@ description: "The files Claude Code, Codex and the others read before every sess
 
 Every session of a coding agent begins by reading its instruction files — CLAUDE.md, AGENTS.md, rules, skills, memory — and every session pays for them again, before your first prompt. They are rarely measured, and most of what goes wrong in them goes wrong silently: an import that loads nothing, a rule that loads everywhere, an AGENTS.md that Claude Code never reads.
 
-The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code when it does.
+The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code or Codex when it does.
 
 ![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, the heaviest start at 6,983 of the 120,000 characters at which Claude Code warns, then the Instructions, Rules, Skills and Commands & Subagents cards, and the Instructions card open on the four files that need fixing](/screenshot-window-maintenance.png)
 
@@ -89,9 +89,14 @@ Five kinds of finding have a fix with one right answer, and Lancetta offers to m
 
 ### When it needs a judgement
 
-Trimming a long file, merging two that drifted apart, rewording a description: these are a judgement, and they go to an agent with you in the session. **Fix with Claude Code** opens Terminal in the file's repository and starts Claude Code there **in plan mode**, with a first message Lancetta writes: what was found, why it matters and how to go about it. Claude Code reads and proposes; it edits nothing until you approve its plan.
+Trimming a long file, merging two that drifted apart, rewording a description: these are a judgement, and they go to an agent with you in the session. **Fix with Claude Code** or **Fix with Codex** opens Terminal in the file's repository and starts that agent there, with a first message Lancetta writes: what was found, why it matters and how to go about it, and to propose the changes before making them.
 
-Its menu also has **Copy Prompt**, to paste the same message into a session of your own. Without Claude Code installed, the button is **Copy Prompt for an Agent**.
+The button names the agent whose file it is: Codex for an AGENTS.md or its size limit, Claude Code for its own files. For a file that is neither's, it is the one you last picked from its menu, which offers every agent installed.
+
+- **Claude Code** starts **in plan mode**: it reads and proposes, and edits nothing until you approve its plan.
+- **Codex** has no way to start in its plan mode from outside its window, so it is asked to propose first and wait for your OK, and its sandbox lets it write only in the repository and the file's own folder. To keep it planning, press ⇧Tab in its window for Plan mode.
+
+The menu also has **Copy Prompt**, to paste the same message into a session of your own. With neither agent installed, the button is **Copy Prompt for an Agent**.
 
 **Copy Findings**, at the top of the pane, puts every finding shown on the clipboard, file by file, ready for any agent.
 
