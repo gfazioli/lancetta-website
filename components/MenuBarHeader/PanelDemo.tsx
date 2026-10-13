@@ -18,11 +18,9 @@ import {
   IconChartBar,
   IconChevronDown,
   IconChevronUp,
-  IconLayoutGrid,
   IconLoader2,
   IconPin,
   IconPinFilled,
-  IconPower,
   IconSettings,
   IconTools,
 } from '@tabler/icons-react';
@@ -203,20 +201,13 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
       className={classes.panel}
     >
       {/* `--place` is where each piece starts in the entrance: the header, the
-          suggestions, each card in turn, then the commands, as `MenuPanelView`
-          orders them. */}
+          suggestions, then each card in turn, as `MenuPanelView` orders them.
+          The app has no footer since 0.51: the pin, then the gear in the corner,
+          whose menu holds Open Lancetta…, Settings…, Check for Updates…, About
+          and Quit. Here the gear links to the page that lists them. */}
       <div className={classes.toolbar} style={{ '--place': 0 } as CSSProperties}>
         <RefreshStamp base={base} refreshing={refreshing} onRefresh={refresh} />
         <span className={classes.spacer} />
-        <Link
-          href="/docs/settings"
-          className={classes.headerIcon}
-          title="Settings…  ⌘,"
-          aria-label="Settings"
-          onClick={onClose}
-        >
-          <IconSettings size={13} stroke={1.8} />
-        </Link>
         <button
           type="button"
           className={classes.headerIcon}
@@ -232,6 +223,15 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
         >
           {pinned ? <IconPinFilled size={13} /> : <IconPin size={13} stroke={1.8} />}
         </button>
+        <Link
+          href="/docs/the-menu#the-rest-of-the-panel"
+          className={classes.headerIcon}
+          title="Lancetta menu"
+          aria-label="Lancetta menu"
+          onClick={onClose}
+        >
+          <IconSettings size={13} stroke={1.8} />
+        </Link>
       </div>
 
       <div className={classes.suggestions} style={{ '--place': 1 } as CSSProperties}>
@@ -268,23 +268,6 @@ export function PanelDemo({ id, state, pinned, onPin, onClose, panelRef }: Panel
             </Fragment>
           );
         })}
-      </div>
-
-      <div className={classes.commands} style={{ '--place': 2 + faces.length } as CSSProperties}>
-        <Link href="/docs/the-window" className={classes.command} onClick={onClose}>
-          <IconLayoutGrid size={12} stroke={1.8} className={classes.commandIcon} />
-          <span className={classes.commandTitle}>Open Lancetta…</span>
-          <span className={classes.commandKey}>⌘O</span>
-        </Link>
-        <button
-          type="button"
-          className={classes.iconCommand}
-          title="Quit Lancetta  ⌘Q"
-          aria-label="Close the panel"
-          onClick={onClose}
-        >
-          <IconPower size={13} stroke={1.8} />
-        </button>
       </div>
     </div>
   );

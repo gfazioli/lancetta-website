@@ -518,63 +518,6 @@
   vertical-align: bottom;
 }
 
-/* The footer: `CommandRow` for the window, `IconCommand` for Quit. */
-.commands {
-  display: flex;
-  gap: 5px;
-  padding-top: 2px;
-}
-
-.command {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  gap: 9px;
-  padding: 5.5px 9px;
-  border-radius: 8px;
-  color: rgb(255 255 255 / 93%);
-  font-size: 12.5px;
-  text-decoration: none;
-}
-
-.command:hover {
-  background: rgb(255 255 255 / 8%);
-}
-
-.commandIcon {
-  flex-shrink: 0;
-  width: 15px;
-  color: #8a90a6;
-}
-
-.commandTitle {
-  flex: 1;
-}
-
-.commandKey {
-  color: #5c6278;
-  font-size: 11px;
-  font-weight: 500;
-}
-
-.iconCommand {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 27px;
-  height: 24px;
-  border: 0;
-  border-radius: 7px;
-  background: rgb(255 255 255 / 5%);
-  color: #8a90a6;
-  cursor: pointer;
-}
-
-.iconCommand:hover {
-  background: rgb(255 255 255 / 10%);
-  color: #fff;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .spin {
     animation: none;
@@ -583,7 +526,7 @@
 
 /*
  * The entrance, as the app plays it (`Motion.swift`) and at its pace
- * (`Motion.pace`, 0.7 of the film's time): the header and the commands RISE,
+ * (`Motion.pace`, 0.7 of the film's time): the header RISES,
  * each card LANDS -- squashed from below and a little low, then an elastic
  * spring -- with the light catching its rim at the top-right and bottom-left
  * corners, and a card's figures roll up out of zeros and its bars fill as it
@@ -597,8 +540,7 @@
  */
 .toolbar,
 .suggestion,
-.tile,
-.commands {
+.tile {
   --at: calc((60ms + 80ms * min(var(--place, 0), 8)) * 0.7);
 }
 
@@ -630,8 +572,7 @@
 }
 
 @media (prefers-reduced-motion: no-preference) {
-  .toolbar,
-  .commands {
+  .toolbar {
     animation: panel-rise var(--lan-panel-rise-duration) var(--lan-panel-rise) var(--at) both;
   }
 
