@@ -100,7 +100,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'maintenance',
     question: 'What does the Maintenance pane do?',
     answer:
-      'It lists the files your coding agents read before every session (CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory) in each repository Claude Code has worked in and the folders above it, and measures what loads at each start against Claude Code’s own warning thresholds. Twenty checks say what is wrong, each with why it matters. Five kinds of finding have a fix that needs no choosing, such as importing AGENTS.md into CLAUDE.md or keeping a personal file out of git: each is shown in full before it is applied, and applied whole or not at all. The rest opens in Claude Code or Codex, whichever the file belongs to, with the prompt already written. Files no agent uses can go to the Trash.',
+      'It lists the files your coding agents read before every session (CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory) in each repository Claude Code has worked in and the folders above it, and measures what loads at each start against Claude Code’s own warning thresholds. Twenty-two checks say what is wrong, from instruction files to hooks and servers that can’t start, each with why it matters. Eight kinds of finding have a fix that needs no choosing, such as importing AGENTS.md into CLAUDE.md, keeping a personal file out of git or quoting a hook’s path: each is shown in full before it is applied, one at a time or all at once with Fix All, and applied whole or not at all. The rest opens in Claude Code or Codex, whichever the file belongs to, with the prompt already written. Files no agent uses can go to the Trash.',
   },
   {
     value: 'privacy',
