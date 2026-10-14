@@ -1,6 +1,6 @@
 ---
 title: "Maintenance: what your coding agents read before they start"
-description: "The files Claude Code, Codex and the others read before every session: what they cost at each start, 20 checks on what is wrong, and the fixes Lancetta guides."
+description: "The files Claude Code, Codex and the others read before every session: what they cost at each start, 22 checks on what is wrong, and the fixes Lancetta guides."
 ---
 
 # Maintenance
@@ -9,7 +9,7 @@ Every session of a coding agent begins by reading its instruction files — CLAU
 
 The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code or Codex when it does.
 
-![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, the heaviest start at 6,983 of the 120,000 characters at which Claude Code warns, then the Instructions, Rules, Skills and Commands & Subagents cards, and the Instructions card open on the four files that need fixing](/screenshot-window-maintenance.png)
+![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, Fix All and Copy Findings at the top, the heaviest start at 6,983 of the 120,000 characters at which Claude Code warns, then the Instructions, Rules, Skills and Commands & Subagents cards, and the Instructions card open on the four files that need fixing](/screenshot-window-maintenance.png)
 
 ## Where it looks
 
@@ -40,20 +40,22 @@ Each finding is one of two kinds, and the pane says which at the top:
 
 Every finding carries a sentence saying what was found, with its figures, and **why it matters**: what it costs, or what an agent misses because of it.
 
-## The 20 checks
+## The 22 checks
 
 | Check | What it catches |
 |---|---|
 | Instructions loaded at launch | A place whose sessions load more than Claude Code takes before it warns. Within 10% of the limit, a suggestion. |
 | One file past Claude Code's size warning | Any one file past the size Claude Code warns about at launch. |
 | Long instruction files | A CLAUDE.md, AGENTS.md, GEMINI.md or Copilot instructions file over 200 lines, the target Claude Code's docs give. |
-| Memory index past what loads | A MEMORY.md past its first 200 lines or 25 KB, the part that loads: the newest entries, at the end, never reach a session. |
+| Memory index past what loads | A MEMORY.md past its first 200 lines or 25 KB, the part that loads: the newest entries, at the end, never reach a session. Past 85% of either, a suggestion. |
 | Memory files nothing links to | A memory file no link reaches from MEMORY.md, so Claude Code finds it only by chance. |
 | AGENTS.md that Claude Code skips | An AGENTS.md Claude Code does not read, because a CLAUDE.md is in charge, holding instructions nothing it does read contains. |
 | Imports that load nothing | An `@` import of a file that is not there, written in quotes, cut short at a space, or more than four imports deep. One outside the repository, which Claude Code asks about first, is a suggestion. |
 | Frontmatter that doesn't parse | A rule, skill or command whose frontmatter is dropped: a rule then loads everywhere, a skill or a command loses its description. |
 | Rules that match no file | A rule whose path patterns match no file in the repository, so it never applies. |
 | Skills, commands and subagents missing a field | A SKILL.md over 500 lines, a skill description cut short in the listing, a skill or a command with no description, a subagent with no name or description. |
+| Skill listings past their budget | A place whose skills and commands, listed by name and description at the start of every session, run past the room Claude Code gives that list: 1% of the context window unless its settings set another share, the window being the one of the model the place's settings name (a million tokens for a model such as `opus[1m]`), else the one set in Settings. The ones used least then lose their description, and Claude stops reaching for them on its own. Past three quarters of it, a suggestion. |
+| Hooks and servers that can't start | A hook, the status line, `apiKeyHelper` or another helper, or a `.mcp.json` server, whose program is not there, cannot run, is a path with a space left unquoted, or starts with a variable nothing fills in where no shell runs. It fails every time it is called. |
 | Paths that don't resolve | A path in backticks that leads to no file, beside the file or in any folder above it. |
 | Personal files committed to git | A CLAUDE.local.md or `.claude/settings.local.json`, which hold one person's settings, committed for everyone who clones the repository. |
 | AGENTS.md past Codex's size limit | The AGENTS.md files from the repository's root down to a folder adding up to more than Codex reads (32 KiB unless you raised it): the files past it never reach a session. |
@@ -73,7 +75,7 @@ Open a card, then a file: under its findings sit the ways to fix them.
 
 ### When the fix needs no choosing
 
-Five kinds of finding have a fix with one right answer, and Lancetta offers to make it:
+Eight kinds of finding have a fix with one right answer, and Lancetta offers to make it:
 
 | Finding | The fix |
 |---|---|
@@ -82,14 +84,23 @@ Five kinds of finding have a fix with one right answer, and Lancetta offers to m
 | A personal file committed to git | Stop tracking it and add it to `.gitignore`. The file stays on your disk. |
 | AGENTS.md that Gemini CLI skips | Create a `.gemini/settings.json` that lists AGENTS.md, only where there is none. |
 | A memory file nothing links to | Add one line at the end of MEMORY.md, in the shape Claude Code writes its own entries, and only while the index still has room. |
+| A hook, the status line or a helper whose path is split at a space | Put the path in quotes, in the settings file as written: its comments, order and layout stay. |
+| A script a hook, the status line, a helper or a server runs, without execute permission | Give it execute permission for whoever can read it. Only for a script that names what runs it on its first line (`#!`), inside the settings' own repository. |
+| A variable nothing fills in | Write it the way Claude Code fills it in where no shell runs: `${HOME}` in a `.mcp.json`, `${CLAUDE_PROJECT_DIR}` in a hook given as a program and its arguments. |
+
+The last three are offered only when the program would then start.
 
 **Nothing is written before you have seen it.** The button opens the fix whole: what it does, what changes for the agents (an import says how many characters it adds to every launch there), and every line it adds or removes, file by file. **Apply** makes it; **Cancel** leaves everything as it was.
 
 **It is applied whole or not at all.** Every file the fix writes, or relies on without writing, must still be byte for byte what the preview showed: if anything changed on disk in the meantime, nothing is written, and the pane scans again. If something fails once it has started — git refusing, a write failing, or the file still not ignored after the change — every file written and every change to git's index is put back before the pane tells you why.
 
+### All of them at once
+
+**Fix All**, beside Copy Findings at the top of the pane, gathers every fix of the findings shown into one preview: each fix with the file it changes, then every line written. **Apply** makes them one after another, each whole or not at all as above. One that can no longer be made leaves the others made, and one that changes the same file as a fix that failed is left for the next Fix All, which plans it again on its own. The notice says how many were made, and which were not and why. Fix All appears only when a finding shown has such a fix, and nothing else is offered until the pane has scanned again after an Apply.
+
 ### When it needs a judgement
 
-Trimming a long file, merging two that drifted apart, rewording a description: these are a judgement, and they go to an agent with you in the session. **Fix with Claude Code** or **Fix with Codex** opens Terminal in the file's repository and starts that agent there, with a first message Lancetta writes: what was found, why it matters and how to go about it, and to propose the changes before making them.
+Trimming a long file, merging two that drifted apart, rewording a description: these are a judgement, and they go to an agent with you in the session. **Fix with Claude Code** or **Fix with Codex** opens Terminal in the file's repository and starts that agent there, with a first message Lancetta writes: what was found, why it matters and how to go about it, to propose the changes before making them, and to write in the language each file is already written in.
 
 The button names the agent whose file it is: Codex for an AGENTS.md or its size limit, Claude Code for its own files. For a file that is neither's, it is the one you last picked from its menu, which offers every agent installed.
 
