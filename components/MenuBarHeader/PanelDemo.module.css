@@ -548,8 +548,10 @@
  * The light: a ring (the padding is the stroke, the mask cuts the rest) lit
  * from two opposite corners, white on this dark card as in the app
  * (`EdgeGlint`), reaching 70 points: the app's cap. `--glint` is
- * registered in theme/global.css; the opacity is its sine, dark at both ends,
- * behind `@supports` as on the page's cards (Motion.module.css says why).
+ * registered in theme/global.css; the opacity is its sine, dark at both ends.
+ * Behind `@supports`, because an engine without `sin()` would find the
+ * opacity invalid at computed-value time, fall back to 1, and leave the light
+ * on for good.
  */
 @supports (opacity: sin(0)) {
   :is(.suggestion, .tile)::after {
