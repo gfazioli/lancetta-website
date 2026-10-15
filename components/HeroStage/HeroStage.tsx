@@ -188,7 +188,7 @@ const frames: Frame[] = [
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
   width: 760,
-  height: 1478,
+  height: 1406,
   alt: 'The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (lower the effort, a lighter model for routine work, no free reset to fall back on, move the next tasks to Codex) and what it rests on; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open on its 5-hour, 7-day and Fable bars, Codex at 20%, Usage and Maintenance',
 };
 
