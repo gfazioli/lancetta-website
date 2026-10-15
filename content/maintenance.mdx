@@ -13,7 +13,7 @@ The **Maintenance** pane of [the window](/docs/the-window) lists those files, sa
 
 ## Where it looks
 
-Lancetta keeps no list of your projects, so it asks Claude Code where it has worked. Every session Claude Code records leaves a transcript under `~/.claude/projects`, and each one names the folder the session started in: Lancetta reads that folder off each project's newest transcript, takes the repository it belongs to, and, for a session started in a workspace folder, the repositories directly inside it. A folder that is gone, outside any repository, or a second checkout of the same repository is left out.
+Lancetta keeps no list of your projects, so it asks the agents where they have worked. Every session Claude Code records leaves a transcript under `~/.claude/projects`, and each one names the folder the session started in: Lancetta reads that folder off each project's newest transcript. Codex keeps a record of its sessions in `~/.codex`, and from it Lancetta reads the folder each session of the last 30 days started in, the time Claude Code keeps a transcript by default. Each folder is taken to the repository it belongs to, a linked worktree to its main checkout, and, for a session started in a workspace folder, to the repositories directly inside it. A folder that is gone, outside any repository, a scratch one (a temporary folder, a background job's, the chats Codex's desktop app starts in Documents), or a second checkout of the same repository is left out.
 
 In each of those places it reads what the agents read:
 
