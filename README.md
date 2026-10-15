@@ -27,6 +27,11 @@
   <img src="public/screenshot-menu-dark.png" alt="The Lancetta menu: Codex and Claude Code, each with a 5-hour and a 7-day quota window, a drawn bar and the time it resets" width="700" />
 </p>
 
+<div align="center">
+  <p><img src="https://raw.githubusercontent.com/gfazioli/gfazioli/master/glancecard/lancetta-website.svg" width="880" alt="lancetta-website at a glance, refreshed daily: commits, releases, stars, issues and pull requests, a year of commit activity, the weekly rhythm, languages, latest commits and releases, contributors" /><br>
+  <sub>Made with <a href="https://github.com/gfazioli/glancecard">glancecard</a> · refreshed daily</sub></p>
+</div>
+
 ## What is Lancetta?
 
 A *lancetta* is the hand of an instrument — the needle that says where you are. The app does one job: **how much of each agent's quota is left, and when it comes back.** The 5-hour and the 7-day window for **Codex** and **Claude Code**, drawn as bars, with the time each one resets, the plan each account is on, and not one token spent to find out.
