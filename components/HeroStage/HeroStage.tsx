@@ -143,7 +143,7 @@ const frames: Frame[] = [
     eyebrow: 'How they are set up',
     title: 'The tokens every session pays for.',
     body: 'Before an agent does anything, it reads its instruction files — CLAUDE.md, AGENTS.md, rules, skills, memory — and every session pays for them again. Lancetta scans them in each repository Claude Code or Codex has worked in recently and the folders above it, measures what loads at each start against Claude Code’s own warning thresholds, and says what to fix: 22 checks, each with why it matters. A fix that needs no choosing is shown in full before it is applied, one at a time or all at once; the rest opens in Claude Code or Codex, with the prompt already written.',
-    figures: [{ value: '20', label: 'checks, each with its reason' }],
+    figures: [{ value: '22', label: 'checks, each with its reason' }],
     href: '/docs/maintenance',
     linkLabel: 'What Maintenance checks',
   },
