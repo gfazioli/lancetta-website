@@ -468,9 +468,11 @@ html {
 }
 
 /*
- * How far the light on a card's rim is through its run (`Motion.module.css`,
- * `PanelDemo.module.css`). Registered, so that it can be ANIMATED: an
- * unregistered custom property jumps from its first value to its last.
+ * How far the light on a card of the panel's copy is through its run
+ * (`PanelDemo.module.css`, `PanelDemo.tsx`). Registered, so that it can be
+ * ANIMATED: an unregistered custom property jumps from its first value to its
+ * last. It costs the main thread when a visitor opens or refreshes the panel;
+ * the page's own cards light theirs with opacity alone (`Motion.module.css`).
  */
 @property --glint {
   syntax: '<number>';
