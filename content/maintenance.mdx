@@ -90,9 +90,9 @@ Eight kinds of finding have a fix with one right answer, and Lancetta offers to 
 
 The last three are offered only when the program would then start.
 
-**Nothing is written before you have seen it.** The button opens the fix whole: what it does, what changes for the agents (an import says how many characters it adds to every launch there), and every line it adds or removes, file by file. **Apply** makes it; **Cancel** leaves everything as it was.
+**Nothing is written before you have seen it.** The button opens the fix whole: what it does, what changes for the agents (an import says how many characters it adds to every launch there), and every line it adds or removes, file by file, or the permission it gives a script. **Apply** makes it; **Cancel** leaves everything as it was.
 
-**It is applied whole or not at all.** Every file the fix writes, or relies on without writing, must still be byte for byte what the preview showed: if anything changed on disk in the meantime, nothing is written, and the pane scans again. If something fails once it has started — git refusing, a write failing, or the file still not ignored after the change — every file written and every change to git's index is put back before the pane tells you why.
+**It is applied whole or not at all.** Every file the fix writes, or relies on without writing, must still be byte for byte what the preview showed: if anything changed on disk in the meantime, nothing is written, and the pane scans again. If something fails once it has started — git refusing, a write failing, or the file still not ignored after the change — every file written, every permission given and every change to git's index is put back before the pane tells you why.
 
 ### All of them at once
 
