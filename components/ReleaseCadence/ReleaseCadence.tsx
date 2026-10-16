@@ -9,11 +9,18 @@ import classes from './ReleaseCadence.module.css';
  * It carries no version number on purpose: the meta line directly above
  * already prints `v{config.app.version}`, and two versions 40px apart is one
  * more place for them to disagree. This element answers a different question -
- * how recently, and how often.
+ * how recently, how often, and (once the figure is worth stating) how many
+ * times it has been downloaded. Downloads, never "users": updates fetch the
+ * same disk image, so one person who updates ten times counts ten.
  */
 export function ReleaseCadence({ cadence }: { cadence: Cadence }) {
-  const { freshness, latestDate, total, since } = cadence;
+  const { freshness, latestDate, total, since, downloads } = cadence;
   const isFresh = freshness !== null;
+  const hasCount = total !== null && since !== null;
+  // The downloads come out of the same summary as the count, so they never
+  // stand without it. Only the line with both figures outgrows a phone, so
+  // only that strip takes the phone layout (`[data-full]` in the CSS module).
+  const isFull = hasCount && downloads !== null;
 
   // Nothing to say: no live data AND no release date in the config, which is
   // the state before the first release. Drawing the strip here would print
@@ -23,7 +30,7 @@ export function ReleaseCadence({ cadence }: { cadence: Cadence }) {
   }
 
   return (
-    <Paper className={classes.strip} radius="xl" px="xl" py={10} withBorder>
+    <Paper className={classes.strip} mod={{ full: isFull }} radius="xl" px="xl" py={10} withBorder>
       <Stack gap={2} align="center">
         <Group gap={8} wrap="nowrap">
           {/*
@@ -38,22 +45,34 @@ export function ReleaseCadence({ cadence }: { cadence: Cadence }) {
           </Text>
         </Group>
 
-        <Group gap={6} wrap="wrap" justify="center">
-          {total !== null && since !== null && (
+        <Group className={classes.facts} gap={6} wrap="wrap" justify="center">
+          {hasCount && (
+            <Text size="xs" c="dimmed">
+              <ScrollNumber value={total} /> releases since {since}
+            </Text>
+          )}
+          {isFull && (
             <>
+              <Separator />
               <Text size="xs" c="dimmed">
-                <ScrollNumber value={total} /> releases since {since}
-              </Text>
-              <Text size="xs" c="dimmed" aria-hidden="true">
-                &middot;
+                <ScrollNumber value={downloads} /> downloads
               </Text>
             </>
           )}
+          {hasCount && <Separator />}
           <Anchor href="/docs/release-notes" size="xs" fw={500}>
             What&apos;s new
           </Anchor>
         </Group>
       </Stack>
     </Paper>
+  );
+}
+
+function Separator() {
+  return (
+    <Text className={classes.separator} size="xs" c="dimmed" aria-hidden="true">
+      &middot;
+    </Text>
   );
 }
