@@ -70,7 +70,7 @@ const glance = [
   },
   {
     label: 'What it does',
-    body: 'Turns every quota reading it keeps, and the files your agents load at every start, into suggestions: when to push on, slow down, switch or trim. And it keeps your Claude Code sessions on one wall, the ones waiting on you first.',
+    body: 'Turns every quota reading it keeps, and the files your agents load at every start, into suggestions: when to push on, slow down, switch or trim. And it keeps your Claude Code and Codex sessions on one wall, the ones waiting on you first.',
   },
   {
     label: 'What it costs',
@@ -148,7 +148,7 @@ const features: Feature[] = [
   {
     icon: IconNote,
     title: 'What waits on you',
-    description: 'Your Claude Code sessions, your turn first.',
+    description: 'Your Claude Code and Codex sessions, your turn first.',
     color: 'grape',
     href: '/docs/sessions',
   },
@@ -224,8 +224,9 @@ interface Step {
  * `today` opens with the decisions the app makes with you — when to push on,
  * when to slow down, what to switch to, how the agents are set up, which
  * session waits on you — then what they leave behind and what it all rests
- * on, each a thing that SHIPS. `ROADMAP_GRID` is chosen so both grids fill
- * their rows on a wide screen: recount when a card is added or removed.
+ * on, each a thing that SHIPS. `ROADMAP_GRID` and `AHEAD_GRID` are chosen so
+ * both grids fill their rows on a wide screen: recount when a card is added
+ * or removed.
  * `soon` and `next` carry the badge AND the future tense, never one without
  * the other, and each is a section of `content/roadmap.mdx` that says what it
  * has to prove before it counts as finished. Add one here and it goes there too.
@@ -262,7 +263,7 @@ const today: Step[] = [
   {
     icon: IconNote,
     title: 'What waits on you',
-    body: 'Your Claude Code sessions on one wall: the ones whose turn is yours first, then what is working, then what you concluded.',
+    body: 'Your Claude Code and Codex sessions on one wall: the ones whose turn is yours first, then what is working, then what you concluded.',
     color: 'grape',
     state: 'today',
   },
@@ -311,16 +312,11 @@ const ahead: Step[] = [
     color: 'gray',
     state: 'next',
   },
-  {
-    icon: IconNote,
-    title: 'Codex sessions, on the same wall',
-    body: 'Codex’s sessions will report themselves as they start, finish a turn and end, and go up on the same wall as Claude Code’s.',
-    color: 'gray',
-    state: 'next',
-  },
 ];
 
 const ROADMAP_GRID = { base: 1, sm: 2, lg: 3 };
+/** Two cards ahead: two columns from `sm` up, so their row is full at every width. */
+const AHEAD_GRID = { base: 1, sm: 2 };
 
 const horizonLabel: Record<Horizon, string> = { today: 'Today', soon: 'Soon', next: 'Next' };
 
@@ -359,6 +355,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
   // ninth waited almost a second after it came into view. The base value is
   // what the server and the first render use; nothing is armed before mount.
   const roadmapColumns = useMatches(ROADMAP_GRID);
+  const aheadColumns = useMatches(AHEAD_GRID);
 
   return (
     <div className={`lan-home ${classes.home}`}>
@@ -493,11 +490,11 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           <p className={classes.horizon}>Ahead</p>
         </Reveal>
 
-        <SimpleGrid cols={ROADMAP_GRID} spacing="lg">
+        <SimpleGrid cols={AHEAD_GRID} spacing="lg">
           {ahead.map((step, i) => (
             <Reveal
               key={step.title}
-              delay={(i % roadmapColumns) * 120}
+              delay={(i % aheadColumns) * 120}
               radius="var(--mantine-radius-lg)"
             >
               <StepCard step={step} />

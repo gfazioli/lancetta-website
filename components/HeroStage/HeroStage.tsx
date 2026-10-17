@@ -120,7 +120,7 @@ const frames: Frame[] = [
     alt: 'A Lancetta suggestion in red: at this pace Claude stops in 51m, then waits 1h18m for its reset; lower the effort, give routine work to a lighter model, there is no free reset to fall back on, move the next tasks to Codex, which has 88% of its 5-hour window and 80% of its week left; under it, what it rests on: 82% of the 5 hours used, 21% an hour over the last hour, from 14 readings',
     eyebrow: 'When to slow down',
     title: 'Before it stops, not after.',
-    body: '“At this pace Claude stops in 51m, then waits 1h18m for its reset.” Lancetta says it while there is still time to act, with what helps: a lower effort, a lighter model for routine work, a free reset if you hold one, the other agent while it has room. The week is where it matters most — a weekly window run out on a Tuesday costs days, and only a series of readings sees it coming.',
+    body: '“At this pace Claude stops in 51m, then waits 1h18m for its reset.” Lancetta says it while there is still time to act, with what helps: pausing the sessions that can wait when two or more are working, a lower effort, a lighter model for routine work, a free reset if you hold one, the other agent while it has room. The week is where it matters most — a weekly window run out on a Tuesday costs days, and only a series of readings sees it coming.',
     figures: [
       { value: '7 days', label: 'the window that actually hurts' },
       { value: '1,890', label: 'readings that settled the rule' },
@@ -159,7 +159,7 @@ const frames: Frame[] = [
     alt: 'The sessions’ own panel: 3 waiting on you · 2 working, Your turn open on its three sessions, each with where it stands and for how long and the Open and Done buttons, Working closed beside it and Concluded below',
     eyebrow: 'What waits on you',
     title: 'Which session needs you.',
-    body: 'Run a few Claude Code sessions at once and the hard part stops being the work: it is remembering which one is waiting for you. Lancetta keeps every session you started as a post-it on a wall — the ones whose turn is yours first, then the ones still working, then what you concluded. A background session opens in your terminal from there, and the sessions can have a menu-bar item of their own that counts the ones waiting on you.',
+    body: 'Run a few Claude Code and Codex sessions at once and the hard part stops being the work: it is remembering which one is waiting for you. Lancetta keeps every session you started as a post-it on a wall — the ones whose turn is yours first, then the ones still working, then what you concluded. A background session opens in your terminal from there, and the sessions can have a menu-bar item of their own that counts the ones waiting on you.',
     href: '/docs/sessions',
     linkLabel: 'How the wall works',
   },
@@ -311,7 +311,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
             of Codex and Claude Code, and a scan of what your agents load at every start, it says
             when to go all in, when to lower the effort or hand work to a lighter model, when to
             move to the other agent, and what to trim. Each suggestion says what it rests on. And it
-            keeps your Claude Code sessions on one wall, the ones waiting on you first.
+            keeps your Claude Code and Codex sessions on one wall, the ones waiting on you first.
           </Text>
 
           {/* Marked for the character: under the bar while this row is in

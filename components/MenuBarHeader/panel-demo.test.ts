@@ -49,4 +49,14 @@ describe('the panel the bar opens', () => {
       expect(five?.reset).toBe(cell.resets);
     }
   );
+
+  // The step that opens the stop suggestion and the sentence under it count
+  // the same sessions, as `Guidance.swift` builds both from one number.
+  it('counts the same working sessions in the stop step and its basis', () => {
+    const stop = panelDemo.suggestions.find((s) => s.id === 'stop.Claude');
+    const step = stop?.steps[0].match(/^(\d+) sessions of Claude are working at once/);
+    const basis = stop?.basis.match(/shows (\d+) of its sessions working now\.$/);
+    expect(step?.[1]).toBeDefined();
+    expect(basis?.[1]).toBe(step?.[1]);
+  });
 });
