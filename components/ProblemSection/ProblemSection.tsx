@@ -122,8 +122,9 @@ export function ProblemSection() {
         </Group>
 
         <Text c="dimmed" fz="sm" ta="center" maw={600} mx="auto" mt="lg">
-          So every reading Lancetta shows carries its age, an unknown is drawn as an unknown, and
-          every suggestion names what it rests on.
+          So every reading Lancetta shows carries its age, a window that refused is named rather
+          than averaged away, an unknown is drawn as an unknown, and every suggestion names what it
+          rests on.
         </Text>
       </Container>
     </Box>
