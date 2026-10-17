@@ -1,17 +1,17 @@
 ---
 title: "The window: every suggestion, and what each one rests on"
-description: "Lancetta's window: every suggestion first, then five panes of cards that open in place: Overview, Usage, Limits, Processes and Maintenance."
+description: "Lancetta's window: every suggestion first, then six panes of cards that open in place: Overview, Usage, Limits, Processes, Maintenance and Sessions."
 ---
 
 # The Window
 
-The panel gives you the three most urgent suggestions and the numbers in brief. The window has room for all of it: **every suggestion, open**, and then what each one rests on. It shows how much has been spent over weeks, what each window is doing in detail, what the agents have left running, and what they read before they start.
+The panel gives you the three most urgent suggestions and the numbers in brief. The window has room for all of it: **every suggestion, open**, and then what each one rests on. It shows how much has been spent over weeks, what each window is doing in detail, what the agents have left running, what they read before they start, and which of your Claude Code sessions wait on you.
 
 **Open Lancetta…** (⌘O) from the menu bar.
 
 ![The Lancetta window on its Overview: four suggestions first (Claude stops in 51m at this pace, Codex has room, Maintenance found 4 warnings, 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, with Usage open on the week’s tokens](/screenshot-window-overview.png)
 
-Five panes, in the sidebar: **Overview**, **Usage**, **Limits**, **Processes** and **Maintenance**. Each pane is a row of cards: a card shows one figure and a line under it, and **a click opens its details under it**, joined to it, while a second click closes them. One card is open at a time in each pane, and each pane remembers which one.
+Six panes, in the sidebar: **Overview**, **Usage**, **Limits**, **Processes**, **Maintenance** and **Sessions**. Each pane is a row of cards: a card shows one figure and a line under it, and **a click opens its details under it**, joined to it, while a second click closes them. One card is open at a time in each pane, and each pane remembers which one.
 
 The window opens where you left it, at the size you left it. The first time, it opens at 1200 by 800 points. It is a normal window and it closes like one. Closing it quits nothing, and the menu-bar item is always the way back.
 
@@ -21,12 +21,13 @@ The window opens where you left it, at the size you left it. The first time, it 
 
 **Every suggestion first, all of them open**, in the order the panel uses: the most urgent first. What each one is and when it appears is on [Suggestions](/docs/suggestions). With nothing to suggest, one line says so, and says whether the readings show room in every window.
 
-Under them, a card for each of the other four panes, with what that pane would tell you first:
+Under them, a card for each of the other panes, with what that pane would tell you first:
 
 - **Usage**: the tokens of the last seven days. Opened, the week's chart, one bar per agent per day, with a chooser for either agent alone or both.
 - **Limits**: the fullest window of any agent, and when it resets. Opened, **Quota Used**, every agent on one row with its 5-hour and 7-day windows side by side: the figure, the bar, the time to the reset and, when there is something worth saying, when your recent rate would run the window out. A model with a weekly limit of its own is drawn under its agent. The title follows the setting that decides what the bars are filled with, so it reads *Quota Left* when you are counting down. Under it is **Last week**.
 - **Processes**: how many background trees are running, and what they hold, or, when some are orphaned, what the orphans hold.
 - **Maintenance**: how many warnings the scan found, and how much the heaviest start loads.
+- **Sessions**: how many of your Claude Code sessions wait on you, and how many are working. Opened, those sessions, each with Open and Done.
 
 The arrow in a card's corner opens that pane.
 
@@ -102,6 +103,12 @@ The pane counts a tree's whole descent rather than the three processes its own d
 
 What your coding agents read before they start, and what it costs: CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory, in every repository Claude Code or Codex has worked in recently and the folders above it. Each finding says why it matters and how to fix it. A fix that needs no choosing is shown in full before it is applied, one at a time or all at once, and the rest opens in Claude Code or Codex. Everything this pane checks, and what it changes, is on [Maintenance](/docs/maintenance).
 
+## Sessions
+
+![The Sessions pane: 3 on Your turn, the longest waiting for 2h05m, 2 Working, 1 Concluded today and 3 in the last 7 days; Your turn open on its three sessions as cards, each with its mark, name and folder, where it stands and for how long (Your turn, Asks you something, Stopped before it was done), when it started, how its time split between working and waiting, and Open and Done](/screenshot-window-sessions.png)
+
+Every Claude Code session you started, as a post-it on a wall: **Your turn**, the sessions waiting on you, with how long the longest has waited; **Working**; and **Concluded**, what you called done or removed, day by day. Each session opens in your terminal from here, and goes down with **Done** without being closed. The whole pane is on [Sessions](/docs/sessions).
+
 ## Pull to refresh
 
 On macOS 27 you can pull any pane down to refresh it, the way you would in Mail. Each pane reads again what it shows:
@@ -113,6 +120,7 @@ On macOS 27 you can pull any pane down to refresh it, the way you would in Mail.
 | **Limits** | the quotas and the process trees, as **Refresh now** does |
 | **Processes** | the process trees, and nothing else: asking the agents from there would spend their reads on numbers that are not on screen |
 | **Maintenance** | where Claude Code and Codex have worked recently, and every agent file there |
+| **Sessions** | the list of sessions Claude Code keeps |
 
 The spinner holds for a couple of seconds at most and lets go; the reading carries on underneath, and the cards it reads again press as the numbers land. A second pull while the first refresh is still out starts nothing new: it waits for that one rather than throwing its answers away. The sidebar is for choosing a pane, so pulling it does nothing. On any version of macOS, **Refresh now** (⌘R), in the panel or in the window's Agents menu, still reads the quotas and the trees.
 

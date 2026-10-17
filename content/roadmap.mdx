@@ -17,6 +17,12 @@ The readings are already being kept, and two pieces of this step shipped in 0.16
 
 **Measured before it was built, and not there yet.** On 4 October 2026 six ways of making that Monday-morning forecast were replayed over two and a half weeks of one Mac's readings: the average of the days before, their median, weekdays apart from weekends, the same weekday, the day before, and an hour-by-hour profile that was even given the real time each window opened. None did better than a single fixed number chosen afterwards, which is what a forecast that knows nothing about the day amounts to. The best was 6.5 points off on Claude against 5.4 for the fixed number, and 23.3 against 20.5 on Codex; neither of Codex's two run-outs — one of them from nothing to empty in eighteen minutes — was foreseen by any of the six, and two days of the same weekday differed as much as any two days. So for now it makes no such forecast, as promised above. The replay runs again once there are more weeks of readings, and the sentence ships only if it clears the bar.
 
+## Codex sessions, on the same wall
+
+The [Sessions](/docs/sessions) pane lists Claude Code's sessions because Claude Code keeps a list of them that it will hand over. Codex keeps no such list. The next step is for Codex's sessions to report themselves as they start, finish a turn, ask something and end, so they go up on the same wall, and so a session's times come from the moment it moved rather than from the last refresh.
+
+**Done when** a Codex session started in a terminal is on the wall within seconds, moves to Your turn when its turn ends, and never stays up once it has closed, and when whatever that takes on the Codex side is something you see before it is set up and can take out again.
+
 ---
 
 ## Not planned
@@ -28,6 +34,16 @@ The readings are already being kept, and two pieces of this step shipped in 0.16
 ---
 
 ## Already shipped
+
+### v0.60 — what waits on you
+
+*Shipped 2026-10-17.*
+
+**Sessions.** A new pane keeps every Claude Code session you started as a post-it on a wall: **Your turn** for the ones waiting on you, **Working**, and **Concluded**, the record of what you finished. Open a session in your terminal from there, or take it down with **Done** without closing it. See [Sessions](/docs/sessions).
+
+**In the panel and the menu bar too.** A Sessions card joins the panel while any session is up, and the sessions can have a menu-bar item of their own, with how many wait on you and the same three cards a click away.
+
+**Settings, regrouped.** **Panel** gathers how the panel opens, what it shows and the sessions' item; **Privacy** shows Lancetta's folder and clears the record of concluded sessions.
 
 ### v0.54 — where Codex has worked too
 

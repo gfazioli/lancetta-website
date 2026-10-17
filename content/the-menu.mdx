@@ -50,16 +50,19 @@ What each suggestion is, when it appears and which ones also arrive as a notific
 
 ## The cards
 
-Under the suggestions is the window in brief. There is a card for each agent, then **Usage** and **Maintenance**, then **Processes** while background trees are running. Each card shows one figure and a line under it:
+Under the suggestions is the window in brief. There is a card for each agent, then **Usage** and **Maintenance**, then **Processes** while background trees are running and **Sessions** while any of your Claude Code sessions is up. Each card shows one figure and a line under it:
 
 - **an agent**: the fuller of its two windows and when that window resets (*82% · 5 hours · ↻ 2h09m*), with the line in amber when it is spent;
 - **Usage**: the tokens of the last seven days, for both agents together;
 - **Maintenance**: how many warnings, and how much of Claude Code's warning size the heaviest start loads;
-- **Processes**: how many Codex trees are running, and what they hold, or, when some are orphaned, what the orphans hold.
+- **Processes**: how many Codex trees are running, and what they hold, or, when some are orphaned, what the orphans hold;
+- **Sessions**: how many of your Claude Code sessions wait on you, and how many are working.
+
+Which of these the panel shows is yours to choose, in [Settings › Panel](/docs/settings#panel); the window always shows them all.
 
 **Click a card and its details open under it**, joined to it, and a second click closes them. One card is open at a time, and the panel remembers which one between launches. The **arrow** in a card's corner opens that pane of [the window](/docs/the-window) instead.
 
-An agent's card opens on its plan, its windows and anything it is waiting on: a refusal, a free reset, or a better route to its numbers. Usage opens on the week's chart, Maintenance on what the scan found, and Processes on its strip with **Reclaim**.
+An agent's card opens on its plan, its windows and anything it is waiting on: a refusal, a free reset, or a better route to its numbers. Usage opens on the week's chart, Maintenance on what the scan found, Processes on its strip with **Reclaim**, and Sessions on the first of your sessions, each with **Open** and **Done**. The whole wall is on [Sessions](/docs/sessions).
 
 ### An agent's card, opened
 
@@ -235,7 +238,7 @@ A card still opens and closes when clicked.
 
 ### Opening it without clicking
 
-If you would rather not click at all, **Settings › General › Menu bar › Open the menu
+If you would rather not click at all, **Settings › Panel › Open the panel
 on hover** opens the panel when you point at the item. It is off unless you turn it on,
 because a panel that opens while the pointer is merely crossing the menu bar on its way
 somewhere else is an interruption for everyone who did not ask for one.
@@ -276,3 +279,11 @@ A refused agent reads **100%** — or `0%` if you are showing what remains — s
 The number is not the last reading: the account has said there is nothing left, which is more recent than whatever the last poll measured. It follows your fields like any other cell — switch the percentage off and a refusal has none either. The reset does not: a block raises exactly one question, and that is it.
 
 An agent can be watched and still kept out of the bar — the menu bar is narrow, and an agent worth a card is not always worth the width. The lamp, though, does not follow the fields: switch the mark and the percentage off and the bead is still there, because it is the whole of the question *can I use this*.
+
+### The sessions' own item
+
+```
+[Lancetta icon] 12
+```
+
+Turn on **Sessions as an item of their own** in [Settings › Panel](/docs/settings#panel) and a second item sits beside this one: the Lancetta icon and how many of your Claude Code sessions wait on you, the icon alone when none does, and a dash when the list could not be read. A click opens the same panel with the sessions alone, as the three cards of the [Sessions](/docs/sessions) pane, each opening in place: **Your turn** and **Working** with Open and Done on every session, **Concluded** with the last seven days. The two items share one panel, so a click on the other one switches it rather than opening a second; a pinned panel switches where you put it. A right-click is the same command menu.

@@ -17,6 +17,7 @@ import {
   IconBellRinging,
   IconTerminal2,
   IconTools,
+  IconNote,
 } from '@tabler/icons-react';
 
 // Sidebar entry with a leading icon. The icon inherits `currentColor`, so it
@@ -48,6 +49,7 @@ export default {
   'the-notch': nav(IconDeviceDesktop, 'The Notch', 'violet'),
   'the-window': nav(IconAppWindow, 'The Window', 'cyan'),
   maintenance: nav(IconTools, 'Maintenance', 'lime'),
+  sessions: nav(IconNote, 'Sessions', 'grape'),
   alerts: nav(IconBellRinging, 'Alerts', 'pink'),
   '---how-it-works': { type: 'separator', title: 'How it works' },
   'how-it-reads': nav(IconEye, 'How it reads each agent', 'blue'),
