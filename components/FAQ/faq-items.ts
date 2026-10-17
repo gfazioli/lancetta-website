@@ -50,7 +50,7 @@ export const faqEntries: FaqEntry[] = [
   },
   {
     value: 'different',
-    question: 'How is it different from the other quota monitors?',
+    question: 'How is it different from a quota monitor?',
     answer:
       'A monitor shows you the percentage; Lancetta tells you what to do with it. Advice about a quota needs three things: the ceiling (what your real limit is), the flow (what you have spent), and the series (how that percentage moved over time). The good tools in this space have the first two. The series is the one nobody keeps — a monitor that reads your transcripts has no way to learn the ceiling at all and infers it from your own highest previous block, and one that covers dozens of providers cannot store a series per provider per window and stay maintainable. Lancetta watches two agents instead of dozens and keeps the series for both, which is the only reason it can say where this pace lands, and what to do about it, against the percentage your account actually reports rather than an inferred one. It is also the part that cannot be added later: history only accumulates forward.',
   },

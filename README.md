@@ -5,8 +5,8 @@
 <h1 align="center">Lancetta</h1>
 
 <p align="center">
-  <strong>A menu-bar monitor for coding agents, on macOS.</strong><br/>
-  What Codex and Claude Code are spending, and what they left running — without spending a single token to find out.
+  <strong>When and how to use your coding agents, from the macOS menu bar.</strong><br/>
+  When to push on with Codex and Claude Code, when to slow down, and which session needs you — without spending a single token to find out.
 </p>
 
 <p align="center">
@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <img src="public/screenshot-menu-dark.png" alt="The Lancetta menu: Codex and Claude Code, each with a 5-hour and a 7-day quota window, a drawn bar and the time it resets" width="700" />
+  <img src="public/screenshot-menu-dark.png" alt="The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps and what it rests on; then Codex has room, and Maintenance found 4 warnings; under them each agent's windows, Usage and Maintenance" width="700" />
 </p>
 
 <div align="center">
@@ -34,11 +34,11 @@
 
 ## What is Lancetta?
 
-A *lancetta* is the hand of an instrument — the needle that says where you are. The app does one job: **how much of each agent's quota is left, and when it comes back.** The 5-hour and the 7-day window for **Codex** and **Claude Code**, drawn as bars, with the time each one resets, the plan each account is on, and not one token spent to find out.
+A *lancetta* is the hand of an instrument — the needle that says where you are, and which way to go. Lancetta is a native macOS menu-bar app that tells you **when and how to use Codex and Claude Code**: push on while a window has room it would lose, slow down before an agent stops (a lower effort, a lighter model for routine work, the other agent while it has room), and trim what every session loads before your first prompt. Each suggestion says what it rests on: the percentage each account reports, how fast it has been moving, when the window resets.
 
-It puts that reading on three surfaces: the **menu bar** for the glance, the **island under the notch** for the glance that needs no mouse, and a **window** for usage over weeks and each agent in detail.
+It also keeps your **Claude Code sessions** on one wall, the ones waiting on you first, and closes the background processes the agents leave behind, on your say-so.
 
-Agents also leave background processes running long after they are done. Lancetta lists those too and closes the orphans on your say-so — a footnote to the job, not a second one.
+It says all this where you already look: the **panel** under the menu-bar item, the **island under the notch**, and a **window** with every suggestion and everything it rests on.
 
 ### Reading a quota costs nothing
 
@@ -51,7 +51,7 @@ A monitor that spends quota in order to display quota is self-defeating, and the
 
 Twelve account reads on one connection moved nothing. And the instrument works, which is the half that makes the zero mean something: the same counter moved by **29,188,602** across a day of ordinary use. A counter that *cannot* move looks exactly like a counter that did not.
 
-Claude Code's side is free by construction — the app makes no request at all, because the numbers arrive in a payload Claude Code already produces for its own status line.
+Claude's numbers come from one account read, made with the sign-in Claude Code keeps on your Mac: the same request Claude Code's own `/usage` makes, with no model in the loop.
 
 **Asking a model how much quota is left is a turn, and it would cost tokens on every poll.** It is the easiest route to build and the one this app will never take.
 

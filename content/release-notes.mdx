@@ -24,7 +24,7 @@ export const releases = await loadReleases();
 */}
 export const metadata = {
     description:
-        "What's new in Lancetta — release notes for the native macOS menu-bar quota monitor for coding agents, with the features, fixes and improvements in each version.",
+        "What's new in Lancetta, the macOS menu-bar app that tells you when and how to use Codex and Claude Code: the features, fixes and improvements of each version.",
     toc: (typeof releases === 'undefined' ? [] : releases).map((release) => ({
         value: `${release.tag_name} - ${new Date(release.created_at).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }).replace(' ', ', ')}`,
         depth: '3',
