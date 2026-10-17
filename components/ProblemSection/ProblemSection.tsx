@@ -16,10 +16,6 @@ import classes from './ProblemSection.module.css';
  * Every figure quoted here is from that session's own measurements — the
  * 0% against a real 59%, the three-hour-old reading, the 9% fallback. Do
  * not round them and do not add any that were not measured.
- *
- * Since 2026-10-17 it comes AFTER the guidance, as the reason to trust it,
- * not before it as the page's opening problem: the app guides, and a page
- * that opened on readouts argued for a monitor.
  */
 const problems = [
   {
@@ -125,7 +121,6 @@ export function ProblemSection() {
           ))}
         </Group>
 
-        {/* The lesson, not the history: how the status line got fixed is on /docs. */}
         <Text c="dimmed" fz="sm" ta="center" maw={600} mx="auto" mt="lg">
           So every reading Lancetta shows carries its age, an unknown is drawn as an unknown, and
           every suggestion names what it rests on.
