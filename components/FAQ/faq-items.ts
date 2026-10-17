@@ -22,7 +22,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'what',
     question: 'What is Lancetta?',
     answer:
-      'Lancetta is a native macOS menu-bar app that tells you when and how to use your coding agents. It reads the quota of Codex and Claude Code without spending any, keeps every reading, and scans the files the agents load at every start; from those it suggests what to do next: go all in while a window has room it would lose, lower the effort or hand routine work to a lighter model before an agent stops, move to the other agent while it has room, trim a setup every session pays for.',
+      'Lancetta is a native macOS menu-bar app that tells you when and how to use your coding agents. It reads the quota of Codex and Claude Code without spending any, keeps every reading, and scans the files the agents load at every start; from those it suggests what to do next: go all in while a window has room it would lose, lower the effort or hand routine work to a lighter model before an agent stops, move to the other agent while it has room, trim a setup every session pays for. It also keeps your Claude Code sessions on one wall, the ones waiting on you first.',
   },
   {
     value: 'name',
@@ -40,7 +40,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'agents',
     question: 'Which agents does it support?',
     answer:
-      'For quota and suggestions, Codex and Claude Code today. A new agent needs code that can read its quota without spending any, which is the whole constraint — so agents arrive with the app rather than being added by hand in Settings. Maintenance reads more: the instruction files of Claude Code, Codex, Cursor, GitHub Copilot and Gemini.',
+      'For quota and suggestions, Codex and Claude Code today. A new agent needs code that can read its quota without spending any, which is the whole constraint — so agents arrive with the app rather than being added by hand in Settings. Maintenance reads more: the instruction files of Claude Code, Codex, Cursor, GitHub Copilot and Gemini. Sessions lists Claude Code’s sessions, and Codex’s will join them.',
   },
   {
     value: 'not-found',
@@ -61,6 +61,12 @@ export const faqEntries: FaqEntry[] = [
       'From the readings Lancetta keeps, never from a model. Each one is worked out on your Mac from the percentage your account reports, the rate it has been moving at, when the window resets, whether you hold a free reset, and the effort set in the agent’s own settings, and each names what it rests on so you can check it. When nothing needs changing, it says that too. Suggestions sit at the top of the panel and of the window; the ones that cannot wait (an agent about to stop, a window about to reset with room left, a free reset about to lapse) also arrive once as a notification, which Settings › Notifications › Suggestions turns off.',
   },
   {
+    value: 'sessions',
+    question: 'I run several sessions at once. Can it tell me which one needs me?',
+    answer:
+      'Yes, for Claude Code. The Sessions pane keeps every Claude Code session you started as a post-it on a wall: Your turn first (it finished its turn, asks you something, stopped or failed, or its terminal closed), with how long each has waited, then Working, then what you concluded. Lancetta reads the list Claude Code keeps of its sessions and changes nothing in it: Done takes a post-it down without closing its session. A background session opens in your terminal in one click, and the sessions can have a menu-bar item of their own, counting the ones that wait on you. Codex’s sessions will go up on the same wall next.',
+  },
+  {
     value: 'refresh',
     question: 'Can I refresh Claude on demand, like Codex?',
     answer:
@@ -76,7 +82,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'model-limit',
     question: 'Claude says I am out, but Lancetta shows two thirds left. Which is right?',
     answer:
-      'Both, and that gap is what Lancetta 0.6 exists to close. Some plans give one model a weekly limit of its own, counted separately from the window every monitor reads — so the model you actually want can be spent while the general window is comfortable. The account sends that limit as a row of its own, and Lancetta now draws it under the name your account gives it, with a sentence when its week is spent, when it is back, and when it is heading for empty before it resets. It needs the account route: the status-line file carries the two general windows and nothing else.',
+      'Both, and that gap is one Lancetta closes. Some plans give one model a weekly limit of its own, counted separately from the window every monitor reads — so the model you actually want can be spent while the general window is comfortable. The account sends that limit as a row of its own, and Lancetta now draws it under the name your account gives it, with a sentence when its week is spent, when it is back, and when it is heading for empty before it resets. It needs the account route: the status-line file carries the two general windows and nothing else.',
   },
   {
     value: 'interrupt',
@@ -88,7 +94,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'surfaces',
     question: 'Is Lancetta only in the menu bar?',
     answer:
-      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, and Maintenance, which checks the files they read at every start. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch.',
+      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch, and the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
   },
   {
     value: 'memory',
@@ -106,7 +112,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'privacy',
     question: 'Does anything leave my Mac?',
     answer:
-      'Not what you do with the agents. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make (to Anthropic and OpenAI, with your own sign-in), the update check you turn on, and a sponsor picture in About. Maintenance reads the agents’ instruction files where they are, and the suggestions read the effort set in Claude Code’s and Codex’s own settings; neither leaves the Mac, unless you hand a finding to Claude Code, which then works as it always does. The privacy page lists each one.',
+      'Not what you do with the agents. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make (to Anthropic and OpenAI, with your own sign-in), the update check you turn on, and a sponsor picture in About. Maintenance reads the agents’ instruction files where they are, the suggestions read the effort set in Claude Code’s and Codex’s own settings, and Sessions asks your own Claude Code for the list of its sessions; none of it leaves the Mac, unless you hand a finding to Claude Code, which then works as it always does. The privacy page lists each one.',
   },
   {
     value: 'macos',

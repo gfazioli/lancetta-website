@@ -9,16 +9,15 @@ import {
   IconBellRinging,
   IconBook2,
   IconCalendarWeek,
-  IconChartHistogram,
   IconChartPie,
   IconChecklist,
-  IconClockHour4,
   IconCreditCardOff,
   IconDeviceLaptop,
   IconGauge,
   IconHandStop,
   IconLayoutNavbar,
   IconListCheck,
+  IconNote,
   IconRocket,
   IconSunrise,
   IconSunset2,
@@ -70,7 +69,7 @@ const glance = [
   },
   {
     label: 'What it does',
-    body: 'Reads each agent’s quota and keeps every reading, scans the files they load at every start, and turns both into suggestions: when to push on, when to slow down, what to switch to, what to trim.',
+    body: 'Turns every quota reading it keeps, and the files your agents load at every start, into suggestions: when to push on, slow down, switch or trim. And it keeps your Claude Code sessions on one wall, the ones waiting on you first.',
   },
   {
     label: 'What it costs',
@@ -101,12 +100,19 @@ interface Feature {
  * which is exactly what the free, 74-provider alternative also does, and a
  * reader who knew it met a reason to prefer this one only at card seven. Do
  * not sort these by feel.
+ *
+ * Since 0.60.0 the sessions come after the setup: which session needs you is
+ * a decision too. And what the advice rests on is ONE card (user, 2026-10-17:
+ * *"Lancetta NON è un contatore di token, ma il suo obiettivo è quello di
+ * guidare l'utente all'uso coscenzioso e ottimizzato di claude e codex"*):
+ * both windows, the age of every reading and the daily tokens were three
+ * cards of fourteen, the most of any one idea on the row.
  */
 const features: Feature[] = [
   {
     icon: IconRocket,
     title: 'Spend what would go unused',
-    description: 'A window about to reset with room: start the long task.',
+    description: 'Room left before the reset: start the long task.',
     color: 'teal',
     href: '/docs/suggestions#when-to-push-on',
   },
@@ -120,7 +126,7 @@ const features: Feature[] = [
   {
     icon: IconCalendarWeek,
     title: 'The week, not just the hour',
-    description: 'A weekly window that runs out days early, seen in time.',
+    description: 'A week that runs out days early, seen in time.',
     color: 'grape',
     href: '/docs/suggestions#the-week',
   },
@@ -137,6 +143,13 @@ const features: Feature[] = [
     description: 'What they load at every start, its cost, and what to fix.',
     color: 'lime',
     href: '/docs/maintenance',
+  },
+  {
+    icon: IconNote,
+    title: 'What waits on you',
+    description: 'Your Claude Code sessions, your turn first.',
+    color: 'grape',
+    href: '/docs/sessions',
   },
   {
     icon: IconListCheck,
@@ -160,11 +173,11 @@ const features: Feature[] = [
     href: '/docs/memory',
   },
   {
-    icon: IconGauge,
-    title: 'Both windows, both agents',
-    description: 'The 5-hour and 7-day windows it reasons from.',
-    color: 'cyan',
-    href: '/docs/the-menu',
+    icon: IconLayoutNavbar,
+    title: 'Under the notch',
+    description: 'On a MacBook Pro, the advice lives in the notch too.',
+    color: 'violet',
+    href: '/docs/the-notch',
   },
   {
     icon: IconChartPie,
@@ -174,11 +187,11 @@ const features: Feature[] = [
     href: '/docs/how-it-reads#a-window-one-model-keeps-to-itself',
   },
   {
-    icon: IconClockHour4,
-    title: 'Every reading carries its age',
-    description: 'How old each number is, and when a source lags.',
-    color: 'blue',
-    href: '/docs/how-it-reads',
+    icon: IconGauge,
+    title: 'What it all rests on',
+    description: 'Both windows, every reading dated, daily tokens.',
+    color: 'cyan',
+    href: '/docs/the-window',
   },
   {
     icon: IconCreditCardOff,
@@ -186,20 +199,6 @@ const features: Feature[] = [
     description: 'No model is asked, so checking costs no quota.',
     color: 'grape',
     href: '/docs/how-it-reads',
-  },
-  {
-    icon: IconLayoutNavbar,
-    title: 'Under the notch',
-    description: 'On a MacBook Pro, the advice lives in the notch too.',
-    color: 'violet',
-    href: '/docs/the-notch',
-  },
-  {
-    icon: IconChartHistogram,
-    title: 'Where the tokens went',
-    description: 'Daily tokens for both agents, over 7, 30 or 90 days.',
-    color: 'cyan',
-    href: '/docs/the-window',
   },
 ];
 
@@ -222,8 +221,10 @@ interface Step {
  * under the grid points at.
  *
  * `today` opens with the decisions the app makes with you — when to push on,
- * when to slow down, what to switch to, how the agents are set up — then what
- * they leave behind and what it all rests on, each a thing that SHIPS.
+ * when to slow down, what to switch to, how the agents are set up, which
+ * session waits on you — then what they leave behind and what it all rests
+ * on, each a thing that SHIPS. Three columns since 0.60.0: nine cards today
+ * and three ahead fill their rows, where four left one card alone on each.
  * `soon` and `next` carry the badge AND the future tense, never one without
  * the other, and each is a section of `content/roadmap.mdx` that says what it
  * has to prove before it counts as finished. Add one here and it goes there too.
@@ -255,6 +256,13 @@ const today: Step[] = [
     title: 'How they are set up',
     body: 'The files agents load at every start, measured and checked, with fixes you see before they are applied.',
     color: 'lime',
+    state: 'today',
+  },
+  {
+    icon: IconNote,
+    title: 'What waits on you',
+    body: 'Your Claude Code sessions on one wall: the ones whose turn is yours first, then what is working, then what you concluded.',
+    color: 'grape',
     state: 'today',
   },
   {
@@ -299,6 +307,13 @@ const ahead: Step[] = [
     icon: IconSunset2,
     title: 'When you will probably stop',
     body: 'Before you have spent anything, it will say roughly how far into the day the five-hour window will carry you — or nothing, until it is right often enough.',
+    color: 'gray',
+    state: 'next',
+  },
+  {
+    icon: IconNote,
+    title: 'Codex sessions, on the same wall',
+    body: 'Codex’s sessions will report themselves as they start, finish a turn and end, and go up on the same wall as Claude Code’s.',
     color: 'gray',
     state: 'next',
   },
@@ -360,11 +375,11 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         </dl>
       </Container>
 
-      {/* The Problem */}
-      <SectionRule />
-      <ProblemSection />
-
-      {/* How it decides */}
+      {/*
+        How it decides, then what is in it, and only then why the numbers can
+        be trusted (2026-10-17). The founding defects opened this run until
+        then: a page about advice started with a story about readouts.
+      */}
       <SectionRule />
       <SolutionSection />
 
@@ -433,7 +448,9 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
         </Reveal>
       </Box>
 
-      {/* The founding constraint */}
+      {/* Why the numbers can be trusted: right, and free to read */}
+      <SectionRule />
+      <ProblemSection />
       <SectionRule />
       <CostsNothingSection />
 
@@ -450,7 +467,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           lead="What ships today, and what comes after it. Nothing ahead carries a date — the order changes as the work teaches you things, and the roadmap says what each step has to prove before it counts as finished."
         />
 
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
           {today.map((step, i) => (
             // Wrapped: StepCard passes nothing through, and the wrapper takes
             // the card's radius for the light on its rim.
@@ -464,7 +481,7 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           <p className={classes.horizon}>Ahead</p>
         </Reveal>
 
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 4 }} spacing="lg">
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
           {ahead.map((step, i) => (
             <Reveal key={step.title} delay={i * 120} radius="var(--mantine-radius-lg)">
               <StepCard step={step} />

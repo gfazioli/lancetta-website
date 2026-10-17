@@ -87,6 +87,10 @@ const WINDOW_SHOT = { width: 2400, height: 1600 };
  * the panel of the app's capture cast, and Maintenance shows the fixture
  * home's pane. A notification is not a frame: a banner has no screenshot
  * worth a hero, and the alerts have a page of their own.
+ *
+ * Since 0.60.0 the sessions follow the quota decisions: which session needs
+ * you is the next decision. Its picture is the sessions' own panel on the
+ * app's demo wall, never a real one: a real wall names the user's folders.
  */
 const frames: Frame[] = [
   /*
@@ -135,6 +139,17 @@ const frames: Frame[] = [
     body: 'Today a suggestion reasons from this window’s own rate, carried forward. It does not yet know that you start at nine, or that you never touch it at the weekend. Next, it will reason from an average across your own days, to say when to start, and when you will probably stop.',
     href: '/docs/roadmap',
     linkLabel: 'What is planned, and what it has to prove',
+  },
+  {
+    src: '/screenshot-panel-sessions.png',
+    width: 760,
+    height: 782,
+    alt: 'The sessions’ own panel: 3 waiting on you · 2 working, Your turn open on its three sessions, each with where it stands and for how long and the Open and Done buttons, Working and Concluded closed beside it',
+    eyebrow: 'What waits on you',
+    title: 'The session that needs you, first.',
+    body: 'Run a few Claude Code sessions at once and the hard part stops being the work: it is remembering which one is waiting for you. Lancetta keeps every session you started as a post-it on a wall — the ones whose turn is yours first, each with how long it has waited, then the ones still working, then what you concluded. A background session opens in your terminal from there, and the sessions can have a menu-bar item of their own that counts what waits on you.',
+    href: '/docs/sessions',
+    linkLabel: 'How the wall works',
   },
   {
     src: '/screenshot-window-maintenance.png',
@@ -292,9 +307,10 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
 
           <Text c="dimmed" fz={{ base: 'md', md: 'lg' }} lh={1.5} className={classes.lead}>
             A percentage leaves the decision to you. Lancetta makes it with you: from every reading
-            of Codex and Claude Code, and a scan of what your agents load at every start, it says
-            when to go all in, when to lower the effort or hand work to a lighter model, when to
-            move to the other agent, and what to trim. Each suggestion says what it rests on.
+            of Codex and Claude Code, a scan of what your agents load at every start, and the list
+            of your sessions, it says when to go all in, when to lower the effort or hand work to a
+            lighter model, when to move to the other agent, what to trim, and which session waits on
+            you. Each suggestion says what it rests on.
           </Text>
 
           {/* Marked for the character: under the bar while this row is in
