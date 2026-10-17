@@ -64,7 +64,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'sessions',
     question: 'I run several sessions at once. Can it tell me which one needs me?',
     answer:
-      'Yes, for Claude Code. The Sessions pane keeps every Claude Code session you started as a post-it on a wall: Your turn first (it finished its turn, asks you something, stopped or failed, or its terminal closed), with how long each has waited, then Working, then what you concluded. Lancetta reads the list Claude Code keeps of its sessions and changes nothing in it: Done takes a post-it down without closing its session. A background session opens in your terminal in one click, and the sessions can have a menu-bar item of their own, counting the ones that wait on you. Codex’s sessions will go up on the same wall next.',
+      'Yes, for Claude Code. The Sessions pane keeps every Claude Code session you started as a post-it on a wall: Your turn first (it finished its turn, asks you something, stopped or failed, or its terminal closed), then Working, then what you concluded. It reads the list Claude Code keeps of its sessions and starts or closes none of them: Done takes a post-it down without closing its session. A background session opens in your terminal in one click, and the sessions can have a menu-bar item of their own, counting the ones that wait on you. Codex’s sessions will go up on the same wall next.',
   },
   {
     value: 'refresh',
@@ -82,7 +82,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'model-limit',
     question: 'Claude says I am out, but Lancetta shows two thirds left. Which is right?',
     answer:
-      'Both, and that gap is one Lancetta closes. Some plans give one model a weekly limit of its own, counted separately from the window every monitor reads — so the model you actually want can be spent while the general window is comfortable. The account sends that limit as a row of its own, and Lancetta now draws it under the name your account gives it, with a sentence when its week is spent, when it is back, and when it is heading for empty before it resets. It needs the account route: the status-line file carries the two general windows and nothing else.',
+      'Both, and that gap is one Lancetta closes. Some plans give one model a weekly limit of its own, counted separately from the window every monitor reads — so the model you actually want can be spent while the general window is comfortable. The account sends that limit as a row of its own, and Lancetta draws it under the name your account gives it, with a sentence when its week is spent, when it is back, and when it is heading for empty before it resets. It needs the account route: the status-line file carries the two general windows and nothing else.',
   },
   {
     value: 'interrupt',
@@ -94,7 +94,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'surfaces',
     question: 'Is Lancetta only in the menu bar?',
     answer:
-      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch, and the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
+      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch. And on any Mac the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
   },
   {
     value: 'memory',

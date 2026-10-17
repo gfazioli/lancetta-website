@@ -6,7 +6,7 @@
 
 <p align="center">
   <strong>When and how to use your coding agents, from the macOS menu bar.</strong><br/>
-  When to push on with Codex and Claude Code, when to slow down, and which session needs you — without spending a single token to find out.
+  When to push on with Codex and Claude Code, when to slow down, and which of your Claude Code sessions needs you — without spending a single token to find out.
 </p>
 
 <p align="center">
@@ -36,9 +36,9 @@
 
 A *lancetta* is the hand of an instrument — the needle that says where you are, and which way to go. Lancetta is a native macOS menu-bar app that tells you **when and how to use Codex and Claude Code**: push on while a window has room it would lose, slow down before an agent stops (a lower effort, a lighter model for routine work, the other agent while it has room), and trim what every session loads before your first prompt. Each suggestion says what it rests on: the percentage each account reports, how fast it has been moving, when the window resets.
 
-It also keeps your **Claude Code sessions** on one wall, the ones waiting on you first, and closes the background processes the agents leave behind, on your say-so.
-
 It says all this where you already look: the **panel** under the menu-bar item, the **island under the notch**, and a **window** with every suggestion and everything it rests on.
+
+It also keeps your **Claude Code sessions** on one wall, the ones waiting on you first, and closes the background processes the agents leave behind once their folder is gone, never a live one, on your say-so.
 
 ### Reading a quota costs nothing
 
@@ -49,9 +49,9 @@ A monitor that spends quota in order to display quota is self-defeating, and the
 | Lifetime tokens | 318,009,023 | 318,009,023 |
 | Percentages used | 33% / 13% | 33% / 13% |
 
-Twelve account reads on one connection moved nothing. And the instrument works, which is the half that makes the zero mean something: the same counter moved by **29,188,602** across a day of ordinary use. A counter that *cannot* move looks exactly like a counter that did not.
+Twelve Codex account reads on one connection moved nothing. And the instrument works, which is the half that makes the zero mean something: the same counter moved by **29,188,602** across a day of ordinary use. A counter that *cannot* move looks exactly like a counter that did not.
 
-Claude's numbers come from one account read, made with the sign-in Claude Code keeps on your Mac: the same request Claude Code's own `/usage` makes, with no model in the loop.
+Claude's numbers come from one account read, made with the sign-in Claude Code keeps on your Mac: the same request Claude Code's own `/usage` makes, with no model in the loop. Or, if you set that up instead, from the payload Claude Code already writes for its own status line, which costs no request at all.
 
 **Asking a model how much quota is left is a turn, and it would cost tokens on every poll.** It is the easiest route to build and the one this app will never take.
 

@@ -156,10 +156,10 @@ const frames: Frame[] = [
     src: '/screenshot-panel-sessions.png',
     width: 760,
     height: 782,
-    alt: 'The sessions’ own panel: 3 waiting on you · 2 working, Your turn open on its three sessions, each with where it stands and for how long and the Open and Done buttons, Working and Concluded closed beside it',
+    alt: 'The sessions’ own panel: 3 waiting on you · 2 working, Your turn open on its three sessions, each with where it stands and for how long and the Open and Done buttons, Working closed beside it and Concluded below',
     eyebrow: 'What waits on you',
-    title: 'The session that needs you, first.',
-    body: 'Run a few Claude Code sessions at once and the hard part stops being the work: it is remembering which one is waiting for you. Lancetta keeps every session you started as a post-it on a wall — the ones whose turn is yours first, each with how long it has waited, then the ones still working, then what you concluded. A background session opens in your terminal from there, and the sessions can have a menu-bar item of their own that counts what waits on you.',
+    title: 'Which session needs you.',
+    body: 'Run a few Claude Code sessions at once and the hard part stops being the work: it is remembering which one is waiting for you. Lancetta keeps every session you started as a post-it on a wall — the ones whose turn is yours first, then the ones still working, then what you concluded. A background session opens in your terminal from there, and the sessions can have a menu-bar item of their own that counts the ones waiting on you.',
     href: '/docs/sessions',
     linkLabel: 'How the wall works',
   },
@@ -195,7 +195,7 @@ const frames: Frame[] = [
     alt: 'The Lancetta window on its Overview: four suggestions first (Claude stops in 51m at this pace, Codex has room, Maintenance found 4 warnings, 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, with Usage open on the week’s tokens',
     eyebrow: 'When you want the reasons',
     title: 'The window.',
-    body: 'Command-O: the suggestions first, then everything they rest on — daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, the processes the agents left running, and Maintenance.',
+    body: 'Command-O: the suggestions first, then everything they rest on — daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, the processes the agents left running, and Maintenance — and the wall of your sessions.',
     href: '/docs/the-window',
     linkLabel: 'What the window holds',
   },
@@ -308,10 +308,10 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
 
           <Text c="dimmed" fz={{ base: 'md', md: 'lg' }} lh={1.5} className={classes.lead}>
             A percentage leaves the decision to you. Lancetta makes it with you: from every reading
-            of Codex and Claude Code, a scan of what your agents load at every start, and the list
-            of your sessions, it says when to go all in, when to lower the effort or hand work to a
-            lighter model, when to move to the other agent, what to trim, and which session waits on
-            you. Each suggestion says what it rests on.
+            of Codex and Claude Code, and a scan of what your agents load at every start, it says
+            when to go all in, when to lower the effort or hand work to a lighter model, when to
+            move to the other agent, and what to trim. Each suggestion says what it rests on. And it
+            keeps your Claude Code sessions on one wall, the ones waiting on you first.
           </Text>
 
           {/* Marked for the character: under the bar while this row is in
