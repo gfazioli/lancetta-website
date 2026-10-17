@@ -35,6 +35,8 @@ Whichever you pick, the bars are filled with **the number that is shown**, and e
 
 Three rows, each installed only when you click, and none of them ever replacing a file Lancetta did not write. The [command line](/docs/command-line) page has the commands and what each prints.
 
+![Lancetta's Settings, on the General pane, scrolled to Startup (Open Lancetta at login on, Show the support window at launch and Show the icon in the Dock off) and Command line: The lancetta command with Install… and the line Not installed: it would go in ~/.local/bin; Agent Skill for Claude Code and Agent Skill for Codex, each with Install and where it would go; and the line under them: lancetta usage --json, lancetta statusline and lancetta advice read what Lancetta last saw, and never an agent](/screenshot-settings-command-line.png)
+
 - **The lancetta command** — **Install…** links `lancetta` to Lancetta's own binary, so a terminal, a script or an agent can ask it what it last read, and the link follows every update. It goes in `~/.local/bin` when that folder exists, otherwise in `/usr/local/bin`, which asks for an administrator's password; a link Lancetta already made is found where it is. The line under the row says where it is or would go. Moving the app breaks the link and **Repair** points it back; **Remove** takes it away. A `lancetta` Lancetta did not create is left as it is, with no button.
 - **Agent Skill for Claude Code** and **Agent Skill for Codex** — a `SKILL.md` in `~/.claude/skills/lancetta` and in Codex's `skills/lancetta`, telling the agent to run `lancetta usage --json` before a long or expensive task, to read a refusal first and a reading's age, and to say the suggestion that matters in one sentence, never polling in a loop. It needs the command. **Install**, **Update** over Lancetta's older version, and **Remove**, which deletes only Lancetta's `SKILL.md`. A skill of that name Lancetta did not write is left as it is.
 
@@ -115,11 +117,7 @@ One switch per agent, each with its mark: off, Lancetta sends nothing about that
 
 The panel that opens under Lancetta's menu-bar item: how it opens, how it draws where each window is heading, what has an item of its own beside it, and what it shows.
 
-![Lancetta's Settings, on the Panel pane: Open the panel on hover under Opening, Sessions as an item of their own switched on under In the menu bar, and under What the panel shows a switch each for Suggestions, Agents, Usage, Maintenance, Processes and Sessions](/screenshot-settings-panel.png)
-
-{/* TODO screenshot: re-shoot /screenshot-settings-panel.png with the Projection section
-    (Where each window is heading, on Ghost fill, and its caption) between Opening and
-    In the menu bar, and update the alt text above to name it. */}
+![Lancetta's Settings, on the Panel pane: Open the panel on hover under Opening; under Projection, Where each window is heading set to Ghost fill, with the line under it saying what that draws; Sessions as an item of their own switched on under In the menu bar; and under What the panel shows, the first of its switches, for Suggestions, Agents and Usage](/screenshot-settings-panel.png)
 
 **Open the panel on hover** — off by default. On, pointing at Lancetta in the menu bar opens the panel after a quarter of a second, with no click; it closes when the pointer leaves it. Opening it this way deliberately **does not take the keyboard**, so nothing is pulled out of whatever you are typing in — which also means the panel's shortcuts are not live yet. Click the item and the panel is yours: it takes the keyboard, its shortcuts work, and it stays open until you click away, exactly as a clicked-open panel always did. Clicking a row inside it works either way.
 

@@ -17,6 +17,8 @@ And an **Agent Skill** that tells Claude Code and Codex to ask before a long or 
 
 **Settings › General › Command line** has a row for the command and one for each agent's skill. Nothing is installed until you click, and nothing Lancetta did not write is replaced.
 
+![Lancetta's Settings, on the General pane, scrolled to Startup and Command line: The lancetta command with Install… and the line Not installed: it would go in ~/.local/bin; Agent Skill for Claude Code and Agent Skill for Codex, each with Install and where it would go; and the line under them: lancetta usage --json, lancetta statusline and lancetta advice read what Lancetta last saw, and never an agent](/screenshot-settings-command-line.png)
+
 **The lancetta command** — **Install…** puts a link named `lancetta` to Lancetta's own binary on your `PATH`, so it follows every update of the app. It goes in `~/.local/bin` when that folder exists, and otherwise in `/usr/local/bin`, for which macOS asks for an administrator's password first. A link Lancetta made earlier, in either folder, is found where it is. Moving the app breaks the link: the row says so, and **Repair** points it back. **Remove** takes it away. A `lancetta` that Lancetta did not create is never touched: the row says so and offers no button.
 
 The row says where it would go before you click. If your shell does not find `lancetta` afterwards, that folder is not on your `PATH`. By hand, the same link is:
