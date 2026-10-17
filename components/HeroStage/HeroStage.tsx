@@ -116,8 +116,8 @@ const frames: Frame[] = [
   {
     src: '/screenshot-suggestion-stop.png',
     width: 716,
-    height: 386,
-    alt: 'A Lancetta suggestion in red: at this pace Claude stops in 51m, then waits 1h18m for its reset; lower the effort, give routine work to a lighter model, there is no free reset to fall back on, move the next tasks to Codex, which has 88% of its 5-hour window and 80% of its week left; under it, what it rests on: 82% of the 5 hours used, 21% an hour over the last hour, from 14 readings',
+    height: 478,
+    alt: 'A Lancetta suggestion in red: at this pace Claude stops in 51m, then waits 1h18m for its reset; pause the ones that can wait, since 2 sessions of Claude are working at once; lower the effort, give routine work to a lighter model, there is no free reset to fall back on, move the next tasks to Codex, which has 88% of its 5-hour window and 80% of its week left; under it, what it rests on: 82% of the 5 hours used, 21% an hour over the last hour, from 14 readings, and 2 of its sessions working now in the Sessions pane',
     eyebrow: 'When to slow down',
     title: 'Before it stops, not after.',
     body: '“At this pace Claude stops in 51m, then waits 1h18m for its reset.” Lancetta says it while there is still time to act, with what helps: pausing the sessions that can wait when two or more are working, a lower effort, a lighter model for routine work, a free reset if you hold one, the other agent while it has room. The week is where it matters most — a weekly window run out on a Tuesday costs days, and only a series of readings sees it coming.',
@@ -155,8 +155,8 @@ const frames: Frame[] = [
   {
     src: '/screenshot-panel-sessions.png',
     width: 760,
-    height: 782,
-    alt: 'The sessions’ own panel: 3 waiting on you · 2 working, Your turn open on its three sessions, each with where it stands and for how long and the Open and Done buttons, Working closed beside it and Concluded below',
+    height: 854,
+    alt: 'The sessions’ own panel: 4 waiting on you · 3 working, Your turn open on its four sessions, each with its agent’s mark, where it stands and for how long, and the Open and Done buttons, the first a Codex session that asks you something; Working closed beside it at 3, and Concluded below: 2, and 3 in the last 7 days',
     eyebrow: 'What waits on you',
     title: 'Which session needs you.',
     body: 'Run a few Claude Code and Codex sessions at once and the hard part stops being the work: it is remembering which one is waiting for you. Lancetta keeps every session you started as a post-it on a wall — the ones whose turn is yours first, then the ones still working, then what you concluded. A background session opens in your terminal from there, and the sessions can have a menu-bar item of their own that counts the ones waiting on you.',
@@ -192,7 +192,7 @@ const frames: Frame[] = [
   {
     src: '/screenshot-window-overview.png',
     ...WINDOW_SHOT,
-    alt: 'The Lancetta window on its Overview: four suggestions first (Claude stops in 51m at this pace, Codex has room, Maintenance found 4 warnings, 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, with Usage open on the week’s tokens',
+    alt: 'The Lancetta window on its Overview: four suggestions first, all open (Claude stops in 51m at this pace, with five steps, the first to pause the ones that can wait since 2 sessions of Claude are working at once, resting on the Sessions pane showing 2 of them working now; Codex has room; Maintenance found 4 warnings; 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, and the top of the Sessions card under them',
     eyebrow: 'When you want the reasons',
     title: 'The window.',
     body: 'Command-O: the suggestions first, then everything they rest on — daily tokens for both agents over 7, 30 or 90 days, every window in detail with when each reading was last true, the week that just ended, the processes the agents left running, and Maintenance — and the wall of your sessions.',
@@ -204,8 +204,8 @@ const frames: Frame[] = [
 const HERO_SHOT = {
   src: '/screenshot-menu-dark.png',
   width: 760,
-  height: 1406,
-  alt: 'The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (lower the effort, a lighter model for routine work, no free reset to fall back on, move the next tasks to Codex) and what it rests on; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open on its 5-hour, 7-day and Fable bars, Codex at 20%, Usage and Maintenance',
+  height: 1694,
+  alt: 'The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (pause the ones that can wait, since 2 sessions of Claude are working at once; lower the effort; a lighter model for routine work; no free reset to fall back on; move the next tasks to Codex) and what it rests on, down to the Sessions pane showing 2 of its sessions working now; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open, its 5-hour bar at 82% carried on in hatched amber to a mark at its end, the pace line under it, then its 7-day and Fable bars; Codex at 20%, Usage, Maintenance, and Sessions with 4 waiting on you · 3 working',
 };
 
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
@@ -373,7 +373,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
         {/*
           The page's largest paint, so it goes through next/image: WebP at the
           size it is drawn (560px, or the column on a phone) instead of the
-          95 KB PNG, eager and high priority. `priority` is deprecated in
+          134 KB PNG, eager and high priority. `priority` is deprecated in
           Next 16 in favour of exactly these two.
         */}
         <Image

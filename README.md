@@ -24,7 +24,7 @@
 </p>
 
 <p align="center">
-  <img src="public/screenshot-menu-dark.png" alt="The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps and what it rests on; then Codex has room, and Maintenance found 4 warnings; under them each agent's windows, Usage and Maintenance" width="700" />
+  <img src="public/screenshot-menu-dark.png" alt="The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps and what it rests on; then Codex has room, and Maintenance found 4 warnings; under them each agent's windows, Claude's 5-hour bar carried on in amber to where it would run out, then Usage, Maintenance and Sessions" width="700" />
 </p>
 
 <div align="center">
