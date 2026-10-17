@@ -11,7 +11,7 @@ import panel from '@/public/screenshot-menu-dark.png';
 The panel opens on **what to do**: the suggestions, the most urgent first. Under them is the window in brief, a card for each agent and for each pane of the window, and each card opens its details in place. The numbers are there for when you want to check a suggestion.
 
 {/* Not Markdown: this is the page's largest paint, and a Markdown image is lazy. */}
-<LeadImage src={panel} alt="The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (lower the effort, a lighter model for routine work, no free reset to fall back on, move the next tasks to Codex) and what it rests on; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open on its 5-hour, 7-day and Fable bars, Codex at 20%, Usage and Maintenance" />
+<LeadImage src={panel} alt="The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (pause the ones that can wait, since 2 sessions of Claude are working at once; lower the effort; a lighter model for routine work; no free reset to fall back on; move the next tasks to Codex) and what it rests on, down to the Sessions pane showing 2 of its sessions working now; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open, its 5-hour bar at 82% carried on in hatched amber to a mark at its end, the pace line under it, then its 7-day and Fable bars; Codex at 20%, Usage, Maintenance, and Sessions with 4 waiting on you · 3 working" />
 
 It is a panel rather than a menu, and that is not decoration. A macOS menu's
 background belongs to the system: its rows can be anything, the surface behind
@@ -28,11 +28,13 @@ Up to three, at the top, because they are what Lancetta is for. The most urgent 
 
 ```
 ⛔  At this pace Claude stops in 51m, then waits 1h18m for its reset.
+    • 2 sessions of Claude are working at once: pause the ones that can wait.
     • Lower the effort: it is set to xhigh.
     • Give routine work to a lighter model.
     • There is no free reset to fall back on: keep what is left for what matters most.
     • Move the next tasks to Codex: 88% of its 5-hour window and 80% of its week are left.
     5 hours: 82% used, 21% an hour over the last 1h00m, from 14 readings.
+    The Sessions pane shows 2 of its sessions working now.
 ```
 
 Each one says what is happening, then what helps, then, in small type, what it rests on, so you can check it before you act. Some carry one button: **Use a reset…** for a stopped agent that holds a free reset, **Open Maintenance…**, or **Reclaim…**.
@@ -193,16 +195,26 @@ that would stop you first, before it resets. It is drawn whether the line is on 
 not. [Settings › Panel](/docs/settings#panel) chooses how:
 
 - **Ghost fill**, the default — the 5-hour bar carries on, faint, to where the last hour's rate leaves it at the reset, with a softer band beyond it out to where the fastest of your recent rates would leave it: the wider the band, the less sure the ghost. Too early in the window, or with nothing spent lately, there is no rate and no ghost. Amber to the end, with a mark there, when you would run out before it resets. The weekly bar gets a ghost only in that case: a week carried forward from one afternoon would be a forecast, and Lancetta makes none. Counting down, the ghost is a veil over the end of the fill, since the bar runs out at 0.
-- **Even-pace mark** — a mark on each bar where an even spend from the window's opening to its reset would put it now. Past the mark the bar is hatched: spent ahead of time. It projects nothing, so it holds for the week as well, and the hatch is never amber, because spending ahead is not running out.
-- **Runway** — under each bar, the window as time: what went, the last hour's rate carried forward to the reset, and in amber the stretch you would be stopped for. The week's runway carries no line forward unless the week is the window that would stop you.
-- **Charts in the card** — in an agent's open card, two small charts under its bars: the 5-hour window with the last hour's rate, and the week as it went, last week dotted. Their full-size versions are in [Limits](/docs/the-window#where-each-window-is-heading).
-- **Clock** — a dial in the corner of each agent's card: the hour hand at now, the 5-hour window as arcs, what has gone in the agent's colour and what is left faint, and amber from where you would run out to the reset. When the week would stop you before this 5-hour window resets, the amber is the week's.
-- **Words only** — the line under each bar, and no drawing.
 
-{/* TODO screenshot: one crop of an opened agent card per style (Ghost fill, Even-pace
-    mark, Runway, Charts in the card, Clock), on the showcase cast, with one window
-    stopping early so the amber shows; and re-shoot the lead panel picture, whose bars
-    will carry the default Ghost fill. */}
+  ![Claude’s card open in the panel, drawn with Ghost fill: the 5-hour bar at 82% carried on in hatched amber to a mark at its end, because at this rate it runs out in 50m, before the reset, as the pace line under it says; the 7-day bar at 41% and the Fable bar at 30% with no ghost; Codex’s card at 20% beside it](/screenshot-projection-ghost.png)
+
+- **Even-pace mark** — a mark on the 5-hour and weekly bars where an even spend from the window's opening to its reset would put it now. Past the mark the bar is hatched: spent ahead of time. It projects nothing, so it holds for the week as well, and the hatch is never amber, because spending ahead is not running out.
+
+  ![Claude’s card open in the panel, drawn with the Even-pace mark: a white mark on the 5-hour bar and on the 7-day bar where an even spend would put each one now, and each bar hatched from its mark to the end of its fill, spent ahead of time; the Fable bar plain](/screenshot-projection-even.png)
+
+- **Runway** — under the 5-hour and weekly bars, the window as time: what went, the last hour's rate carried forward to the reset, and in amber the stretch you would be stopped for. The week's runway carries no line forward unless the week is the window that would stop you.
+
+  ![Claude’s card open in the panel, drawn with Runway: under the 5-hour bar, the window as time, the climb so far, the last hour’s rate dashed on to the limit, and the stretch from there to the reset hatched in amber; under the 7-day bar, the week so far, with no line carried forward](/screenshot-projection-runway.png)
+
+- **Charts in the card** — in an agent's open card, two small charts under its bars: the 5-hour window with the last hour's rate, and the week as it went, last week dotted. Their full-size versions are in [Limits](/docs/the-window#where-each-window-is-heading).
+
+  ![Claude’s card open in the panel, drawn with Charts in the card: under its bars, 5 hours from 16:57 to 21:57, the climb so far, the last hour’s rate dashed on to the limit and the stretch to the reset hatched in amber, then 7 days from Thursday 13:47 to the next, what went so far and last week dotted](/screenshot-projection-charts.png)
+
+- **Clock** — a dial in the corner of each agent's card: the hour hand at now, the 5-hour window as arcs, what has gone in the agent's colour and what is left faint, and amber from where you would run out to the reset. When the week would stop you before this 5-hour window resets, the amber is the week's.
+
+  ![Claude’s and Codex’s cards in the panel, drawn with the Clock: a dial in the corner of each, the hour hand at now and the 5-hour window as arcs, Claude’s gone in orange with a hatched amber wedge where it would be stopped, Codex’s in teal; Claude’s card open on its bars under them](/screenshot-projection-clock.png)
+
+- **Words only** — the line under each bar, and no drawing.
 
 ## Processes
 

@@ -9,7 +9,7 @@ The panel gives you the three most urgent suggestions and the numbers in brief. 
 
 **Open Lancetta…** (⌘O) from the menu bar.
 
-![The Lancetta window on its Overview: four suggestions first (Claude stops in 51m at this pace, Codex has room, Maintenance found 4 warnings, 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, with Usage open on the week’s tokens](/screenshot-window-overview.png)
+![The Lancetta window on its Overview: four suggestions first, all open (Claude stops in 51m at this pace, with five steps, the first to pause the ones that can wait since 2 sessions of Claude are working at once, resting on the Sessions pane showing 2 of them working now; Codex has room; Maintenance found 4 warnings; 3 orphaned Codex trees hold 1.05 GB), then the cards for Usage, Limits, Processes and Maintenance, and the top of the Sessions card under them](/screenshot-window-overview.png)
 
 Six panes, in the sidebar: **Overview**, **Usage**, **Limits**, **Processes**, **Maintenance** and **Sessions**. Each pane is a row of cards: a card shows one figure and a line under it, and **a click opens its details under it**, joined to it, while a second click closes them. One card is open at a time in each pane, and each pane remembers which one.
 
@@ -50,7 +50,7 @@ It needs one whole week. Until Lancetta has read a week from its start, the card
 
 ## Usage
 
-![The Usage pane: three cards (the tokens of the last 30 days, the fullest 5-hour window at 100% and how many days it ran out, Codex’s lifetime total), and Total Usage open under them: thirty days of tokens for both agents side by side](/screenshot-window-usage.png)
+![The Usage pane: three cards (the tokens of the last 30 days, the fullest 5-hour window at 100% and the one day it ran out, Codex’s lifetime total), and Total Usage open under them: thirty days of tokens for Claude and Codex side by side, the total marked tokens · Claude + Codex and up 85% on the 30 days before, with the caption under the chart on where each series comes from](/screenshot-window-usage.png)
 
 Three cards:
 
@@ -74,7 +74,7 @@ The percentage beside the total compares **the last 7, 30 or 90 complete days wi
 
 ### What a total covers
 
-A total is a claim about every agent it counts, so it starts from the agents you asked for: the ones watched in [Settings › Agents](/docs/settings#agents), and of those the ones the chooser shows. With every one of them read, the total is whole, *tokens · Codex + Claude*, and compared with the days before. With one of them not read, the total is the sum of the others and says so: *tokens · Claude only* under the figure, *partial: Codex not read* in amber on its card, and a line under the chart with the code and what went wrong. **A partial total is never compared**, since a read that failed would pass for a drop. While an agent is still loading, the card says *partial: Codex still loading*; with none read, the figure is a dash and the line under it says why.
+A total is a claim about every agent it counts, so it starts from the agents you asked for: the ones watched in [Settings › Agents](/docs/settings#agents), and of those the ones the chooser shows. With every one of them read, the total is whole, *tokens · Claude + Codex*, and compared with the days before. With one of them not read, the total is the sum of the others and says so: *tokens · Claude only* under the figure, *partial: Codex not read* in amber on its card, and a line under the chart with the code and what went wrong. **A partial total is never compared**, since a read that failed would pass for a drop. While an agent is still loading, the card says *partial: Codex still loading*; with none read, the figure is a dash and the line under it says why.
 
 An agent with no history is not a missing one: a Codex with no day published yet, or a Mac with no Claude Code transcripts, adds nothing and leaves the total whole.
 
@@ -83,7 +83,7 @@ An agent with no history is not a missing one: a Codex with no day published yet
 
 ## Limits
 
-![The Limits pane: a card per agent, Claude at 82% and Codex at 20%, and Claude’s open under them: its 5-hour window with the pace line under it (at this rate it runs out in 50m, before the reset), its 7-day window, and the Fable model’s own weekly limit, counted separately](/screenshot-window-limits.png)
+![The Limits pane: a card per agent, Claude at 82% and Codex at 20%, and Claude’s open under them, marked live: its 5-hour window at 82% with the pace line under it (at this rate it runs out in 50m, before the reset, and what that rests on), its 7-day window at 41%, the Fable model’s own weekly limit at 30%, counted separately, and the top of its 7-day chart](/screenshot-window-limits.png)
 
 A card per agent, with the fuller of its two windows and when it resets. Opened, the agent in full, and this is where the asymmetry between the two is on screen rather than in a footnote:
 
@@ -100,6 +100,8 @@ Under those, when your account keeps one, **its own weekly limit, counted separa
 
 At the foot of an agent's card, under everything you can act on, Limits draws both windows, whatever [the panel](/docs/the-menu#where-each-window-is-heading) is set to draw: the panel is for a glance, and this is where you come to see what a suggestion rests on.
 
+![Claude’s card in the Limits pane, scrolled to its two charts: 7 days, from Thursday 13:38 to the next, with the nights shaded, the 5-hour sessions as thin teeth, what went so far up to now at 19:38, and last week dotted, ending at 68%; under it 5 hours, from 16:48 to 21:48, beside the dial with its amber wedge: the climb so far, the last hour’s rate dashed on in a narrow cone to the limit at 20:29, and the stretch from there to the reset hatched in amber](/screenshot-window-limits-charts.png)
+
 **7 days**, from the week's opening to its reset. What went so far, with the nights shaded from 22:00 to 07:00, and behind it the 5-hour windows the week was made of, as thin teeth on the same scale: how full each session got, beside how far the week moved. Last week is dotted over this one: found by its own reset and lined up from its own opening, so each point is where last week stood at the same point of its window, even when days went by between its reset and the start of this one. The week carries no line forward, because a week projected from one afternoon would be a forecast and Lancetta makes none. The one exception is a week the pace line says will stop you, which gets an amber line to that moment.
 
 **5 hours**, hour by hour, beside a clock. What went, and from the newest reading a cone of where it is heading. Its dashed middle is the last hour's rate, the one the pace line and the suggestions rest on, labelled *at this rate* with where it leaves the window at the reset. Its edges are the slowest and fastest of the rate over half an hour, an hour and two hours, so a wide cone says how far to trust the middle without a sentence. When that rate empties the window before its reset, the middle turns amber, the moment is named in clock time on the limit line, and the stretch from there to the reset is hatched: the time you would wait. The clock is the panel's dial at full size.
@@ -109,11 +111,6 @@ Amber means here exactly what the pace line means by *at this rate you run out*,
 **A stretch nobody read is never drawn flat.** When the readings stop, with the Mac asleep or Lancetta quit, the line does not hold the old figure across the gap as if nothing had been spent: a fainter dashed connector runs straight from the reading before to the reading after, because the figure got from one to the other somewhere in there, and that is all anyone knows. The teeth and last week are drawn the same way. A window starts from zero at its opening only when this Mac was reading at that moment; otherwise its line starts at the first reading.
 
 Each chart's legend names only the lines it draws. With [Count down what is left](/docs/settings#general) on, the charts plot what is left, falling toward the limit at 0%.
-
-{/* TODO screenshot: the Limits pane with an agent's card open on its two charts (7 days
-    with nights, 5-hour teeth and last week; 5 hours with the cone, an amber stop and the
-    dial), on the showcase cast. It belongs to the window set: re-shoot the four panes
-    together, and check the Limits picture's alt text above against the new frame. */}
 
 ## Processes
 
@@ -133,7 +130,7 @@ What your coding agents read before they start, and what it costs: CLAUDE.md, AG
 
 ## Sessions
 
-![The Sessions pane: 3 on Your turn, the longest waiting for 2h05m, 2 Working, 1 Concluded today and 3 in the last 7 days; Your turn open on its three sessions as cards, each with its mark, name and folder, where it stands and for how long (Your turn, Asks you something, Stopped before it was done), when it started, how its time split between working and waiting, and Open and Done](/screenshot-window-sessions.png)
+![The Sessions pane: 4 on Your turn, the longest waiting for 2h05m, 3 Working, 2 Concluded and 3 in the last 7 days; Your turn open on its four sessions as a list, newest first, each with its badge carrying its agent’s mark, its name, where it stands and for how long (Asks you something, Your turn, Stopped before it was done), its folder and when it started, how its time split between working and waiting, and Open and Done; the first is a Codex session, Tighten the onboarding copy on the pricing page, and the others are Claude’s](/screenshot-window-sessions.png)
 
 Every Claude Code and Codex session you started, as a post-it on a wall: **Your turn**, the sessions waiting on you, with how long the longest has waited; **Working**; and **Concluded**, what you called done or removed, day by day. Each session opens in your terminal from here, and goes down with **Done** without being closed. The whole pane is on [Sessions](/docs/sessions).
 
