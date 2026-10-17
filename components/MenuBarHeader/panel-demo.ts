@@ -169,7 +169,9 @@ export function refreshLabel(ageSeconds: number, refreshing = false) {
 
 /**
  * The panel in the hero's menu screenshot, row for row: one afternoon on which
- * Claude is about to stop and Codex has a window about to go unused.
+ * Claude is about to stop and Codex has a window about to go unused. Since
+ * 0.61.0 the cast also has two Claude sessions working, so the stop suggestion
+ * opens on them and its basis counts them (read off the cast's own usage.json).
  */
 export const panelDemo: PanelState = {
   updatedAgo: 42,
@@ -180,12 +182,14 @@ export const panelDemo: PanelState = {
       tone: 'warning',
       title: 'At this pace Claude stops in 51m, then waits 1h18m for its reset.',
       steps: [
+        '2 sessions of Claude are working at once: pause the ones that can wait.',
         'Lower the effort: it is set to xhigh.',
         'Give routine work to a lighter model.',
         'There is no free reset to fall back on: keep what is left for what matters most.',
         'Move the next tasks to Codex: 88% of its 5-hour window and 80% of its week are left.',
       ],
-      basis: '5 hours: 82% used, 21% an hour over the last 1h00m, from 14 readings.',
+      basis:
+        '5 hours: 82% used, 21% an hour over the last 1h00m, from 14 readings. The Sessions pane shows 2 of its sessions working now.',
     },
     {
       id: 'room.Codex',

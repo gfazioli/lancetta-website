@@ -22,7 +22,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'what',
     question: 'What is Lancetta?',
     answer:
-      'Lancetta is a native macOS menu-bar app that tells you when and how to use your coding agents. It reads the quota of Codex and Claude Code without spending any, keeps every reading, and scans the files the agents load at every start; from those it suggests what to do next: go all in while a window has room it would lose, lower the effort or hand routine work to a lighter model before an agent stops, move to the other agent while it has room, trim a setup every session pays for. It also keeps your Claude Code sessions on one wall, the ones waiting on you first.',
+      'Lancetta is a native macOS menu-bar app that tells you when and how to use your coding agents. It reads the quota of Codex and Claude Code without spending any, keeps every reading, and scans the files the agents load at every start; from those it suggests what to do next: go all in while a window has room it would lose, lower the effort or hand routine work to a lighter model before an agent stops, move to the other agent while it has room, trim a setup every session pays for. It also keeps your Claude Code and Codex sessions on one wall, the ones waiting on you first.',
   },
   {
     value: 'name',
@@ -40,7 +40,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'agents',
     question: 'Which agents does it support?',
     answer:
-      'For quota and suggestions, Codex and Claude Code today. A new agent needs code that can read its quota without spending any, which is the whole constraint — so agents arrive with the app rather than being added by hand in Settings. Maintenance reads more: the instruction files of Claude Code, Codex, Cursor, GitHub Copilot and Gemini. Sessions lists Claude Code’s sessions, and Codex’s will join them.',
+      'For quota and suggestions, Codex and Claude Code today. A new agent needs code that can read its quota without spending any, which is the whole constraint — so agents arrive with the app rather than being added by hand in Settings. Maintenance reads more: the instruction files of Claude Code, Codex, Cursor, GitHub Copilot and Gemini. Sessions lists the sessions of both Claude Code and Codex.',
   },
   {
     value: 'not-found',
@@ -64,7 +64,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'sessions',
     question: 'I run several sessions at once. Can it tell me which one needs me?',
     answer:
-      'Yes, for Claude Code. The Sessions pane keeps every Claude Code session you started as a post-it on a wall: Your turn first (it finished its turn, asks you something, stopped or failed, or its terminal closed), then Working, then what you concluded. It reads the list Claude Code keeps of its sessions and starts or closes none of them: Done takes a post-it down without closing its session. A background session opens in your terminal in one click, and the sessions can have a menu-bar item of their own, counting the ones that wait on you. Codex’s sessions will go up on the same wall next.',
+      'Yes, for Claude Code and Codex. The Sessions pane keeps every Claude Code and Codex session you started as a post-it on a wall: Your turn first (it finished its turn, asks you something, stopped or failed, or its terminal closed), then Working, then what you concluded. It reads the list each agent keeps of its sessions (for Codex, the ones open in it) and starts or closes none of them: Done takes a post-it down without closing its session. A background session opens in your terminal in one click, and the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
   },
   {
     value: 'refresh',
@@ -94,7 +94,13 @@ export const faqEntries: FaqEntry[] = [
     value: 'surfaces',
     question: 'Is Lancetta only in the menu bar?',
     answer:
-      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch. And on any Mac the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
+      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code and Codex sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch. And on any Mac the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
+  },
+  {
+    value: 'command-line',
+    question: 'Can my agents ask Lancetta before a long task?',
+    answer:
+      'Yes, once you install the lancetta command and its Agent Skill, from Settings › General › Command line. The skill has Claude Code and Codex check how much room is left and what Lancetta suggests before a long or expensive task, and say the suggestion that matters in one sentence. In a terminal, lancetta statusline prints each agent’s windows and Lancetta’s first suggestion on one line, for your prompt, and lancetta advice prints the most urgent suggestion, or nothing. Each reads what Lancetta already keeps on your Mac: no model is asked, and no quota is spent.',
   },
   {
     value: 'memory',
@@ -112,7 +118,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'privacy',
     question: 'Does anything leave my Mac?',
     answer:
-      'Not what you do with the agents. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make (to Anthropic and OpenAI, with your own sign-in), the update check you turn on, and a sponsor picture in About. Maintenance reads the agents’ instruction files where they are, the suggestions read the effort set in Claude Code’s and Codex’s own settings, and Sessions asks your own Claude Code for the list of its sessions; none of it leaves the Mac, unless you hand a finding to Claude Code, which then works as it always does. The privacy page lists each one.',
+      'Not what you do with the agents. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make (to Anthropic and OpenAI, with your own sign-in), the update check you turn on, and a sponsor picture in About. Maintenance reads the agents’ instruction files where they are, the suggestions read the effort set in Claude Code’s and Codex’s own settings, and Sessions asks your own Claude Code and Codex for the lists of their sessions; none of it leaves the Mac, unless you hand a finding to Claude Code, which then works as it always does. The privacy page lists each one.',
   },
   {
     value: 'macos',
