@@ -1,34 +1,44 @@
 ---
-title: "The command line: Lancetta usage --json"
-description: "Lancetta usage --json prints what Lancetta last read for each agent as one JSON document, for a tmux line, SketchyBar or anything that can run a command."
+title: "The command line: lancetta usage, statusline and advice"
+description: "The lancetta command and an Agent Skill: what Lancetta suggests and last read, as JSON, as one status line, or as advice an agent reads before a long task."
 ---
 
 # The command line
 
-`Lancetta usage --json` prints what Lancetta last read for each agent, as one JSON document: for a tmux status line, SketchyBar, a desk display, or anything else that can run a command.
+Lancetta's suggestions, where the work happens: in a terminal, in Claude Code's status line, and in the agent's own context before a long task. One command, from Lancetta's own binary:
 
-```sh
-/Applications/Lancetta.app/Contents/MacOS/Lancetta usage --json
-```
+- **`lancetta usage --json`** prints what Lancetta last read for each agent, and what it suggests, as one JSON document: for a tmux line, SketchyBar, a desk display, a script or an agent.
+- **`lancetta statusline`** prints the same in one line, for Claude Code's status line or a shell prompt.
+- **`lancetta advice`** prints the most urgent suggestion as plain text, or nothing: for an agent's SessionStart hook.
 
-To type it as `lancetta`, link it into any directory on your `PATH`:
+And an **Agent Skill** that tells Claude Code and Codex to ask before a long or expensive task, and to say the suggestion that matters in one sentence.
+
+## Installing it
+
+**Settings › General › Command line** has a row for the command and one for each agent's skill. Nothing is installed until you click, and nothing Lancetta did not write is replaced.
+
+**The lancetta command** — **Install…** puts a link named `lancetta` to Lancetta's own binary on your `PATH`, so it follows every update of the app. It goes in `~/.local/bin` when that folder exists, and otherwise in `/usr/local/bin`, for which macOS asks for an administrator's password first. A link Lancetta made earlier, in either folder, is found where it is. Moving the app breaks the link: the row says so, and **Repair** points it back. **Remove** takes it away. A `lancetta` that Lancetta did not create is never touched: the row says so and offers no button.
+
+The row says where it would go before you click. If your shell does not find `lancetta` afterwards, that folder is not on your `PATH`. By hand, the same link is:
 
 ```sh
 ln -s /Applications/Lancetta.app/Contents/MacOS/Lancetta ~/.local/bin/lancetta
 ```
 
+The two skill rows are under [The Agent Skill](#the-agent-skill).
+
 ## It never reads an agent itself
 
-The app rewrites the document after every read, once a refresh interval (45 seconds unless you changed it in Settings), and whenever the agents it shows change. The command prints it. So the command never touches the keychain, never puts up a dialog, and never sends a request to either account. The price is that it is only as fresh as the app's last read, and it moves only while the app is running. That is why every reading carries its own `observedAt`, and the document its `writtenAt`: a consumer can tell a held number from a fresh one, and a `writtenAt` more than a few refresh intervals old means the app has stopped reading: it has quit, or one of its own alerts is waiting for an answer.
-
-If Lancetta has not read anything since it was installed, the command says so on standard error and exits with status 1.
+The app rewrites the document after every read, once a refresh interval (45 seconds unless you changed it in Settings), and whenever the agents it shows change. All three commands read that document, at `~/Library/Application Support/Lancetta/usage.json`. So they never touch the keychain, never put up a dialog, and never send a request to either account. The price is that they are only as fresh as the app's last read, and they move only while the app is running. That is why every reading carries its own `observedAt`, and the document its `writtenAt`: a consumer can tell a held number from a fresh one, and a `writtenAt` more than a few refresh intervals old means the app has stopped reading: it has quit, or one of its own alerts is waiting for an answer.
 
 ## The document
+
+`lancetta usage --json` prints it as it is on disk:
 
 ```json
 {
   "schema": 1,
-  "app": "0.13.1",
+  "app": "0.61.0",
   "writtenAt": 1790400000,
   "agents": [
     {
@@ -58,6 +68,23 @@ If Lancetta has not read anything since it was installed, the command says so on
         "state": true
       }
     }
+  ],
+  "advice": [
+    {
+      "kind": "stop",
+      "tone": "caution",
+      "agent": "Codex",
+      "title": "At this pace Codex stops in 1h10m, then waits 3h33m for its reset.",
+      "steps": [
+        "2 sessions of Codex are working at once: pause the ones that can wait.",
+        "Give routine work to a lighter model.",
+        "You hold a free reset: use it when it stops.",
+        "Or pause it, and plan, review or write in the meantime."
+      ],
+      "basis": "5 hours: 41% used, 51% an hour over the last 1h00m, from 14 readings. The Sessions pane shows 2 of its sessions working now.",
+      "at": 1790404200,
+      "first": true
+    }
   ]
 }
 ```
@@ -77,6 +104,13 @@ If Lancetta has not read anything since it was installed, the command says so on
 | `models` | Windows the account reports for one model each: `id`, `label`, `group`, `usedPercent`, `resetsAt`. Empty when none are reported, which is always the case on the status-line route. |
 | `resetCreditsAvailable` | Codex's free resets; `null` for an agent that has none. |
 | `problem` | Why there is no reading, as the entry in [Troubleshooting](/docs/troubleshooting): `code`, `title`, `message`, `detail`, and `state` — `true` for a state that clears by itself or waits for a click, `false` for a fault. `title` and `message` are in English whatever language Lancetta speaks; a script matches on `code`. |
+| `advice` | What Lancetta suggests now, the most urgent first: the [suggestions](/docs/suggestions) the panel opens on, in English whatever language Lancetta speaks. Empty when there is nothing to suggest. It is written with the readings, so it is only as current as they are: `statusline` and `advice` leave out a suggestion about an agent whose reading is more than 15 minutes old. |
+| `kind` | `stop` (it will stop at this pace), `spent` (it has stopped), `week` (the week runs out early), `room` (room to spend), `lapse` (a free reset about to lapse), `maintenance` or `orphans`. |
+| `tone` | `warning`, `caution`, `encourage` or `info`: red, amber, green and blue in the app, and the order it sorts by. |
+| `agent` | The agent it is about, or `null` for one about the Mac (`maintenance`, `orphans`). |
+| `title`, `steps`, `basis` | The words, for a person: what is happening, what to do (one step each, the most useful first), and what it rests on. They may be reworded in any version: a script matches on `kind`, `tone` and `agent`. |
+| `at` | When it matters, the stop, the reset or the lapse, or `null`. |
+| `first` | `true` on the one the island under the notch shows: the most urgent about an agent. |
 
 Three rules hold everywhere in it:
 
@@ -84,17 +118,127 @@ Three rules hold everywhere in it:
 - **An unknown is `null`, never `0`.** A `0` is a reading.
 - **Times are Unix epoch seconds**, the same unit as Claude Code's own status-line payload.
 
+## lancetta statusline
+
+One line: each agent's two windows, then the suggestion that matters.
+
+```text
+Claude 5h 82% · 7d 40% | Codex 5h 12% · 7d 20% | ⚠ At this pace Claude stops in 51m, then waits 1h18m for its reset.
+```
+
+- **Each agent**, in the order Lancetta draws them, with both windows as **used**, whatever the app is set to show. A ⛔ follows an agent whose account refused. An agent with no reading shows its problem's code instead (`Claude CLAUDE-9`), or `—` before its first answer.
+- **`(seen 2h05m ago)`** follows a reading more than 15 minutes old. The document is rewritten after every poll, so a fresh document can carry an old reading, such as a status-line file nothing has written since: an old reading is never shown as current.
+- **Then the suggestion the notch would show**, or, when there is none, one about room to spend: marked ↗ for room and ⚠ for the rest. A suggestion about an agent whose reading is more than 15 minutes old is left out.
+- **`as of 20m ago`** ends the line when the document itself is more than 15 minutes old: the app has quit, or is not polling.
+
+`--color` adds the terminal's colours: a percentage green under 50%, yellow under 80% and red from there; the suggestion red for a warning, yellow for a caution and green otherwise; a fault's code red; the ages dimmed.
+
+For Claude Code's own status line, in `~/.claude/settings.json`:
+
+```json
+{
+  "statusLine": { "type": "command", "command": "lancetta statusline --color" }
+}
+```
+
+With no document yet, it prints `Lancetta: no reading yet` and exits with status 1, so a status line says why rather than going blank.
+
+## lancetta advice
+
+The suggestion the notch would show, or else the first there is, as a title, its steps and what it rests on:
+
+```text
+Lancetta: At this pace Claude stops in 51m, then waits 1h18m for its reset.
+- Lower the effort: it is set to xhigh.
+- Give routine work to a lighter model.
+- There is no free reset to fall back on: keep what is left for what matters most.
+- Move the next tasks to Codex: 88% of its 5-hour window and 80% of its week are left.
+(5 hours: 82% used, 21% an hour over the last 1h00m, from 14 readings.)
+```
+
+`--all` prints every suggestion, the most urgent first, with a blank line between them. In English, whatever language Lancetta speaks.
+
+**It prints nothing at all when there is nothing current to say**: no document, a document more than 15 minutes old, or no suggestion; and a suggestion about an agent whose reading is more than 15 minutes old is dropped. What a SessionStart hook prints goes into the agent's context, and an old suggestion there is advice about an afternoon long gone. It exits with status 0 whether it printed or not, so a hook never fails on its account.
+
+### At the start of every session
+
+Lancetta does not set this up for you: it is one entry in Claude Code's `~/.claude/settings.json`, merged into the hooks you already have.
+
+```json
+{
+  "hooks": {
+    "SessionStart": [
+      { "hooks": [{ "type": "command", "command": "lancetta advice" }] }
+    ]
+  }
+}
+```
+
+Claude Code adds what a SessionStart hook prints to the session's context, so each session starts knowing what Lancetta suggests, and with nothing added when there is nothing to suggest.
+
+## The Agent Skill
+
+Under the command's row in **Settings › General › Command line**, **Agent Skill for Claude Code** writes a `SKILL.md` into `~/.claude/skills/lancetta`, and **Agent Skill for Codex** into `~/.codex/skills/lancetta`, or the same under `$CODEX_HOME` when Lancetta's environment sets one. The line under each row names the folder before you click. The skill needs the `lancetta` command.
+
+It tells the agent to run `lancetta usage --json` before a long or expensive task, to read a refusal first and a reading's age, and to say the suggestion that matters in one sentence, never polling in a loop.
+
+- **Install** writes it. **Update** appears when the skill there is Lancetta's from an older version, and writes this one over it.
+- **Remove** deletes Lancetta's `SKILL.md`, and its folder only when nothing else is in it: what you added beside it is yours.
+- A skill of that name that Lancetta did not write is left as it is, and the row says so.
+
+This is the skill as Lancetta installs it:
+
+```md
+---
+name: lancetta
+description: Check how much Claude Code and Codex quota is left, and what Lancetta suggests, before a long or expensive task, through the `lancetta` command. Use before a big refactor, a long review or many subagents, and when the user asks how much quota is left, when a window resets, or which agent to use.
+---
+<!-- Installed by Lancetta (lancetta.app), skill v1. Settings › General › Command line updates or removes it. -->
+
+# Lancetta: quota and advice on this Mac
+
+Lancetta is a menu-bar app on this Mac. It reads Claude Code's and Codex's quota without spending a token and suggests what to do next. After every poll it writes what it knows, and the `lancetta` command prints it. The command never reads an agent itself.
+
+## When to run it
+
+- Before a long or expensive task (a big refactor, a long review, many subagents): run `lancetta usage --json` once.
+- When the user asks how much quota is left, when a window resets, or which agent to use.
+- Never in a loop, and not more than once every few minutes: the document changes only when Lancetta polls.
+
+## How to read it
+
+1. `agents[].reading.blocked` first: `true` means that agent's account refuses turns now, whatever the percentages say.
+2. `usedPercent` is what is used, 0 to 100, for the 5-hour window (`fiveHour`) and the week (`sevenDay`). `null` is unknown, never 0. `resetsAt` is in epoch seconds.
+3. `observedAt` (each reading) and `writtenAt` (the document): older than about 15 minutes means Lancetta is not running or not polling. Say so, and do not present the numbers as current.
+4. `advice[]` holds Lancetta's suggestions, the most urgent first. Match on `kind` (stop, week, room, spent, lapse, maintenance, orphans), `tone` (warning, caution, encourage, info) and `agent`. The `title`, `steps` and `basis` are for people.
+
+## What to say
+
+One sentence: the suggestion that matters for the task at hand, such as "At this pace Claude stops in 51 minutes: give routine work to a lighter model, or move it to Codex." Nothing when there is nothing to suggest. Do not recite the document.
+
+## Shortcuts
+
+- `lancetta advice` prints the most urgent suggestion as plain text, or nothing.
+- `lancetta statusline` prints one line: each agent's windows, then the suggestion.
+- `lancetta usage --json` exits 0 when it printed, 1 when there is no document yet (Lancetta is not running), and 74 when the document cannot be read.
+```
+
 ## What may change
 
-`schema` changes only when a field is removed, renamed or changes meaning. A new field can appear in any version, so ignore the keys you do not know.
+`schema` changes only when a field is removed, renamed or changes meaning. A new field can appear in any version, as `advice` did with `schema` still at 1, so ignore the keys you do not know.
 
 ## Exit status
 
-`0` when it printed the document; `1` when there is none yet; `74` when the file cannot be read (a permission, say) or standard output will not take it; `64` for anything else. Run from a shell (a terminal, a script, an agent), it never starts a second copy of the app: `lancetta` alone, `lancetta Usage --json` or `lancetta -v` prints the usage and exits `64`. `lancetta --help` prints the usage on standard output.
+- **`usage --json`**: `0` when it printed the document; `1` when there is none yet, said on standard error; `74` when the file cannot be read (a permission, say) or standard output will not take it.
+- **`statusline`**: `0` when it printed the line; `1` when there is no document to read, with `Lancetta: no reading yet` printed instead; `74` when standard output will not take it.
+- **`advice`**: `0` whether it printed or not; `74` when standard output will not take it.
+- **`64`** for anything else: a command it does not know, or an argument a command does not take (`statusline` takes only `--color`, `advice` only `--all`).
+
+Run from a shell (a terminal, a script, an agent), it never starts a second copy of the app: `lancetta` alone, `lancetta Usage --json` or `lancetta -v` prints the usage and exits `64`. `lancetta --help` prints the usage on standard output.
 
 ## Example: a tmux or SketchyBar strip
 
-One line, each agent's five-hour figure, a word when the account refused, and a flag once a reading is more than ten minutes old:
+`lancetta statusline` is a line of Lancetta's own. For a strip of your own shape, read the document: here, one line, each agent's five-hour figure, a word when the account refused, and a flag once a reading is more than ten minutes old:
 
 ```sh
 #!/bin/sh

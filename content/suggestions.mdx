@@ -5,7 +5,7 @@ description: "How Lancetta turns each agent's readings into advice: spend a wind
 
 # Suggestions
 
-A percentage tells you what is gone. What you want to know is what to do next: whether to start the long task now, whether to slow down, whether to move the work to the other agent. Lancetta works that out from what it has measured — every reading of each agent's windows, how fast they have been moving, the free resets you hold, the effort each agent is set to, and what your agents load at every start — and says it as a suggestion.
+A percentage tells you what is gone. What you want to know is what to do next: whether to start the long task now, whether to slow down, whether to move the work to the other agent. Lancetta works that out from what it has measured — every reading of each agent's windows, how fast they have been moving, the free resets you hold, the effort each agent is set to, how many of each agent's sessions are working, and what your agents load at every start — and says it as a suggestion.
 
 No model is asked. Every suggestion is worked out on your Mac, in plain arithmetic over the readings, and every one shows what it rests on, so you can weigh it before you act on it.
 
@@ -86,6 +86,7 @@ Amber within two days of the lapse, blue within the week. A stopped agent does n
 
 The steps under a stop or a week running out come from what Lancetta can see about that agent and the others, most useful first:
 
+- **"2 sessions of Claude are working at once: pause the ones that can wait."** — first on a stop, when the [Sessions](/docs/sessions) pane shows two or more of that agent's sessions working now, counted only from lists read now. Sessions working side by side spend the window together, and pausing one is the quickest of the levers. What the suggestion rests on then says so too: *"The Sessions pane shows 2 of its sessions working now."*
 - **"Lower the effort: it is set to xhigh."** — only when the agent's own settings set a high default effort (high, xhigh or max). It is read from the agent's settings, so it is the effort a new session starts at, not one a running session may have changed.
 - **"Give routine work to a lighter model."**
 - **Your free resets:** *"You hold a free reset: use it when it stops."*, or *"There is no free reset to fall back on: keep what is left for what matters most."*

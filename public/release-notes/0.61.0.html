@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.61.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.61.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<h3>See where this pace lands</h3>
+<ul>
+<li>The panel draws where each window is heading at your recent rate: a ghost fill on the bar by default, or words only, an even-pace mark, a runway, charts in the card or a clock (Settings › Panel). It turns amber only when the window would stop you before it resets.</li>
+<li>Limits charts both windows at the foot of each agent's card: the week, with its nights and its 5-hour sessions beside last week, and the 5 hours, with the cone of where your recent rate leads. A stretch with no readings is drawn as a gap, never as a flat line.</li>
+</ul>
+<h3>Codex sessions on the wall</h3>
+<ul>
+<li>Codex sessions join Claude Code's on the Sessions wall, read from Codex itself with nothing installed, each with its agent's mark. Reopen one in your terminal from its post-it.</li>
+<li>When two or more sessions of one agent are working at once, the stop suggestion says so first: pause the ones that can wait.</li>
+</ul>
+<h3>Your agents can ask Lancetta</h3>
+<ul>
+<li>The <code class="notranslate">lancetta</code> command and an Agent Skill for Claude Code and Codex, installed with a click in Settings › General › Command line. Before a long task the agent checks how much room is left and what Lancetta suggests, in one sentence.</li>
+<li><code class="notranslate">lancetta statusline</code> puts the same line in your prompt, and <code class="notranslate">lancetta advice</code> prints the suggestion that matters, or nothing when it is stale.</li>
+<li><code class="notranslate">usage.json</code> now carries the suggestions, in English, with stable codes a script can match on.</li>
+</ul>
+<h3>Numbers that say what they cover</h3>
+<ul>
+<li>Usage totals name an agent that could not be read instead of leaving it out, and the change compares complete days, today left out of both sides.</li>
+<li>Claude's token history that cannot be read is now a problem with its own card, not a silent zero.</li>
+</ul>
+<h3>Smoother</h3>
+<ul>
+<li>Cards no longer land again when the window changes its columns.</li>
+<li>A Codex server that ignores a polite stop is ended after a read that timed out.</li>
+</ul>
+</body>
+</html>

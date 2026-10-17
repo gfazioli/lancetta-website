@@ -19,7 +19,7 @@ It applies to Claude too once it is connected, with a floor: the account is aske
 
 Whichever you pick, the bars are filled with **the number that is shown**, and every label that names the quantity follows it. That sounds like a detail and is not: a card headed *Quota left* over a bar filled with what was used is the exact defect this app was built in response to, and the app has written it twice by accident since.
 
-**Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone and how long it has been open, and, when your recent rate would empty a window before it resets, when — on the window that would stop you first. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything. Two settings on the [Notifications](#notifications) pane work with it: your [working hours](#working-hours) tell it when your day ends, and the Suggestions notifications are sent only while it is on. The [suggestions](/docs/suggestions) at the top of the panel and the window do not depend on it: advice is the app's job, and this line is one way of saying it.
+**Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone and how long it has been open, and, when your recent rate would empty a window before it resets, when — on the window that would stop you first. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything. Two settings on the [Notifications](#notifications) pane work with it: your [working hours](#working-hours) tell it when your day ends, and the Suggestions notifications are sent only while it is on. The [suggestions](/docs/suggestions) at the top of the panel and the window do not depend on it: advice is the app's job, and this line is one way of saying it. How the panel draws it, besides saying it, is under [Panel](#panel).
 
 **Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there, and turns amber when it says when you would run out. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
 
@@ -30,6 +30,13 @@ Whichever you pick, the bars are filled with **the number that is shown**, and e
 **Show the support window at launch** — off by default. Opens About + Support when Lancetta starts. Netfox ships the same switch on; here it is off, because this app opens at login, and a window at every login is the thing a menu-bar app exists to avoid.
 
 **Show the icon in the Dock** — off by default, which means Lancetta is an accessory app with nothing in the Dock. Note what that setting does *not* control: a Dock icon appears while [the window](/docs/the-window) is open whatever this is set to, because a window needs its app to be a normal one to have its own menu bar and to come forward when asked. This switch decides whether the icon stays there the rest of the time.
+
+### Command line
+
+Three rows, each installed only when you click, and none of them ever replacing a file Lancetta did not write. The [command line](/docs/command-line) page has the commands and what each prints.
+
+- **The lancetta command** — **Install…** links `lancetta` to Lancetta's own binary, so a terminal, a script or an agent can ask it what it last read, and the link follows every update. It goes in `~/.local/bin` when that folder exists, otherwise in `/usr/local/bin`, which asks for an administrator's password; a link Lancetta already made is found where it is. The line under the row says where it is or would go. Moving the app breaks the link and **Repair** points it back; **Remove** takes it away. A `lancetta` Lancetta did not create is left as it is, with no button.
+- **Agent Skill for Claude Code** and **Agent Skill for Codex** — a `SKILL.md` in `~/.claude/skills/lancetta` and in Codex's `skills/lancetta`, telling the agent to run `lancetta usage --json` before a long or expensive task, to read a refusal first and a reading's age, and to say the suggestion that matters in one sentence, never polling in a loop. It needs the command. **Install**, **Update** over Lancetta's older version, and **Remove**, which deletes only Lancetta's `SKILL.md`. A skill of that name Lancetta did not write is left as it is.
 
 ## Agents
 
@@ -44,7 +51,7 @@ A row opens on a click anywhere, and drags from anywhere. The grip on the left s
 **Each agent's page** carries:
 
 - **Colour** — the tint its bars are drawn in, everywhere: the panel, the window, the island, and the token chart if the data is that agent's. A colour you set is a colour you expect to see. There is a Reset beside it.
-- **Watch this agent** — off, it keeps no card in the menu and no cell in the bar. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
+- **Watch this agent** — off, it keeps no card in the menu and no cell in the bar, and its sessions leave the [Sessions](/docs/sessions) wall, kept for when you watch it again. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
 - **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width. A refusal is shown regardless: when this agent is refused, its mark and a dead lamp take a turn in the bar even with this off, because the bar's rule is alarm first.
 - **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
 - **How it is wired** — the line under the agent's name says which route its numbers arrive by, so a card that is not updating tells you where to look. The panel says it too: a Claude card still read through the status-line file carries a line saying so, and a Connect button beside it. [Sources](#sources) has the detail, and for Codex a way to choose the binary.
@@ -106,15 +113,21 @@ One switch per agent, each with its mark: off, Lancetta sends nothing about that
 
 ## Panel
 
-The panel that opens under Lancetta's menu-bar item: how it opens, what has an item of its own beside it, and what it shows.
+The panel that opens under Lancetta's menu-bar item: how it opens, how it draws where each window is heading, what has an item of its own beside it, and what it shows.
 
 ![Lancetta's Settings, on the Panel pane: Open the panel on hover under Opening, Sessions as an item of their own switched on under In the menu bar, and under What the panel shows a switch each for Suggestions, Agents, Usage, Maintenance, Processes and Sessions](/screenshot-settings-panel.png)
+
+{/* TODO screenshot: re-shoot /screenshot-settings-panel.png with the Projection section
+    (Where each window is heading, on Ghost fill, and its caption) between Opening and
+    In the menu bar, and update the alt text above to name it. */}
 
 **Open the panel on hover** — off by default. On, pointing at Lancetta in the menu bar opens the panel after a quarter of a second, with no click; it closes when the pointer leaves it. Opening it this way deliberately **does not take the keyboard**, so nothing is pulled out of whatever you are typing in — which also means the panel's shortcuts are not live yet. Click the item and the panel is yours: it takes the keyboard, its shortcuts work, and it stays open until you click away, exactly as a clicked-open panel always did. Clicking a row inside it works either way.
 
 The quarter-second is not a round number for its own sake: a pointer on its way to another app's menu-bar item crosses ours in a few dozen milliseconds, and a panel that opened on the way past would be in the way every time.
 
-**Sessions as an item of their own** — off by default. On, a second item beside Lancetta's: the Lancetta icon and how many of your Claude Code sessions wait on you, or the icon alone when none does. A click opens the panel with the sessions alone, as the three cards of [Sessions](/docs/sessions); clicking the other item switches the panel to it. It is there while Claude is watched, and keeps the place you ⌘-drag it to.
+**Where each window is heading** — under **Projection**: how the panel draws where each window is heading at your recent rate, as well as saying it. **Words only**, **Ghost fill** (the default), **Even-pace mark**, **Runway**, **Charts in the card** or **Clock**; the line under the picker says what the one chosen draws, and [The Panel](/docs/the-menu#where-each-window-is-heading) shows each. Every choice rests on the same readings and the same hour as the [pace line](/docs/the-menu#the-pace-line), turns amber only where that rate would stop you first, and draws whether the line is on or not. The window's [Limits](/docs/the-window#where-each-window-is-heading) pane draws its charts whatever you choose here.
+
+**Sessions as an item of their own** — off by default. On, a second item beside Lancetta's: the Lancetta icon and how many of your sessions, Claude Code's and Codex's, wait on you, or the icon alone when none does. A click opens the panel with the sessions alone, as the three cards of [Sessions](/docs/sessions); clicking the other item switches the panel to it. It is there while Claude or Codex is watched, and keeps the place you ⌘-drag it to.
 
 **What the panel shows** — a switch for each part of the panel: the suggestions, the agents, Usage, Maintenance, Processes and Sessions. The window always shows everything. One of the agents, Usage and Maintenance always stays, so the panel is never empty.
 
@@ -151,7 +164,7 @@ An app launched from the Finder inherits almost no `PATH`, so Lancetta looks for
 - **A binary you choose is the only one Lancetta runs**, for the quota and for a free reset alike. If it goes — deleted, or moved by an update — the card says so and offers this pane, rather than quietly reading some other copy. **Clear** goes back to finding Codex by itself.
 - **Where Lancetta looked** — every place, in the order it looks, with what was there: used, found, not there, not a command, or what your shell answered.
 
-Claude's quota isn't read from a binary. The pane says whether Lancetta reads your Claude account or the status-line file, and when that file was last written; Connect and Disconnect stay on Claude's page under Agents. The [Sessions](/docs/sessions) pane is the one part that runs Claude Code, to ask it for the list of its sessions, which starts none: the pane shows which `claude` that is.
+Claude's quota isn't read from a binary. The pane says whether Lancetta reads your Claude account or the status-line file, and when that file was last written; Connect and Disconnect stay on Claude's page under Agents. The [Sessions](/docs/sessions) pane is the one part that runs Claude Code, to ask it for the list of its sessions, which starts none: the pane shows which `claude` that is. For Codex's sessions, the wall asks through the same `codex` the readings use, and Open resumes a Codex session with it; choose another here and what the wall knew of Codex is read again through the new one.
 
 ## Privacy
 
@@ -160,7 +173,7 @@ What Lancetta keeps on this Mac.
 ![Lancetta's Settings, on the Privacy pane: Lancetta's folder with Show in Finder under On this Mac, and under Sessions the history of concluded sessions with Clear… and a line saying how many it holds and since when](/screenshot-settings-privacy.png)
 
 - **Lancetta's folder** — **Show in Finder** opens the folder that holds the readings Lancetta takes and their history, the token usage it counts, and the sessions on the wall with their history. Nothing in it is sent anywhere; what each file holds is on [Privacy](/docs/privacy#what-it-writes).
-- **History of concluded sessions** — every session you marked done or removed, with when it started and ended and how long it worked. The Sessions pane draws the last 30 days, and the older ones stay in the file. A line says how many there are and since when. **Clear…** forgets them all, after a confirmation that says what goes and what stays; your sessions in Claude Code are not touched.
+- **History of concluded sessions** — every session you marked done or removed, with when it started and ended and how long it worked. The Sessions pane draws the last 30 days, and the older ones stay in the file. A line says how many there are and since when. **Clear…** forgets them all, after a confirmation that says what goes and what stays; your sessions in Claude Code and Codex are not touched.
 
 ## Updates
 

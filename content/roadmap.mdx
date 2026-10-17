@@ -17,11 +17,11 @@ The readings are already being kept, and two pieces of this step shipped in 0.16
 
 **Measured before it was built, and not there yet.** On 4 October 2026 six ways of making that Monday-morning forecast were replayed over two and a half weeks of one Mac's readings: the average of the days before, their median, weekdays apart from weekends, the same weekday, the day before, and an hour-by-hour profile that was even given the real time each window opened. None did better than a single fixed number chosen afterwards, which is what a forecast that knows nothing about the day amounts to. The best was 6.5 points off on Claude against 5.4 for the fixed number, and 23.3 against 20.5 on Codex; neither of Codex's two run-outs — one of them from nothing to empty in eighteen minutes — was foreseen by any of the six, and two days of the same weekday differed as much as any two days. So for now it makes no such forecast, as promised above. The replay runs again once there are more weeks of readings, and the sentence ships only if it clears the bar.
 
-## Codex sessions, on the same wall
+## On the desktop
 
-The [Sessions](/docs/sessions) pane lists Claude Code's sessions because Claude Code keeps a list of them that it will hand over. Codex keeps no such list. The next step is for Codex's sessions to report themselves as they start, finish a turn, ask something and end, so they go up on the same wall, and so a session's times come from the moment it moved rather than from the last refresh.
+The suggestions already reach the terminal: [the `lancetta` command](/docs/command-line) prints them for a script, a status line or a session's start, and an Agent Skill tells Claude Code and Codex to ask before a long task. The next step is the desktop: a widget that will show each agent's windows, the time to each reset and the suggestion that matters, where you can see it without opening the panel, drawn from the same readings the panel uses rather than by a second copy polling on its own.
 
-**Done when** a Codex session started in a terminal is on the wall within seconds, moves to Your turn when its turn ends, and never stays up once it has closed, and when whatever that takes on the Codex side is something you see before it is set up and can take out again.
+**Done when** the widget says what the panel says, as current as the panel's last reading and saying how old it is when it is not, and when an agent about to stop reads as one by its words and its shape, since a desktop widget can lose its colour while a window is in front of it.
 
 ---
 
@@ -34,6 +34,20 @@ The [Sessions](/docs/sessions) pane lists Claude Code's sessions because Claude 
 ---
 
 ## Already shipped
+
+### v0.61 — where it is heading, and in your terminal
+
+*Shipped 2026-10-17.*
+
+**Where each window is heading, drawn.** The panel draws where each window is heading at your recent rate, in amber only when it would stop you before the reset. Choose how in Settings › Panel: words only, a ghost fill on the bar (the default), an even-pace mark, a runway, charts in the card or a clock. See [Where each window is heading](/docs/the-menu#where-each-window-is-heading).
+
+**Limits draws both windows.** At the foot of each agent's card: the week, with its nights and its 5-hour windows beside last week, and the 5 hours, with the cone of where your recent rate leads. See [Limits](/docs/the-window#where-each-window-is-heading).
+
+**Codex sessions on the wall.** Codex's sessions join Claude Code's on the Sessions wall, read from Codex itself with nothing installed into it. When two or more sessions of one agent are working at once, the stop suggestion says so first. See [Sessions](/docs/sessions).
+
+**The lancetta command and an Agent Skill.** Settings › General › Command line installs both, so Claude Code and Codex can check how much room is left and what Lancetta suggests before a long task; `lancetta statusline` puts the same line in your prompt, and `lancetta advice` gives a session the suggestion as it starts. See [The command line](/docs/command-line).
+
+**Usage totals say what they cover.** An agent that could not be read is named rather than left out, and the change compares complete days. See [What a total covers](/docs/the-window#what-a-total-covers). And the cards no longer land again when the window changes its columns.
 
 ### v0.60 — what waits on you
 

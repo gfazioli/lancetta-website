@@ -50,13 +50,13 @@ What each suggestion is, when it appears and which ones also arrive as a notific
 
 ## The cards
 
-Under the suggestions is the window in brief. There is a card for each agent, then **Usage** and **Maintenance**, then **Processes** while background trees are running and **Sessions** while any of your Claude Code sessions is up. Each card shows one figure and a line under it:
+Under the suggestions is the window in brief. There is a card for each agent, then **Usage** and **Maintenance**, then **Processes** while background trees are running and **Sessions** while any of your sessions is up. Each card shows one figure and a line under it:
 
 - **an agent**: the fuller of its two windows and when that window resets (*82% · 5 hours · ↻ 2h09m*), with the line in amber when it is spent;
 - **Usage**: the tokens of the last seven days, for both agents together;
 - **Maintenance**: how many warnings, and how much of Claude Code's warning size the heaviest start loads;
 - **Processes**: how many Codex trees are running, and what they hold, or, when some are orphaned, what the orphans hold;
-- **Sessions**: how many of your Claude Code sessions wait on you, and how many are working.
+- **Sessions**: how many of your Claude Code and Codex sessions wait on you, and how many are working.
 
 Which of these the panel shows is yours to choose, in [Settings › Panel](/docs/settings#panel); the window always shows them all.
 
@@ -86,7 +86,7 @@ The mark and the name are on the card itself. The marks are the vendors' own art
 
 - **The percentage** — how much of that window is spent, or how much is left, depending on [one setting](/docs/settings#general). The bar is filled with whichever number is on screen, never with its opposite.
 - **The window** — `5h` is the rolling five-hour bucket, `7d` the weekly one. A row carrying a **model's name** instead is a weekly limit that belongs to that model alone, counted separately from the two above and sent by your account under that name. It appears only when your account has one and only once it has been used; see [How it reads each agent](/docs/how-it-reads#a-window-one-model-keeps-to-itself).
-- **The bar** — the same number, drawn, so a glance is enough. It is tinted with the colour you gave that agent.
+- **The bar** — the same number, drawn, so a glance is enough. It is tinted with the colour you gave that agent. Unless you choose otherwise, the 5-hour bar also carries on, faint, to where your recent rate leaves it at the reset, whenever there is a recent rate to go on: see [Where each window is heading](#where-each-window-is-heading).
 - **The reset** — when this window rolls over. 80% with four hours to go is a different afternoon from 80% with ten minutes to go, which is why every suggestion about a window names its reset too.
 
 ### A free reset
@@ -182,6 +182,27 @@ hours nothing changes, because spending at nine at night is working.
 
 When a window has refused you outright, the card says so under the rows, in the
 window's own name.
+
+### Where each window is heading
+
+The line says where a window is heading; the panel draws it too, so a glance tells
+you whether this pace carries you to the reset or stops you short of it. Every
+drawing rests on the same readings and the same last hour as the line, and turns
+**amber only where the line would say** *at this rate you run out*: on the window
+that would stop you first, before it resets. It is drawn whether the line is on or
+not. [Settings › Panel](/docs/settings#panel) chooses how:
+
+- **Ghost fill**, the default — the 5-hour bar carries on, faint, to where the last hour's rate leaves it at the reset, with a softer band beyond it out to where the fastest of your recent rates would leave it: the wider the band, the less sure the ghost. Too early in the window, or with nothing spent lately, there is no rate and no ghost. Amber to the end, with a mark there, when you would run out before it resets. The weekly bar gets a ghost only in that case: a week carried forward from one afternoon would be a forecast, and Lancetta makes none. Counting down, the ghost is a veil over the end of the fill, since the bar runs out at 0.
+- **Even-pace mark** — a mark on each bar where an even spend from the window's opening to its reset would put it now. Past the mark the bar is hatched: spent ahead of time. It projects nothing, so it holds for the week as well, and the hatch is never amber, because spending ahead is not running out.
+- **Runway** — under each bar, the window as time: what went, the last hour's rate carried forward to the reset, and in amber the stretch you would be stopped for. The week's runway carries no line forward unless the week is the window that would stop you.
+- **Charts in the card** — in an agent's open card, two small charts under its bars: the 5-hour window with the last hour's rate, and the week as it went, last week dotted. Their full-size versions are in [Limits](/docs/the-window#where-each-window-is-heading).
+- **Clock** — a dial in the corner of each agent's card: the hour hand at now, the 5-hour window as arcs, what has gone in the agent's colour and what is left faint, and amber from where you would run out to the reset. When the week would stop you before this 5-hour window resets, the amber is the week's.
+- **Words only** — the line under each bar, and no drawing.
+
+{/* TODO screenshot: one crop of an opened agent card per style (Ghost fill, Even-pace
+    mark, Runway, Charts in the card, Clock), on the showcase cast, with one window
+    stopping early so the amber shows; and re-shoot the lead panel picture, whose bars
+    will carry the default Ghost fill. */}
 
 ## Processes
 
@@ -286,4 +307,4 @@ An agent can be watched and still kept out of the bar — the menu bar is narrow
 [Lancetta icon] 12
 ```
 
-Turn on **Sessions as an item of their own** in [Settings › Panel](/docs/settings#panel) and a second item sits beside this one: the Lancetta icon and how many of your Claude Code sessions wait on you, the icon alone when none does, and a dash when the list could not be read. A click opens the same panel with the sessions alone, as the three cards of the [Sessions](/docs/sessions) pane, each opening in place: **Your turn** and **Working** with Open and Done on every session, **Concluded** with the last seven days. The two items share one panel, so a click on the other one switches it rather than opening a second; a pinned panel switches where you put it. A right-click is the same command menu.
+Turn on **Sessions as an item of their own** in [Settings › Panel](/docs/settings#panel) and a second item sits beside this one: the Lancetta icon and how many of your Claude Code and Codex sessions wait on you, the icon alone when none does, and a dash when no list could be read; with one agent's list read and not the other's, it counts the one read, and its tooltip says the count is partial. A click opens the same panel with the sessions alone, as the three cards of the [Sessions](/docs/sessions) pane, each opening in place: **Your turn** and **Working** with Open and Done on every session, **Concluded** with the last seven days. The two items share one panel, so a click on the other one switches it rather than opening a second; a pinned panel switches where you put it. A right-click is the same command menu.

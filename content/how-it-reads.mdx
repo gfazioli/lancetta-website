@@ -95,9 +95,17 @@ The history is not on the poll timer. It is a second round trip and it only chan
 
 ## Your sessions, for the wall
 
-The [Sessions](/docs/sessions) pane is the one part of Lancetta that runs Claude Code: at every refresh, while Claude is watched, it asks `claude agents --json --all` for the list of sessions Claude Code keeps. That command lists them and starts none, and it costs no tokens: no model is asked anything. With no session running, Claude Code answers with an empty list and starts nothing to answer it. Lancetta looks for the same `claude` that Maintenance uses, in the places installers put it, and asks your shell only when those come up empty; [Settings → Sources](/docs/settings#sources) shows which one it runs.
+The [Sessions](/docs/sessions) pane asks each agent for the sessions it keeps, at every refresh, while that agent is watched. Neither question costs a token: no model is asked anything, and neither starts, resumes or closes a session.
+
+**Claude Code.** Lancetta runs `claude agents --json --all`, which lists Claude Code's sessions and starts none. With no session running, Claude Code answers with an empty list and starts nothing to answer it. Lancetta looks for the same `claude` that Maintenance uses, in the places installers put it, and asks your shell only when those come up empty; [Settings → Sources](/docs/settings#sources) shows which one it runs.
 
 A background session comes with Claude Code's own verdict on where it stands. A session in a terminal comes with only its process's state, idle, waiting or busy, which the wall reads as your turn, a question and working. A session that leaves the list is believed gone only once it has been missing for half a minute of the Mac's awake time, and an empty list takes longer to believe.
+
+**Codex** prints no list of its sessions, but from 0.163 its terminal app runs every session through one shared background service on your Mac, and that service answers which sessions it has open and where each one stands. Lancetta asks it through `codex app-server proxy`, with the same `codex` its readings use: which threads are loaded (`thread/loaded/list`), then, for each, its status (`thread/read`, without its turns). The status is Codex's own report, not a guess: a turn running, a turn stopped on an approval or on your answer, a turn ended, a failure. When the service is not running, the proxy finds nothing to connect to: no Codex session is open, the list is empty, and nothing is started to answer it.
+
+Of each Codex session Lancetta keeps its id, its status, its name, the folder it runs in and when it was created. A session with no name comes with its first message, of which Lancetta keeps the first line, cut at 80 characters, as the post-it's name, and nothing else. The answer also says what started the session, which is how a `codex exec` run, a subagent's thread and a session Claude Code started in Codex are set aside. Nothing is installed into Codex for any of this: no plugin, no hook, no line in its configuration, and no transcript of Codex's is opened.
+
+Two things this cannot see. Codex keeps a session loaded for a while after its terminal closes, so the wall learns of the close only when Codex lets the session go. And `/new` in a Codex terminal starts a new thread, which nothing ties to the one before, so that one's post-it stays up until you call it done.
 
 ## The plan, and where it comes from
 
