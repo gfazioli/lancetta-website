@@ -4,7 +4,7 @@ Guidance for Claude Code when working in this repository.
 
 ## Project overview
 
-Marketing, docs and download site for **Lancetta**, a native macOS menu-bar monitor for coding agents. Next.js on Vercel, **not a macOS app**; the app repo `gfazioli/Lancetta` is private. Live at https://lancetta.app (`/download` redirects to the newest DMG).
+Marketing, docs and download site for **Lancetta**, a native macOS menu-bar app that tells you when and how to use your coding agents. Next.js on Vercel, **not a macOS app**; the app repo `gfazioli/Lancetta` is private. Live at https://lancetta.app (`/download` redirects to the newest DMG).
 
 ## The thing to get right before anything else
 
@@ -115,7 +115,7 @@ The GitHub **social preview** has no API and no `gh` field: it is uploaded by ha
 
 ### The hero is ordinary flow
 
-Never bring back the pinned, scroll-driven stage, nor a header reading that follows the scroll (`HeroStage.tsx` and `MenuBarHeader/reading.ts` say what each cost). Measure the page's length before adding to it: `document.documentElement.scrollHeight` at 1440 and 390, in Chrome (`scripts/shot.mjs --eval`). 13,381 and 18,970 on 2026-10-17, with the Sessions frame and the nine-card strip, from 12,549 and 17,556; 10,018 and 13,967 at the last cut.
+Never bring back the pinned, scroll-driven stage, nor a header reading that follows the scroll (`HeroStage.tsx` and `MenuBarHeader/reading.ts` say what each cost). Measure the page's length before adding to it: `document.documentElement.scrollHeight` at 1440 and 390, in Chrome (`scripts/shot.mjs --eval`). 13,381 and 18,970 on 2026-10-17, with the Sessions frame and the nine-card strip; 10,018 and 13,967 at the last cut.
 
 ### The character
 
