@@ -190,7 +190,7 @@ const features: Feature[] = [
     icon: IconGauge,
     title: 'What it all rests on',
     description: 'Both windows, every reading dated, daily tokens.',
-    color: 'cyan',
+    color: 'violet',
     href: '/docs/the-window',
   },
   {
@@ -223,8 +223,8 @@ interface Step {
  * `today` opens with the decisions the app makes with you — when to push on,
  * when to slow down, what to switch to, how the agents are set up, which
  * session waits on you — then what they leave behind and what it all rests
- * on, each a thing that SHIPS. Three columns since 0.60.0: nine cards today
- * and three ahead fill their rows, where four left one card alone on each.
+ * on, each a thing that SHIPS. `ROADMAP_COLUMNS` is chosen so both grids fill
+ * their rows on a wide screen: recount when a card is added or removed.
  * `soon` and `next` carry the badge AND the future tense, never one without
  * the other, and each is a section of `content/roadmap.mdx` that says what it
  * has to prove before it counts as finished. Add one here and it goes there too.
@@ -318,6 +318,8 @@ const ahead: Step[] = [
     state: 'next',
   },
 ];
+
+const ROADMAP_COLUMNS = 3;
 
 const horizonLabel: Record<Horizon, string> = { today: 'Today', soon: 'Soon', next: 'Next' };
 
@@ -467,11 +469,17 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           lead="What ships today, and what comes after it. Nothing ahead carries a date — the order changes as the work teaches you things, and the roadmap says what each step has to prove before it counts as finished."
         />
 
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: ROADMAP_COLUMNS }} spacing="lg">
           {today.map((step, i) => (
             // Wrapped: StepCard passes nothing through, and the wrapper takes
-            // the card's radius for the light on its rim.
-            <Reveal key={step.title} delay={i * 120} radius="var(--mantine-radius-lg)">
+            // the card's radius for the light on its rim. Each card watches for
+            // itself, so the stagger restarts with each row: counted down the
+            // whole grid, the last card waited a second after it came into view.
+            <Reveal
+              key={step.title}
+              delay={(i % ROADMAP_COLUMNS) * 120}
+              radius="var(--mantine-radius-lg)"
+            >
               <StepCard step={step} />
             </Reveal>
           ))}
@@ -481,9 +489,13 @@ export function Welcome({ cadence = fallbackReleaseCadence() }: { cadence?: Cade
           <p className={classes.horizon}>Ahead</p>
         </Reveal>
 
-        <SimpleGrid cols={{ base: 1, sm: 2, lg: 3 }} spacing="lg">
+        <SimpleGrid cols={{ base: 1, sm: 2, lg: ROADMAP_COLUMNS }} spacing="lg">
           {ahead.map((step, i) => (
-            <Reveal key={step.title} delay={i * 120} radius="var(--mantine-radius-lg)">
+            <Reveal
+              key={step.title}
+              delay={(i % ROADMAP_COLUMNS) * 120}
+              radius="var(--mantine-radius-lg)"
+            >
               <StepCard step={step} />
             </Reveal>
           ))}
