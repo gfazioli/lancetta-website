@@ -14,6 +14,19 @@
         -->
         <!-- release.sh inserts new <item> entries right below this marker -->
         <item>
+            <title>Version 0.60.0</title>
+            <pubDate>Sat, 17 Oct 2026 07:56:43 +0000</pubDate>
+            <sparkle:version>493</sparkle:version>
+            <sparkle:shortVersionString>0.60.0</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.60.0.html</sparkle:releaseNotesLink>
+            <enclosure
+                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.60.0/Lancetta-0.60.0.dmg"
+                sparkle:edSignature="D3cjTRem9xgFVrPHzXW4Yvw3lT3hyolHv4C49ZDGAQMGs8EhCc97vwZbDvaQ9kIHu3q/ssY7r2fl1oGvYMa9AA==" length="16737105"
+                type="application/octet-stream" />
+        </item>
+
+        <item>
             <title>Version 0.54.0</title>
             <pubDate>Thu, 15 Oct 2026 16:57:00 +0000</pubDate>
             <sparkle:version>468</sparkle:version>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Lancetta 0.60.0 — Release Notes</title>
+<style>
+  :root { color-scheme: light dark; --bg:#fff; --fg:#1a1a1a; --accent:#5a3cc8;
+           --muted:#6b6b73; --code-bg:#f4f4f5; --border:rgba(0,0,0,.12); }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#1c1c1e; --fg:#ececec; --muted:#9c9ca5; --code-bg:#2c2c2e;
+             --border:rgba(255,255,255,.14); }
+  }
+  * { box-sizing: border-box; }
+  body { font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+          color: var(--fg); background: var(--bg); margin: 0 auto;
+          padding: 20px 24px 40px; max-width: 720px; }
+  header.page-header { border-bottom: 1px solid var(--border); padding-bottom: 14px;
+                        margin-bottom: 22px; }
+  header.page-header h1 { font-size: 1.7em; margin: 0 0 4px; letter-spacing: -.02em; }
+  header.page-header .subtitle { color: var(--muted); margin: 0; font-size: .92em; }
+  h1,h2,h3,h4 { letter-spacing: -.01em; margin: 1.5em 0 .5em; }
+  h1 { font-size: 1.4em; } h2 { font-size: 1.2em; } h3 { font-size: 1em; }
+  a { color: var(--accent); }
+  hr { border: 0; border-top: 1px solid var(--border); margin: 22px 0; }
+  ul, ol { padding-left: 1.4em; } li { margin: 4px 0; }
+  code { font: .9em ui-monospace, "SF Mono", Menlo, monospace; background: var(--code-bg);
+          padding: 1px 5px; border-radius: 3px; }
+  pre { background: var(--code-bg); padding: 12px 14px; border-radius: 6px;
+         overflow-x: auto; font-size: .88em; }
+  pre code { background: transparent; padding: 0; font-size: 1em; }
+  table { border-collapse: collapse; width: 100%; margin: 12px 0; font-size: .95em; }
+  th, td { border: 1px solid var(--border); padding: 6px 10px; text-align: left; }
+  th { background: var(--code-bg); }
+  img { max-width: 100%; }
+</style>
+</head>
+<body>
+<header class="page-header">
+  <h1>Lancetta 0.60.0</h1>
+  <p class="subtitle">Release notes</p>
+</header>
+<p><strong>Sessions: what waits on you, across every Claude Code session.</strong></p>
+<ul>
+<li><strong>A new Sessions pane.</strong> Every Claude Code session you started, in a terminal or in the background, is a post-it on a wall. <strong>Your turn</strong> holds the ones waiting on you, with how long the longest has waited; <strong>Working</strong>, the ones Claude Code is on; <strong>Concluded</strong>, a record of what you finished, day by day. Show them as cards or as a list, in the order you choose.</li>
+<li><strong>Open and Done.</strong> Open a background session in your terminal straight from its post-it. Done takes the post-it down without closing the session, and it comes back by itself if the session starts working again. Rename a post-it, or copy its attach command.</li>
+<li><strong>In the panel and the menu bar.</strong> The panel shows a Sessions card while any session is up. Turn on <strong>Settings › Panel › Sessions as an item of their own</strong> and the sessions get a menu-bar item: the Lancetta icon and how many wait on you, with the same three cards a click away.</li>
+<li><strong>Never a stale count.</strong> When Claude Code's list cannot be read, every count on the wall becomes a dash, with the reason: the list could not be read, it took too long, or Claude Code is not installed. Two new codes in Troubleshooting, SESSIONS-1 and SESSIONS-2.</li>
+<li><strong>Settings, regrouped.</strong> A new <strong>Panel</strong> pane gathers how the panel opens, what it shows and the sessions' item. A new <strong>Privacy</strong> pane shows Lancetta's folder and clears the record of concluded sessions.</li>
+</ul>
+<p><strong>Also</strong></p>
+<ul>
+<li>One button style everywhere, with white text that reads clearly on the accent colour.</li>
+<li>Escape typed into another Lancetta window no longer closes the panel, and goes where you typed it.</li>
+<li>The Usage card shows a dash rather than 0 until its tokens have been read.</li>
+</ul>
+<p>Everything stays on your Mac: the wall and the record of concluded sessions are two files in Lancetta's own folder, and nothing about them is sent anywhere.</p>
+</body>
+</html>
