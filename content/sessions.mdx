@@ -1,0 +1,55 @@
+---
+title: "Sessions: what waits on you, across every Claude Code session"
+description: "Every Claude Code session you started, as a post-it on a wall: which ones wait on you, which are working, and a record of what you finished."
+---
+
+import { LeadImage } from '@/components/DocsImage/LeadImage';
+import sessions from '@/public/screenshot-window-sessions.png';
+
+# Sessions
+
+Run a few Claude Code sessions at once, in terminals and in the background, and the hard part stops being the work: it is remembering **which one is waiting for you**. The **Sessions** pane of [the window](/docs/the-window) keeps every session you started as a post-it on a wall and says where each one stands, so the next one to pick up is the first one you see.
+
+<LeadImage src={sessions} alt="The Sessions pane: 3 on Your turn, the longest waiting for 2h05m, 2 Working, 1 Concluded today and 3 in the last 7 days; Your turn open on its three sessions as cards, each with its mark, name and folder, where it stands and for how long (Your turn, Asks you something, Stopped before it was done), when it started, how its time split between working and waiting, and Open and Done" />
+
+They are Claude Code's sessions, not Lancetta's: nothing here starts one or closes one. At every refresh Lancetta reads the list Claude Code keeps of its sessions, and changes nothing in it. Claude Code only, for now.
+
+## Three places on the wall
+
+- **Your turn**: the session finished its turn, asks you something, stopped or failed, or its terminal closed. The card says how long the one waiting longest has waited.
+- **Working**: Claude Code is on it.
+- **Concluded**: the sessions you called done, and the ones you removed in Claude Code. The card counts today's, and under it the last seven days.
+
+Each card opens into its sessions, **as cards or as a list**: one switch for all three, kept from one launch to the next. A menu orders them: oldest first, newest first, by when they started, by name or by folder. Concluded is grouped by day, over the last 30 days.
+
+The first time you open the pane, a short explanation sits at the top: what it is, how it works, what it is for. **Got it** puts it away, and the ⓘ beside the title brings it back.
+
+## A session, at a glance
+
+Each session shows its name, the folder it runs in, where it stands and for how long, and when it started, in words: *Started this morning at 09:05*, *yesterday at 18:00*, *on 3 October*. A name that starts with an emoji, as names often do, wears it as its mark; the others wear their first letter on a colour of their own.
+
+Once Lancetta has seen a session work for a minute, a bar splits its time between **working** and **waiting on you**, as far as Lancetta saw it.
+
+## What you can do with one
+
+- **Open** opens a background session in your terminal, as `claude attach` would.
+- **Done** takes the post-it down **without closing the session**: it stays in Claude Code, and its post-it comes back by itself if it starts working again. Done is not offered while a session is working.
+- **Put back** puts a concluded post-it back on the wall, while its session is still there.
+- A right-click offers **Rename…**, a name of your own for the post-it, and **Copy Attach Command**.
+
+A session you remove in Claude Code moves to Concluded by itself. Lancetta waits until it has been missing for half a minute of the Mac's awake time before believing it, and for longer when every session goes missing at once, which is more often a restart than an empty wall.
+
+## Without opening the window
+
+- **In the panel**, a **Sessions** card joins the deck while any session is up, and opens into the first of them, each with Open and Done.
+- **In the menu bar**, the sessions can have [an item of their own](/docs/settings#panel), off until you turn it on: the Lancetta icon and how many sessions wait on you. A click opens the panel with the sessions alone, as the same three cards, each opening in place. A right-click is the command menu, as on Lancetta's own item.
+
+![The sessions’ own panel: 3 waiting on you · 2 working, Your turn open on its three sessions, each with where it stands and for how long and the Open and Done buttons, Working and Concluded closed beside it](/screenshot-panel-sessions.png)
+
+## When the wall is not current
+
+A wall Lancetta could not read is never shown as a count. Every figure on it becomes a dash, and a line says why: the list could not be read, Claude Code took too long to answer, Claude Code is not on this Mac, Claude is switched off in [Settings](/docs/settings#agents), or the list has not been read since launch. The sessions it last knew stay on the wall, and **Why, and what to do…** opens what went wrong. The two codes are on [Troubleshooting](/docs/troubleshooting).
+
+## What it keeps
+
+The wall and the record of concluded sessions are two files on this Mac, and nothing in them leaves it. What each one holds, and how to clear the record, is on [Privacy](/docs/privacy#what-it-writes) and in [Settings → Privacy](/docs/settings#privacy).

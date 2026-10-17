@@ -25,10 +25,6 @@ Whichever you pick, the bars are filled with **the number that is shown**, and e
 
 **Rotate agents every** — with more than one agent in the menu bar they take turns, cross-fading. The item holds a fixed width at the widest of them so its neighbours never shift. With one agent in the bar there is nothing to rotate, and the control is disabled rather than silently doing nothing.
 
-**Open the menu on hover** — off by default. On, pointing at Lancetta in the menu bar opens the panel after a quarter of a second, with no click; it closes when the pointer leaves it. Opening it this way deliberately **does not take the keyboard**, so nothing is pulled out of whatever you are typing in — which also means the panel's shortcuts are not live yet. Click the item and the panel is yours: it takes the keyboard, its shortcuts work, and it stays open until you click away, exactly as a clicked-open panel always did. Clicking a row inside it works either way.
-
-The quarter-second is not a round number for its own sake: a pointer on its way to another app's menu-bar item crosses ours in a few dozen milliseconds, and a panel that opened on the way past would be in the way every time.
-
 **Open Lancetta at login** — off by default. It binds to macOS's own login-item status rather than to a copy of it, so the switch reflects what the system actually has registered.
 
 **Show the support window at launch** — off by default. Opens About + Support when Lancetta starts. Netfox ships the same switch on; here it is off, because this app opens at login, and a window at every login is the thing a menu-bar app exists to avoid.
@@ -108,6 +104,20 @@ One switch per agent, each with its mark: off, Lancetta sends nothing about that
 
 **Show the reading under the notch** — only on a Mac that has a notch, since a setting whose feature can never run reads as broken. See [The Notch](/docs/the-notch).
 
+## Panel
+
+The panel that opens under Lancetta's menu-bar item: how it opens, what has an item of its own beside it, and what it shows.
+
+{/* ![Lancetta's Settings, on the Panel pane: Open the panel on hover, Sessions as an item of their own, and a switch for each part of the panel](/screenshot-settings-panel.png) */}
+
+**Open the panel on hover** — off by default. On, pointing at Lancetta in the menu bar opens the panel after a quarter of a second, with no click; it closes when the pointer leaves it. Opening it this way deliberately **does not take the keyboard**, so nothing is pulled out of whatever you are typing in — which also means the panel's shortcuts are not live yet. Click the item and the panel is yours: it takes the keyboard, its shortcuts work, and it stays open until you click away, exactly as a clicked-open panel always did. Clicking a row inside it works either way.
+
+The quarter-second is not a round number for its own sake: a pointer on its way to another app's menu-bar item crosses ours in a few dozen milliseconds, and a panel that opened on the way past would be in the way every time.
+
+**Sessions as an item of their own** — off by default. On, a second item beside Lancetta's: the Lancetta icon and how many of your Claude Code sessions wait on you, or the icon alone when none does. A click opens the panel with the sessions alone, as the three cards of [Sessions](/docs/sessions); clicking the other item switches the panel to it. It is there while Claude is watched, and keeps the place you ⌘-drag it to.
+
+**What the panel shows** — a switch for each part of the panel: the suggestions, the agents, Usage, Maintenance, Processes and Sessions. The window always shows everything. One of the agents, Usage and Maintenance always stays, so the panel is never empty.
+
 ## Maintenance
 
 What the [Maintenance pane](/docs/maintenance) reads and checks. The pane's own **Settings…** button opens this page.
@@ -141,7 +151,16 @@ An app launched from the Finder inherits almost no `PATH`, so Lancetta looks for
 - **A binary you choose is the only one Lancetta runs**, for the quota and for a free reset alike. If it goes — deleted, or moved by an update — the card says so and offers this pane, rather than quietly reading some other copy. **Clear** goes back to finding Codex by itself.
 - **Where Lancetta looked** — every place, in the order it looks, with what was there: used, found, not there, not a command, or what your shell answered.
 
-Claude isn't read from a binary. The pane says whether Lancetta reads your Claude account or the status-line file, and when that file was last written; Connect and Disconnect stay on Claude's page under Agents.
+Claude's quota isn't read from a binary. The pane says whether Lancetta reads your Claude account or the status-line file, and when that file was last written; Connect and Disconnect stay on Claude's page under Agents. The [Sessions](/docs/sessions) pane is the one part that runs Claude Code, to ask it for the list of its sessions, which starts none: the pane shows which `claude` that is.
+
+## Privacy
+
+What Lancetta keeps on this Mac.
+
+{/* ![Lancetta's Settings, on the Privacy pane: Lancetta's folder with Show in Finder, and the history of concluded sessions with Clear…](/screenshot-settings-privacy.png) */}
+
+- **Lancetta's folder** — **Show in Finder** opens the folder that holds the readings Lancetta takes and their history, the token usage it counts, and the sessions on the wall with their history. Nothing in it is sent anywhere; what each file holds is on [Privacy](/docs/privacy#what-it-writes).
+- **History of concluded sessions** — every session you marked done or removed, with when it started and ended and how long it worked. The Sessions pane draws the last 30 days, and the older ones stay in the file. A line says how many there are and since when. **Clear…** forgets them all, after a confirmation that says what goes and what stays; your sessions in Claude Code are not touched.
 
 ## Updates
 
