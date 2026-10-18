@@ -50,6 +50,44 @@ describe('the panel the bar opens', () => {
     }
   );
 
+  const rows = panelDemo.agents.flatMap((agent) =>
+    agent.rows.map((row) => [`${agent.name} ${row.label}`, row] as const)
+  );
+
+  // `Projection.ghost`: the ghost carries the bar on from its own figure to
+  // the reset, so it can never end before the fill, nor past a full window.
+  it.each(rows.filter(([, row]) => row.ghost))('draws %s’s ghost inside its bar', (_, row) => {
+    expect(row.percent).not.toBeNull();
+    expect(row.ghost!.to).toBeGreaterThanOrEqual(row.percent!);
+    expect(row.ghost!.to).toBeLessThanOrEqual(100);
+  });
+
+  // The amber is the caption's "at this rate you run out", nowhere else, on
+  // either side: a stop the caption does not state is an alarm the app never
+  // raises, and an urgent caption over a calm bar is the drift this file has
+  // shipped before. A stop runs the window out, so its ghost reaches 100.
+  it.each(rows)('stops %s only where its caption is urgent', (_, row) => {
+    expect(row.ghost?.stop ?? false).toBe(row.pace?.urgent ?? false);
+    if (row.ghost?.stop) {
+      expect(row.ghost.to).toBe(100);
+    }
+  });
+
+  it('draws the one stop the cast has, so the tests above see input', () => {
+    expect(rows.filter(([, row]) => row.ghost?.stop)).toHaveLength(1);
+  });
+
+  // A week carried forward from one afternoon would be a forecast: any other
+  // window gets a ghost only when it stops the agent. No row has one today;
+  // this holds the next edit to the rule.
+  it('gives a window other than the 5 hours a ghost only when it stops', () => {
+    for (const [, row] of rows) {
+      if (row.ghost && row.label !== '5h') {
+        expect(row.ghost.stop).toBe(true);
+      }
+    }
+  });
+
   // The step that opens the stop suggestion and the sentence under it count
   // the same sessions, as `Guidance.swift` builds both from one number.
   it('counts the same working sessions in the stop step and its basis', () => {

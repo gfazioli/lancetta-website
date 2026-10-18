@@ -36,6 +36,18 @@ export interface PanelRow {
   reset: string;
   /** The pace caption under the bar, when the app has one to say. */
   pace?: { text: string; urgent?: boolean };
+  /**
+   * Where the window is heading at the recent rate, as the panel draws it by
+   * default (Ghost fill, `Projection.ghost`): `to` is the percent USED the
+   * ghost reaches at the reset, and `stop` says that is a stop before the
+   * reset, drawn amber to the end with a mark there. Amber exactly where the
+   * caption says "at this rate you run out", and a stop always reaches 100.
+   * Absent where the app has no rate to go on, and on a week that does not
+   * stop the agent: a week carried forward from one afternoon is a forecast.
+   * The softer band a calm ghost carries out to the fastest recent rate is
+   * not drawn here: the one ghost in the cast is a stop, which has none.
+   */
+  ghost?: { to: number; stop: boolean };
 }
 
 export interface PanelAgent {
@@ -225,6 +237,8 @@ export const panelDemo: PanelState = {
           percent: 82,
           reset: '2h09m',
           pace: { text: 'at this rate you run out in 51m', urgent: true },
+          // 21% an hour from 82% runs out in 51m, long before the 2h09m reset.
+          ghost: { to: 100, stop: true },
         },
         { label: '7d', percent: 41, reset: '4d18h' },
         { label: 'Fable', percent: 30, reset: '4d18h' },
@@ -234,6 +248,8 @@ export const panelDemo: PanelState = {
       agent: 'codex',
       name: 'Codex',
       plan: 'plus',
+      // No ghost: the cast's capture shows Codex's card closed, so there is no
+      // drawn value to repeat here.
       rows: [
         { label: '5h', percent: 12, reset: '39m', pace: { text: '12% in 4h21m' } },
         { label: '7d', percent: 20, reset: '4d06h' },

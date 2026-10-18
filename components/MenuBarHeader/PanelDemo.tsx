@@ -486,9 +486,16 @@ function AgentDetail({ agent }: { agent: PanelAgent }) {
   );
 }
 
-/** `MeterRow` and its `PaceCaption`: number, window, glass bar, reset. */
+/**
+ * `MeterRow` and its `PaceCaption`: number, window, glass bar, reset. The bar
+ * carries the row's ghost when it has one, as Ghost fill draws it: under the
+ * fill from the start of the groove, so the fill covers its own share and the
+ * ghost reads as the fill carrying on (`BarGhostUnder`), and over it the mark
+ * where the window runs out (`BarGhostOver`).
+ */
 function Meter({ row }: { row: PanelRow }) {
   const fill = row.percent === null ? null : Math.min(100, Math.max(0, row.percent));
+  const ghost = fill === null ? undefined : row.ghost;
   return (
     <>
       {/* The figures roll up out of zeros as their card lands (`RollingNumberText`). */}
@@ -499,9 +506,16 @@ function Meter({ row }: { row: PanelRow }) {
       <span
         className={classes.track}
         data-unknown={fill === null}
-        style={{ '--p': fill ?? 0 } as CSSProperties}
+        style={
+          {
+            '--p': fill ?? 0,
+            '--to': ghost ? Math.min(100, Math.max(fill ?? 0, ghost.to)) : undefined,
+          } as CSSProperties
+        }
       >
+        {ghost && <span className={classes.ghost} data-stop={ghost.stop} />}
         {fill !== null && fill > 0 && <span className={classes.fill} />}
+        {ghost?.stop && <span className={classes.cap} />}
       </span>
       <span className={classes.reset}>
         {row.reset && <ResetMark size={9} />}
