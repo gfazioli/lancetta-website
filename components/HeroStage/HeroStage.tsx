@@ -75,12 +75,15 @@ const WINDOW_SHOT = { width: 2400, height: 1600 };
  * l'accento subito su cosa differenzia Lancetta dagli altri concorrenti -
  * quindi suggerimenti e clean dei processi"*).
  *
- * What the field has, measured and recorded in Lancetta#24: CodexBar has the
- * quota ceiling and the token flow and keeps no series; ccusage has the flow
- * and guesses the ceiling; Quotio routes around a limit rather than advising
- * on it. Nobody else reaps the process trees, and nobody else keeps a series
- * to advise from. So those two lead, and the surfaces that every monitor has
- * — a menu, an island, a window, a chart — come after them.
+ * What the field has, measured on 2026-09-20 and again on 2026-10-18, when the
+ * first reading's "CodexBar keeps no series" turned out wrong: CodexBar (0.77.0)
+ * reads the real ceiling for 106 providers, has charted quota utilisation since
+ * 0.19.0 (March 2026), says "Runs out in" at the current pace and lists live
+ * sessions; ccusage has the flow and guesses the ceiling; Quotio routes around
+ * a limit rather than advising on it. A series and a projection are therefore
+ * not ours alone. What none of them does is say what to do next, or reap the
+ * trees the agents leave behind. So those two lead, and the surfaces that every
+ * monitor has — a menu, an island, a window, a chart — come after them.
  *
  * Since 0.50.0 the frames are the decisions themselves (see the comment in
  * the array): each one's picture is that suggestion's own card, cropped from
