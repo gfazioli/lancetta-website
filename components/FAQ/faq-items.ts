@@ -58,7 +58,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'suggestions',
     question: 'Where do its suggestions come from?',
     answer:
-      'From the readings Lancetta keeps, never from a model. Each one is worked out on your Mac from the percentage your account reports, the rate it has been moving at, when the window resets, whether you hold a free reset, and the effort set in the agent’s own settings, and each names what it rests on so you can check it. When nothing needs changing, it says that too. Suggestions sit at the top of the panel and of the window; the ones that cannot wait (an agent about to stop, a window about to reset with room left, a free reset about to lapse) also arrive once as a notification, which Settings › Notifications › Suggestions turns off.',
+      'From the readings Lancetta keeps, never from a model. Each one is worked out on your Mac from the percentage your account reports, the rate it has been moving at, when the window resets, whether you hold a free reset, and the effort set in the agent’s own settings, and each names what it rests on so you can check it. The panel draws that rate too: unless you choose otherwise, the 5-hour bar carries on, faint, to where it leaves the window at the reset, amber only when it would stop the agent before then. When nothing needs changing, it says that too. Suggestions sit at the top of the panel and of the window; the ones that cannot wait (an agent about to stop, a window about to reset with room left, a free reset about to lapse) also arrive once as a notification, which Settings › Notifications › Suggestions turns off.',
   },
   {
     value: 'sessions',

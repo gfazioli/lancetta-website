@@ -92,6 +92,11 @@ const WINDOW_SHOT = { width: 2400, height: 1600 };
  * and the roadmap strip: which session needs you is a decision too. Its
  * picture is the sessions' own panel on the app's demo wall, never a real
  * one: a real wall names the user's folders.
+ *
+ * Since 0.61.0 the two decisions are followed by what they rest on, drawn:
+ * where this pace leaves each window. It is the frame's job to show the basis
+ * of a suggestion, so it sits under them and before the Next card, whose
+ * first sentence ("this window's own rate, carried forward") it pictures.
  */
 const frames: Frame[] = [
   /*
@@ -130,9 +135,28 @@ const frames: Frame[] = [
   },
   {
     /*
+     * WHAT THE TWO DECISIONS ABOVE REST ON, DRAWN (0.61.0): where this pace
+     * leaves each window. Under the decisions, never beside them, and said as
+     * what a suggestion rests on, not as a gauge. The panel at the top of the
+     * page already carries the ghost on its bar, so the picture here is the
+     * other half: Limits' two charts, drawn whatever the panel is set to.
+     */
+    src: '/screenshot-window-limits-charts.png',
+    ...WINDOW_SHOT,
+    alt: 'The Limits pane, Claude’s card scrolled down to its two charts, under its bars (5 hours at 82%, with the pace line: at this rate you run out in 50m; 7 days at 41%; Fable, its own weekly limit, at 30%): 7 days, from Thursday 13:38 to the next, with the nights shaded, the 5-hour sessions as thin teeth, the week so far up to now at 19:38, and last week dotted, ending at 68%; under it 5 hours, from 16:48 to 21:48, beside the dial with its amber wedge: the climb so far, the last hour’s rate dashed on to the limit at 20:29, and the stretch from there to the reset hatched in amber',
+    eyebrow: 'What it rests on',
+    title: 'Where this pace lands.',
+    body: 'A glance tells you whether this pace carries you to the reset or stops you short of it: by default the panel’s 5-hour bar carries on, faint, to where the last hour’s rate leaves it at the reset, amber with a mark at the end only when that pace would stop the agent before then. In the window, Limits charts both windows — the week with its nights and its 5-hour sessions, the five hours with a cone of where the rate leads — so you can check what a suggestion rests on.',
+    href: '/docs/the-window#where-each-window-is-heading',
+    linkLabel: 'Where each window is heading',
+  },
+  {
+    /*
      * NO SCREENSHOT, ON PURPOSE: the one unshipped section on the page carries
      * the badge AND the future tense, never one without the other. It follows
-     * the two decisions above because it is where they go next.
+     * the two decisions above, and the drawing of the rate they rest on,
+     * because it is where they go next: from this window's own rate to an
+     * average across your days.
      */
     eyebrow: 'Next',
     next: true,
