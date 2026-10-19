@@ -44,7 +44,7 @@ describe('MantineFooter newsletter band', () => {
     expect(screen.getByRole('heading', { level: 2, name: 'Get release updates' })).toBeVisible();
     expect(screen.getByRole('link', { name: 'Subscribe for updates' })).toHaveAttribute(
       'href',
-      'https://lancetta.substack.com'
+      config.community.newsletter
     );
   });
 });

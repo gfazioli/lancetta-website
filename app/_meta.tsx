@@ -58,7 +58,7 @@ export default {
       },
       newsletter: {
         title: 'Newsletter',
-        href: 'https://lancetta.substack.com',
+        href: config.community.newsletter,
       },
       releases: {
         title: 'Releases',

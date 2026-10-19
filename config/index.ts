@@ -130,6 +130,10 @@ export default {
     // opened" badge decays from it (`isRecent`): gone two minor releases on,
     // with no one having to remember it.
     discordSince: '0.17.0',
+    // The release newsletter: the subscribe form is Substack's, so nothing on
+    // this site collects an address. The footer band, its icon, the prompt and
+    // the Support menu all link here.
+    newsletter: 'https://lancetta.substack.com',
   },
   // The directories Lancetta is listed on, as badges, in this order; the shape
   // is findergit.app's. `placement` says where each one goes: Product Hunt's

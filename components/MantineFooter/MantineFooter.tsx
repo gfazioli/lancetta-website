@@ -133,7 +133,7 @@ export const MantineFooter = ({ year }: { year: number }) => {
                 <ActionIcon
                   variant="subtle"
                   component="a"
-                  href="https://lancetta.substack.com"
+                  href={config.community.newsletter}
                   aria-label="Newsletter"
                 >
                   <IconMailHeart size={20} />

@@ -233,6 +233,8 @@ function waitFor(method, sessionId) {
 }
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const store = (key, value) =>
+  `localStorage.setItem(${JSON.stringify(key)}, ${JSON.stringify(value)});`;
 
 try {
   const { targetId } = await send('Target.createTarget', { url: 'about:blank' });
@@ -256,11 +258,7 @@ try {
   await probed;
   await send(
     'Runtime.evaluate',
-    {
-      expression: `localStorage.setItem(${JSON.stringify(MANTINE_KEY)}, "light");${
-        prompt ? '' : ` localStorage.setItem(${JSON.stringify(PROMPT_KEY)}, "true");`
-      }`,
-    },
+    { expression: store(MANTINE_KEY, 'light') + (prompt ? '' : store(PROMPT_KEY, 'true')) },
     sessionId
   );
 

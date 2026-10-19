@@ -13,7 +13,6 @@ import { DISMISSED_KEY, PROMPT_OPEN_ATTRIBUTE } from './prompt-open';
 describe('NewsletterModal', () => {
   let frames: Map<number, FrameRequestCallback>;
   let nextFrame: number;
-  let jsdomScrollY: PropertyDescriptor | undefined;
 
   const runFrames = () =>
     act(() => {
@@ -22,8 +21,13 @@ describe('NewsletterModal', () => {
       due.forEach((callback) => callback(performance.now()));
     });
 
+  // A plain, writable property in jsdom.
+  const setScrollY = (y: number) => {
+    (window as { scrollY: number }).scrollY = y;
+  };
+
   const scrollTo = (y: number) => {
-    Object.defineProperty(window, 'scrollY', { configurable: true, value: y });
+    setScrollY(y);
     act(() => {
       window.dispatchEvent(new Event('scroll'));
     });
@@ -33,6 +37,11 @@ describe('NewsletterModal', () => {
   // The dialog is a chunk of its own, loaded when the prompt opens: a test
   // that opens it waits for it to land.
   const dialog = () => screen.findByRole('dialog');
+  const openPrompt = () => {
+    scrollTo(1300);
+    runFrames();
+    return dialog();
+  };
 
   beforeEach(() => {
     localStorage.clear();
@@ -45,8 +54,7 @@ describe('NewsletterModal', () => {
     jest.spyOn(window, 'cancelAnimationFrame').mockImplementation((id) => {
       frames.delete(id);
     });
-    jsdomScrollY = Object.getOwnPropertyDescriptor(window, 'scrollY');
-    Object.defineProperty(window, 'scrollY', { configurable: true, value: 0 });
+    setScrollY(0);
   });
 
   afterEach(() => {
@@ -54,11 +62,6 @@ describe('NewsletterModal', () => {
     // frame the mock queued, which the real cancelAnimationFrame never issued.
     cleanup();
     jest.restoreAllMocks();
-    if (jsdomScrollY) {
-      Object.defineProperty(window, 'scrollY', jsdomScrollY);
-    } else {
-      delete (window as { scrollY?: number }).scrollY;
-    }
   });
 
   it('opens once the page has scrolled past 1200px, and not before', async () => {
@@ -68,19 +71,13 @@ describe('NewsletterModal', () => {
     expect(isOpen()).toBe(false);
     expect(screen.queryByRole('dialog')).toBeNull();
 
-    scrollTo(1300);
-    runFrames();
-    await dialog();
+    await openPrompt();
     expect(isOpen()).toBe(true);
   });
 
   it('is a dialog with a name of its own', async () => {
     render(<NewsletterModal />);
-    scrollTo(1300);
-    runFrames();
-    expect(
-      await screen.findByRole('dialog', { name: 'Subscribe to the Lancetta newsletter' })
-    ).toBeInTheDocument();
+    expect(await openPrompt()).toHaveAccessibleName('Subscribe to the Lancetta newsletter');
   });
 
   it('reads the scroll at most once a frame', () => {
@@ -94,9 +91,7 @@ describe('NewsletterModal', () => {
 
   it('stops watching the scroll once it has opened', async () => {
     render(<NewsletterModal />);
-    scrollTo(1300);
-    runFrames();
-    await dialog();
+    await openPrompt();
     expect(isOpen()).toBe(true);
 
     // The open modal queues frames of its own; a scroll must add none.
@@ -106,7 +101,7 @@ describe('NewsletterModal', () => {
   });
 
   it('opens on a page that loads already past the trigger', async () => {
-    Object.defineProperty(window, 'scrollY', { configurable: true, value: 3000 });
+    setScrollY(3000);
     render(<NewsletterModal />);
     runFrames();
     await dialog();
@@ -115,9 +110,7 @@ describe('NewsletterModal', () => {
 
   it('remembers that the visitor closed it', async () => {
     render(<NewsletterModal />);
-    scrollTo(1300);
-    runFrames();
-    fireEvent.keyDown(await dialog(), { key: 'Escape' });
+    fireEvent.keyDown(await openPrompt(), { key: 'Escape' });
     expect(localStorage.getItem(DISMISSED_KEY)).toBe('true');
   });
 
@@ -126,19 +119,12 @@ describe('NewsletterModal', () => {
       throw new Error('blocked');
     });
     render(<NewsletterModal />);
-    scrollTo(1300);
-    runFrames();
-    fireEvent.keyDown(await dialog(), { key: 'Escape' });
+    fireEvent.keyDown(await openPrompt(), { key: 'Escape' });
     expect(isOpen()).toBe(false);
 
     scrollTo(1600);
     runFrames();
     expect(isOpen()).toBe(false);
-  });
-
-  it('is the key the screenshot script writes to keep it out of its captures', () => {
-    const shot = readFileSync(join(__dirname, '../../scripts/shot.mjs'), 'utf8');
-    expect(shot).toContain(`const PROMPT_KEY = '${DISMISSED_KEY}';`);
   });
 
   it('imports the dialog only when it opens, never with the page', () => {
@@ -148,10 +134,13 @@ describe('NewsletterModal', () => {
     expect(source).toContain("import('./PromptDialog')");
   });
 
-  it('is the key the WebKit tools write to keep it out of what they see', () => {
-    for (const tool of ['pageshot', 'pageeval']) {
-      const source = readFileSync(join(__dirname, `../../scripts/${tool}.swift`), 'utf8');
-      expect(source).toContain(`let promptKey = "${DISMISSED_KEY}"`);
+  it('is the key the capture tools write to keep it out of what they see', () => {
+    for (const [tool, line] of [
+      ['shot.mjs', `const PROMPT_KEY = '${DISMISSED_KEY}';`],
+      ['pageshot.swift', `let promptKey = "${DISMISSED_KEY}"`],
+      ['pageeval.swift', `let promptKey = "${DISMISSED_KEY}"`],
+    ]) {
+      expect(readFileSync(join(__dirname, `../../scripts/${tool}`), 'utf8')).toContain(line);
     }
   });
 
