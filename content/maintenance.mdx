@@ -1,11 +1,11 @@
 ---
 title: "Maintenance: what your coding agents read before they start"
-description: "The files Claude Code, Codex and the others read before every session: what they cost at each start, 22 checks on what is wrong, and the fixes Lancetta guides."
+description: "The files Claude Code, Codex and the others read: what loads at each start, 22 checks on what is wrong, and the fixes Lancetta guides."
 ---
 
 # Maintenance
 
-Every session of a coding agent begins by reading its instruction files — CLAUDE.md, AGENTS.md, rules, skills, memory — and every session pays for them again, before your first prompt. They are rarely measured, and most of what goes wrong in them goes wrong silently: an import that loads nothing, a rule that loads everywhere, an AGENTS.md that Claude Code never reads.
+Every session of a coding agent begins by reading its instruction files, and every session pays for them again, before your first prompt: CLAUDE.md and AGENTS.md with the files they import, the rules that apply everywhere, the index of Claude Code's memory. Skills and commands cost less: a session reads only their names and descriptions, the list the agent chooses from, and the body of one only when it is used. A rule scoped to some files loads when the agent works on one of them, a memory note when the index leads to it. These files are rarely measured, and most of what goes wrong in them goes wrong silently: an import that loads nothing, a rule that loads everywhere, an AGENTS.md that Claude Code never reads.
 
 The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code or Codex when it does.
 
@@ -30,6 +30,8 @@ The scan runs the first time you open the panel, the window or the pane, and aga
 The top of the pane is a budget. Everything a session loads at launch stays in its context for the whole session, before your first word, and Claude Code warns past a size it does not document: Lancetta read the figures out of Claude Code itself. With a 200K context window it warns past **40,000 characters in one file** and **120,000 in everything a session loads at launch**; with 1M, past 150,000 for both.
 
 **Heaviest start** is the place whose sessions load the most, against that limit: the bar fills toward the point where Claude Code would warn, and a place past it is a warning. Which window you run is set in [Settings](/docs/settings#maintenance).
+
+Skills and commands are not part of that figure: at the start they cost only their list, which Claude Code gives a budget of its own, checked below as **Skill listings past their budget**.
 
 ## Warnings and suggestions
 
