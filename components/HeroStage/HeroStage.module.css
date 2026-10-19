@@ -132,6 +132,16 @@
 }
 
 /*
+ * The Product Hunt badge (`DirectoryBadges`, which has no stylesheet of its
+ * own): at its own 54px it is 250px wide, and fits a 320px screen as it is.
+ */
+.badge {
+  display: block;
+  width: auto;
+  height: rem(54px);
+}
+
+/*
  * `width: 100%` under the cap, not `auto`. The shot comes through next/image,
  * whose srcset is described in widths: on a 3x phone the browser picks the
  * 1200w candidate, the optimizer cannot upscale the 760px file, and an `auto`
