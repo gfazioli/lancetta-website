@@ -7,6 +7,7 @@ import { TextAnimate } from '@gfazioli/mantine-text-animate';
 import { IconArrowRight, IconBook2, IconGauge } from '@tabler/icons-react';
 import { Button, Container, Group, Image, Stack, Text, Title } from '@mantine/core';
 import config from '@/config';
+import { DirectoryBadges } from '../DirectoryBadges/DirectoryBadges';
 import { Reveal, revealItem, revealScope } from '../Motion/Reveal';
 import { ScrollNumber } from '../Motion/ScrollNumber';
 import { useReveal } from '../Motion/useReveal';
@@ -395,6 +396,8 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
             </Text>
             {released && <ReleaseCadence cadence={cadence} />}
           </Stack>
+
+          <DirectoryBadges placement="hero" mt="md" badgeClassName={classes.badge} />
         </div>
 
         {/*

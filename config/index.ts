@@ -131,6 +131,30 @@ export default {
     // with no one having to remember it.
     discordSince: '0.17.0',
   },
+  // The directories Lancetta is listed on, as badges, in this order; the shape
+  // is findergit.app's. `placement` says where each one goes: Product Hunt's
+  // alone under the hero, where its vote count is proof a visitor reads. There
+  // is no footer row yet: the first listing that goes there brings
+  // findergit.app's (`ListedOn`) with it, and a test fails until it does.
+  // `width` and `height` only give the ratio, and it has to be the SVG's own
+  // viewBox: the host's stylesheet draws every badge in a row at one height.
+  //
+  // `src` is the directory's own URL, exactly as its embed code gives it,
+  // never a copy served from here: a directory's verifier looks for its badge
+  // IMAGE as well as the link (LaunchNest refused findergit.app's copy on
+  // 2026-10-08, "We couldn't find the badge image on that page").
+  directoryBadges: [
+    {
+      // Launched 2026-10-19, post 1254725.
+      name: 'Product Hunt',
+      placement: 'hero',
+      href: 'https://www.producthunt.com/products/lancetta?embed=true&utm_source=badge-featured&utm_medium=badge&utm_campaign=badge-lancetta',
+      src: 'https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1254725&theme=neutral&t=1792409230173',
+      alt: 'Lancetta - Know when to push your coding agents, and when to ease off | Product Hunt',
+      width: 250,
+      height: 54,
+    },
+  ],
   // Who publishes the site, as Italian law asks every VAT-registered owner to
   // say: the VAT number on the home page (art. 35 DPR 633/72), and name,
   // contact and VAT number reachable from every page (art. 7 D.Lgs. 70/2003).

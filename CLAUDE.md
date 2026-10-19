@@ -115,11 +115,11 @@ The GitHub **social preview** has no API and no `gh` field: it is uploaded by ha
 
 ### The hero is ordinary flow
 
-Never bring back the pinned, scroll-driven stage, nor a header reading that follows the scroll (`HeroStage.tsx` and `MenuBarHeader/reading.ts` say what each cost). Measure the page's length before adding to it: `document.documentElement.scrollHeight` at 1440 and 390, in Chrome (`scripts/shot.mjs --eval`). 14,232 and 19,833 on 2026-10-18, with the projection frame (Limits' charts); 13,728 and 19,103 on 2026-10-17 with the 0.61.0 shots (the panel 1694 px tall, from 1406); 13,394 and 18,961 earlier that day, with the Sessions frame and the nine-card strip; 10,018 and 13,967 at the last cut.
+Never bring back the pinned, scroll-driven stage, nor a header reading that follows the scroll (`HeroStage.tsx` and `MenuBarHeader/reading.ts` say what each cost). Measure the page's length before adding to it: `document.documentElement.scrollHeight` at 1440 and 390, in Chrome (`scripts/shot.mjs --eval`). 14,302 and 19,903 on 2026-10-19, with the Product Hunt badge under the hero (+70); 14,232 and 19,833 on 2026-10-18, with the projection frame (Limits' charts); 13,728 and 19,103 on 2026-10-17 with the 0.61.0 shots (the panel 1694 px tall, from 1406); 13,394 and 18,961 earlier that day, with the Sessions frame and the nine-card strip; 10,018 and 13,967 at the last cut.
 
 ### The character
 
-**The home page must never import `PanelHint.tsx`**: it costs every page one more render-blocking stylesheet. After changing what the home page imports, count `<link rel="stylesheet">` on `/` and on a docs page. The character is ours on purpose: never a vendor's mascot.
+**The home page must never import `PanelHint.tsx`**: it costs every page one more render-blocking stylesheet. **A new or ported component on the home page brings no `.module.css` of its own** for the same reason (a ported `DirectoryBadges` module split the shared chunk, 2026-10-19): style it through its host's module, as `Mascot` does. After changing what the home page imports, count `<link rel="stylesheet">` on `/` and on a docs page. The character is ours on purpose: never a vendor's mascot.
 
 ## Motion
 
