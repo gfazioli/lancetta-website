@@ -78,6 +78,8 @@ describe('NewsletterModal', () => {
   it('is a dialog with a name of its own', async () => {
     render(<NewsletterModal />);
     expect(await openPrompt()).toHaveAccessibleName('Subscribe to the Lancetta newsletter');
+    // Where the focus lands as it opens.
+    expect(screen.getByRole('button', { name: 'Close' })).toHaveFocus();
   });
 
   it('reads the scroll at most once a frame', () => {

@@ -48,6 +48,8 @@ export default function PromptDialog({ onClose }: { onClose: () => void }) {
       // A plain `aria-label` lands on the modal's root <div>, where it names
       // nothing (read in Chrome, 2026-10-19).
       attributes={{ content: { 'aria-label': 'Subscribe to the Lancetta newsletter' } }}
+      // The button the focus lands on as it opens: an icon alone names nothing.
+      closeButtonProps={{ 'aria-label': 'Close' }}
     >
       <NewsletterCallToAction />
     </Modal>
