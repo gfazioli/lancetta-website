@@ -19,6 +19,7 @@ import { ColorSchemeScript, mantineHtmlProps, MantineProvider } from '@mantine/c
 
 import { MantineFooter } from '@/components';
 import { MenuBarHeader } from '@/components/MenuBarHeader/MenuBarHeader';
+import { NewsletterModal } from '@/components/NewsletterSignup/NewsletterModal';
 import { WebsiteJsonLd } from '@/components/StructuredData/StructuredData';
 import config from '@/config';
 import { theme } from '../theme';
@@ -172,6 +173,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           >
             {children}
           </Layout>
+          <NewsletterModal />
         </MantineProvider>
         <WebsiteJsonLd />
         <Analytics />

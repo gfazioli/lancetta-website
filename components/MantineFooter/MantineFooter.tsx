@@ -24,6 +24,7 @@ import {
 } from '@mantine/core';
 import { discordLinkProps } from '@/components/Discord/discord';
 import { Logo } from '@/components/Logo/Logo';
+import { NewsletterSignup } from '@/components/NewsletterSignup/NewsletterSignup';
 import { ShareButtons } from '@/components/ShareButtons/ShareButtons';
 import config from '@/config';
 import { AnimateBadge } from './AnimateBadge';
@@ -71,7 +72,10 @@ export const MantineFooter = ({ year }: { year: number }) => {
   return (
     <footer className={classes.contentFooter}>
       <Container className={classes.footer} size="lg">
-        <Grid grow>
+        {/* The newsletter leads, and space separates it from the columns: no rule. */}
+        <NewsletterSignup />
+
+        <Grid grow mt={48}>
           <Grid.Col span={{ base: 12, sm: 4 }}>
             <Stack gap="sm">
               <Logo size={44} />

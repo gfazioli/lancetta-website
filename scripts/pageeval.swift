@@ -22,6 +22,14 @@ win.alphaValue = 1.0
 win.level = NSWindow.Level(rawValue: Int(CGWindowLevelForKey(.desktopWindow)))
 win.ignoresMouseEvents = true
 win.orderFrontRegardless()
+// The newsletter prompt opens once the page has scrolled 1200px, over all of
+// it below the hero: stored as already closed, so what is seen scrolled past
+// that is the page and not the prompt. `DISMISSED_KEY` in
+// components/NewsletterSignup/prompt-open.ts.
+let promptKey = "lancetta-newsletter-prompt-dismissed"
+cfg.userContentController.addUserScript(WKUserScript(
+    source: "try { localStorage.setItem('\(promptKey)', 'true'); } catch (e) {}",
+    injectionTime: .atDocumentStart, forMainFrameOnly: true))
 wv.load(URLRequest(url: URL(string: url)!))
 final class D: NSObject, WKNavigationDelegate {
     let js: String, scrollY: Int

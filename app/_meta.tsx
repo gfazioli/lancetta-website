@@ -56,6 +56,10 @@ export default {
         ),
         href: config.community.discord,
       },
+      newsletter: {
+        title: 'Newsletter',
+        href: 'https://lancetta.substack.com',
+      },
       releases: {
         title: 'Releases',
         href: 'https://github.com/gfazioli/lancetta-website/releases',

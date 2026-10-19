@@ -32,3 +32,19 @@ describe('MantineFooter publisher line', () => {
     );
   });
 });
+
+/**
+ * The newsletter band leads the footer on every page, as on findergit.app. An
+ * h2, so a page with no h2 of its own (Legal, the FAQ) goes h1, h2 rather than
+ * skipping a level, and the subscribe link is the publication itself.
+ */
+describe('MantineFooter newsletter band', () => {
+  it('is an h2 with the Substack publication behind it', () => {
+    render(<MantineFooter year={2026} />);
+    expect(screen.getByRole('heading', { level: 2, name: 'Get release updates' })).toBeVisible();
+    expect(screen.getByRole('link', { name: 'Subscribe for updates' })).toHaveAttribute(
+      'href',
+      'https://lancetta.substack.com'
+    );
+  });
+});
