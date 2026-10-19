@@ -1,9 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { readLocalStorageValue } from '@mantine/hooks';
 import type PromptDialog from './PromptDialog';
-import { DISMISSED_KEY, PROMPT_OPEN_ATTRIBUTE } from './prompt-open';
+import { DISMISSED_KEY } from './prompt-open';
 
 /**
  * Scroll-triggered newsletter prompt, ported from findergit.app.
@@ -16,10 +15,25 @@ import { DISMISSED_KEY, PROMPT_OPEN_ATTRIBUTE } from './prompt-open';
  */
 const SCROLL_TRIGGER_PX = 1200;
 
-const isDismissed = () => readLocalStorageValue({ key: DISMISSED_KEY, defaultValue: false });
+/** Read by hand: Mantine's `readLocalStorageValue` put 0.7 KB on every page. */
+function isDismissed() {
+  try {
+    return window.localStorage.getItem(DISMISSED_KEY) === 'true';
+  } catch {
+    return false;
+  }
+}
+
+function rememberClosed() {
+  try {
+    window.localStorage.setItem(DISMISSED_KEY, 'true');
+  } catch {
+    // Storage refused (site data blocked, a full quota): it closes for this
+    // page load, and the watcher has already stopped.
+  }
+}
 
 export function NewsletterModal() {
-  const [opened, setOpened] = useState(false);
   // The dialog, once its chunk has loaded. It stays mounted from then on, so
   // closing plays it out. Loaded by hand rather than through `lazy`: React
   // holds back what a Suspense boundary reveals by up to 300 ms, and the
@@ -54,7 +68,6 @@ export function NewsletterModal() {
             ({ default: loaded }) => {
               if (!gone) {
                 setDialog(() => loaded);
-                setOpened(true);
               }
             },
             // A chunk that cannot load (offline, a deploy in between) costs
@@ -79,23 +92,5 @@ export function NewsletterModal() {
     };
   }, []);
 
-  useEffect(() => {
-    if (!opened) {
-      return undefined;
-    }
-    document.documentElement.setAttribute(PROMPT_OPEN_ATTRIBUTE, 'open');
-    return () => document.documentElement.removeAttribute(PROMPT_OPEN_ATTRIBUTE);
-  }, [opened]);
-
-  const handleClose = () => {
-    try {
-      window.localStorage.setItem(DISMISSED_KEY, JSON.stringify(true));
-    } catch {
-      // Storage refused (site data blocked, a full quota): it closes for this
-      // page load, and the watcher has already stopped.
-    }
-    setOpened(false);
-  };
-
-  return Dialog ? <Dialog opened={opened} onClose={handleClose} /> : null;
+  return Dialog ? <Dialog onClose={rememberClosed} /> : null;
 }

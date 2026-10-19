@@ -1,5 +1,6 @@
 import { IconMail } from '@tabler/icons-react';
 import { Button, Stack, Text, Title } from '@mantine/core';
+import config from '@/config';
 
 /**
  * The shared newsletter call-to-action (heading + blurb + Subscribe button),
@@ -24,7 +25,7 @@ export function NewsletterCallToAction() {
       </Text>
       <Button
         component="a"
-        href="https://lancetta.substack.com"
+        href={config.community.newsletter}
         target="_blank"
         rel="noopener noreferrer"
         leftSection={<IconMail size={16} />}
