@@ -9,6 +9,7 @@
  *                                            [--click "<selector>" ...] [--between 1500]
  *                                            [--rate 0.1]
  *                                            [--frames 12 --every 250] [--no-wake]
+ *                                            [--prompt]
  *
  * With no `--at` it writes ONE full-page `<prefix>.png`. With `--at` it writes
  * one VIEWPORT capture per fraction of the scrollable height:
@@ -69,6 +70,11 @@
  * And `--no-wake`, without which none of that can see a reveal: the default
  * scrolls the whole page once to wake the lazy backgrounds, which is exactly
  * what fires every one-shot reveal before the first frame.
+ *
+ * The newsletter prompt is stored as already dismissed, because it opens once
+ * the page has scrolled 1200px, over every section below the hero, dimmed and
+ * blurred behind its overlay (findergit.app's first strip filmed on
+ * 2026-09-28). `--prompt` leaves it as a first visit gets it.
  */
 import { spawn } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
@@ -77,6 +83,8 @@ import { join } from 'node:path';
 
 const CHROME = '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome';
 const MANTINE_KEY = 'mantine-color-scheme-value';
+/** `NewsletterModal`'s flag (`DISMISSED_KEY`), which it stores as the JSON `true`. */
+const PROMPT_KEY = 'lancetta-newsletter-prompt-dismissed';
 
 const [url, prefix, ...rest] = process.argv.slice(2);
 
@@ -107,6 +115,7 @@ const rate = Number(flag('--rate') ?? 1);
 const frames = Number(flag('--frames') ?? 0);
 const every = Number(flag('--every') ?? 200);
 const wake = !rest.includes('--no-wake');
+const prompt = rest.includes('--prompt');
 const at = flag('--at')
   ?.split(',')
   .map((value) => Number(value.trim()))
@@ -247,7 +256,11 @@ try {
   await probed;
   await send(
     'Runtime.evaluate',
-    { expression: `localStorage.setItem(${JSON.stringify(MANTINE_KEY)}, "light")` },
+    {
+      expression: `localStorage.setItem(${JSON.stringify(MANTINE_KEY)}, "light");${
+        prompt ? '' : ` localStorage.setItem(${JSON.stringify(PROMPT_KEY)}, "true");`
+      }`,
+    },
     sessionId
   );
 
