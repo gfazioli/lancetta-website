@@ -126,6 +126,12 @@ export const theme = createTheme({
    * the metric-compatible fallback next/font generates travels with them.
    */
   fontFamily: 'var(--font-body)',
+  /*
+   * Mantine's own transitions (modals, tooltips, menus, accordions) take 0 ms
+   * for a visitor whose system asks for less motion. Mantine's default
+   * ignores that setting.
+   */
+  respectReducedMotion: true,
   headings: {
     fontFamily: 'var(--font-display)',
     /*
