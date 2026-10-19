@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { Modal } from '@mantine/core';
+import { useReducedMotion } from '@mantine/hooks';
 import { NewsletterCallToAction } from './NewsletterCallToAction';
 import { PROMPT_OPEN_ATTRIBUTE } from './prompt-open';
 
@@ -22,6 +23,10 @@ export default function PromptDialog({ onClose }: { onClose: () => void }) {
   // 0.9). The prompt is mounted at the end of <body> already.
   const [opened, setOpened] = useState(false);
   useEffect(() => setOpened(true), []);
+  // Mantine ignores Reduce Motion unless the theme opts in, and this one does
+  // not (Codex, round 2): the pop and the overlay's fade are skipped by hand.
+  // Read at once, not in an effect: this chunk only ever mounts in a browser.
+  const reduced = useReducedMotion(false, { getInitialValueInEffect: false });
 
   useEffect(() => {
     if (!opened) {
@@ -43,7 +48,7 @@ export default function PromptDialog({ onClose }: { onClose: () => void }) {
       size="md"
       radius="lg"
       overlayProps={{ blur: 2 }}
-      transitionProps={{ transition: 'pop' }}
+      transitionProps={{ transition: 'pop', duration: reduced ? 0 : 250 }}
       // On the element with role="dialog", which has no title to be named by.
       // A plain `aria-label` lands on the modal's root <div>, where it names
       // nothing (read in Chrome, 2026-10-19).

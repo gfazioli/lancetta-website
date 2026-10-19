@@ -9,7 +9,7 @@
  *                                            [--click "<selector>" ...] [--between 1500]
  *                                            [--rate 0.1]
  *                                            [--frames 12 --every 250] [--no-wake]
- *                                            [--prompt]
+ *                                            [--prompt] [--reduce]
  *
  * With no `--at` it writes ONE full-page `<prefix>.png`. With `--at` it writes
  * one VIEWPORT capture per fraction of the scrollable height:
@@ -75,6 +75,8 @@
  * the page has scrolled 1200px, over every section below the hero, dimmed and
  * blurred behind its overlay (findergit.app's first strip filmed on
  * 2026-09-28). `--prompt` leaves it as a first visit gets it.
+ *
+ * `--reduce` emulates Reduce Motion (`prefers-reduced-motion: reduce`).
  */
 import { spawn } from 'node:child_process';
 import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
@@ -116,6 +118,7 @@ const frames = Number(flag('--frames') ?? 0);
 const every = Number(flag('--every') ?? 200);
 const wake = !rest.includes('--no-wake');
 const prompt = rest.includes('--prompt');
+const reduce = rest.includes('--reduce');
 const at = flag('--at')
   ?.split(',')
   .map((value) => Number(value.trim()))
@@ -248,7 +251,12 @@ try {
   );
   await send(
     'Emulation.setEmulatedMedia',
-    { features: [{ name: 'prefers-color-scheme', value: 'light' }] },
+    {
+      features: [
+        { name: 'prefers-color-scheme', value: 'light' },
+        { name: 'prefers-reduced-motion', value: reduce ? 'reduce' : 'no-preference' },
+      ],
+    },
     sessionId
   );
 
