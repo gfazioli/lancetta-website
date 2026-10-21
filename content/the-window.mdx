@@ -126,7 +126,7 @@ The pane counts a tree's whole descent rather than the three processes its own d
 
 ![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, Fix All and Copy Findings at the top, the heaviest start loading 6,983 of the 120,000 characters at which Claude Code warns, and the Instructions card open on the files that need fixing: a long CLAUDE.md, an AGENTS.md that Claude Code skips, a personal file committed to git, and a CLAUDE.md with a suggestion](/screenshot-window-maintenance.png)
 
-What your coding agents read, and what each start costs: CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory, in every repository Claude Code or Codex has worked in recently and the folders above it. Each finding says why it matters and how to fix it. A fix that needs no choosing is shown in full before it is applied, one at a time or all at once, and the rest opens in Claude Code or Codex. Everything this pane checks, and what it changes, is on [Maintenance](/docs/maintenance).
+What your coding agents read, and what each start costs: CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory, in every repository Claude Code or Codex has worked in recently and the folders above it. Each finding says why it matters and how to fix it. A fix that needs no choosing is shown in full before it is applied, one at a time or all at once, and the rest opens in Claude Code or Codex. What the agents left on disk that nothing uses goes to the Trash from here too, once you have seen it. Everything this pane checks, and what it changes, is on [Maintenance](/docs/maintenance).
 
 ## Sessions
 
@@ -144,7 +144,7 @@ On macOS 27 you can pull any pane down to refresh it, the way you would in Mail.
 | **Usage** | the token history, with Codex asked again, and the 5-hour windows |
 | **Limits** | the quotas and the process trees, as **Refresh now** does |
 | **Processes** | the process trees, and nothing else: asking the agents from there would spend their reads on numbers that are not on screen |
-| **Maintenance** | where Claude Code and Codex have worked recently, and every agent file there |
+| **Maintenance** | where Claude Code and Codex have worked recently, every agent file there, and what the agents left on disk |
 | **Sessions** | the sessions Claude Code and Codex each keep |
 
 The spinner holds for a couple of seconds at most and lets go; the reading carries on underneath, and the cards it reads again press as the numbers land. A second pull while the first refresh is still out starts nothing new: it waits for that one rather than throwing its answers away. The sidebar is for choosing a pane, so pulling it does nothing. On any version of macOS, **Refresh now** (⌘R), in the panel or in the window's Agents menu, still reads the quotas and the trees.

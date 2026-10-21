@@ -135,19 +135,19 @@ What the [Maintenance pane](/docs/maintenance) reads and checks. The pane's own 
 
 ![Lancetta's Settings, on the Maintenance pane: the context window set to 200K, with the warning sizes it means, Flag instruction files over 200 lines, then a switch for each agent whose files are read — Claude Code, Codex, Cursor, Copilot and Gemini CLI — and Include your home folder's configuration](/screenshot-settings-maintenance.png)
 
-**Context window** — 200K by default, or 1M: the context window of the model you run Claude Code with. Claude Code's startup warnings scale with it: at 200K it warns past 40,000 characters in one file and 120,000 in everything a session loads at launch; at 1M, past 150,000 for both. These figures were read out of Claude Code itself, not its docs, so a later version may move them.
+**Context window** — 200K by default, or 1M: the context window of the model you run Claude Code with. Claude Code's startup warnings scale with it: at 200K it warns past 40,000 characters in one file and past 120,000 in all the files it counts together, the CLAUDE.md files, what they import and the rules that load in every session; at 1M, past 150,000 for both. These figures were read out of Claude Code itself, not its docs, so a later version may move them.
 
 **Flag instruction files over 200 lines** — the target Claude Code's docs give each CLAUDE.md, applied to AGENTS.md, GEMINI.md and Copilot's instructions too, from 50 to 1,000 lines.
 
-**Agents** — Claude Code, Codex, Cursor, Copilot and Gemini CLI, a switch each: the agents whose files the pane lists and checks. A file several agents read, like AGENTS.md, stays while any of them is on. Claude Code off also hides what loads at launch, which is its own.
+**Agents** — Claude Code, Codex, Cursor, Copilot and Gemini CLI, a switch each: the agents whose files the pane lists and checks. A file several agents read, like AGENTS.md, stays while any of them is on. Claude Code off also hides what loads at launch, which is its own. An agent switched off has its leftovers skipped in [Storage](/docs/maintenance#storage) too.
 
-**Include your home folder's configuration** — on by default: `~/.claude`, `~/.codex`, `~/.gemini` and the memory Claude Code keeps per folder. Off, they are neither listed nor checked, but what loads at launch still counts them: every session pays for them either way.
+**Include your home folder's configuration** — on by default: `~/.claude`, `~/.codex`, `~/.gemini` and the memory Claude Code keeps per folder. Off, they are neither listed nor checked, but what loads at launch still counts them: every session pays for them either way. Your organisation's policy files stay listed either way.
 
 **Show suggestions** — on by default. Off, the pane lists warnings only; warnings are always shown.
 
 **Flag a paragraph repeated in 3 repositories** — how many repositories must repeat a paragraph word for word in their instructions before it is worth keeping once, from 2 to 10.
 
-**Checks** — each of the [22 checks](/docs/maintenance#the-22-checks), with why it matters and a switch of its own. **Turn All On** appears once one of them is off.
+**Checks** — each of the [24 checks](/docs/maintenance#the-24-checks), with why it matters and a switch of its own. **Turn All On** appears once one of them is off.
 
 ## Sources
 

@@ -1,13 +1,13 @@
 ---
 title: "Maintenance: what your coding agents read before they start"
-description: "The files Claude Code, Codex and the others read: what loads at each start, 22 checks on what is wrong, and the fixes Lancetta guides."
+description: "The files Claude Code, Codex and the others read: what loads at each start, 24 checks, the fixes Lancetta guides, and what they left on disk."
 ---
 
 # Maintenance
 
 Every session of a coding agent begins by reading its instruction files, and every session pays for them again, before your first prompt: CLAUDE.md and AGENTS.md with the files they import, the rules that apply everywhere, the index of Claude Code's memory. Skills and commands cost less: a session reads only their names and descriptions, the list the agent chooses from, and the body of one only when it is used. A rule scoped to some files loads when the agent works on one of them, a memory note when the index leads to it. These files are rarely measured, and most of what goes wrong in them goes wrong silently: an import that loads nothing, a rule that loads everywhere, an AGENTS.md that Claude Code never reads.
 
-The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code or Codex when it does.
+The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code or Codex when it does. It also finds what the agents left on disk that nothing uses any more, and moves it to the Trash when you say so: see [Storage](#storage).
 
 ![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, Fix All and Copy Findings at the top, the heaviest start at 6,983 of the 120,000 characters at which Claude Code warns, then the Instructions, Rules, Skills and Commands & Subagents cards, and the Instructions card open on the four files that need fixing](/screenshot-window-maintenance.png)
 
@@ -18,8 +18,9 @@ Lancetta keeps no list of your projects, so it asks the agents where they have w
 In each of those places it reads what the agents read:
 
 - **the repository** — its CLAUDE.md, AGENTS.md and GEMINI.md at any depth, Copilot's and Cursor's instructions and rules, its `.claude` folder (rules, skills, commands, subagents, settings) and `.mcp.json`;
-- **the folders above it**, which Claude Code also reads when a session starts below them;
-- **your home folder's configuration** — `~/.claude` (CLAUDE.md, rules, skills, commands, subagents, settings), `~/.codex`, `~/.gemini`, and the memory Claude Code keeps for each folder.
+- **the folders above it**, their CLAUDE.md and their rules, which Claude Code also reads when a session starts below them;
+- **your home folder's configuration** — `~/.claude` (CLAUDE.md, rules, skills, commands, subagents, settings), `~/.codex`, `~/.gemini`, and the memory Claude Code keeps for each repository, read where it keeps it: a worktree shares its main checkout's, and a memory moved with `autoMemoryDirectory` is read where it was moved;
+- **your organisation's policy**, when an administrator has set one — the managed CLAUDE.md every session loads, and the managed settings, which the checks follow as Claude Code does. A policy file Claude Code can't load is listed with the badge **Organization**. Only someone who can write it, usually an administrator, can fix it, so it is handed to no agent.
 
 The scan only reads, and runs nothing but `git`, which it needs to find each repository and to know what is committed in it. Lancetta looks for the `git` of Apple's developer tools, then Homebrew's; when there is none, the pane says so rather than showing an empty list.
 
@@ -27,11 +28,15 @@ The scan runs the first time you open the panel, the window or the pane, and aga
 
 ## What loads at each start
 
-The top of the pane is a budget. Everything a session loads at launch stays in its context for the whole session, before your first word, and Claude Code warns past a size it does not document: Lancetta read the figures out of Claude Code itself. With a 200K context window it warns past **40,000 characters in one file** and **120,000 in everything a session loads at launch**; with 1M, past 150,000 for both.
+The top of the pane is a budget. Everything a session loads at launch stays in its context for the whole session, before your first word, and Claude Code warns past a size it does not document: Lancetta read the figures out of Claude Code itself. With a 200K context window it warns past **40,000 characters in one file** and **120,000 in all the files it counts together**; with 1M, past 150,000 for both.
 
-**Heaviest start** is the place whose sessions load the most, against that limit: the bar fills toward the point where Claude Code would warn, and a place past it is a warning. Which window you run is set in [Settings](/docs/settings#maintenance).
+It counts the CLAUDE.md files, what they import and the rules that load in every session, a folder above's included; the memory index loads too, and is not counted. A file already past the one-file limit has a warning of its own, and is left out of the sum that decides the warning about the total. Outside your own files, an import of a file beyond the folder a session starts in counts only where you allowed external imports when Claude Code asked; elsewhere the session skips it.
+
+**Heaviest start** is the place where that count is highest, against the limit: the bar fills toward the point where Claude Code would warn, and a place past it is a warning. Which window you run is set in [Settings](/docs/settings#maintenance).
 
 Skills and commands are not part of that figure: at the start they cost only their list, which Claude Code gives a budget of its own, checked below as **Skill listings past their budget**.
+
+The **Launch Weight** card has a row for every place, its bar in layers: your own files, a folder above, the place's own. Each row shows the place's warnings and suggestions; open it for the files it adds to yours, and to hand all its findings to one agent (see [When it needs a judgement](#when-it-needs-a-judgement)).
 
 ## Warnings and suggestions
 
@@ -42,7 +47,7 @@ Each finding is one of two kinds, and the pane says which at the top:
 
 Every finding carries a sentence saying what was found, with its figures, and **why it matters**: what it costs, or what an agent misses because of it.
 
-## The 22 checks
+## The 24 checks
 
 | Check | What it catches |
 |---|---|
@@ -52,12 +57,14 @@ Every finding carries a sentence saying what was found, with its figures, and **
 | Memory index past what loads | A MEMORY.md past its first 200 lines or 25 KB, the part that loads: the newest entries, at the end, never reach a session. Past 85% of either, a suggestion. |
 | Memory files nothing links to | A memory file no link reaches from MEMORY.md, so Claude Code finds it only by chance. |
 | AGENTS.md that Claude Code skips | An AGENTS.md Claude Code does not read, because a CLAUDE.md is in charge, holding instructions nothing it does read contains. |
-| Imports that load nothing | An `@` import of a file that is not there, written in quotes, cut short at a space, or more than four imports deep. One outside the repository, which Claude Code asks about first, is a suggestion. |
-| Frontmatter that doesn't parse | A rule, skill or command whose frontmatter is dropped: a rule then loads everywhere, a skill or a command loses its description. |
+| Imports that load nothing | An `@` import of a file that is not there, written in quotes, cut short at a space, or more than four imports deep. One outside the repository, which Claude Code asks about first, is a suggestion, and so is one outside a folder whose sessions load the file: they skip it unless external imports were allowed there. |
+| Frontmatter that doesn't parse | A rule, skill or command whose frontmatter Claude Code drops, even after the repair it tries first: a rule then loads everywhere, a skill or a command loses its description. |
 | Rules that match no file | A rule whose path patterns match no file in the repository, so it never applies. |
 | Skills, commands and subagents missing a field | A SKILL.md over 500 lines, a skill description cut short in the listing, a skill or a command with no description, a subagent with no name or description. |
 | Skill listings past their budget | A place whose skills and commands, listed by name and description at the start of every session, run past the room Claude Code gives that list: 1% of the context window unless its settings set another share, the window being the one of the model the place's settings name (a million tokens for a model such as `opus[1m]`), else the one set in Settings. The ones used least then lose their description, and Claude stops reaching for them on its own. Past three quarters of it, a suggestion. |
-| Hooks and servers that can't start | A hook, the status line, `apiKeyHelper` or another helper, or a `.mcp.json` server, whose program is not there, cannot run, is a path with a space left unquoted, or starts with a variable nothing fills in where no shell runs. It fails every time it is called. |
+| Skills one folder too deep | A SKILL.md in a folder of `skills` that has no SKILL.md of its own: Claude Code never lists it, and nothing says so. A suggestion, since a skill can be set aside on purpose; the file shows as Ignored. |
+| Settings Claude Code can't load | A settings file or a `.mcp.json` that Claude Code drops whole: a comment, a trailing comma, an invisible NUL character, text that isn't JSON or isn't a JSON object, UTF-16 where it reads UTF-8, over 2 MiB, or a path it can't read. None of its permissions, hooks, plugins or servers apply, and the other checks count none of them either. A policy file of your organisation that Claude Code can't read as a JSON object is worse: Claude Code won't start on this Mac until it is fixed. |
+| Hooks and servers that can't start | A hook, the status line, `apiKeyHelper` or another helper, or a `.mcp.json` server, whose program is not there, cannot run, is a path with a space left unquoted, or starts with a variable nothing fills in where no shell runs. It fails every time it is called. A hook Claude Code never runs, because the settings or your organisation's policy switch hooks off, and a server they turn off, are left alone. |
 | Paths that don't resolve | A path in backticks that leads to no file, beside the file or in any folder above it. |
 | Personal files committed to git | A CLAUDE.local.md or `.claude/settings.local.json`, which hold one person's settings, committed for everyone who clones the repository. |
 | AGENTS.md past Codex's size limit | The AGENTS.md files from the repository's root down to a folder adding up to more than Codex reads (32 KiB unless you raised it): the files past it never reach a session. |
@@ -73,7 +80,7 @@ Each check can be switched off in [Settings](/docs/settings#maintenance), and su
 
 ## Fixing what it finds
 
-Open a card, then a file: under its findings sit the ways to fix them.
+Open a card, then a file, with a click, the keyboard or VoiceOver: under its findings sit the ways to fix them.
 
 ### When the fix needs no choosing
 
@@ -100,6 +107,16 @@ The last three are offered only when the program would then start.
 
 **Fix All**, beside Copy Findings at the top of the pane, gathers every fix of the findings shown into one preview: each fix with the file it changes, then every line written. **Apply** makes them one after another, each whole or not at all as above. One that can no longer be made leaves the others made, and one that changes the same file as a fix that failed is left for the next Fix All, which plans it again on its own. The notice says how many were made, and which were not and why. Fix All appears only when a finding shown has such a fix, and nothing else is offered until the pane has scanned again after an Apply.
 
+### A skill listing past its budget
+
+What to drop from a listing is yours to pick, so it has choices rather than a fix. **Listing Choices…** on the finding's row lists them, each with the listing it would leave against the budget:
+
+- **Turn off the skills synced from claude.ai**, when the listing has them;
+- **Turn off** a plugin that lists skills or commands there: it stays installed, and on wherever else it is turned on;
+- **List skills by name only**: tick skills and commands of your own or of the place, never a plugin's, the ones that save the most first, and the listing is counted again as you tick. Claude then has only their names to go on, and you can still run them by name.
+
+Each choice writes one setting into the place's own `.claude/settings.local.json`, for sessions started there alone, and into that of every other place that lists the same, as the sheet says. It writes only a file git does not track, never your own `~/.claude`, and opens the same preview as a fix: nothing is written before **Apply**. The choices are never part of Fix All. The figures are what is on the disk: Claude Code's own skills come on top in a session.
+
 ### When it needs a judgement
 
 Trimming a long file, merging two that drifted apart, rewording a description: these are a judgement, and they go to an agent with you in the session. **Fix with Claude Code** or **Fix with Codex** opens Terminal in the file's repository and starts that agent there, with a first message Lancetta writes: what was found, why it matters and how to go about it, to propose the changes before making them, and to write in the language each file is already written in.
@@ -110,6 +127,8 @@ The button names the agent whose file it is: Codex for an AGENTS.md or its size 
 - **Codex** has no way to start in its plan mode from outside its window, so it is asked to propose first and wait for your OK, and its sandbox lets it write only in the repository and the file's own folder. To keep it planning, press ⇧Tab in its window for Plan mode.
 
 The menu also has **Copy Prompt**, to paste the same message into a session of your own. With neither agent installed, the button is **Copy Prompt for an Agent**.
+
+**A whole place at once.** In Launch Weight, a place's row shows how many warnings and suggestions a session there is about. Open it, and the same button hands all of them to one session started in that folder, or copies them; Codex's sandbox then writes only in that folder and the folders of its own files.
 
 **Copy Findings**, at the top of the pane, puts every finding shown on the clipboard, file by file, ready for any agent.
 
@@ -122,6 +141,28 @@ A memory file nothing links to, an empty file that keeps nothing out, a plain `.
 Claude Code's background sessions keep a folder each after they end. The **Background Sessions** card lists the ones that have ended, with what each still keeps on disk, as Claude Code itself reports them when Lancetta asks it, and marks those that stopped waiting for your answer, which may hold work in progress.
 
 They are removed the way Claude Code documents, one `claude rm` each, never by deleting folders: Claude Code knows which worktree a session made, and refuses on its own to drop one that holds work not pushed. A session running again by the time you confirm is left alone, and the pane says what was removed and what was not.
+
+## Storage
+
+Coding agents, and the tools they run, leave folders behind that nothing uses any more: an install that stopped halfway, a release replaced since, a build cache in a session that has ended. The **Storage** card adds up what can go, and appears while something can go or is held by a running program.
+
+Each kind is a group of its own, which says what it is, what proves it unused, and whether it comes back:
+
+| Group | What can go |
+|---|---|
+| Codex runtime installs that never finished | An install holding a runtime no newer than the one Codex uses, or unchanged for a day. |
+| Superseded Codex server releases | The releases older than the one before the current one. |
+| Codex marketplace updates that never finished | An update unchanged for an hour, once Codex has put a newer copy of that marketplace in place. |
+| Empty git folders Codex left behind | Those unchanged for a day. |
+| Files ChatGPT copied out and left behind | Those unchanged for a day and older than the ChatGPT running now. They are never opened: they may hold credentials. |
+| Xcode build caches of ended sessions | The build cache in an ended background session's folder; the rest of that folder stays, as your work. |
+| Chrome code-sign clones | Those unchanged for a day. While a Chrome runs, every clone of its version is in use: nothing tells which one is its own. |
+
+Codex's groups are skipped while Codex is switched off in [Settings](/docs/settings#maintenance), the build caches while Claude Code is.
+
+A row says what it frees, how many items it holds, when it last changed and where it is. Where emptying the Trash would free less than the row takes up, because some of its blocks are shared with other files through clones or hard links, the row gives both figures, what it frees out of what it takes up, and its tooltip says why. Nothing a running program holds is offered (the file it runs from, its working folder, a file it has open or mapped): its row is marked **In use**, with the program's name. A row a rule keeps is marked **Kept**, with the reason, and has no button. The card's line counts rows: **Can go**, **In use** and **Kept**.
+
+**Move to Trash…** on a row asks first, naming what goes, its size, and whether it comes back; **Move All to Trash…** takes every row that can go, one at a time. Each is looked at again just before it moves: one that changed since, or that a program holds by then, stays where it is, and the pane says why. On a row marked In use, the button looks again and moves it only once nothing holds it. A folder goes to the Trash whole; the kinds that come in thousands (git folders, ChatGPT's files, Chrome's clones) are first gathered into one new folder that says what they are, and that folder goes. The Finder can put everything back until you empty the Trash. A move and a removal of background sessions never run at the same time.
 
 ## In the panel and the window
 
