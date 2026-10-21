@@ -1,6 +1,6 @@
 ---
 title: "Maintenance: what your coding agents read before they start"
-description: "The files Claude Code, Codex and the others read: what loads at each start, 24 checks, the fixes Lancetta guides, and what they left on disk."
+description: "The files Claude Code, Codex and the others read: what loads at each start, 25 checks, the fixes Lancetta guides, and what they left on disk."
 ---
 
 # Maintenance
@@ -17,10 +17,10 @@ Lancetta keeps no list of your projects, so it asks the agents where they have w
 
 In each of those places it reads what the agents read:
 
-- **the repository** — its CLAUDE.md, AGENTS.md and GEMINI.md at any depth, Copilot's and Cursor's instructions and rules, its `.claude` folder (rules, skills, commands, subagents, settings) and `.mcp.json`;
+- **the repository** — its CLAUDE.md, AGENTS.md and GEMINI.md at any depth, Copilot's and Cursor's instructions and rules, its `.claude` folder (rules, skills, commands, subagents, settings), the rules of a subfolder's `.claude`, which Claude Code reads when a session works there, and `.mcp.json`;
 - **the folders above it**, their CLAUDE.md and their rules, which Claude Code also reads when a session starts below them;
 - **your home folder's configuration** — `~/.claude` (CLAUDE.md, rules, skills, commands, subagents, settings), `~/.codex`, `~/.gemini`, and the memory Claude Code keeps for each repository, read where it keeps it: a worktree shares its main checkout's, and a memory moved with `autoMemoryDirectory` is read where it was moved;
-- **your organisation's policy**, when an administrator has set one — the managed CLAUDE.md every session loads, and the managed settings, which the checks follow as Claude Code does. A policy file Claude Code can't load is listed with the badge **Organization**. Only someone who can write it, usually an administrator, can fix it, so it is handed to no agent.
+- **your organisation's policy**, when an administrator has set one — the managed CLAUDE.md every session loads, its managed rules and the instructions the policy carries, and the managed settings, which the checks follow as Claude Code does, the policy's own programs included. A policy file Claude Code can't load is listed with the badge **Organization**. Only someone who can write it, usually an administrator, can fix it, so it is handed to no agent.
 
 The scan only reads, and runs nothing but `git`, which it needs to find each repository and to know what is committed in it. Lancetta looks for the `git` of Apple's developer tools, then Homebrew's; when there is none, the pane says so rather than showing an empty list.
 
@@ -47,7 +47,7 @@ Each finding is one of two kinds, and the pane says which at the top:
 
 Every finding carries a sentence saying what was found, with its figures, and **why it matters**: what it costs, or what an agent misses because of it.
 
-## The 24 checks
+## The 25 checks
 
 | Check | What it catches |
 |---|---|
@@ -57,14 +57,15 @@ Every finding carries a sentence saying what was found, with its figures, and **
 | Memory index past what loads | A MEMORY.md past its first 200 lines or 25 KB, the part that loads: the newest entries, at the end, never reach a session. Past 85% of either, a suggestion. |
 | Memory files nothing links to | A memory file no link reaches from MEMORY.md, so Claude Code finds it only by chance. |
 | AGENTS.md that Claude Code skips | An AGENTS.md Claude Code does not read, because a CLAUDE.md is in charge, holding instructions nothing it does read contains. |
-| Imports that load nothing | An `@` import of a file that is not there, written in quotes, cut short at a space, or more than four imports deep. One outside the repository, which Claude Code asks about first, is a suggestion, and so is one outside a folder whose sessions load the file: they skip it unless external imports were allowed there. |
+| Imports that load nothing | An `@` import of a file that is not there, written in quotes, cut short at a space, or more than four imports deep. One outside the repository is a suggestion: in a committed file, Claude Code asks everyone who opens the repository about it once; in a file only you have, it is judged as your own sessions read it, and they skip one outside the folder they start in unless external imports were allowed there. |
 | Frontmatter that doesn't parse | A rule, skill or command whose frontmatter Claude Code drops, even after the repair it tries first: a rule then loads everywhere, a skill or a command loses its description. |
 | Rules that match no file | A rule whose path patterns match no file in the repository, so it never applies. |
+| Rules behind a link Claude Code doesn't follow | A rule reached through a link out of the folder its sessions start in: it loads only where external imports are allowed, and a path-scoped one never does. It is listed as ignored, with where the link leads. |
 | Skills, commands and subagents missing a field | A SKILL.md over 500 lines, a skill description cut short in the listing, a skill or a command with no description, a subagent with no name or description. |
 | Skill listings past their budget | A place whose skills and commands, listed by name and description at the start of every session, run past the room Claude Code gives that list: 1% of the context window unless its settings set another share, the window being the one of the model the place's settings name (a million tokens for a model such as `opus[1m]`), else the one set in Settings. The ones used least then lose their description, and Claude stops reaching for them on its own. Past three quarters of it, a suggestion. |
 | Skills one folder too deep | A SKILL.md in a folder of `skills` that has no SKILL.md of its own: Claude Code never lists it, and nothing says so. A suggestion, since a skill can be set aside on purpose; the file shows as Ignored. |
 | Settings Claude Code can't load | A settings file or a `.mcp.json` that Claude Code drops whole: a comment, a trailing comma, an invisible NUL character, text that isn't JSON or isn't a JSON object, UTF-16 where it reads UTF-8, over 2 MiB, or a path it can't read. None of its permissions, hooks, plugins or servers apply, and the other checks count none of them either. A policy file of your organisation that Claude Code can't read as a JSON object is worse: Claude Code won't start on this Mac until it is fixed. |
-| Hooks and servers that can't start | A hook, the status line, `apiKeyHelper` or another helper, or a `.mcp.json` server, whose program is not there, cannot run, is a path with a space left unquoted, or starts with a variable nothing fills in where no shell runs. It fails every time it is called. A hook Claude Code never runs, because the settings or your organisation's policy switch hooks off, and a server they turn off, are left alone. |
+| Hooks and servers that can't start | A hook, the status line, `fileSuggestion`, `apiKeyHelper` or another helper, the background sessions' `processWrapper`, or a `.mcp.json` server, your organisation's policy's own and its policy helper included, whose program is not there, cannot run, is a path with a space left unquoted, or starts with a variable nothing fills in where no shell runs. It fails every time it is called. A hook Claude Code never runs, because the settings or your organisation's policy switch hooks off, and a server they turn off, are left alone. |
 | Paths that don't resolve | A path in backticks that leads to no file, beside the file or in any folder above it. |
 | Personal files committed to git | A CLAUDE.local.md or `.claude/settings.local.json`, which hold one person's settings, committed for everyone who clones the repository. |
 | AGENTS.md past Codex's size limit | The AGENTS.md files from the repository's root down to a folder adding up to more than Codex reads (32 KiB unless you raised it): the files past it never reach a session. |
@@ -144,7 +145,7 @@ They are removed the way Claude Code documents, one `claude rm` each, never by d
 
 ## Storage
 
-Coding agents, and the tools they run, leave folders behind that nothing uses any more: an install that stopped halfway, a release replaced since, a build cache in a session that has ended. The **Storage** card adds up what can go, and appears while something can go or is held by a running program.
+Coding agents, and the tools they run, leave folders behind that nothing uses any more: an install that stopped halfway, a release replaced since, a build cache in a session that has ended. The **Storage** card adds up what can go. It is there once Lancetta has looked, and says **All clear** when nothing can go and nothing is held by a running program.
 
 ![The Storage card open on the fixture home: 39.1 MB can go, nine rows that can go and two kept, grouped by kind, starting with Codex runtime installs that never finished and superseded Codex server releases, each row with its size and Move to Trash, and Move All to Trash at the top](/screenshot-window-maintenance-storage.png)
 
