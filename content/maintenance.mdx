@@ -9,7 +9,7 @@ Every session of a coding agent begins by reading its instruction files, and eve
 
 The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code or Codex when it does. It also finds what the agents left on disk that nothing uses any more, and moves it to the Trash when you say so: see [Storage](#storage).
 
-![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, Fix All and Copy Findings at the top, the heaviest start at 6,983 of the 120,000 characters at which Claude Code warns, then the Instructions, Rules, Skills and Commands & Subagents cards, and the Instructions card open on the four files that need fixing](/screenshot-window-maintenance.png)
+![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, Fix All and Copy Findings at the top, the heaviest start at 6,983 characters in the files Claude Code's startup warning counts, which warns past 120,000, then the Instructions, Rules, Skills and Commands & Subagents cards, and the Instructions card open on the four files that need fixing](/screenshot-window-maintenance.png)
 
 ## Where it looks
 
@@ -145,6 +145,8 @@ They are removed the way Claude Code documents, one `claude rm` each, never by d
 ## Storage
 
 Coding agents, and the tools they run, leave folders behind that nothing uses any more: an install that stopped halfway, a release replaced since, a build cache in a session that has ended. The **Storage** card adds up what can go, and appears while something can go or is held by a running program.
+
+![The Storage card open on the fixture home: 39.1 MB can go, nine rows that can go and two kept, grouped by kind, starting with Codex runtime installs that never finished and superseded Codex server releases, each row with its size and Move to Trash, and Move All to Trash at the top](/screenshot-window-maintenance-storage.png)
 
 Each kind is a group of its own, which says what it is, what proves it unused, and whether it comes back:
 

@@ -172,11 +172,11 @@ const frames: Frame[] = [
   {
     src: '/screenshot-window-maintenance.png',
     ...WINDOW_SHOT,
-    alt: 'The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, the heaviest start (design-system) at 6,983 of the 120,000 characters where Claude Code warns, and the Instructions card open on the files that need fixing: an over-long CLAUDE.md, an AGENTS.md that Claude Code skips, a CLAUDE.local.md committed to git',
+    alt: 'The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, the heaviest start (design-system) at 6,983 characters in the files Claude Code’s startup warning counts, which warns past 120,000, and the Instructions card open on the files that need fixing: an over-long CLAUDE.md, an AGENTS.md that Claude Code skips, a CLAUDE.local.md committed to git',
     eyebrow: 'How they are set up',
     title: 'The tokens every session pays for.',
     body: 'Before an agent does anything, it reads its instruction files — CLAUDE.md, AGENTS.md, the rules that apply everywhere, the index of its memory, a line for each skill — and every session pays for them again. Lancetta scans them in each repository Claude Code or Codex has worked in recently and the folders above it, measures what loads at each start against Claude Code’s own warning thresholds, and says what to fix: 24 checks, each with why it matters. A fix that needs no choosing is shown in full before it is applied, one at a time or all at once; the rest opens in Claude Code or Codex, with the prompt already written.',
-    figures: [{ value: '22', label: 'checks, each with its reason' }],
+    figures: [{ value: '24', label: 'checks, each with its reason' }],
     href: '/docs/maintenance',
     linkLabel: 'What Maintenance checks',
   },
