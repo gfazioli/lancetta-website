@@ -176,7 +176,7 @@ const frames: Frame[] = [
     eyebrow: 'How they are set up',
     title: 'The tokens every session pays for.',
     body: 'Before an agent does anything, it reads its instruction files — CLAUDE.md, AGENTS.md, the rules that apply everywhere, the index of its memory, a line for each skill — and every session pays for them again. Lancetta scans them in each repository Claude Code or Codex has worked in recently and the folders above it, measures what loads at each start against Claude Code’s own warning thresholds, and says what to fix: 25 checks, each with why it matters. A fix that needs no choosing is shown in full before it is applied, one at a time or all at once; the rest opens in Claude Code or Codex, with the prompt already written.',
-    figures: [{ value: '24', label: 'checks, each with its reason' }],
+    figures: [{ value: '25', label: 'checks, each with its reason' }],
     href: '/docs/maintenance',
     linkLabel: 'What Maintenance checks',
   },
@@ -197,7 +197,7 @@ const frames: Frame[] = [
     alt: 'The Processes pane: 4 Codex trees holding 1.45 GB, 3 of them orphaned holding 1.05 GB, and the list open under them: each tree with the directory it was started for, what it holds, its children and its pid, the three orphans marked with a warning',
     eyebrow: 'What they leave behind',
     title: 'Nobody ever closes them.',
-    body: 'Every folder an agent works in leaves a background tree behind, and one whose folder is gone is never shut down — not by the agent, not by the terminal, not by macOS. Lancetta finds them, suggests reclaiming what they hold, and shows you the list before it closes anything.',
+    body: 'Every folder an agent works in leaves a background tree behind, and one whose folder is gone is never shut down — not by the agent, not by the terminal, not by macOS. Lancetta finds them, suggests reclaiming what they hold, and shows you the list before it closes anything. What they leave on disk that nothing uses any more, Maintenance finds too, and moves to the Trash when you say so.',
     figures: [
       { value: '28', label: 'trees on one Mac' },
       { value: '2.68 GB', label: 'held between them' },

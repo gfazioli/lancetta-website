@@ -7,8 +7,8 @@
  *
  * A plain module rather than part of `FAQ.tsx`, which is a client component:
  * `FaqJsonLd` renders on the server (`content/faq.mdx`), where an import from
- * a client module arrives as a reference, not as this array. The three
- * answers the page draws with links are in `FAQ.tsx` (`richAnswers`), and a
+ * a client module arrives as a reference, not as this array. The answers
+ * the page draws with links are in `FAQ.tsx` (`richAnswers`), and a
  * test holds their text to the plain text here.
  */
 export interface FaqEntry {
@@ -52,7 +52,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'different',
     question: 'How is it different from a quota monitor?',
     answer:
-      'A monitor shows you the percentage; Lancetta tells you what to do with it. Advice about a quota needs three things: the ceiling (what your real limit is), the flow (what you have spent), and the series (how that percentage moved over time). The good tools in this space have the first two. The series is the one nobody keeps — a monitor that reads your transcripts has no way to learn the ceiling at all and infers it from your own highest previous block, and one that covers dozens of providers cannot store a series per provider per window and stay maintainable. Lancetta watches two agents instead of dozens and keeps the series for both, which is the only reason it can say where this pace lands, and what to do about it, against the percentage your account actually reports rather than an inferred one. It is also the part that cannot be added later: history only accumulates forward.',
+      'A monitor shows you the percentage; Lancetta tells you what to do with it. Other tools read the quota well, and some keep its history and draw where your pace leads too. Lancetta is built around the decision instead: each suggestion says what to do (spend a window about to reset unused, lower the effort, hand routine work to a lighter model, move to the other agent while it has room) and names the readings it rests on, starting from the percentage your account reports. Around that, it checks the files your agents load at every start, keeps your sessions on one wall, and finds the processes and files they leave behind. It watches two agents rather than dozens, and goes deep on both.',
   },
   {
     value: 'suggestions',
@@ -65,12 +65,6 @@ export const faqEntries: FaqEntry[] = [
     question: 'I run several sessions at once. Can it tell me which one needs me?',
     answer:
       'Yes, for Claude Code and Codex. The Sessions pane keeps every Claude Code and Codex session you started as a post-it on a wall: Your turn first (it finished its turn, asks you something, stopped or failed, or its terminal closed), then Working, then what you concluded. It reads the list each agent keeps of its sessions (for Codex, the ones open in it) and starts or closes none of them: Done takes a post-it down without closing its session. A background session opens in your terminal in one click, and the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
-  },
-  {
-    value: 'refresh',
-    question: 'Can I refresh Claude on demand, like Codex?',
-    answer:
-      'Yes, once it is connected: one click in the menu, and Lancetta reads the sign-in Claude Code keeps the way Claude Code does, with normally no dialog to answer. From then on Claude answers an account read the way Codex does, on the same interval and on Refresh now. Through the status-line file instead, the numbers arrive when a session renders one, and the card shows how old they are rather than pretending to be live.',
   },
   {
     value: 'stale',
@@ -88,13 +82,13 @@ export const faqEntries: FaqEntry[] = [
     value: 'interrupt',
     question: 'Will it interrupt me?',
     answer:
-      'Only about what the menu bar cannot already show. The percentage is on your bar, so Lancetta never announces it; it speaks first when a suggestion cannot wait — an agent that will stop within the hour, a window about to reset with room left, a free reset about to lapse — when a window will run out before it resets, when an agent has nothing left, when it is ready again, when a reading has stopped moving while looking live, and when Codex grants you a free reset. A banner about an agent carries the first steps of its suggestion. Each once, at the moment it changes, and never on launch, with two exceptions: a free reset granted while Lancetta was closed, which is news rather than a state, and a suggestion that cannot wait, said once at the first reading. macOS is asked for permission the first time there is actually something to say. Alerts and suggestions are separate switches, each agent has its own, and a sound is reserved for the two moments you are not looking at a screen.',
+      'Only about what the menu bar cannot already show. The percentage is on your bar, so Lancetta does not announce it unless you choose a level in Settings › Notifications; it speaks first when a suggestion cannot wait — an agent that will stop within the hour, a window about to reset with room left, a free reset about to lapse — when a window will run out before it resets, when an agent has nothing left, when it is ready again, when a reading has stopped moving while looking live, and when Codex grants you a free reset. A banner about an agent carries the first steps of its suggestion. Each once, at the moment it changes, and never on launch, with two exceptions: a free reset granted while Lancetta was closed, which is news rather than a state, and a suggestion that cannot wait, said once at the first reading. macOS is asked for permission the first time there is actually something to say. Alerts and suggestions are separate switches, each agent has its own, and a sound is reserved for the two moments you are not looking at a screen.',
   },
   {
     value: 'surfaces',
     question: 'Is Lancetta only in the menu bar?',
     answer:
-      'Mostly, and that is the point. There is also a window — ⌘O from the menu — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code and Codex sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch. And on any Mac the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
+      'Mostly, and that is the point. There is also a window — ⌘O from the panel — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code and Codex sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock unless you ask it to in Settings › General, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch. And on any Mac the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
   },
   {
     value: 'command-line',
@@ -112,13 +106,13 @@ export const faqEntries: FaqEntry[] = [
     value: 'maintenance',
     question: 'What does the Maintenance pane do?',
     answer:
-      'It lists the files your coding agents read (CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory) in each repository Claude Code or Codex has worked in recently and the folders above it, and measures what loads at each start against Claude Code’s own warning thresholds. Twenty-four checks say what is wrong, from instruction files to hooks and servers that can’t start, each with why it matters. Eight kinds of finding have a fix that needs no choosing, such as importing AGENTS.md into CLAUDE.md, keeping a personal file out of git or quoting a hook’s path: each is shown in full before it is applied, one at a time or all at once with Fix All, and applied whole or not at all. The rest opens in Claude Code or Codex, whichever the file belongs to, with the prompt already written. Files no agent uses can go to the Trash.',
+      'It lists the files your coding agents read (CLAUDE.md, AGENTS.md, rules, skills, commands, settings and memory) in each repository Claude Code or Codex has worked in recently and the folders above it, and measures what loads at each start against Claude Code’s own warning thresholds. Its 25 checks say what is wrong, from instruction files to hooks and servers that can’t start, each with why it matters. Eight kinds of finding have a fix that needs no choosing, such as importing AGENTS.md into CLAUDE.md, keeping a personal file out of git or quoting a hook’s path: each is shown in full before it is applied, one at a time or all at once with Fix All, and applied whole or not at all. The rest opens in Claude Code or Codex, whichever the file belongs to, with the prompt already written. Files no agent uses can go to the Trash, and so can what the agents left on disk that nothing uses any more: the Storage card lists it, and nothing a running program holds is offered.',
   },
   {
     value: 'privacy',
     question: 'Does anything leave my Mac?',
     answer:
-      'Not what you do with the agents. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make (to Anthropic and OpenAI, with your own sign-in), the update check you turn on, and a sponsor picture in About. Maintenance reads the agents’ instruction files where they are, the suggestions read the effort set in Claude Code’s and Codex’s own settings, and Sessions asks your own Claude Code and Codex for the lists of their sessions; none of it leaves the Mac, unless you hand a finding to Claude Code, which then works as it always does. The privacy page lists each one.',
+      'Not what you do with the agents. Lancetta reads what is already on your machine and draws it in your menu bar. There is no account, no server of ours and no telemetry; the only requests are the usage reads the agents themselves make (to Anthropic and OpenAI, with your own sign-in), the update check you turn on, and a sponsor picture in About. Maintenance reads the agents’ instruction files where they are, the suggestions read the effort set in Claude Code’s and Codex’s own settings, and Sessions asks your own Claude Code and Codex for the lists of their sessions; none of it leaves the Mac, unless you hand a finding to Claude Code or Codex, which then works as it always does. The privacy page lists each one.',
   },
   {
     value: 'macos',
@@ -136,18 +130,12 @@ export const faqEntries: FaqEntry[] = [
     value: 'marks',
     question: 'Are those the real Codex and Claude logos?',
     answer:
-      'They are the vendors’ own marks, drawn from vector data so they stay sharp at any size, and used nominatively — to name the products Lancetta reads. Lancetta is not affiliated with, or endorsed by, OpenAI or Anthropic, and one switch in Settings replaces the whole menu with neutral system symbols.',
+      'They are the vendors’ own marks, drawn from vector data so they stay sharp at any size, and used nominatively — to name the products Lancetta reads. Lancetta is not affiliated with, or endorsed by, OpenAI or Anthropic, and one switch in Settings replaces every agent’s mark with a neutral system symbol.',
   },
   {
     value: 'price',
     question: 'What does it cost?',
     answer: 'Lancetta is free. If you find it useful, consider sponsoring the project.',
-  },
-  {
-    value: 'community',
-    question: 'Is there a Lancetta community?',
-    answer:
-      'Yes, on Discord, where Lancetta and its sibling apps live: get help, suggest features, vote on what comes next and talk directly with the maker.',
   },
   {
     value: 'when',
