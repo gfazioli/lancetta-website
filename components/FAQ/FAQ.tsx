@@ -10,13 +10,12 @@ import {
   type Icon,
 } from '@tabler/icons-react';
 import { Accordion, Anchor, Text } from '@mantine/core';
-import { discordLinkProps } from '@/components/Discord/discord';
 import { faqEntries, faqQuestions } from './faq-items';
 import classes from './FAQ.module.css';
 
 /*
  * The answers the page draws with links. Everything else, and the plain text
- * of these three, is `faq-items.ts`, which the JSON-LD quotes too; FAQ.test
+ * of these, is `faq-items.ts`, which the JSON-LD quotes too; FAQ.test
  * holds each of these to its plain text there.
  */
 export const richAnswers: Partial<Record<string, ReactNode>> = {
@@ -27,16 +26,6 @@ export const richAnswers: Partial<Record<string, ReactNode>> = {
         sponsoring the project
       </Anchor>
       .
-    </>
-  ),
-  community: (
-    <>
-      Yes, on{' '}
-      <Anchor {...discordLinkProps} size="sm">
-        Discord
-      </Anchor>
-      , where Lancetta and its sibling apps live: get help, suggest features, vote on what comes
-      next and talk directly with the maker.
     </>
   ),
   when: (

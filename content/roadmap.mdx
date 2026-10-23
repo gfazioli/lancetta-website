@@ -5,17 +5,17 @@ description: "What Lancetta goes after next, and what each step has to prove bef
 
 # What’s next
 
-Nothing here is a promise, and nothing ahead is numbered or dated: the order changes as the work teaches you things (two of the entries on this page were built early, and one was deleted by a measurement). What is worth publishing is the other half: **what each step has to do before it counts as finished**. The versions that have shipped are at the end of the page, named, because they exist and you can download them.
+Nothing here is a promise, and nothing ahead is numbered or dated: the order changes as the work teaches you things (two of the entries on this page were built early). What is worth publishing is the other half: **what each step has to do before it counts as finished**. The versions that have shipped are at the end of the page, named, because they exist and you can download them.
 
 ## Advice from your own history
 
 Today the suggestions reason from the last hour: if you carry on like this, when you run out, and what helps. It is honest arithmetic and it has a blind spot — it does not know that you start at nine, that Thursday is your long day, or that you never touch it at the weekend. So it can tell you where *this* afternoon lands, and what to do about it, but not what a normal one costs you.
 
-The readings are already being kept, and two pieces of this step shipped in 0.16: a **working-hours setting**, so the app knows which hours are yours, and **each day's fullest 5-hour window** in the Usage pane — the history this advice would be drawn from. What is still to come is advice from your own days: an average across them, and the two sentences that need it — **when to start**, and **when you will probably stop**.
+The readings are already being kept, and two pieces of this step have shipped: a **working-hours setting**, so the app knows which hours are yours, and **each day's fullest 5-hour window** in the Usage pane — the history this advice would be drawn from. What is still to come is advice from your own days: an average across them, and the two sentences that need it — **when to start**, and **when you will probably stop**.
 
 **Done when** it can say, on a Monday morning and before you have spent anything, roughly how far into the day the five-hour window will carry you — and be right often enough that the sentence is worth reading. That is a higher bar than the pace line had to clear, because a projection made before there is any evidence is a forecast rather than arithmetic, and a forecast that is wrong twice stops being read. If it cannot clear it, it says nothing, the way every other case that cannot support a projection already does.
 
-**Measured before it was built, and not there yet.** On 4 October 2026 six ways of making that Monday-morning forecast were replayed over two and a half weeks of one Mac's readings: the average of the days before, their median, weekdays apart from weekends, the same weekday, the day before, and an hour-by-hour profile that was even given the real time each window opened. None did better than a single fixed number chosen afterwards, which is what a forecast that knows nothing about the day amounts to. The best was 6.5 points off on Claude against 5.4 for the fixed number, and 23.3 against 20.5 on Codex; neither of Codex's two run-outs — one of them from nothing to empty in eighteen minutes — was foreseen by any of the six, and two days of the same weekday differed as much as any two days. So for now it makes no such forecast, as promised above. The replay runs again once there are more weeks of readings, and the sentence ships only if it clears the bar.
+**Measured before it was built, and not there yet.** On 4 October 2026 six ways of making that Monday-morning forecast were replayed over two and a half weeks of one Mac's readings: the average of the days before, their median, weekdays apart from weekends, the same weekday, the day before, and an hour-by-hour profile that was even given the real time each window opened. None did better than a single fixed number chosen afterwards, which is what a forecast that knows nothing about the day amounts to. The best was 6.5 points off on Claude against 5.4 for the fixed number, and 23.3 against 20.5 on Codex; neither of Codex's two run-outs — one of them from nothing to empty in eighteen minutes — was foreseen by any of the six, and two days of the same weekday differed as much as any two days. So for now it makes no such forecast, as promised above. Replayed again on 23 October over five weeks of readings, the answer was the same: the best was 6.8 points off on Claude against 6.2 for the fixed number, and 20.4 against 19.4 on Codex, and Codex's two run-outs still went unforeseen. The replay runs again as the weeks add up, and the sentence ships only if it clears the bar.
 
 ## On the desktop
 
@@ -35,6 +35,16 @@ The suggestions already reach the terminal: [the `lancetta` command](/docs/comma
 
 ## Already shipped
 
+### v0.63 — what Claude Code really loads
+
+*Shipped 2026-10-21.*
+
+**Maintenance reads more of what Claude Code loads.** The rules of a subfolder are listed with the folder they belong to, your organization's managed rules and the instructions its policy carries are counted in each launch they join, and rules are matched as Claude Code matches them, from the folders above a repository into the ones below it. See [Where it looks](/docs/maintenance#where-it-looks).
+
+**Checks that say what really happens.** A rule behind a link Claude Code doesn't follow is listed as ignored, with a finding that says where the link leads; an import from outside a repository is worded by who reads the file; and more programs are checked, your organization's own hooks, status line and helpers among them, with nothing ever offered to fix inside its policy. See [The 25 checks](/docs/maintenance#the-25-checks).
+
+**Storage, always there.** Once it has looked, the Storage card stays on Maintenance, and says **All clear** when nothing can go. See [Storage](/docs/maintenance#storage).
+
 ### v0.62 — what the agents leave behind
 
 *Shipped 2026-10-21.*
@@ -44,6 +54,8 @@ The suggestions already reach the terminal: [the `lancetta` command](/docs/comma
 **Two more checks, and the policy read as Claude Code reads it.** Settings Claude Code drops without a word, and skills one folder too deep, which it never lists. An organization's policy is followed from a managed profile too: a policy file that would stop Claude Code from starting is flagged, and hooks and servers it switches off no longer are. See [The 25 checks](/docs/maintenance#the-25-checks).
 
 **Choices for a crowded skill listing, and a place at a time.** A listing past its budget offers **Listing Choices…**, each shown in full before anything is written; in Launch Weight, one button hands every finding about a place to a single Claude Code or Codex session. The launch budget counts imports and the rules of the folders above, as Claude Code's own warning does. See [Fixing what it finds](/docs/maintenance#fixing-what-it-finds).
+
+**And 0.62.1: Storage on a Mac with Time Machine.** The card no longer reads *0 bytes* where Time Machine keeps local snapshots: it counts the space that comes back once they are removed, within a day, and says how much of it they still hold.
 
 ### v0.61 — where it is heading, and in your terminal
 
@@ -88,6 +100,12 @@ The suggestions already reach the terminal: [the `lancetta` command](/docs/comma
 **Hooks and servers that can't start, and skill listings past their budget.** A hook, the status line or an MCP server whose program cannot start fails every time it is called, and now Maintenance says so, with fixes of its own for a path split at a space, a script that cannot run and a variable nothing fills in. It also checks each place's skill listing against the room Claude Code gives it, sized by the model the place names, and says when the memory index nears the part that loads. See [The 25 checks](/docs/maintenance#the-25-checks).
 
 **Fewer false findings.** Rules in a workspace of ignored repositories, paths into what git ignores, placeholders and generated blocks no longer raise one.
+
+### v0.52 — About, in two columns
+
+*Shipped 2026-10-13.*
+
+About Lancetta is wider than it is tall now: the app and its links on the left, the sponsors and the developer's other apps on the right, with a new link to Discord. **And 0.52.1** draws the Discord logo whole.
 
 ### v0.51 — Codex can fix it too
 

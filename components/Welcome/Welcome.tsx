@@ -12,6 +12,7 @@ import {
   IconChartPie,
   IconChecklist,
   IconCreditCardOff,
+  IconDeviceDesktop,
   IconDeviceLaptop,
   IconGauge,
   IconHandStop,
@@ -270,7 +271,7 @@ const today: Step[] = [
   {
     icon: IconTrash,
     title: 'What they leave behind',
-    body: 'The background processes agents never clean up, listed before anything is stopped — and never a live one.',
+    body: 'The background processes agents never clean up, and the files nothing uses any more: listed before anything is stopped or moved, and never one in use.',
     color: 'indigo',
     state: 'today',
   },
@@ -301,7 +302,7 @@ const ahead: Step[] = [
   {
     icon: IconSunrise,
     title: 'When to start',
-    body: 'Once you tell it which hours are yours, it will reason from an average across your own days, not the last two hours — and say when to start.',
+    body: 'Once you tell it which hours are yours, it will reason from an average across your own days, not the last hour — and say when to start.',
     color: 'gray',
     state: 'next',
   },
@@ -312,11 +313,18 @@ const ahead: Step[] = [
     color: 'gray',
     state: 'next',
   },
+  {
+    icon: IconDeviceDesktop,
+    title: 'On the desktop',
+    body: 'The suggestions already reach your terminal and your agents. Next, a widget will show them on the desktop, drawn from the same readings as the panel.',
+    color: 'gray',
+    state: 'next',
+  },
 ];
 
 const ROADMAP_GRID = { base: 1, sm: 2, lg: 3 };
-/** Two cards ahead: two columns from `sm` up, so their row is full at every width. */
-const AHEAD_GRID = { base: 1, sm: 2 };
+/** The cards ahead: one column, then one row from `md` up, full at every width. */
+const AHEAD_GRID = { base: 1, md: 3 };
 
 const horizonLabel: Record<Horizon, string> = { today: 'Today', soon: 'Soon', next: 'Next' };
 

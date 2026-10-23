@@ -31,7 +31,7 @@ describe('FAQ server render', () => {
 
 describe('FAQ answers drawn with links', () => {
   // The JSON-LD quotes the plain text in faq-items.ts; the page draws these
-  // three with links. Their words have to be the same, or the rich result
+  // with links. Their words have to be the same, or the rich result
   // quotes an answer the page no longer gives.
   const text = (html: string) =>
     html
