@@ -12,10 +12,10 @@ import {
   IconChartPie,
   IconChecklist,
   IconCreditCardOff,
-  IconDeviceDesktop,
   IconDeviceLaptop,
   IconGauge,
   IconHandStop,
+  IconLayoutDashboard,
   IconLayoutNavbar,
   IconListCheck,
   IconNote,
@@ -182,6 +182,13 @@ const features: Feature[] = [
     href: '/docs/the-notch',
   },
   {
+    icon: IconLayoutDashboard,
+    title: 'On your desktop',
+    description: 'Widgets that say what the panel says, and when.',
+    color: 'cyan',
+    href: '/docs/widgets',
+  },
+  {
     icon: IconChartPie,
     title: 'The window your bar cannot show',
     description: 'A model’s own weekly limit, which can run out first.',
@@ -313,18 +320,11 @@ const ahead: Step[] = [
     color: 'gray',
     state: 'next',
   },
-  {
-    icon: IconDeviceDesktop,
-    title: 'On the desktop',
-    body: 'The suggestions already reach your terminal and your agents. Next, a widget will show them on the desktop, drawn from the same readings as the panel.',
-    color: 'gray',
-    state: 'next',
-  },
 ];
 
 const ROADMAP_GRID = { base: 1, sm: 2, lg: 3 };
 /** The cards ahead: one column, then one row from `md` up, full at every width. */
-const AHEAD_GRID = { base: 1, md: 3 };
+const AHEAD_GRID = { base: 1, md: 2 };
 
 const horizonLabel: Record<Horizon, string> = { today: 'Today', soon: 'Soon', next: 'Next' };
 
