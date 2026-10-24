@@ -1,0 +1,39 @@
+---
+title: "Desktop widgets"
+description: "Lancetta's desktop widgets: one for Claude and one for Codex, and one with every agent and the suggestion that matters, from the panel's own readings."
+---
+
+import { LeadImage } from '@/components/DocsImage/LeadImage';
+import widgets from '@/public/screenshot-widgets.png';
+
+# Desktop widgets
+
+The suggestion that matters and the windows it rests on, on the desktop, without opening the panel.
+
+<LeadImage src={widgets} alt="Lancetta's three desktop widgets: a medium one with Claude and Codex side by side and, at its foot, the suggestion that at this pace Claude stops in 51 minutes; then a small one for Claude and a small one for Codex, each with its two windows and the time to each reset" />
+
+## Adding them
+
+Right-click the desktop › **Edit Widgets…**, search for **Lancetta** and drag the ones you want onto the desktop. Lancetta has to be running: the widgets draw what it reads, and they have nothing of their own to read.
+
+- **Claude** and **Codex**, small: the agent's 5-hour and weekly windows, each as a figure, a bar and the time to its reset, and when they were read.
+- **Your agents**, medium: every agent in the panel, side by side (the first two, in the panel's order), and the suggestion that matters most, with the time it was made beside it.
+
+The figures say what is left or what is used, whichever the panel says ([Settings](/docs/settings)), and the bars are drawn in the colours you gave the agents. A click on any of them opens [Lancetta's window](/docs/the-window).
+
+## Honest about time
+
+The widgets show the panel's own readings. Lancetta writes them out for the widgets after it reads; nothing polls twice, and nothing else asks your account.
+
+- **When it was read.** Every widget says when its numbers were read.
+- **Past a reset, a dash.** When a window resets before Lancetta reads it again, the widget shows a dash and the time it reset, never the old number: the window has filled again by an amount nobody has read yet.
+- **Over an hour old, faint.** The numbers turn faint and the time gets a warning clock: Lancetta was quit, or the Mac was asleep.
+- **The countdowns move by themselves.** The figures change when Lancetta asks macOS to redraw the widgets, and macOS allows each widget a few dozen of those a day. Lancetta asks at once for news — an agent spent, refused, failing or back, a window that started again, a different suggestion — and otherwise when a figure has moved five points, or after half an hour. A suggestion's own words can hold a duration ("stops in 51m"), which is why its time stands beside it.
+
+## Without colour
+
+On the desktop, macOS drains a widget's colour whenever a window is in front of it. So nothing that matters is said by colour alone: a spent window says **Spent, back in 1h14m** beside an hourglass, a refusal says **Refused by the account** beside a raised hand, and an urgent suggestion has a warning sign.
+
+## What they can read
+
+Nothing but the one file Lancetta writes for them, in a folder the two share (see [Privacy](/docs/privacy#what-it-writes)). The widgets have no network access and run in macOS's sandbox: they cannot read your agents, your account or anything else on the Mac.

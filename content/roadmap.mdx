@@ -17,12 +17,6 @@ The readings are already being kept, and two pieces of this step have shipped: a
 
 **Measured before it was built, and not there yet.** On 4 October 2026 six ways of making that Monday-morning forecast were replayed over two and a half weeks of one Mac's readings: the average of the days before, their median, weekdays apart from weekends, the same weekday, the day before, and an hour-by-hour profile that was even given the real time each window opened. None did better than a single fixed number chosen afterwards, which is what a forecast that knows nothing about the day amounts to. The best was 6.5 points off on Claude against 5.4 for the fixed number, and 23.3 against 20.5 on Codex; neither of Codex's two run-outs — one of them from nothing to empty in eighteen minutes — was foreseen by any of the six, and two days of the same weekday differed as much as any two days. So for now it makes no such forecast, as promised above. Replayed again on 23 October over five weeks of readings, the answer was the same: the best was 6.8 points off on Claude against 6.2 for the fixed number, and 20.4 against 19.4 on Codex, and Codex's two run-outs still went unforeseen. The replay runs again as the weeks add up, and the sentence ships only if it clears the bar.
 
-## On the desktop
-
-The suggestions already reach the terminal: [the `lancetta` command](/docs/command-line) prints them for a script, a status line or a session's start, and an Agent Skill tells Claude Code and Codex to ask before a long task. The next step is the desktop: a widget that will show each agent's windows, the time to each reset and the suggestion that matters, where you can see it without opening the panel, drawn from the same readings the panel uses rather than by a second copy polling on its own.
-
-**Done when** the widget says what the panel says, as current as the panel's last reading and saying how old it is when it is not, and when an agent about to stop reads as one by its words and its shape, since a desktop widget can lose its colour while a window is in front of it.
-
 ---
 
 ## Not planned
@@ -34,6 +28,12 @@ The suggestions already reach the terminal: [the `lancetta` command](/docs/comma
 ---
 
 ## Already shipped
+
+### v0.64 — on the desktop
+
+*Shipped 2026-10-24.*
+
+**Widgets that say what the panel says.** A small widget for Claude and one for Codex, with both windows and the time to each reset, and a medium one with every agent and the suggestion that matters most, all drawn from the panel's own readings rather than by a second copy polling on its own. Each says when its numbers were read and turns faint when that was over an hour ago. An agent that has stopped says so in words and with a shape, and one about to stop gets the medium widget's suggestion with a warning sign, so they read the same when macOS drains their colour behind a window. See [Desktop widgets](/docs/widgets).
 
 ### v0.63 — what Claude Code really loads
 
