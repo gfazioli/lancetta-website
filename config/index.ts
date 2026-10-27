@@ -134,6 +134,9 @@ export default {
     // this site collects an address. The footer band, its icon, the prompt and
     // the Support menu all link here.
     newsletter: 'https://lancetta.substack.com',
+    // Lancetta's own YouTube channel since 2026-10-27: the footer links this,
+    // never the author's personal channel.
+    youtube: 'https://www.youtube.com/@Lancetta-app',
   },
   // The directories Lancetta is listed on, as badges, in this order; the shape
   // is findergit.app's. `placement` says where each one goes: Product Hunt's

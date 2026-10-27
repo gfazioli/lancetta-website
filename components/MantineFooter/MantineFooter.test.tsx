@@ -34,6 +34,28 @@ describe('MantineFooter publisher line', () => {
 });
 
 /**
+ * The icon row links Lancetta's own YouTube channel, never the author's
+ * personal one: the URL is pinned here, not read back from `config`.
+ */
+describe('MantineFooter social links', () => {
+  it("lists the icon row in order, with Lancetta's own YouTube channel", () => {
+    render(<MantineFooter year={2026} />);
+    // The icon row, found through its first icon: the text above it links to
+    // Discord too.
+    const icons = screen.getByRole('link', { name: 'GitHub' }).parentElement as HTMLElement;
+    expect(
+      within(icons)
+        .getAllByRole('link')
+        .map((link) => link.getAttribute('aria-label'))
+    ).toEqual(['GitHub', 'X', 'Discord', 'YouTube', 'Newsletter']);
+    expect(within(icons).getByRole('link', { name: 'YouTube' })).toHaveAttribute(
+      'href',
+      'https://www.youtube.com/@Lancetta-app'
+    );
+  });
+});
+
+/**
  * The newsletter band leads the footer on every page, as on findergit.app. An
  * h2, so a page with no h2 of its own (Legal, the FAQ) goes h1, h2 rather than
  * skipping a level, and the subscribe link is the publication itself.
