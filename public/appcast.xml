@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><!-- sparkle-sign-warning:
+IMPORTANT: This file was signed by Sparkle. Any modifications to this file requires re-signing this file with generate_appcast or sign_update! The signed signature will be embedded at the end of this file.
+--><rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
     <channel>
         <title>Lancetta</title>
         <link>https://lancetta.app/appcast.xml</link>
@@ -14,16 +15,23 @@
         -->
         <!-- release.sh inserts new <item> entries right below this marker -->
         <item>
+            <title>Version 0.64.5</title>
+            <pubDate>Wed, 28 Oct 2026 18:26:24 +0000</pubDate>
+            <sparkle:version>594</sparkle:version>
+            <sparkle:shortVersionString>0.64.5</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.64.5.html</sparkle:releaseNotesLink>
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.5/Lancetta-0.64.5.dmg" sparkle:edSignature="pa3KXAO0LoMXXcq5s8oyu8+VPLkzWoMqLwbH9/Pvzy3BZhCn3QZHQmoCqgs8+cRYaLjRWtyAoFS7SdH0wyhmDQ==" length="20256724" type="application/octet-stream"></enclosure>
+        </item>
+
+        <item>
             <title>Version 0.64.4</title>
             <pubDate>Tue, 27 Oct 2026 08:47:58 +0000</pubDate>
             <sparkle:version>589</sparkle:version>
             <sparkle:shortVersionString>0.64.4</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.64.4.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.4/Lancetta-0.64.4.dmg"
-                sparkle:edSignature="BcyyaaMDV9KlnsClpAAX9H8c4YjeUIJfHI+IC4ZgmGRObZ/Y4L930goajNyU/9YQ4trhpTgaec7Yfgop4sB2Cg==" length="20253250"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.4/Lancetta-0.64.4.dmg" sparkle:edSignature="BcyyaaMDV9KlnsClpAAX9H8c4YjeUIJfHI+IC4ZgmGRObZ/Y4L930goajNyU/9YQ4trhpTgaec7Yfgop4sB2Cg==" length="20253250" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -33,10 +41,7 @@
             <sparkle:shortVersionString>0.64.3</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.64.3.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.3/Lancetta-0.64.3.dmg"
-                sparkle:edSignature="ACoQFExEcUELA5kdZWwKXwwiJ+L447asU9usUDgQtVB07D2ZK/TD6IqmIlIQbMWUM6eQajqp1a7zXxpk+ql0CQ==" length="20207098"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.3/Lancetta-0.64.3.dmg" sparkle:edSignature="ACoQFExEcUELA5kdZWwKXwwiJ+L447asU9usUDgQtVB07D2ZK/TD6IqmIlIQbMWUM6eQajqp1a7zXxpk+ql0CQ==" length="20207098" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -46,10 +51,7 @@
             <sparkle:shortVersionString>0.64.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.64.2.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.2/Lancetta-0.64.2.dmg"
-                sparkle:edSignature="/ZYyVLJlSxOgiUzF16nu9mCihcX/df348WU8slZtZ5NSPC+gPSRJLrPXEEKWaQY2tRfsG7+M6REUYZ/lh7qaDg==" length="19394139"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.2/Lancetta-0.64.2.dmg" sparkle:edSignature="/ZYyVLJlSxOgiUzF16nu9mCihcX/df348WU8slZtZ5NSPC+gPSRJLrPXEEKWaQY2tRfsG7+M6REUYZ/lh7qaDg==" length="19394139" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -59,10 +61,7 @@
             <sparkle:shortVersionString>0.64.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.64.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.1/Lancetta-0.64.1.dmg"
-                sparkle:edSignature="mpjbshVWgaRHmGHNpcyCsIfm6jdbGH1QZImSiMdJzeyuYp15UuFkKwL6EFOmJPXFKXe/ToAIFPPb2cNFYyLoAg==" length="19390844"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.1/Lancetta-0.64.1.dmg" sparkle:edSignature="mpjbshVWgaRHmGHNpcyCsIfm6jdbGH1QZImSiMdJzeyuYp15UuFkKwL6EFOmJPXFKXe/ToAIFPPb2cNFYyLoAg==" length="19390844" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -72,10 +71,7 @@
             <sparkle:shortVersionString>0.64.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.64.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.0/Lancetta-0.64.0.dmg"
-                sparkle:edSignature="fDofskqytRaU8+Gtx87lmJBHWMxJorNBE5mA9kUm166lMhjql3asnlo6uEdBdURz958LgAESHOj+u/LJCtZkAA==" length="19375874"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.64.0/Lancetta-0.64.0.dmg" sparkle:edSignature="fDofskqytRaU8+Gtx87lmJBHWMxJorNBE5mA9kUm166lMhjql3asnlo6uEdBdURz958LgAESHOj+u/LJCtZkAA==" length="19375874" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -85,10 +81,7 @@
             <sparkle:shortVersionString>0.63.3</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.63.3.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.63.3/Lancetta-0.63.3.dmg"
-                sparkle:edSignature="BwIKP5DxeeeFhGIPemfiUZZYUZcQCMzpOr/Gx3O2hB5svzX1oQ52n0yfo2OxwmRiMfcL9nOfNjcRwRiJjdNdCw==" length="18681590"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.63.3/Lancetta-0.63.3.dmg" sparkle:edSignature="BwIKP5DxeeeFhGIPemfiUZZYUZcQCMzpOr/Gx3O2hB5svzX1oQ52n0yfo2OxwmRiMfcL9nOfNjcRwRiJjdNdCw==" length="18681590" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -98,10 +91,7 @@
             <sparkle:shortVersionString>0.63.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.63.2.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.63.2/Lancetta-0.63.2.dmg"
-                sparkle:edSignature="qlLzDPtEk0ptzB/uV2jz5vrYA63X2N8Mo7uCPTriK9+/WO9v3//jOiCAM4IhizXFoC7N0FBANoBn7ah02IKmCg==" length="18678314"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.63.2/Lancetta-0.63.2.dmg" sparkle:edSignature="qlLzDPtEk0ptzB/uV2jz5vrYA63X2N8Mo7uCPTriK9+/WO9v3//jOiCAM4IhizXFoC7N0FBANoBn7ah02IKmCg==" length="18678314" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -111,10 +101,7 @@
             <sparkle:shortVersionString>0.63.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.63.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.63.1/Lancetta-0.63.1.dmg"
-                sparkle:edSignature="1Ga3rh2laGrJpdO3OIUUZLTb5T9qpzgIH+JYZMpM8qG5md8dK7LC5Ir7CrFmg64pGtD4NLODiKPlNsF3LUBpAg==" length="18676845"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.63.1/Lancetta-0.63.1.dmg" sparkle:edSignature="1Ga3rh2laGrJpdO3OIUUZLTb5T9qpzgIH+JYZMpM8qG5md8dK7LC5Ir7CrFmg64pGtD4NLODiKPlNsF3LUBpAg==" length="18676845" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -124,10 +111,7 @@
             <sparkle:shortVersionString>0.63.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.63.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.63.0/Lancetta-0.63.0.dmg"
-                sparkle:edSignature="b+qD+z8oYMIu0D/QjmbxEXSOkRCSMIpNT6N8b4ljrNNmYTOp2tY5AcNK1fLFjxEYgtMAyYTZJ69NCaWqW2NrAA==" length="18660951"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.63.0/Lancetta-0.63.0.dmg" sparkle:edSignature="b+qD+z8oYMIu0D/QjmbxEXSOkRCSMIpNT6N8b4ljrNNmYTOp2tY5AcNK1fLFjxEYgtMAyYTZJ69NCaWqW2NrAA==" length="18660951" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -137,10 +121,7 @@
             <sparkle:shortVersionString>0.62.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.62.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.62.1/Lancetta-0.62.1.dmg"
-                sparkle:edSignature="69CbVxFSofAaqAIl6Leg7EXxyqzlb6BF2aWTJhlwXvhPbMwK1fs1qgpfxWBSEZIi+pksDkwwOyZT06RibPj8Aw==" length="18496861"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.62.1/Lancetta-0.62.1.dmg" sparkle:edSignature="69CbVxFSofAaqAIl6Leg7EXxyqzlb6BF2aWTJhlwXvhPbMwK1fs1qgpfxWBSEZIi+pksDkwwOyZT06RibPj8Aw==" length="18496861" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -150,10 +131,7 @@
             <sparkle:shortVersionString>0.62.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.62.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.62.0/Lancetta-0.62.0.dmg"
-                sparkle:edSignature="iFMFB9fv/bXZGhhrL4WpGOhxAZLuNAyrb+yyEj/10V2HvbVEBYm1RPtParTirnZ525LqXhsq4Yvjfkop9PQFDQ==" length="18492858"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.62.0/Lancetta-0.62.0.dmg" sparkle:edSignature="iFMFB9fv/bXZGhhrL4WpGOhxAZLuNAyrb+yyEj/10V2HvbVEBYm1RPtParTirnZ525LqXhsq4Yvjfkop9PQFDQ==" length="18492858" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -163,10 +141,7 @@
             <sparkle:shortVersionString>0.61.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.61.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.61.0/Lancetta-0.61.0.dmg"
-                sparkle:edSignature="kZTipVwnx6Oh6KgXtKeBzkNdvrHrVZRI7uHVaHVyTK+e+e1Pb7O357uaX5El3aMn+QZqJa1mkrXv9F/fCD5uDg==" length="17415675"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.61.0/Lancetta-0.61.0.dmg" sparkle:edSignature="kZTipVwnx6Oh6KgXtKeBzkNdvrHrVZRI7uHVaHVyTK+e+e1Pb7O357uaX5El3aMn+QZqJa1mkrXv9F/fCD5uDg==" length="17415675" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -176,10 +151,7 @@
             <sparkle:shortVersionString>0.60.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.60.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.60.0/Lancetta-0.60.0.dmg"
-                sparkle:edSignature="D3cjTRem9xgFVrPHzXW4Yvw3lT3hyolHv4C49ZDGAQMGs8EhCc97vwZbDvaQ9kIHu3q/ssY7r2fl1oGvYMa9AA==" length="16737105"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.60.0/Lancetta-0.60.0.dmg" sparkle:edSignature="D3cjTRem9xgFVrPHzXW4Yvw3lT3hyolHv4C49ZDGAQMGs8EhCc97vwZbDvaQ9kIHu3q/ssY7r2fl1oGvYMa9AA==" length="16737105" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -189,10 +161,7 @@
             <sparkle:shortVersionString>0.54.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.54.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.54.0/Lancetta-0.54.0.dmg"
-                sparkle:edSignature="r0o22kvpUXCxxsPdLHLMfE7sU3ZIC0NzrVwOlXpuJB60vgLeBJfqioimKCtn2twMU+44C+25pga53+5vQiLEAw==" length="15973408"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.54.0/Lancetta-0.54.0.dmg" sparkle:edSignature="r0o22kvpUXCxxsPdLHLMfE7sU3ZIC0NzrVwOlXpuJB60vgLeBJfqioimKCtn2twMU+44C+25pga53+5vQiLEAw==" length="15973408" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -202,10 +171,7 @@
             <sparkle:shortVersionString>0.53.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.53.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.53.0/Lancetta-0.53.0.dmg"
-                sparkle:edSignature="1g7DVTiX6drlyvla1SDrAGsE3eRO3SeQhkAa4nMinbbWgj9r01nmCKM31G7uRuzHpAhV5HgDqTMcYazg4sndBQ==" length="15946743"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.53.0/Lancetta-0.53.0.dmg" sparkle:edSignature="1g7DVTiX6drlyvla1SDrAGsE3eRO3SeQhkAa4nMinbbWgj9r01nmCKM31G7uRuzHpAhV5HgDqTMcYazg4sndBQ==" length="15946743" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -215,10 +181,7 @@
             <sparkle:shortVersionString>0.52.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.52.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.52.1/Lancetta-0.52.1.dmg"
-                sparkle:edSignature="lQUkdU/Lip2yi7+LDWShY49Xy9oTg8btXvE9pdg6Qv8f8hTQZf9X0V3jjU3rzq4gspl9ZvKBwHkEbg9wZGP7Dg==" length="15528668"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.52.1/Lancetta-0.52.1.dmg" sparkle:edSignature="lQUkdU/Lip2yi7+LDWShY49Xy9oTg8btXvE9pdg6Qv8f8hTQZf9X0V3jjU3rzq4gspl9ZvKBwHkEbg9wZGP7Dg==" length="15528668" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -228,10 +191,7 @@
             <sparkle:shortVersionString>0.52.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.52.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.52.0/Lancetta-0.52.0.dmg"
-                sparkle:edSignature="i394AECdxWJh3y/B1oFKkeDtLzy2hDrDbNDiOCvqtUxBeuOOn1U9G6ED1GO81dDZxSj0vVeb6983NAE5osriDw==" length="15527744"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.52.0/Lancetta-0.52.0.dmg" sparkle:edSignature="i394AECdxWJh3y/B1oFKkeDtLzy2hDrDbNDiOCvqtUxBeuOOn1U9G6ED1GO81dDZxSj0vVeb6983NAE5osriDw==" length="15527744" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -241,10 +201,7 @@
             <sparkle:shortVersionString>0.51.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.51.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.51.0/Lancetta-0.51.0.dmg"
-                sparkle:edSignature="JvNEMV+fjg+l7t1LLYlHZcCNL7kcizOUuVWbI+2RXuIQeKi9LGtc5WieuBYM73+88r7u4z//oFQt/OF3XCW4Cw==" length="15424326"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.51.0/Lancetta-0.51.0.dmg" sparkle:edSignature="JvNEMV+fjg+l7t1LLYlHZcCNL7kcizOUuVWbI+2RXuIQeKi9LGtc5WieuBYM73+88r7u4z//oFQt/OF3XCW4Cw==" length="15424326" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -254,10 +211,7 @@
             <sparkle:shortVersionString>0.50.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.50.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.50.0/Lancetta-0.50.0.dmg"
-                sparkle:edSignature="NiXaa+N+6GZWgVvEBRG50ltxjyDzs+QJl+N98vmRsLXBNpShLUYKrJjcwyd0hznI5xt1WSeulIQ9EDnlRNmhCA==" length="15367847"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.50.0/Lancetta-0.50.0.dmg" sparkle:edSignature="NiXaa+N+6GZWgVvEBRG50ltxjyDzs+QJl+N98vmRsLXBNpShLUYKrJjcwyd0hznI5xt1WSeulIQ9EDnlRNmhCA==" length="15367847" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -267,10 +221,7 @@
             <sparkle:shortVersionString>0.17.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.17.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.17.0/Lancetta-0.17.0.dmg"
-                sparkle:edSignature="+lNB4Q9G6F6JZskXq+OpiQm02L2wGmgkPpAjA1y1iHzZKzz2GV9DvU8ASBYRxinedjnAioXlGqbjlbaUzK4fDg==" length="12846852"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.17.0/Lancetta-0.17.0.dmg" sparkle:edSignature="+lNB4Q9G6F6JZskXq+OpiQm02L2wGmgkPpAjA1y1iHzZKzz2GV9DvU8ASBYRxinedjnAioXlGqbjlbaUzK4fDg==" length="12846852" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -280,10 +231,7 @@
             <sparkle:shortVersionString>0.16.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.16.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.16.1/Lancetta-0.16.1.dmg"
-                sparkle:edSignature="SwQNNz32Jp7C4OgT/kl6nJklKku2MS/NQWye/X/TE1HnzWRKMVaUbmrUimGeOKhx/y60bfjpxlNc1yViydTpDA==" length="12830248"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.16.1/Lancetta-0.16.1.dmg" sparkle:edSignature="SwQNNz32Jp7C4OgT/kl6nJklKku2MS/NQWye/X/TE1HnzWRKMVaUbmrUimGeOKhx/y60bfjpxlNc1yViydTpDA==" length="12830248" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -293,10 +241,7 @@
             <sparkle:shortVersionString>0.16.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.16.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.16.0/Lancetta-0.16.0.dmg"
-                sparkle:edSignature="Lv0oPBiuzppQBMk5O50J8IRVQRtxpGZMKpN8eQ4EE0ClOXXtaepl8CM8ce4S9UmJVdoqfcDJEUShAyaZiOrUDw==" length="12814898"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.16.0/Lancetta-0.16.0.dmg" sparkle:edSignature="Lv0oPBiuzppQBMk5O50J8IRVQRtxpGZMKpN8eQ4EE0ClOXXtaepl8CM8ce4S9UmJVdoqfcDJEUShAyaZiOrUDw==" length="12814898" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -306,10 +251,7 @@
             <sparkle:shortVersionString>0.15.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.15.2.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.15.2/Lancetta-0.15.2.dmg"
-                sparkle:edSignature="WmS5kFcqIaRAu/pAwhdoFjRQXvBgKihpuBBkMAm5rtfzQQkXhnlCDvATIymelEtwMGzvazgQvpS7gIE+0rL7CA==" length="12642689"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.15.2/Lancetta-0.15.2.dmg" sparkle:edSignature="WmS5kFcqIaRAu/pAwhdoFjRQXvBgKihpuBBkMAm5rtfzQQkXhnlCDvATIymelEtwMGzvazgQvpS7gIE+0rL7CA==" length="12642689" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -319,10 +261,7 @@
             <sparkle:shortVersionString>0.15.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.15.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.15.1/Lancetta-0.15.1.dmg"
-                sparkle:edSignature="TyOk7N6zELXj5xgUUhUCV2U7RFxxMu1NuEjp0W+fq6Fg+tMpyBYnV9zh2aaohg2AsxQjtkop+U0rAB/5heE+Aw==" length="12636208"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.15.1/Lancetta-0.15.1.dmg" sparkle:edSignature="TyOk7N6zELXj5xgUUhUCV2U7RFxxMu1NuEjp0W+fq6Fg+tMpyBYnV9zh2aaohg2AsxQjtkop+U0rAB/5heE+Aw==" length="12636208" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -332,10 +271,7 @@
             <sparkle:shortVersionString>0.15.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.15.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.15.0/Lancetta-0.15.0.dmg"
-                sparkle:edSignature="XE1PzLUAuy+F96HiGaZ/o4eM0mN7NYzjVcZorvZ3l73pj8hbMtl6ZifXDO9nhawpVSG2E21fuZ8/1F+p4mZSBA==" length="12659878"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.15.0/Lancetta-0.15.0.dmg" sparkle:edSignature="XE1PzLUAuy+F96HiGaZ/o4eM0mN7NYzjVcZorvZ3l73pj8hbMtl6ZifXDO9nhawpVSG2E21fuZ8/1F+p4mZSBA==" length="12659878" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -345,10 +281,7 @@
             <sparkle:shortVersionString>0.14.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.14.2.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.14.2/Lancetta-0.14.2.dmg"
-                sparkle:edSignature="i06mCPOS8KB3WSaWDHOlNJ5F2YrLF8XNN5PHQ+yOEfwIbtNc6f3/em8q/8DThfZKdFdR5LaBXnRRqgkXYLsKDw==" length="12589443"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.14.2/Lancetta-0.14.2.dmg" sparkle:edSignature="i06mCPOS8KB3WSaWDHOlNJ5F2YrLF8XNN5PHQ+yOEfwIbtNc6f3/em8q/8DThfZKdFdR5LaBXnRRqgkXYLsKDw==" length="12589443" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -358,10 +291,7 @@
             <sparkle:shortVersionString>0.14.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.14.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.14.1/Lancetta-0.14.1.dmg"
-                sparkle:edSignature="t8862yb+AK/fOBDiPdz3GfXcEUGW0Jg8qByjx3HxLUgsHF6vli4XBS8FQuOfxplVbmL+VpHrOXJJCXBopuExBQ==" length="12567311"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.14.1/Lancetta-0.14.1.dmg" sparkle:edSignature="t8862yb+AK/fOBDiPdz3GfXcEUGW0Jg8qByjx3HxLUgsHF6vli4XBS8FQuOfxplVbmL+VpHrOXJJCXBopuExBQ==" length="12567311" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -371,10 +301,7 @@
             <sparkle:shortVersionString>0.14.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.14.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.14.0/Lancetta-0.14.0.dmg"
-                sparkle:edSignature="rr/uzRzg5LpRe2i9B3UybiArISCfnfLA6MRcIVJLklEt2Wvsq1yyEoa5XS6MaL3fyZFL7EhoRGekOld/op5MCg==" length="12536511"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.14.0/Lancetta-0.14.0.dmg" sparkle:edSignature="rr/uzRzg5LpRe2i9B3UybiArISCfnfLA6MRcIVJLklEt2Wvsq1yyEoa5XS6MaL3fyZFL7EhoRGekOld/op5MCg==" length="12536511" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -384,10 +311,7 @@
             <sparkle:shortVersionString>0.13.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.13.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.13.1/Lancetta-0.13.1.dmg"
-                sparkle:edSignature="7EWbP8ZTQCsDVUTsYAz5Git0L5CprXVMA1sNzhAa7Vu4T3n71/He39WkqT4pPW2UMD7ZrVTai6GHuG/s1yy5AQ==" length="12306465"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.13.1/Lancetta-0.13.1.dmg" sparkle:edSignature="7EWbP8ZTQCsDVUTsYAz5Git0L5CprXVMA1sNzhAa7Vu4T3n71/He39WkqT4pPW2UMD7ZrVTai6GHuG/s1yy5AQ==" length="12306465" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -397,10 +321,7 @@
             <sparkle:shortVersionString>0.13.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.13.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.13.0/Lancetta-0.13.0.dmg"
-                sparkle:edSignature="a9zlSSt8vrnhNKKOTobifr8ovXueFhR1qdLWzBG9Vgm+mKbzfbeoIavZfQ/8+nyKastmQE28E8QBddSR2V5cBQ==" length="12305777"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.13.0/Lancetta-0.13.0.dmg" sparkle:edSignature="a9zlSSt8vrnhNKKOTobifr8ovXueFhR1qdLWzBG9Vgm+mKbzfbeoIavZfQ/8+nyKastmQE28E8QBddSR2V5cBQ==" length="12305777" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -410,10 +331,7 @@
             <sparkle:shortVersionString>0.12.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.12.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.12.0/Lancetta-0.12.0.dmg"
-                sparkle:edSignature="dN7FOZz0Ts+vSj/tof2aIQRGg+dQAdY7+i6icjq2ghBplgQ0cj/OqkIxW645fHi4lXwv6KaJlCPfHqEhrbsGBA==" length="11806533"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.12.0/Lancetta-0.12.0.dmg" sparkle:edSignature="dN7FOZz0Ts+vSj/tof2aIQRGg+dQAdY7+i6icjq2ghBplgQ0cj/OqkIxW645fHi4lXwv6KaJlCPfHqEhrbsGBA==" length="11806533" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -423,10 +341,7 @@
             <sparkle:shortVersionString>0.11.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.11.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.11.1/Lancetta-0.11.1.dmg"
-                sparkle:edSignature="Z7dyK5YImuZ4xbudMI5qn2ACFKKZ4iUOalwOQSBJ8feSDogSY8GUTLQa8KvPcg6mZxyulxf57D0+OTYPCIhuBg==" length="11404151"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.11.1/Lancetta-0.11.1.dmg" sparkle:edSignature="Z7dyK5YImuZ4xbudMI5qn2ACFKKZ4iUOalwOQSBJ8feSDogSY8GUTLQa8KvPcg6mZxyulxf57D0+OTYPCIhuBg==" length="11404151" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -436,10 +351,7 @@
             <sparkle:shortVersionString>0.11.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.11.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.11.0/Lancetta-0.11.0.dmg"
-                sparkle:edSignature="PMUVGbjIg6u91NtpRv5LkW0SdY+MaJvRREdmnrJqh2UMyQmC7H/H3ow2NMAngCRKoKWCFgXwHP/BNzt5GmJ+BA==" length="11378228"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.11.0/Lancetta-0.11.0.dmg" sparkle:edSignature="PMUVGbjIg6u91NtpRv5LkW0SdY+MaJvRREdmnrJqh2UMyQmC7H/H3ow2NMAngCRKoKWCFgXwHP/BNzt5GmJ+BA==" length="11378228" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -449,10 +361,7 @@
             <sparkle:shortVersionString>0.10.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.10.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.10.0/Lancetta-0.10.0.dmg"
-                sparkle:edSignature="hr1jWo+HQp/b/EyUUFJWjMBo8H10a0sXyaa322Ydt5+z3P65tAz0so0ktv2drL5YIz1/qFIfnsUESGZOy2O+Bw==" length="11277096"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.10.0/Lancetta-0.10.0.dmg" sparkle:edSignature="hr1jWo+HQp/b/EyUUFJWjMBo8H10a0sXyaa322Ydt5+z3P65tAz0so0ktv2drL5YIz1/qFIfnsUESGZOy2O+Bw==" length="11277096" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -462,10 +371,7 @@
             <sparkle:shortVersionString>0.9.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.9.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.9.0/Lancetta-0.9.0.dmg"
-                sparkle:edSignature="rvJvAYYOHtW/rDFKOyd/Ndd9Uom6bsqHeofNhOhGtv1mv6qsxdpSG0e7OAl6d/4ybYyPT32YJIlqH6ef7U/LDA==" length="11230137"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.9.0/Lancetta-0.9.0.dmg" sparkle:edSignature="rvJvAYYOHtW/rDFKOyd/Ndd9Uom6bsqHeofNhOhGtv1mv6qsxdpSG0e7OAl6d/4ybYyPT32YJIlqH6ef7U/LDA==" length="11230137" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -475,10 +381,7 @@
             <sparkle:shortVersionString>0.8.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.8.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.8.0/Lancetta-0.8.0.dmg"
-                sparkle:edSignature="jrGCWp0QshLuRUXrQqTF/tINhOVwLMIM9ZGdKELDt3svRqA3VB1+mgAlf314aOTpCalNFPsfBTQQMrhmLgKkBw==" length="11207936"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.8.0/Lancetta-0.8.0.dmg" sparkle:edSignature="jrGCWp0QshLuRUXrQqTF/tINhOVwLMIM9ZGdKELDt3svRqA3VB1+mgAlf314aOTpCalNFPsfBTQQMrhmLgKkBw==" length="11207936" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -488,10 +391,7 @@
             <sparkle:shortVersionString>0.7.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.7.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.7.0/Lancetta-0.7.0.dmg"
-                sparkle:edSignature="a3th+mPRbyavxDeqJac2r4me+B7nWJayskj8qcMwAZICuPcZZnqVkuAouppc6H0l6P1++JIgpfHFh8STTC2NDg==" length="11201695"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.7.0/Lancetta-0.7.0.dmg" sparkle:edSignature="a3th+mPRbyavxDeqJac2r4me+B7nWJayskj8qcMwAZICuPcZZnqVkuAouppc6H0l6P1++JIgpfHFh8STTC2NDg==" length="11201695" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -501,10 +401,7 @@
             <sparkle:shortVersionString>0.6.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.6.2.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.6.2/Lancetta-0.6.2.dmg"
-                sparkle:edSignature="F0hxlQAEPUbZSRBdnkjNI04fyMzBEkq30LviP9rU6SCSvgAD+OqJh77j/Lz9idHRhVx/HJxPMyyqrAx+ZEd/Dw==" length="11197847"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.6.2/Lancetta-0.6.2.dmg" sparkle:edSignature="F0hxlQAEPUbZSRBdnkjNI04fyMzBEkq30LviP9rU6SCSvgAD+OqJh77j/Lz9idHRhVx/HJxPMyyqrAx+ZEd/Dw==" length="11197847" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -514,10 +411,7 @@
             <sparkle:shortVersionString>0.6.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.6.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.6.1/Lancetta-0.6.1.dmg"
-                sparkle:edSignature="6avbnG6GADR08gGQpyUHKEbggSax/jU98Jn1OapyoNqgB2XljwOGn02m+Q+JrJKi2iYAF8YyERhJGKkxVCSjAw==" length="11145849"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.6.1/Lancetta-0.6.1.dmg" sparkle:edSignature="6avbnG6GADR08gGQpyUHKEbggSax/jU98Jn1OapyoNqgB2XljwOGn02m+Q+JrJKi2iYAF8YyERhJGKkxVCSjAw==" length="11145849" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -527,10 +421,7 @@
             <sparkle:shortVersionString>0.6.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.6.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.6.0/Lancetta-0.6.0.dmg"
-                sparkle:edSignature="zzOiAuVkxVq6Ey7bQgojouSIHbhdFuA6Rp3ODOLeEuej46A333k3iIspIz0TnDjvVTfisjglS2wAuuWAHfzfDQ==" length="11143074"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.6.0/Lancetta-0.6.0.dmg" sparkle:edSignature="zzOiAuVkxVq6Ey7bQgojouSIHbhdFuA6Rp3ODOLeEuej46A333k3iIspIz0TnDjvVTfisjglS2wAuuWAHfzfDQ==" length="11143074" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -540,10 +431,7 @@
             <sparkle:shortVersionString>0.5.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.5.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.5.1/Lancetta-0.5.1.dmg"
-                sparkle:edSignature="K1a0ljEQE6OYf/HM4WKU/TfWIZJ4s0xGqYXJ6v8sNZXBnpjoF+FXF4NxFqbM4eHh+fg2K6qWOfJY7yl+MGzCCw==" length="11080641"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.5.1/Lancetta-0.5.1.dmg" sparkle:edSignature="K1a0ljEQE6OYf/HM4WKU/TfWIZJ4s0xGqYXJ6v8sNZXBnpjoF+FXF4NxFqbM4eHh+fg2K6qWOfJY7yl+MGzCCw==" length="11080641" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -553,10 +441,7 @@
             <sparkle:shortVersionString>0.5.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.5.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.5.0/Lancetta-0.5.0.dmg"
-                sparkle:edSignature="pdwNjm4XlIglks3/VybVTIJtJJDlRjbC/a04Q6Wt56vTKvzJ7AOHiwKlEKUdWr/4c4Ho6Fa3nNK56RnxONJrCA==" length="11078200"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.5.0/Lancetta-0.5.0.dmg" sparkle:edSignature="pdwNjm4XlIglks3/VybVTIJtJJDlRjbC/a04Q6Wt56vTKvzJ7AOHiwKlEKUdWr/4c4Ho6Fa3nNK56RnxONJrCA==" length="11078200" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -566,10 +451,7 @@
             <sparkle:shortVersionString>0.4.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.4.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.4.0/Lancetta-0.4.0.dmg"
-                sparkle:edSignature="w/XgwA09SOaa7jHPma8sGVs/oPU80haPyYr93y+VkLKWZr6MTLxDLB84++dHPUGpatogOwPGSFNT8/gVu7WzDA==" length="10940363"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.4.0/Lancetta-0.4.0.dmg" sparkle:edSignature="w/XgwA09SOaa7jHPma8sGVs/oPU80haPyYr93y+VkLKWZr6MTLxDLB84++dHPUGpatogOwPGSFNT8/gVu7WzDA==" length="10940363" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -579,10 +461,7 @@
             <sparkle:shortVersionString>0.3.4</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.3.4.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.4/Lancetta-0.3.4.dmg"
-                sparkle:edSignature="vGKfG+fvHUOU1BY8jWdenuQHRUbqr6uadAN/MEKTWtaJcHjURlqyblkcbMvNKVwpuC1QpRFIyHD7VDUK/JqRCA==" length="10729670"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.4/Lancetta-0.3.4.dmg" sparkle:edSignature="vGKfG+fvHUOU1BY8jWdenuQHRUbqr6uadAN/MEKTWtaJcHjURlqyblkcbMvNKVwpuC1QpRFIyHD7VDUK/JqRCA==" length="10729670" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -592,10 +471,7 @@
             <sparkle:shortVersionString>0.3.3</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.3.3.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.3/Lancetta-0.3.3.dmg"
-                sparkle:edSignature="sVglTbx/L0GOdYJBEQpEi1STREY99E1OiP3qotXWnWzVYWUagLe7oxeeFllgJ6MnRF+bM7EaZEwz8KyOQ6URBw==" length="10715126"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.3/Lancetta-0.3.3.dmg" sparkle:edSignature="sVglTbx/L0GOdYJBEQpEi1STREY99E1OiP3qotXWnWzVYWUagLe7oxeeFllgJ6MnRF+bM7EaZEwz8KyOQ6URBw==" length="10715126" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -605,10 +481,7 @@
             <sparkle:shortVersionString>0.3.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.3.2.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.2/Lancetta-0.3.2.dmg"
-                sparkle:edSignature="kiQ9X9eMJsV6jYTUnjqySLHeo7h2ODRjRWppN6I7XqDpddC1370tFQ9W2umevjkG+ZLQiKyYDHv5134vvFKLAg==" length="10542705"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.2/Lancetta-0.3.2.dmg" sparkle:edSignature="kiQ9X9eMJsV6jYTUnjqySLHeo7h2ODRjRWppN6I7XqDpddC1370tFQ9W2umevjkG+ZLQiKyYDHv5134vvFKLAg==" length="10542705" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -618,10 +491,7 @@
             <sparkle:shortVersionString>0.3.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.3.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.1/Lancetta-0.3.1.dmg"
-                sparkle:edSignature="hDRMFGyDVcWIYh6G69TXBv7OY/xR1VQZNQmLzmp9HB5NsAe2rkELQ+yRKd12ANNwlwyesWvNTu8Ktw303j1lCw==" length="10522932"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.1/Lancetta-0.3.1.dmg" sparkle:edSignature="hDRMFGyDVcWIYh6G69TXBv7OY/xR1VQZNQmLzmp9HB5NsAe2rkELQ+yRKd12ANNwlwyesWvNTu8Ktw303j1lCw==" length="10522932" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -631,10 +501,7 @@
             <sparkle:shortVersionString>0.3.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.3.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.0/Lancetta-0.3.0.dmg"
-                sparkle:edSignature="EmkVyNvQGiIP57AWNATtSr+gRUyKw4FKnbCL5+MIl4L5Aq1Gf6r1tBco2vO/OD1bLs7qM/KaxZ0AbKsbx05KBg==" length="10508568"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.3.0/Lancetta-0.3.0.dmg" sparkle:edSignature="EmkVyNvQGiIP57AWNATtSr+gRUyKw4FKnbCL5+MIl4L5Aq1Gf6r1tBco2vO/OD1bLs7qM/KaxZ0AbKsbx05KBg==" length="10508568" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -644,10 +511,7 @@
             <sparkle:shortVersionString>0.2.2</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.2.2.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.2.2/Lancetta-0.2.2.dmg"
-                sparkle:edSignature="hVmF6eDfG25vUYn6ijoIs4Eqh+3LcNY7Rio5B1LEWUKKLRF62B5SQgYTdN0BXXeM/cqVpZIKziCF9vkGIs7VDQ==" length="6221478"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.2.2/Lancetta-0.2.2.dmg" sparkle:edSignature="hVmF6eDfG25vUYn6ijoIs4Eqh+3LcNY7Rio5B1LEWUKKLRF62B5SQgYTdN0BXXeM/cqVpZIKziCF9vkGIs7VDQ==" length="6221478" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -657,10 +521,7 @@
             <sparkle:shortVersionString>0.2.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.2.1.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.2.1/Lancetta-0.2.1.dmg"
-                sparkle:edSignature="uB0mib1VZgxu7S9YtiRyLAFEk6cegqw3soAJXQ+f8I/dRxve8xhThoDavplPmv8t+n9GDJukXUrqqUJ+CQB5Cg==" length="4324228"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.2.1/Lancetta-0.2.1.dmg" sparkle:edSignature="uB0mib1VZgxu7S9YtiRyLAFEk6cegqw3soAJXQ+f8I/dRxve8xhThoDavplPmv8t+n9GDJukXUrqqUJ+CQB5Cg==" length="4324228" type="application/octet-stream"></enclosure>
         </item>
 
         <item>
@@ -670,11 +531,11 @@
             <sparkle:shortVersionString>0.2.0</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
             <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.2.0.html</sparkle:releaseNotesLink>
-            <enclosure
-                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.2.0/Lancetta-0.2.0.dmg"
-                sparkle:edSignature="+eoltWGW/p0IwPz9o1IhPzLb+bOuzjMCb54OaapCChb0gPKzItyVyKnMNkHAbOuCJZ3iYyHYOUzByoHl0QmNBg==" length="3555820"
-                type="application/octet-stream" />
+            <enclosure url="https://github.com/gfazioli/lancetta-website/releases/download/v0.2.0/Lancetta-0.2.0.dmg" sparkle:edSignature="+eoltWGW/p0IwPz9o1IhPzLb+bOuzjMCb54OaapCChb0gPKzItyVyKnMNkHAbOuCJZ3iYyHYOUzByoHl0QmNBg==" length="3555820" type="application/octet-stream"></enclosure>
         </item>
 
     </channel>
-</rss>
+</rss><!-- sparkle-signatures:
+edSignature: o2Nj4ytPbdPDZ+ShHDkVharlCXfcjp6lVALWfLObmA+1AlQ2gqJvylmezNZ/ciYA4FsDjdskXQUE/TJnAn4RDg==
+length: 39839
+-->
