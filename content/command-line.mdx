@@ -48,8 +48,8 @@ The app rewrites the document after every read, once a refresh interval (45 seco
       "route": "appServer",
       "reading": {
         "observedAt": 1790400000,
-        "fiveHour": { "usedPercent": 41, "resetsAt": 1790417000 },
-        "sevenDay": { "usedPercent": 12.5, "resetsAt": 1790946000 },
+        "fiveHour": { "usedPercent": 41, "resetsAt": 1790417000, "absent": false },
+        "sevenDay": { "usedPercent": 12.5, "resetsAt": 1790946000, "absent": false },
         "plan": "pro",
         "blocked": false,
         "blockedBucket": null,
@@ -100,7 +100,7 @@ The app rewrites the document after every read, once a refresh interval (45 seco
 | `agent`, `route` | The agent, and the route its numbers came through — or, beside a `problem`, the route that failed: `appServer` for Codex; `account` or `statusLine` for Claude, and `unwired` while it is connected to neither. |
 | `reading` | The last reading, or `null` when there is none. With `problem` also `null`, the app has not heard from that agent since it started; that lasts until the agent first answers, usually a second or two after launch or after you turn it on. |
 | `observedAt` | When that reading was taken. |
-| `fiveHour`, `sevenDay` | Each window: `usedPercent` and `resetsAt`. |
+| `fiveHour`, `sevenDay` | Each window: `usedPercent`, `resetsAt`, and `absent` — `true` when the plan has no such window (Claude’s Ultra plan has no five-hour one), with `usedPercent` `null` beside it. |
 | `plan` | The plan the account reports, or `null`. |
 | `blocked`, `blockedBucket` | Whether the account refused, and the bucket that did when it has a name worth saying. Read this before the percentages: a refused account can still show a comfortable one. |
 | `models` | Windows the account reports for one model each: `id`, `label`, `group`, `usedPercent`, `resetsAt`. Empty when none are reported, which is always the case on the status-line route. |
@@ -117,7 +117,7 @@ The app rewrites the document after every read, once a refresh interval (45 seco
 Three rules hold everywhere in it:
 
 - **`usedPercent` is what has been used**, whatever the app is set to show. What is left is 100 minus it.
-- **An unknown is `null`, never `0`.** A `0` is a reading.
+- **An unknown is `null`, never `0`.** A `0` is a reading. A window the plan does not have is `null` too, with `absent: true`: nothing will ever fill it.
 - **Times are Unix epoch seconds**, the same unit as Claude Code's own status-line payload.
 
 ## lancetta statusline
@@ -128,7 +128,7 @@ One line: each agent's two windows, then the suggestion that matters.
 Claude 5h 82% · 7d 40% | Codex 5h 12% · 7d 20% | ⚠ At this pace Claude stops in 51m, then waits 1h18m for its reset.
 ```
 
-- **Each agent**, in the order Lancetta draws them, with both windows as **used**, whatever the app is set to show. A ⛔ follows an agent whose account refused. An agent with no reading shows its problem's code instead (`Claude CLAUDE-9`), or `—` before its first answer.
+- **Each agent**, in the order Lancetta draws them, with both windows as **used**, whatever the app is set to show; a plan with no five-hour window prints only its week (`Claude 7d 40%`). A ⛔ follows an agent whose account refused. An agent with no reading shows its problem's code instead (`Claude CLAUDE-9`), or `—` before its first answer.
 - **`(seen 2h05m ago)`** follows a reading more than 15 minutes old. The document is rewritten after every poll, so a fresh document can carry an old reading, such as a status-line file nothing has written since: an old reading is never shown as current.
 - **Then the suggestion the notch would show**, or, when there is none, one about room to spend: marked ↗ for room and ⚠ for the rest. A suggestion about an agent whose reading is more than 15 minutes old is left out.
 - **`as of 20m ago`** ends the line when the document itself is more than 15 minutes old: the app has quit, or is not polling.
@@ -195,7 +195,7 @@ This is the skill as Lancetta installs it:
 name: lancetta
 description: Check how much Claude Code and Codex quota is left, and what Lancetta suggests, before a long or expensive task, through the `lancetta` command. Use before a big refactor, a long review or many subagents, and when the user asks how much quota is left, when a window resets, or which agent to use.
 ---
-<!-- Installed by Lancetta (lancetta.app), skill v1. Settings › General › Command line updates or removes it. -->
+<!-- Installed by Lancetta (lancetta.app), skill v2. Settings › General › Command line updates or removes it. -->
 
 # Lancetta: quota and advice on this Mac
 
@@ -210,7 +210,7 @@ Lancetta is a menu-bar app on this Mac. It reads Claude Code's and Codex's quota
 ## How to read it
 
 1. `agents[].reading.blocked` first: `true` means that agent's account refuses turns now, whatever the percentages say.
-2. `usedPercent` is what is used, 0 to 100, for the 5-hour window (`fiveHour`) and the week (`sevenDay`). `null` is unknown, never 0. `resetsAt` is in epoch seconds.
+2. `usedPercent` is what is used, 0 to 100, for the 5-hour window (`fiveHour`) and the week (`sevenDay`). `null` is unknown, never 0. `resetsAt` is in epoch seconds. `absent: true` means the plan has no such window (Claude's Ultra plan has no 5-hour limit): only the week can stop that agent.
 3. `observedAt` (each reading) and `writtenAt` (the document): older than about 15 minutes means Lancetta is not running or not polling. Say so, and do not present the numbers as current.
 4. `advice[]` holds Lancetta's suggestions, the most urgent first. Match on `kind` (stop, week, room, spent, lapse, maintenance, orphans), `tone` (warning, caution, encourage, info) and `agent`. The `title`, `steps` and `basis` are for people.
 
@@ -250,11 +250,12 @@ lancetta=/Applications/Lancetta.app/Contents/MacOS/Lancetta
 "$lancetta" usage --json 2>/dev/null | /usr/bin/jq -r '
   [.agents[] | select(.reading != null) | .reading as $r
    | .agent + " "
-     + (if $r.fiveHour.usedPercent == null then "?"
+     + (if $r.fiveHour.absent then "7d " + ($r.sevenDay.usedPercent | floor | tostring) + "%"
+        elif $r.fiveHour.usedPercent == null then "?"
         else ($r.fiveHour.usedPercent | floor | tostring) + "%" end)
      + (if $r.blocked then " refused" else "" end)
      + (if now - $r.observedAt > 600 then " (stale)" else "" end)
   ] | join("  ")'
 ```
 
-Against the document above it prints `Codex 41% (stale)`: that reading is long past, and Claude, with no reading, is left out. A window nobody has read yet shows as `?`, an agent whose account said no gets ` refused`, and a reading more than ten minutes old gets ` (stale)`.
+Against the document above it prints `Codex 41% (stale)`: that reading is long past, and Claude, with no reading, is left out. A window nobody has read yet shows as `?`, a plan with no five-hour window shows its week (`Claude 7d 40%`), an agent whose account said no gets ` refused`, and a reading more than ten minutes old gets ` (stale)`.

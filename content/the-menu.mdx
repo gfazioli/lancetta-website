@@ -87,7 +87,7 @@ The mark and the name are on the card itself. The marks are the vendors' own art
 ```
 
 - **The percentage** — how much of that window is spent, or how much is left, depending on [one setting](/docs/settings#general). The bar is filled with whichever number is on screen, never with its opposite.
-- **The window** — `5h` is the rolling five-hour bucket, `7d` the weekly one. A row carrying a **model's name** instead is a weekly limit that belongs to that model alone, counted separately from the two above and sent by your account under that name. It appears only when your account has one and only once it has been used; see [How it reads each agent](/docs/how-it-reads#a-window-one-model-keeps-to-itself).
+- **The window** — `5h` is the rolling five-hour bucket, `7d` the weekly one. A plan with no five-hour window, such as Claude’s Ultra, has no `5h` row at all rather than a dash. A row carrying a **model's name** instead is a weekly limit that belongs to that model alone, counted separately from the two above and sent by your account under that name. It appears only when your account has one and only once it has been used; see [How it reads each agent](/docs/how-it-reads#a-window-one-model-keeps-to-itself).
 - **The bar** — the same number, drawn, so a glance is enough. It is tinted with the colour you gave that agent. Unless you choose otherwise, the 5-hour bar also carries on, faint, to where your recent rate leaves it at the reset, whenever there is a recent rate to go on: see [Where each window is heading](#where-each-window-is-heading).
 - **The reset** — when this window rolls over. 80% with four hours to go is a different afternoon from 80% with ten minutes to go, which is why every suggestion about a window names its reset too.
 
@@ -299,6 +299,8 @@ What sits in the menu bar is configurable per agent: its mark, its percentage, i
 | **black, red edge** | refused, or nothing left. Unusable until it comes back |
 
 A window nobody has managed to read yet shows a **grey** bead rather than a green one. An unknown is not an empty quota, and this app exists because a status line once drew one as the other.
+
+A plan with **no five-hour window** — Claude’s Ultra plan, once Anthropic has verified the account — has its cell read the week instead: the week’s lamp, its percentage and a reset counted in days (`41% · ↻4d17h`). That is not a guess at a missing number: the account says the window does not exist, and an account that only failed to answer still gets the grey bead.
 
 The bead reads what is **spent**, whichever way round you asked to see the number: if you have the item showing what remains, `3%` on screen is a red lamp, not a green one.
 

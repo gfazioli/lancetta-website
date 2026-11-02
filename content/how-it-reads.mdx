@@ -45,6 +45,10 @@ A spent window of this kind is **not** an agent with nothing left, and Lancetta 
 
 **This is an account-route fact.** The status-line payload carries the two general windows and nothing else, so a Claude card reading that file cannot see these rows at all — one more thing [Connect](/docs/getting-started#claude-code) buys, and the card says so.
 
+## A plan with no five-hour window
+
+Claude’s **Ultra** plan has no five-hour limit once Anthropic has verified the account, only the weekly ones. The account says so in its own reply: no five-hour figure, and no session meter among its rows. Lancetta reads that as a window the plan does not have, which is a different thing from a number it failed to read, so the menu bar, the island and the widgets read the week, the five-hour rows are not drawn, and the suggestions count the week as the only thing that can stop you. An account still waiting for verification gets a temporary limit, and Lancetta shows whatever the account reports for it.
+
 ## The other route
 
 Before 0.3 the only way in was a file: Claude Code hands its status-line command a payload that carries the same two windows, and one line in that script writes them where Lancetta can read them. It still works, and it is the route for anyone who would rather not hand the app a keychain item.
@@ -71,6 +75,7 @@ Two things about it, because Lancetta shows both rather than hiding them:
 
 - **The card is only as fresh as your last rendered session.** If nothing has rendered a status line for two hours, the reading is two hours old, and the panel says so.
 - **The file is a shared slot.** Every Claude Code session that renders writes it, so two sessions can disagree. The line above writes only when the payload carries the five-hour window, so a session that sees just the weekly one does not replace a complete reading with a partial one.
+- **On a plan with no five-hour window it writes nothing.** Claude’s Ultra plan sends no five-hour figure, so the line above never fires and the card keeps its last reading, with its age. Connect reads the account instead, which says the window does not exist.
 
 With the account connected, the file is not read at all.
 
