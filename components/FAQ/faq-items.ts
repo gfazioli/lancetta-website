@@ -79,6 +79,12 @@ export const faqEntries: FaqEntry[] = [
       'Both, and that gap is one Lancetta closes. Some plans give one model a weekly limit of its own, counted separately from the window every monitor reads — so the model you actually want can be spent while the general window is comfortable. The account sends that limit as a row of its own, and Lancetta draws it under the name your account gives it, with a sentence when its week is spent, when it is back, and when it is heading for empty before it resets. It needs the account route: the status-line file carries the two general windows and nothing else.',
   },
   {
+    value: 'ultra',
+    question: 'Does it work with Claude’s Ultra plan, which has no 5-hour limit?',
+    answer:
+      'Yes. A verified Ultra account has only weekly limits, and Lancetta reads it that way: the menu bar shows the week with its reset counted in days, the 5-hour rows are gone instead of showing a dash (a table that needs the cell says “No 5-hour limit”), and the suggestions warn about the week, the only limit that can stop you. It needs Connect: on Ultra the status-line file is no longer written, and the card says so.',
+  },
+  {
     value: 'interrupt',
     question: 'Will it interrupt me?',
     answer:
