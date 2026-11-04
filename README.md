@@ -12,7 +12,7 @@
 <p align="center">
   <a href="https://github.com/gfazioli/lancetta-website/releases/latest"><img src="https://img.shields.io/github/v/release/gfazioli/lancetta-website?label=release&color=8D78F5" alt="Latest release" /></a>
   <a href="https://www.apple.com/macos/"><img src="https://img.shields.io/badge/macOS-15%2B-2FBFA8" alt="macOS 15+" /></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-E8833A" alt="MIT License" /></a>
+  <a href="NOTICE.md"><img src="https://img.shields.io/badge/website%20code-MIT-E8833A" alt="Website code: MIT License" /></a>
 </p>
 
 <p align="center">
@@ -119,4 +119,4 @@ The brand accent is deliberately the icon's **third** bar. The other two hues al
 
 ## Licence
 
-MIT — see [LICENSE](./LICENSE).
+The website's source code is released under the [MIT License](LICENSE). The Lancetta app published in [Releases](https://github.com/gfazioli/lancetta-website/releases) is not open source: it is free to use under its [Terms of Use](https://lancetta.app/docs/terms). What the licence covers, brand assets and third-party notices: [NOTICE.md](NOTICE.md).
