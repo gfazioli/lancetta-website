@@ -1,6 +1,6 @@
 ---
 title: "Sessions: what waits on you, across Claude Code and Codex"
-description: "Every Claude Code and Codex session you started, as a post-it on a wall: which ones wait on you, which are working, and a record of what you finished."
+description: "Every Claude Code and Codex session, on one wall: which wait on you, which are working, what you finished, and what the agents keep, to open again or delete."
 ---
 
 import { LeadImage } from '@/components/DocsImage/LeadImage';
@@ -19,13 +19,16 @@ They are the agents' sessions, not Lancetta's: nothing here starts one or closes
 
 How each list is read, and what is not, is on [How it reads each agent](/docs/how-it-reads#your-sessions-for-the-wall). On a wall that holds both agents' sessions, each post-it carries its agent's mark in the corner of its badge.
 
-## Three places on the wall
+## Four cards
 
-- **Your turn**: the session finished its turn, asks you something, stopped or failed, or its terminal closed. The card says how long the one waiting longest has waited.
+- **Your turn**: the session finished its turn, asks you something, stopped or failed. The card says how long the one waiting longest has waited.
 - **Working**: the agent is on it.
-- **Concluded**: the sessions you called done, and the ones you removed in Claude Code. The card counts today's, and under it the last seven days.
+- **Concluded**: the sessions you called done, the ones you removed in Claude Code, and the ones that closed by themselves. The card counts today's, and under it the last seven days.
+- **Saved**: what the agents still keep on disk once a session is off the wall, to open again or delete. See [Saved](#saved).
 
-Each card opens into its sessions, **as cards or as a list**: one switch for all three, kept from one launch to the next. A menu orders them: oldest first, newest first, by when they started, by name or by folder. Concluded is grouped by day, over the last 30 days.
+With both agents watched, a switch at the top shows **All**, **Claude** or **Codex**: every card follows it, and so does the sessions' own panel.
+
+Each of the first three opens into its sessions, **as cards or as a list**: one switch for all three, kept from one launch to the next. A menu orders them: oldest first, newest first, by when they started, by name or by folder. Concluded is grouped by day, over the last 30 days.
 
 The first time you open the pane, a short explanation sits at the top: what it is, how it works, what it is for. **Got it** puts it away, and the ⓘ beside the title brings it back.
 
@@ -42,12 +45,28 @@ Once Lancetta has seen a session work for a minute, a bar splits its time betwee
 - **Put back** puts a concluded post-it back on the wall, while its session is still there.
 - A right-click offers **Rename…**, a name of your own for the post-it, and **Copy Attach Command**, or **Copy Resume Command** on a Codex session: the command Open runs, for a terminal of your choosing.
 
-A session you remove in Claude Code moves to Concluded by itself. Lancetta waits until it has been missing for half a minute of the Mac's awake time before believing it, and for longer when every session goes missing at once, which is more often a restart than an empty wall. A session in a terminal that leaves the list, Claude Code's or Codex's, stays up as *Its terminal closed* until you call it done: leaving the list says nothing about whether the work is finished.
+A concluded session can still be opened, and deleted:
+
+- **Open** runs `codex resume` on a Codex session, `claude attach` on a Claude Code background session that is still there, and otherwise `claude --resume` on its conversation, in the folder it ran in. A right-click copies that command.
+- **Delete…** deletes the session itself, after a confirmation that says what goes. On a Codex session it is Codex's own delete, for good. On a Claude Code session it is `claude rm`, then its conversation moves to the Trash, where the Finder can put it back; `claude --resume` no longer finds it while it is there. A session still running is left alone, and the pane says why. Lancetta forgets it too. Delete is in the window only: the panel has no room to say what it did.
+
+A session you remove in Claude Code moves to Concluded by itself. Lancetta waits until it has been missing for half a minute of the Mac's awake time before believing it, and for longer when every session goes missing at once, which is more often a restart than an empty wall. A session that closes by itself, a terminal that closed or a Codex session its background service let go, moves there too, as *Closed*, at the time it left the list. Leaving the list says nothing about whether the work is finished, so a closed session that shows up again, resumed in another terminal, goes back up where it stood.
 
 ## What the wall cannot see of Codex
 
-- **A terminal closing, straight away.** Codex keeps a session loaded in its background service for a while after its terminal closes, so for that while its post-it still reads as waiting on you, and *Its terminal closed* only once Codex lets it go.
+- **A terminal closing, straight away.** Codex keeps a session loaded in its background service for a while after its terminal closes, so for that while its post-it still reads as waiting on you, and it goes to Concluded as *Closed* only once Codex lets it go.
 - **`/new` in a Codex terminal.** It starts another session, so the post-it of the one before stays up until you call it done: nothing in a Codex session ties it to the terminal it ran in.
+
+## Saved
+
+The agents keep their sessions after they are off the wall, and some of them pile up. The **Saved** card lists them, as each agent reports them when Lancetta asks it, and follows the switch at the top:
+
+- **Claude Code's background sessions that have ended**, with what each still keeps on disk. **Remove…** runs `claude rm`, the way Claude Code documents: the folder goes, and a worktree the session made unless it holds work not pushed, which Claude Code refuses on its own. The conversation stays, for `claude --resume`. **Delete…** does the same, then moves the conversation to the Trash. **Select Finished** ticks the ones that finished, never one that stopped waiting for your answer.
+- **Codex's saved sessions**: your conversations, and in a group of its own, closed until you open it, the ones every `codex exec` and `codex review` leaves behind, with the threads reviews run in. **Select Commands** ticks those, never a conversation. **Archive…** is Codex's own archive: the session leaves Codex's list, its file is compressed, and `codex unarchive` with its id brings it back. **Delete…** is Codex's own delete, for good. The sessions Codex has archived sit in a group of their own, where Delete still reaches them.
+
+Every row opens in your terminal, as Open does on the wall. A Codex session is never archived or deleted while Codex has it open, while a program has its file open, when it was written to within the hour, or when an agent it spawned is any of these, since Codex takes a session's agents with it. Each one is looked at again just before its turn, and the pane says how many went and why any stayed. Codex's side reads through the `codex` [Settings → Sources](/docs/settings#sources) names, and shows nothing until it is found.
+
+These used to be two cards in [Maintenance](/docs/maintenance), which no longer shows them.
 
 ## Working at once
 
@@ -56,7 +75,7 @@ Sessions of one agent working side by side spend its window together. When two o
 ## Without opening the window
 
 - **In the panel**, a **Sessions** card joins the deck while any session is up, and opens into the first of them, each with Open and Done.
-- **In the menu bar**, the sessions can have [an item of their own](/docs/settings#panel), off until you turn it on: the Lancetta icon and how many sessions, Claude Code's and Codex's, wait on you. A click opens the panel with the sessions alone, as the same three cards, each opening in place. A right-click is the command menu, as on Lancetta's own item.
+- **In the menu bar**, the sessions can have [an item of their own](/docs/settings#panel), off until you turn it on: the Lancetta icon and how many sessions, Claude Code's and Codex's, wait on you. A click opens the panel with the sessions alone, as the same four cards and the same switch: the first three open in place, and Saved opens the window on it. A right-click is the command menu, as on Lancetta's own item.
 
 ![The sessions’ own panel: 4 waiting on you · 3 working, Your turn open on its four sessions, each with its agent’s mark, where it stands and for how long, and the Open and Done buttons, the first a Codex session that asks you something; Working closed beside it at 3, and Concluded below: 2, and 3 in the last 7 days](/screenshot-panel-sessions.png)
 
@@ -68,4 +87,4 @@ An agent you stop watching in Settings › Agents takes its sessions off the wal
 
 ## What it keeps
 
-The wall and the record of concluded sessions are two files on this Mac, and nothing in them leaves it. What each one holds, and how to clear the record, is on [Privacy](/docs/privacy#what-it-writes) and in [Settings → Privacy](/docs/settings#privacy).
+The wall and the record of concluded sessions are two files on this Mac, and nothing in them leaves it. A concluded session's record keeps the identifiers Open and Delete need, and Delete removes it. What each one holds, and how to clear the record, is on [Privacy](/docs/privacy#what-it-writes) and in [Settings → Privacy](/docs/settings#privacy).

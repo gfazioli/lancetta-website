@@ -137,21 +137,9 @@ The menu also has **Copy Prompt**, to paste the same message into a session of y
 
 A memory file nothing links to, an empty file that keeps nothing out, a plain `.md` in Cursor's rules: these do nothing for any agent today, and only these offer **Move to Trash…**. The file is read again just before it moves, and anything changed since the scan is left alone. The Finder can put it back.
 
-## Background sessions
+## Sessions the agents keep
 
-Claude Code's background sessions keep a folder each after they end. The **Background Sessions** card lists the ones that have ended, with what each still keeps on disk, as Claude Code itself reports them when Lancetta asks it, and marks those that stopped waiting for your answer, which may hold work in progress.
-
-They are removed the way Claude Code documents, one `claude rm` each, never by deleting folders: Claude Code knows which worktree a session made, and refuses on its own to drop one that holds work not pushed. A session running again by the time you confirm is left alone, and the pane says what was removed and what was not.
-
-## Codex sessions
-
-Codex keeps every session in its list, where `codex resume` finds it: your conversations, and also one for every `codex exec` and `codex review` that a command or another agent ran, with the thread each review runs in. Those pile up. The **Codex Sessions** card lists every session Codex has not archived, newest first, as Codex itself reports them when Lancetta asks it: what started it, the folder it ran in, when it was last active, and its id. The threads reviews ran in, which Codex's own list never shows, are counted in one row.
-
-![The Codex Sessions card open on the fixture home: 11 sessions, 8 run by commands and 3 conversations, the task threads in one row, then each session with what started it, its folder, when it was last active and its id, one marked Recent and one In use, with Select Commands, Select None and Archive at the top](/screenshot-window-maintenance-codex.png)
-
-**Select Commands** ticks every session a command ran and every task thread, never one of your conversations, which only you tick. **Archive…** asks first, then archives them one at a time the way Codex does: a session leaves the list, its file is compressed beside the others Codex has archived, and `codex unarchive` with its id brings it back. Nothing is deleted.
-
-A session is never archived while Codex has it open, while a program has its file open (a Codex window run without its background service, or a command still running), when it was written to within the hour, or when an agent it spawned is any of these, since Codex archives a session's agents with it. Each one is looked at again just before its turn, and the pane says how many went and why any stayed. The card is skipped while Codex is switched off in [Settings](/docs/settings#maintenance).
+Claude Code's ended background sessions and the sessions Codex keeps are in the **Saved** card of [Sessions](/docs/sessions#saved), with every other session: open them, remove them, archive or delete them there. Maintenance showed them as two cards until 0.68.
 
 ## Storage
 

@@ -29,11 +29,17 @@ The readings are already being kept, and two pieces of this step have shipped: a
 
 ## Already shipped
 
+### v0.68 — one place for every session
+
+*Shipped 2026-11-04.*
+
+**Sessions, for both agents.** The Sessions pane is now where every session lives, Claude Code's and Codex's: a fourth card, **Saved**, holds what the agents keep on disk, and a switch shows all of them, Claude's or Codex's. A session that closes by itself goes to Concluded as *Closed* rather than waiting on you for ever, and comes back if it starts again. Any concluded or saved session opens again in a terminal, or is deleted for good: Codex's own delete, or `claude rm` with the conversation moved to the Trash. See [Sessions](/docs/sessions).
+
 ### v0.67 — Codex's sessions, cleared
 
 *Shipped 2026-11-04.*
 
-**Codex Sessions.** Every `codex exec` and `codex review` is saved in Codex's list like a conversation, with the thread each review runs in, and they pile up. Maintenance now lists every session Codex keeps, ticks the ones commands ran with **Select Commands**, never your conversations, and archives them the way Codex does, so `codex unarchive` brings any back. A session open in Codex, held by a program, or written to within the hour is never archived. See [Codex sessions](/docs/maintenance#codex-sessions).
+**Codex Sessions.** Every `codex exec` and `codex review` is saved in Codex's list like a conversation, with the thread each review runs in, and they pile up. Maintenance now lists every session Codex keeps, ticks the ones commands ran with **Select Commands**, never your conversations, and archives them the way Codex does, so `codex unarchive` brings any back. A session open in Codex, held by a program, or written to within the hour is never archived. See [Saved](/docs/sessions#saved).
 
 ### v0.65 — a plan with no five-hour window
 
