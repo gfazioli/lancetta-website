@@ -213,7 +213,7 @@ const frames: Frame[] = [
     alt: 'The Lancetta island open under a MacBook Pro notch: a ring per agent carrying its mark and its 5-hour reading, each window as a bar, and at the end the panel’s first suggestion: at this pace Claude stops in 51m, then waits 1h18m for its reset, lower the effort',
     eyebrow: 'Under the notch',
     title: 'The advice, at a glance.',
-    body: 'On a MacBook Pro Lancetta also lives under the notch — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. A bar turns red when its agent has stopped, or will within the hour. Point at it and it opens on the same suggestion as the panel.',
+    body: 'On a Mac with a notch Lancetta also lives under it — one bar per agent, exactly as wide as the notch, so the menu bar beside it still works. A bar turns red when its agent has stopped, or will within the hour. Point at it and it opens on the same suggestion as the panel.',
     href: '/docs/the-notch',
     linkLabel: 'How the island works',
   },

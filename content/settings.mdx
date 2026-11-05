@@ -23,7 +23,7 @@ Whichever you pick, the bars are filled with **the number that is shown**, and e
 
 **Show where each window ends** — on by default. The [pace line](/docs/the-menu#the-pace-line): a caption under each bar saying how much of the window has gone and how long it has been open, and, when your recent rate would empty a window before it resets, when — on the window that would stop you first. It is an extrapolation of your own readings, not a prediction, and it says nothing at all until enough of the window has passed for a rate to mean anything. Two settings on the [Notifications](#notifications) pane work with it: your [working hours](#working-hours) tell it when your day ends, and the Suggestions notifications are sent only while it is on. The [suggestions](/docs/suggestions) at the top of the panel and the window do not depend on it: advice is the app's job, and this line is one way of saying it. How the panel draws it, besides saying it, is under [Panel](#panel).
 
-**Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there, and turns amber when it says when you would run out. On, it appears only then. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
+**Only when a window would run out early** — off by default, and disabled while the line above is off. Off, the line is always there, and turns amber when it says when you would run out. On, it appears only then, or when the window's average so far would empty it before it resets. Always on is the default because a line that shows up only in trouble is one nobody has learnt to read by the time it matters.
 
 **Rotate agents every** — with more than one agent in the menu bar they take turns, cross-fading. The item holds a fixed width at the widest of them so its neighbours never shift. With one agent in the bar there is nothing to rotate, and the control is disabled rather than silently doing nothing.
 
@@ -57,7 +57,7 @@ A row opens on a click anywhere, and drags from anywhere. The grip on the left s
 - **Colour** — the tint its bars are drawn in, everywhere: the panel, the window, the island, and the token chart if the data is that agent's. A colour you set is a colour you expect to see. There is a Reset beside it.
 - **Watch this agent** — off, it keeps no card in the menu and no cell in the bar, and its sessions leave the [Sessions](/docs/sessions) wall, kept for when you watch it again. Lancetta refuses to turn off the last one: an empty menu is indistinguishable from an app that has stopped working, and the way back would be through the thing you just emptied.
 - **Show in the menu bar** — separate from watching it, because an agent can be worth a card in the menu and not worth the bar's width. A refusal is shown regardless: when this agent is refused, its mark and a dead lamp take a turn in the bar even with this off, because the bar's rule is alarm first.
-- **In the bar show** — its mark, its percentage, its reset, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
+- **In the bar show** — **Icon** (its mark), **Percentage** and **Reset**, in any combination. The reset is off by default: it is four characters wide and the menu bar is the one place width is expensive. An agent set to show nothing still shows its mark, because an empty cell reads as a bug.
 - **How it is wired** — the line under the agent's name says which route its numbers arrive by, so a card that is not updating tells you where to look. The panel says it too: a Claude card still read through the status-line file carries a line saying so, and a Connect button beside it. [Sources](#sources) has the detail, and for Codex a way to choose the binary.
 - **Notifications** — whether Lancetta speaks about this agent is on the [Notifications](#per-agent) pane, beside the other agents.
 - **Account** (Claude only) — **Connect** reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left, reading it the way Claude Code does, so there is normally nothing to approve. **Disconnect** stops it. What that click does and does not do is spelled out in [Getting Started](/docs/getting-started#claude-code).
@@ -80,13 +80,15 @@ What Lancetta says first, which is deliberately little: the percentage is alread
 
 **Let Lancetta speak first** — on by default. macOS asks whether Lancetta may notify you the first time there is something worth saying, not now and not at launch.
 
-**Alerts** — what the account reported: it refused you or a window is spent, it is ready again, or its reading has stopped moving.
+**Alerts** — what the account reported: it refused you or a window is spent, it is ready again, a model's own weekly limit is spent, or its reading has stopped moving.
 
 **Suggestions** — what Lancetta suggests while the panel is closed: an agent that will stop within the hour at this pace, with what to do instead; a window about to reset mostly unused; a free reset about to lapse; and where a week is heading, days ahead, at its average so far, with the reset named beside it. Each is said once per window. It is off while the pace line's switch, under [General](#general), is off. The [suggestions](/docs/suggestions) themselves, at the top of the panel and the window, are there either way.
 
 **Also say when a window passes** — *Never* by default, because this one announces the number already in your menu bar. Kept for a hard threshold; each level is said once per window, going up, and again after the window resets.
 
 **Sound when you are out** and **Sound when you can start again** — one of macOS's own sounds, or none. Only these two moments carry a sound: the work stopping, and the work being possible again.
+
+The level list and the two sounds belong to **Alerts**: with it off, they are greyed out.
 
 ### Working hours
 

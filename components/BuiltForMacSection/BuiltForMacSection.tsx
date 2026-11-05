@@ -105,9 +105,9 @@ export function BuiltForMacSection() {
             mt="lg"
           >
             No Electron, and no window you have to keep open. Native SwiftUI that sits in the menu
-            bar and gets out of the way — and on a MacBook Pro, one thin bar per agent under the
-            notch. It speaks your Mac’s language: English, Italian, French, German, Spanish,
-            Portuguese or Dutch.
+            bar and gets out of the way — and on a Mac with a notch, one thin bar per agent under
+            it. It speaks your Mac’s language: English, Italian, French, German, Spanish, Portuguese
+            or Dutch.
           </Text>
         </Stack>
       </Container>

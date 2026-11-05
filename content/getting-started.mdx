@@ -32,7 +32,7 @@ That question costs no tokens. It is an account read, not a model turn; see [How
 
 One click. Open the panel and, under Claude, choose **Connect Claude Code…** (it is also in Settings › Agents › Claude). Lancetta reads the sign-in Claude Code keeps on your Mac and asks your Claude account how much is left — the question Claude Code's own `/usage` asks. It reads that sign-in the way Claude Code itself does, through macOS's own `security` tool, so there is normally no dialog to answer.
 
-Claude Code rewrites its sign-in every time it renews it, and Lancetta reads the new one by itself: no Reconnect, no dialog. If your login keychain is locked, Lancetta reads nothing and says so, and tries again by itself at the next reading once you unlock it (Keychain Access does); **Refresh now** tries straight away. If the route is closed for any other reason, Lancetta has to ask macOS directly, and it only does that when you choose Connect: a background read never raises a dialog, and neither does Refresh now. The card offers **Reconnect** instead; choose **Always Allow** when macOS asks.
+Claude Code rewrites its sign-in every time it renews it, and Lancetta reads the new one by itself: no Reconnect, no dialog. If your login keychain is locked, Lancetta reads nothing and says so, and tries again by itself at the next reading once you unlock it (Keychain Access does); **Refresh now** tries straight away. If the route is closed for any other reason, Lancetta has to ask macOS directly, and it only does that when you choose Connect: a background read never raises a dialog, and neither does Refresh now. The card asks you to reconnect instead, with **Connect Claude Code…** beside the sentence; choose **Always Allow** when macOS asks.
 
 What that click does, and does not do:
 
@@ -40,7 +40,7 @@ What that click does, and does not do:
 - **One request, to Anthropic, the same one Claude Code makes.** Nothing else is sent, and no model is involved, so nothing is billed.
 - **Disconnect**, in Settings › Agents › Claude, stops it.
 
-If you would rather not hand Lancetta a keychain item, there is an older route that connects nothing: a line in your status-line script writes the numbers to a file, and Lancetta reads the file. It is spelled out in [How it reads each agent](/docs/how-it-reads#the-other-route), with its two limits. If Claude was already being read through that file when you installed this version, nothing changes until you ask: the card carries the numbers as before, a line saying where they come from, and the Connect button beside it.
+If you would rather not hand Lancetta a keychain item, there is an older route that connects nothing: a line in your status-line script writes the numbers to a file, and Lancetta reads the file. It is spelled out in [How it reads each agent](/docs/how-it-reads#the-other-route), with its limits. If Claude was already being read through that file when you installed this version, nothing changes until you ask: the card carries the numbers as before, a line saying where they come from, and the Connect button beside it.
 
 ## Read the panel
 
@@ -58,7 +58,7 @@ All of it follows: the panel, the island under the notch, the window, Settings, 
 
 ## And then the rest of it
 
-- On a MacBook Pro, the same reading sits under the notch, turns red when an agent has stopped or will within the hour, and opens on the same suggestion as the panel when you point at it — [The Notch](/docs/the-notch).
+- On a Mac with a notch, the same reading sits under it, turns red when an agent has stopped or will within the hour, and opens on the same suggestion as the panel when you point at it — [The Notch](/docs/the-notch).
 - **Open Lancetta…** (⌘O) gives you every suggestion, usage over weeks, both agents in detail, and the background processes the agents have left running — [The Window](/docs/the-window).
 - The window's **Maintenance** pane checks the files your agents read before every session, and fixes what needs no choosing once you have seen the change — [Maintenance](/docs/maintenance).
 - The window's **Sessions** pane keeps your Claude Code and Codex sessions on one wall, the ones waiting on you first, and opens a Claude Code background session or a Codex session in your terminal — [Sessions](/docs/sessions).

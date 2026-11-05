@@ -38,16 +38,16 @@ A *lancetta* is the hand of an instrument — the needle that says where you are
 
 It says all this where you already look: the **panel** under the menu-bar item, the **island under the notch**, and a **window** with every suggestion and everything it rests on.
 
-It also keeps your **Claude Code sessions** on one wall, the ones waiting on you first, and closes the background processes the agents leave behind once their folder is gone, never a live one, on your say-so.
+It also keeps your **Claude Code and Codex sessions** on one wall, the ones waiting on you first, and closes the background processes the agents leave behind once their folder is gone, never a live one, on your say-so.
 
 ### Reading a quota costs nothing
 
 A monitor that spends quota in order to display quota is self-defeating, and the failure would be invisible — a few hundred tokens per poll, every forty-five seconds, is a real bite out of a five-hour window and nothing in the UI would say so. So it was measured rather than assumed:
 
-| | before | after |
+| Codex, measured 2026-09-17 | before | after twelve reads |
 |---|---|---|
 | Lifetime tokens | 318,009,023 | 318,009,023 |
-| Percentages used | 33% / 13% | 33% / 13% |
+| Used, 5-hour / 7-day window | 33% / 13% | 33% / 13% |
 
 Twelve Codex account reads on one connection moved nothing. And the instrument works, which is the half that makes the zero mean something: the same counter moved by **29,188,602** across a day of ordinary use. A counter that *cannot* move looks exactly like a counter that did not.
 

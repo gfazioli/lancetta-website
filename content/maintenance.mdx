@@ -7,7 +7,7 @@ description: "The files Claude Code, Codex and the others read: what loads at ea
 
 Every session of a coding agent begins by reading its instruction files, and every session pays for them again, before your first prompt: CLAUDE.md and AGENTS.md with the files they import, the rules that apply everywhere, the index of Claude Code's memory. Skills and commands cost less: a session reads only their names and descriptions, the list the agent chooses from, and the body of one only when it is used. A rule scoped to some files loads when the agent works on one of them, a memory note when the index leads to it. These files are rarely measured, and most of what goes wrong in them goes wrong silently: an import that loads nothing, a rule that loads everywhere, an AGENTS.md that Claude Code never reads.
 
-The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code or Codex when it does. It also finds what the agents left on disk that nothing uses any more, and moves it to the Trash when you say so: see [Storage](#storage); and it archives the sessions Codex keeps piling up: see [Codex sessions](#codex-sessions).
+The **Maintenance** pane of [the window](/docs/the-window) lists those files, says what they cost at each start, checks them, and guides the fix: done for you when it needs no choosing, handed to Claude Code or Codex when it does. It also finds what the agents left on disk that nothing uses any more, and moves it to the Trash when you say so: see [Storage](#storage). The sessions the agents keep piling up are in [Sessions](/docs/sessions#saved).
 
 ![The Maintenance pane: 4 warnings and 5 suggestions across 18 files in 4 places, Fix All and Copy Findings at the top, the heaviest start at 6,983 characters in the files Claude Code's startup warning counts, which warns past 120,000, then the Instructions, Rules, Skills and Commands & Subagents cards, and the Instructions card open on the four files that need fixing](/screenshot-window-maintenance.png)
 
@@ -106,7 +106,7 @@ The last three are offered only when the program would then start.
 
 ### All of them at once
 
-**Fix All**, beside Copy Findings at the top of the pane, gathers every fix of the findings shown into one preview: each fix with the file it changes, then every line written. **Apply** makes them one after another, each whole or not at all as above. One that can no longer be made leaves the others made, and one that changes the same file as a fix that failed is left for the next Fix All, which plans it again on its own. The notice says how many were made, and which were not and why. Fix All appears only when a finding shown has such a fix, and nothing else is offered until the pane has scanned again after an Apply.
+**Fix All…**, beside Copy Findings at the top of the pane, gathers every fix of the findings shown into one preview: each fix with the file it changes, then every line written. **Apply** makes them one after another, each whole or not at all as above. One that can no longer be made leaves the others made, and one that changes the same file as a fix that failed is left for the next Fix All, which plans it again on its own. The notice says how many were made, and which were not and why. Fix All appears only when a finding shown has such a fix, and nothing else is offered until the pane has scanned again after an Apply.
 
 ### A skill listing past its budget
 

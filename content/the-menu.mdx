@@ -46,7 +46,7 @@ The colour says how much it matters:
 - **green**: room you would otherwise lose, a window about to reset mostly unused;
 - **blue**: housekeeping: what [Maintenance](/docs/maintenance) found, a free reset that lapses later in the week, or the trees nothing can reach.
 
-With more than three, a line under them says how many more there are, and opens the window, where the Overview shows them all. With nothing to suggest, one line takes their place: *Nothing to adjust: every agent has room, and Lancetta is watching the pace.* It says that only when the readings show room in every window. Otherwise the line is just *Nothing to suggest right now: Lancetta is watching the pace.*
+With more than three, a line under them says how many more there are, and opens the window, where the Overview shows them all. With nothing to suggest, one line takes their place: *Nothing to adjust: every agent has room, and Lancetta is watching the pace.* With one agent it says *there is room* instead. That line appears only when readings from the last half hour show room in every window. Otherwise the line is just *Nothing to suggest right now: Lancetta is watching the pace.*
 
 What each suggestion is, when it appears and which ones also arrive as a notification are on [Suggestions](/docs/suggestions).
 
@@ -64,16 +64,16 @@ Which of these the panel shows is yours to choose, in [Settings › Panel](/docs
 
 **Click a card and its details open under it**, joined to it, and a second click closes them. One card is open at a time, and the panel remembers which one between launches. The **arrow** in a card's corner opens that pane of [the window](/docs/the-window) instead.
 
-An agent's card opens on its plan, its windows and anything it is waiting on: a refusal, a free reset, or a better route to its numbers. Usage opens on the week's chart, Maintenance on what the scan found, Processes on its strip with **Reclaim**, and Sessions on the first of your sessions, each with **Open** and **Done**. The whole wall is on [Sessions](/docs/sessions).
+An agent's card opens on its plan, its windows and anything it is waiting on: a refusal, a free reset, or a better route to its numbers. Usage opens on the week's chart, Maintenance on what the scan found, Processes on its strip with **Reclaim**, and Sessions on the first six of your sessions, each with **Open** and **Done**, then a line to the pane for the rest. The whole wall is on [Sessions](/docs/sessions).
 
 ### An agent's card, opened
 
 ```
-max 20×                                  seen 7s ago
+max                                      seen 7s ago
 ```
 
 - **The plan**: read from the account itself rather than typed into a setting, so it cannot drift out of date.
-- **The freshness marker**: how long ago this reading was taken. It is shown only when it trails the panel's own **Updated … ago** line by more than a minute and a half. The panel has one clock, at the top, and a card adds its own age only when that clock would be wrong about it. Codex can be asked, so it keeps up. Claude, once connected, is asked too, at most once a minute and straight away on Refresh now, so it keeps up while the account answers. If the account asks for a pause, the last reading stays on the card with its age. Through the status-line file instead, the reading moves only while a Claude Code session is open. After an idle evening the card says *seen 3h17m ago* under a header saying *Updated 5s ago*, and the gap between the two is the point. That asymmetry is real and the panel shows it rather than smoothing it over; see [How it reads each agent](/docs/how-it-reads). A Claude card still on that route also says so under its bars, *From the status-line file, which moves only while a Claude Code session is open*, with a **Connect Claude Code…** button beside the sentence. A Mac wired that way before the account route existed was never told there was a better one.
+- **The freshness marker**: how long ago this reading was taken. It is shown only when it trails the panel's own **Updated … ago** line by more than a minute and a half. The panel has one clock, at the top, and a card adds its own age only when that clock would be wrong about it. Codex can be asked, so it keeps up. Claude, once connected, is asked too, at most once a minute and straight away on Refresh now, so it keeps up while the account answers. If the account asks for a pause, the last reading stays on the card with its age. Through the status-line file instead, the reading moves only while a Claude Code session is open. After an idle evening the card says *seen 3h17m ago* under a header saying *Updated 5s ago*, and the gap between the two is the point. That asymmetry is real and the panel shows it rather than smoothing it over; see [How it reads each agent](/docs/how-it-reads). A Claude card still on that route also says so under its bars, *From the status-line file, which moves only while a Claude Code session is open. The account answers any time.*, with a **Connect Claude Code…** button beside the sentence. A Mac wired that way before the account route existed was never told there was a better one.
 
 The mark and the name are on the card itself. The marks are the vendors' own artwork, and one switch in [Settings](/docs/settings#appearance) replaces them with neutral system symbols.
 
@@ -108,15 +108,16 @@ Only Codex has these. Claude's account grants no free resets — what Claude cal
 ### How a length of time is written
 
 Every duration in Lancetta — a reset, an age, a window's elapsed time — is written
-the same way: **two units, the larger first, and the larger one is the largest that has
+the same way: **at most two units, the larger first, and the larger one is the largest that has
 reached 1.**
 
 ```
 45s     59m     1h04m     23h59m     1d     1d05h     6d23h
 ```
 
-The second unit is dropped when it is zero, so a reset exactly two days out is `2d`
-rather than `2d00h`. Nothing is ever rounded up: a countdown that overstates would
+Under an hour it is one unit, seconds or minutes. An hour keeps its minutes even when
+they are zero, `2h00m`, while a day drops a zero hour, so a reset exactly two days out
+is `2d` rather than `2d00h`. Nothing is ever rounded up: a countdown that overstates would
 promise a return that has not happened.
 
 Up to ninety seconds it counts in seconds, which is the one place a smaller unit is
@@ -154,9 +155,10 @@ half hours past the first hour, and under ten minutes it says *a few minutes*.
 
 It is said on **one** row: the window that would stop you first. When the 5-hour
 window runs out before the weekly one would, the weekly row shows its figures
-alone, and the other way round. A limit one model has of its own never says it,
-since running it out does not stop the agent. And nothing is said once the agent
-has already stopped.
+alone, and the other way round. A limit one model has of its own says it on its own
+row: running it out does not stop the agent, which falls back to another model, but
+it is still worth knowing before it happens. And nothing is said once the agent has
+already stopped.
 
 It is an extrapolation of your own readings, not a prediction, and it says
 nothing until there is enough to extrapolate from: half an hour of readings at
@@ -248,7 +250,7 @@ The strip across the top is the panel's own toolbar:
 - **Updated 14s ago** — how long since Lancetta last read an agent, and, clicked, **Refresh now** (⌘R). It asks every agent that can be asked: Codex, and Claude once it is connected. Through the status-line file instead, the Claude card is refreshed by the next session that renders one, not by this — and the card says so, with the Connect button that would change it. It never raises the keychain dialog: that belongs to Connect alone. It spins while the read is on its way and the panel stays open, so you can watch the numbers move; it turns amber once three polls, and at least three minutes, have gone by without a reading.
 - **Update** — a button naming the new version, drawn only when one is out. It opens the update prompt. The rest of the time it is not there, because a button whose answer is nearly always "you are up to date" teaches you to stop looking at it.
 - **The pin** — see below.
-- **The gear**, in the corner — a menu of Lancetta's commands: **Open Lancetta…** (⌘O), which opens the window on the pane it was left on (every suggestion, usage over weeks, both agents in detail, the process list and Maintenance; see [The Window](/docs/the-window)), **Settings…** (⌘,), **Check for Updates…**, **About Lancetta** and **Quit Lancetta** (⌘Q). The shortcuts work with the panel open, whether the menu is or not.
+- **The gear**, in the corner — a menu of Lancetta's commands: **Open Lancetta…** (⌘O), which opens the window on the pane it was left on (every suggestion, usage over weeks, both agents in detail, the process list, Maintenance and your sessions; see [The Window](/docs/the-window)), **Settings…** (⌘,), **Check for Updates…**, **About Lancetta** and **Quit Lancetta** (⌘Q). The shortcuts work with the panel open, whether the menu is or not.
 
 There is no footer: a card opens the window on its own pane.
 
@@ -259,15 +261,15 @@ menu-bar item again.
 
 ### Pinning it
 
-The **pin** in the top-right corner keeps the panel on screen. Pinned, none of those
-three things closes it — not a click elsewhere, not another window taking the keyboard,
-not the pointer leaving the item — and neither does choosing Settings or Open
-Lancetta inside it, which open their window beside it. It stays in front of
+The **pin**, beside the gear, keeps the panel on screen. Pinned, it no longer closes
+on a click elsewhere, on another window taking the keyboard or on the pointer leaving
+the item, and neither does choosing Settings or Open Lancetta inside it, which open
+their window beside it. It stays in front of
 whatever you are working in, and you can drag it away from the menu bar to wherever
 suits, by any empty part of it: beside the header, between the cards or around them.
 A card still opens and closes when clicked.
 
-**Escape still closes it.** The pin is remembered, so it opens pinned next time.
+**Escape, or a click on the menu-bar item, still closes it.** The pin is remembered, so it opens pinned next time.
 
 ### Opening it without clicking
 
@@ -295,8 +297,8 @@ What sits in the menu bar is configurable per agent: its mark, its percentage, i
 | --- | --- |
 | **green** | up to 50% of the window spent — work |
 | **amber** | over 50%, up to 80% — still yours, but it is going |
-| **red** | over 80% — finish what you are on |
-| **black, red edge** | refused, or nothing left. Unusable until it comes back |
+| **red** | over 80%, under 99% — finish what you are on |
+| **black, red edge** | refused, or 99% and over. Unusable until it comes back |
 
 A window nobody has managed to read yet shows a **grey** bead rather than a green one. An unknown is not an empty quota, and this app exists because a status line once drew one as the other.
 
