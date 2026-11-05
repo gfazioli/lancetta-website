@@ -35,13 +35,23 @@ describe('NewsletterModal', () => {
 
   const isOpen = () => document.documentElement.hasAttribute(PROMPT_OPEN_ATTRIBUTE);
   // The dialog is a chunk of its own, loaded when the prompt opens: a test
-  // that opens it waits for it to land.
-  const dialog = () => screen.findByRole('dialog');
+  // that opens it waits for it to land. The wait gets 3 s, not
+  // `findByRole`'s 1 s. On an idle machine the first test waited 65 ms and
+  // the others 6 ms. A machine busy running the rest of the suite stretched
+  // a cold import of the chunk from 125 ms to 4.8 s, and the first test
+  // failed with nothing on the page, on main too.
+  const dialog = () => screen.findByRole('dialog', {}, { timeout: 3_000 });
   const openPrompt = () => {
     scrollTo(1300);
     runFrames();
     return dialog();
   };
+
+  // The chunk is loaded once before any test, so the first wait no longer
+  // includes loading it: 27 ms instead of 65 ms on an idle machine. The rest
+  // is the dialog's first render. The hook gets a time limit of its own,
+  // because it pays the load that used to fall inside a test.
+  beforeAll(() => import('./PromptDialog'), 30_000);
 
   beforeEach(() => {
     localStorage.clear();
