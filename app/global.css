@@ -17,6 +17,20 @@
   }
 
   /*
+   * The product bar shows its menus from 75em and its hamburger below that,
+   * and the hamburger opens Nextra's mobile panel, which Nextra hides from
+   * 48rem up. Between the two the hamburger opened nothing (#125; a 20px
+   * default font widens the gap to 960–1500px), so the panel stays available
+   * until the menus take over. Closed, it is still translated off screen, so
+   * this shows nothing on its own. The same rule as vicenda.app's.
+   */
+  @media (width >= 48rem) and (width < 75em) {
+    .nextra-mobile-nav {
+      display: flex;
+    }
+  }
+
+  /*
    * The bar's height, in ONE place. Nextra lays its sidebar, its table of
    * contents and every sticky heading out against `--nextra-navbar-height`,
    * and the bar those offsets are measured from is now ours — so the value
