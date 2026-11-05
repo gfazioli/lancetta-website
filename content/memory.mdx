@@ -18,7 +18,7 @@ They exit when they are told to. The trouble is what happens when nobody tells t
 
 Either way the result is certain: **nothing will ever reap them.**
 
-They also hide well. The broker is a `node` process and shows in Activity Monitor under that generic name, so what looks like twenty-eight processes is really forty-two. And a tree is deeper than its own documentation says: the shape published for it is three processes, and a real one measured **eleven descendants holding 392 MB**, because the server had gone on to spawn helpers of its own. Lancetta walks the parent table rather than trusting a fixed depth.
+They also hide well. The broker is a `node` process and shows in Activity Monitor under that generic name, so what looks like twenty-eight processes is really forty-two. And a tree is deeper than its own documentation says: the shape published for it is three processes, and a real one measured **eleven descendants holding 392 MB**, because the server had gone on to spawn helpers of its own. Lancetta walks the parent table rather than trusting the published shape.
 
 ## What that cost, once, on one Mac
 
@@ -47,7 +47,7 @@ Three things keep it that way, and each one is a way the obvious version would h
 
 When some trees are orphaned, a **suggestion** says so — *3 orphaned Codex trees hold 1.05 GB*, with *Reclaim the memory: nothing can reconnect to them* and a **Reclaim…** button. It rests on one fact, which it names: the trees were *started for folders that no longer exist*. The Overview shows it with every other suggestion. The panel shows it when it is among the three most urgent, and housekeeping comes after anything about your quota.
 
-The panel also has a **Processes** card whenever trees are running: how many, and what they hold. Opened, it is one strip with a **Reclaim** button when some are orphaned. It is not drawn when no trees are running, because a permanent card of zeroes teaches you to stop reading that part of the panel.
+The panel also has a **Processes** card whenever trees are running: how many, and what they hold. Opened, it is one strip with a button naming what the orphans hold, such as **Reclaim 1.05 GB**, when some are orphaned, and *nothing orphaned* when none are. It is not drawn when no trees are running, because a permanent card of zeroes teaches you to stop reading that part of the panel.
 
 The [window's Processes pane](/docs/the-window#processes) has the whole list: each tree, the directory it was started for, what it is holding, how many children it has.
 

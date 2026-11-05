@@ -94,7 +94,7 @@ export const faqEntries: FaqEntry[] = [
     value: 'surfaces',
     question: 'Is Lancetta only in the menu bar?',
     answer:
-      'Mostly, and that is the point. There is also a window — ⌘O from the panel — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code and Codex sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock unless you ask it to in Settings › General, and closing the window quits nothing. On a MacBook Pro the reading also sits under the notch. And on any Mac the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
+      'Mostly, and that is the point. There is also a window — ⌘O from the panel — with the same suggestions first, the daily token chart, both agents in detail, the background processes the agents have left running, Maintenance, which checks the files they read at every start, and Sessions, the wall of your Claude Code and Codex sessions. A Dock icon appears while that window is open and goes again when you close it, because a window needs its app to be a normal one; at rest Lancetta keeps nothing in the Dock unless you ask it to in Settings › General, and closing the window quits nothing. On a Mac with a notch the reading also sits under it. And on any Mac the sessions can have a menu-bar item of their own, counting the ones that wait on you.',
   },
   {
     value: 'command-line',

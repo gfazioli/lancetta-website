@@ -177,7 +177,7 @@ const features: Feature[] = [
   {
     icon: IconLayoutNavbar,
     title: 'Under the notch',
-    description: 'On a MacBook Pro, the advice lives in the notch too.',
+    description: 'On a Mac with a notch, the advice lives in it too.',
     color: 'violet',
     href: '/docs/the-notch',
   },
