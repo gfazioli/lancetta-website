@@ -15,6 +15,19 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
         -->
         <!-- release.sh inserts new <item> entries right below this marker -->
         <item>
+            <title>Version 0.68.2</title>
+            <pubDate>Fri, 06 Nov 2026 11:13:34 +0000</pubDate>
+            <sparkle:version>636</sparkle:version>
+            <sparkle:shortVersionString>0.68.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>15.0</sparkle:minimumSystemVersion>
+            <sparkle:releaseNotesLink>https://lancetta.app/release-notes/0.68.2.html</sparkle:releaseNotesLink>
+            <enclosure
+                url="https://github.com/gfazioli/lancetta-website/releases/download/v0.68.2/Lancetta-0.68.2.dmg"
+                sparkle:edSignature="0C90muA6/4SFnyepY1GBguHIlU3qs+hKWKsDwWYd5NFwm6P/Y8qxCghnI8jI99nwz+7WD9p4xFFe6EuqFTXwBg==" length="20908189"
+                type="application/octet-stream" />
+        </item>
+
+        <item>
             <title>Version 0.68.1</title>
             <pubDate>Thu, 05 Nov 2026 18:24:36 +0000</pubDate>
             <sparkle:version>632</sparkle:version>
@@ -614,6 +627,6 @@ IMPORTANT: This file was signed by Sparkle. Any modifications to this file requi
 
     </channel>
 </rss><!-- sparkle-signatures:
-edSignature: lNwPfL91eGPkYBPXVcbVDSklbpFryGV49kFgCQUom9WmqI6SHJQIxPIFBVkfPPLVwdnSvFXtrsrnCulCUmxKBw==
-length: 44555
+edSignature: 1v/DQx2uujX1vZ39ggX/pz6K0fW4Ywi2P9aMN3Y1LIjusU8LuByT/GFg9DZQI6XTNeH0O5mCUzIs+W88m3WRDw==
+length: 45341
 -->
