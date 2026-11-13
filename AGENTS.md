@@ -32,6 +32,14 @@ Anything read off a screenshot is **not** a claim and must not become one: the c
   `.module.css` of its own**: each costs every page a render-blocking stylesheet.
 - **Never hide served content until a script runs.**
 
+## Tutorials in the docs
+
+`<Tutorial n={N} />` puts a Lancetta Tutorial (the YouTube series, `components/Tutorial/tutorials.ts`) in the docs section that covers it: the poster and a Play pill until clicked, nothing from YouTube before that, a VideoObject in the served HTML. The films' subtitles are burned into the picture, so the player starts with YouTube's own captions off (`TutorialPlayer`, as on findergit-website and netfox-website); the viewer's CC button still works.
+
+- A film is listed on the day it goes out, with its YouTube id and its `published` time: a page that names a film not listed fails the build, and `Tutorial.test.tsx` fails a page that embeds one before that time (an early embed shows "Video unavailable").
+- Sections: 01 `getting-started` (Install) · 02 `suggestions` (What a suggestion says) · 03 `the-menu`.
+- Posters are `public/tutorials/lancetta-tutorial-NN.jpg`, 1280x720, the film's opening card, through ImageOptim.
+
 ## Read before you change
 
 | Working on | Read first |
