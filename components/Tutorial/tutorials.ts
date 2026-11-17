@@ -64,6 +64,15 @@ export const TUTORIALS: TutorialFilm[] = [
     seconds: 97.6,
     published: '2026-11-13T18:20:00+01:00',
   },
+  {
+    n: 4,
+    id: '-PFOdupUYP4',
+    title: 'The island under the notch',
+    summary:
+      'On a MacBook with a notch, Lancetta also lives under it: one thin bar per agent, red when an agent stops within the hour. In this tutorial, read the collapsed island, point at it to open it, and read the advice at its foot.',
+    seconds: 121.4,
+    published: '2026-11-16T17:00:00+01:00',
+  },
 ];
 
 /** The film numbered `n`; a number with no film is a typo in a page, or a film not out yet, and fails the build. */
