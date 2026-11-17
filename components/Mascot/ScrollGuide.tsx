@@ -145,6 +145,8 @@ export function ScrollGuide() {
   const [card, setCard] = useState<HTMLElement | null>(null);
   // Its box, in whichever place it is.
   const box = useRef<HTMLDivElement>(null);
+  // Its own button in the corner, which stays when its bubble folds.
+  const walker = useRef<HTMLButtonElement>(null);
   // What the page says about where it belongs.
   const seen = useRef<Seen>({
     ready: false,
@@ -198,6 +200,23 @@ export function ScrollGuide() {
   }, []);
 
   /**
+   * Folds the bubble it did not leave with: on its timer, or once the row is
+   * scrolled past. The keyboard on the sentence or on Dismiss would drop to
+   * the page as the bubble unmounts, so it goes to its own button, which stays
+   * (netfox.app's #129, from vicenda.app's #47; `handFocusBack` is for when
+   * it goes itself). The panel opening needs none of this: the panel takes
+   * the focus.
+   */
+  const fold = useCallback(() => {
+    const el = box.current;
+    const focused = document.activeElement;
+    if (el?.contains(focused) && focused !== walker.current) {
+      walker.current?.focus({ preventScroll: true });
+    }
+    setBubble(false);
+  }, [setBubble]);
+
+  /**
    * Once it stands in the corner with the row in view where the one under the
    * bar has no room, it says that one's sentence, once, after its hop.
    */
@@ -219,7 +238,7 @@ export function ScrollGuide() {
         ) {
           told.current = true;
           setBubble(true);
-          later(() => setBubble(false), HERO_FOLD_MS);
+          later(fold, HERO_FOLD_MS);
         }
       };
       if (reducedNow.current) {
@@ -228,7 +247,7 @@ export function ScrollGuide() {
         later(open, HOP_MS);
       }
     },
-    [later, setBubble]
+    [fold, later, setBubble]
   );
 
   /** Moves it to where it belongs: out of where it is first, then in. */
@@ -319,7 +338,7 @@ export function ScrollGuide() {
       // Above the window counts: a page reloaded halfway down has passed it.
       page.reached = visible || bottom <= 0;
       if (!visible) {
-        setBubble(false);
+        fold();
       }
       sync();
     };
@@ -359,7 +378,7 @@ export function ScrollGuide() {
       window.removeEventListener('scroll', scrolled);
       window.removeEventListener('resize', resized);
     };
-  }, [sync, setBubble]);
+  }, [sync, fold]);
 
   // The footer's Support card.
   useEffect(() => {
@@ -471,6 +490,7 @@ export function ScrollGuide() {
       inert={phase === 'leaving'}
     >
       <button
+        ref={walker}
         type="button"
         className={classes.walker}
         aria-label="Open Lancetta’s panel"

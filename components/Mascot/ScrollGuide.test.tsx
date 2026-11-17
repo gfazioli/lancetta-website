@@ -324,6 +324,49 @@ describe('ScrollGuide', () => {
     expect(corner()).toBeNull();
   });
 
+  describe('folding a bubble the keyboard is in', () => {
+    // netfox.app's #129, from vicenda.app's #47: a bubble folded on its own
+    // took the focused sentence or Dismiss with it, and the focus dropped to
+    // the page. The character stays, so the focus goes to it.
+    const focusSentence = () => act(() => screen.getByRole('button', { name: HERO_LINE }).focus());
+    const onFigure = () => expect(document.activeElement).toBe(figure());
+
+    /** Its sentence, said from the corner on a phone. */
+    const sentenceOpen = () => {
+      onAPhone();
+      render(<Page />);
+      wait(DELAY_MS);
+      rowOnScreen();
+      wait(CORNER_IN_MS + HOP_MS);
+      expect(screen.getByText(HERO_LINE)).toBeInTheDocument();
+    };
+
+    it('on its timer', () => {
+      sentenceOpen();
+      focusSentence();
+      wait(HERO_FOLD_MS);
+      expect(screen.queryByText(HERO_LINE)).toBeNull();
+      onFigure();
+    });
+
+    it('once the row is scrolled past', () => {
+      sentenceOpen();
+      act(() => screen.getByRole('button', { name: 'Dismiss' }).focus());
+      rowPassed();
+      expect(screen.queryByText(HERO_LINE)).toBeNull();
+      onFigure();
+    });
+
+    it('and, when the prompt sends it off too, to the page, not to nothing', async () => {
+      sentenceOpen();
+      focusSentence();
+      await act(async () => {
+        document.documentElement.setAttribute(PROMPT_OPEN_ATTRIBUTE, 'open');
+      });
+      expect(document.activeElement).toBe(screen.getByRole('link', { name: 'See what it does' }));
+    });
+  });
+
   it('hands the keyboard focus to a control in view rather than the one before it', () => {
     inTheCorner();
     const inView = screen.getByRole('link', { name: 'In view' });
