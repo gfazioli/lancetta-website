@@ -73,6 +73,15 @@ export const TUTORIALS: TutorialFilm[] = [
     seconds: 121.4,
     published: '2026-11-16T17:00:00+01:00',
   },
+  {
+    n: 5,
+    id: 'AM-rM0UuQX4',
+    title: 'Desktop widgets',
+    summary:
+      'Lancetta puts the suggestion that matters, and the windows it rests on, on the desktop. In this tutorial, add the widgets from the gallery, read the small and the medium one, see how they stay honest about time, and why nothing on them is said by colour alone.',
+    seconds: 121.97,
+    published: '2026-11-19T17:00:00+01:00',
+  },
 ];
 
 /** The film numbered `n`; a number with no film is a typo in a page, or a film not out yet, and fails the build. */
