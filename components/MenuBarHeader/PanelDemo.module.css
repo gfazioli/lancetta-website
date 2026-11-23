@@ -322,12 +322,7 @@
 }
 
 .tileValue {
-  font-family:
-    ui-rounded,
-    'SF Pro Rounded',
-    -apple-system,
-    system-ui,
-    sans-serif;
+  font-family: ui-rounded, 'SF Pro Rounded', -apple-system, system-ui, sans-serif;
   font-size: 21px;
   font-weight: 600;
   font-variant-numeric: tabular-nums;

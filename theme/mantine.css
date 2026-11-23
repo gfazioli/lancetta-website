@@ -655,7 +655,7 @@ fieldset:disabled .mantine-active:active {
       [data-offset-scrollbars='y'],
       [data-offset-scrollbars='present']
     ):not([data-vertical-hidden]) {
-        padding-inline-end: var(--scrollarea-scrollbar-size);
+        padding-inline-end: var(--scrollarea-offset-size, var(--scrollarea-scrollbar-size));
         padding-inline-start: unset;
       }
 
@@ -665,7 +665,7 @@ fieldset:disabled .mantine-active:active {
       [data-offset-scrollbars='present']
     ):not([data-vertical-hidden]):where([data-vertical-scrollbar-position='left']) {
           padding-inline-end: unset;
-          padding-left: var(--scrollarea-scrollbar-size);
+          padding-left: var(--scrollarea-offset-size, var(--scrollarea-scrollbar-size));
           padding-right: unset;
         }
 
@@ -676,7 +676,7 @@ fieldset:disabled .mantine-active:active {
     ):not([data-vertical-hidden]):where([data-vertical-scrollbar-position='right']) {
           padding-inline-end: unset;
           padding-left: unset;
-          padding-right: var(--scrollarea-scrollbar-size);
+          padding-right: var(--scrollarea-offset-size, var(--scrollarea-scrollbar-size));
         }
 
 .m_c0783ff9:where([data-scrollbars='xy'], [data-scrollbars='x']):where(
@@ -692,7 +692,7 @@ fieldset:disabled .mantine-active:active {
       [data-offset-scrollbars='x'],
       [data-offset-scrollbars='present']
     ):not([data-horizontal-hidden]) {
-        padding-bottom: var(--scrollarea-scrollbar-size);
+        padding-bottom: var(--scrollarea-offset-size, var(--scrollarea-scrollbar-size));
       }
 
 .m_f8f631dd {
@@ -867,7 +867,7 @@ fieldset:disabled .mantine-active:active {
 
 .m_87cf2631 {
   background-color: transparent;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   border: 0;
   padding: 0;
   appearance: none;
@@ -1077,7 +1077,7 @@ fieldset:disabled .mantine-active:active {
   background: var(--ai-bg, var(--mantine-primary-color-filled));
   color: var(--ai-color, var(--mantine-color-white));
   border: var(--ai-bd, calc(0.0625rem * var(--mantine-scale)) solid transparent);
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 }
 
   @media (hover: hover) {
@@ -1394,7 +1394,7 @@ fieldset:disabled .mantine-active:active {
   flex-direction: row-reverse;
   padding-inline: var(--mantine-spacing-md);
   opacity: 1;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   background-color: transparent;
   color: var(--mantine-color-bright);
 }
@@ -1694,7 +1694,7 @@ fieldset:disabled .mantine-active:active {
   padding: 0;
   margin: 0;
   background-color: transparent;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
 }
 
   @media (hover: hover) {
@@ -1972,7 +1972,7 @@ fieldset:disabled .mantine-active:active {
   overflow: hidden;
 
   width: auto;
-  cursor: pointer;
+  cursor: var(--mantine-cursor-type);
   display: inline-block;
   border-radius: var(--button-radius, var(--mantine-radius-default));
   font-size: var(--button-fz, var(--mantine-font-size-sm));
