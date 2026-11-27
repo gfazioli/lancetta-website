@@ -229,13 +229,6 @@ const frames: Frame[] = [
   },
 ];
 
-const HERO_SHOT = {
-  src: '/screenshot-menu-dark.png',
-  width: 760,
-  height: 1694,
-  alt: 'The Lancetta panel: three suggestions first, the most urgent open: at this pace Claude stops in 51m, then waits 1h18m for its reset, with what helps (pause the ones that can wait, since 2 sessions of Claude are working at once; lower the effort; a lighter model for routine work; no free reset to fall back on; move the next tasks to Codex) and what it rests on, down to the Sessions pane showing 2 of its sessions working now; then Codex has room, and Maintenance found 4 warnings. Under them the window in brief: Claude’s card open, its 5-hour bar at 82% carried on in hatched amber to a mark at its end, the pace line under it, then its 7-day and Fable bars; Codex at 20%, Usage, Maintenance, and Sessions with 4 waiting on you · 3 working',
-};
-
 export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Cadence }) {
   const released = config.app.released;
   /*
@@ -399,24 +392,6 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
 
           <DirectoryBadges placement="hero" mt="md" badgeClassName={classes.badge} />
         </div>
-
-        {/*
-          The page's largest paint, so it goes through next/image: WebP at the
-          size it is drawn (560px, or the column on a phone) instead of the
-          134 KB PNG, eager and high priority. `priority` is deprecated in
-          Next 16 in favour of exactly these two.
-        */}
-        <Image
-          component={NextImage}
-          src={HERO_SHOT.src}
-          alt={HERO_SHOT.alt}
-          width={HERO_SHOT.width}
-          height={HERO_SHOT.height}
-          sizes="(max-width: 36em) 100vw, 560px"
-          className={classes.openingShot}
-          loading="eager"
-          fetchPriority="high"
-        />
 
         <div className={classes.frames}>
           {frames.map((frame, i) => (
