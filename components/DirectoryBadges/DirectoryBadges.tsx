@@ -14,10 +14,10 @@ type Placement = (typeof config.directoryBadges)[number]['placement'];
  * every badge in its row is drawn at; the width follows from the
  * `width`/`height` attributes, which are the badge's own.
  *
- * Lazy, unlike the hero's shot: React 19 preloads, at the top of the document,
- * every `<img>` the server renders without `loading="lazy"`, and an eager badge
- * from a third-party origin would be queued there beside the page's largest
- * paint. A lazy image near the viewport is still fetched as soon as the page is
+ * Lazy: React 19 preloads, at the top of the document, every `<img>` the
+ * server renders without `loading="lazy"`, and an eager badge from a
+ * third-party origin would be queued there ahead of what the page paints
+ * first. A lazy image near the viewport is still fetched as soon as the page is
  * laid out; it is just no longer queued ahead of what the hero is made of.
  *
  * The links carry no `nofollow`, `sponsored` or `ugc`: a directory that checks
