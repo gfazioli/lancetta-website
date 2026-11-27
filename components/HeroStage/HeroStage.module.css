@@ -560,7 +560,7 @@
  * page was still arriving: Chrome paints the HTML it has, the section is
  * then a fraction of its height, and the rest of the page takes the glows
  * down with it. Served in two parts, the home measured up to 0.93 of layout
- * shift on a phone and 0.13 on a desktop (2026-11-27; netfox.app had the same,
+ * shift on a phone and 0.49 on a desktop (2026-11-27; netfox.app had the same,
  * netfox-website#158). In rem they stay put while the page grows under them.
  *
  * The values are where 2%, 8% and 76% of the finished section fell (Chrome,
