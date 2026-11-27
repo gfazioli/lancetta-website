@@ -144,3 +144,30 @@ describe('HeroStage frames', () => {
     expect(card).toHaveAttribute('data-revealed');
   });
 });
+
+describe('HeroStage wash', () => {
+  it('places the glows from the top in rem, never as a share of the height', () => {
+    // What the server sends is what Chrome paints while the rest of the page
+    // is still arriving: a glow at a % of the section's height then moves as
+    // the section grows, up to 0.93 of layout shift on a phone.
+    const html = renderToString(
+      <MantineProvider theme={theme}>
+        <HeroStage />
+      </MantineProvider>
+    );
+    const doc = new DOMParser().parseFromString(html, 'text/html');
+    const glows = [...doc.querySelectorAll<HTMLElement>('#overview .mantine-Scene-glow')];
+    expect(glows.map((glow) => glow.style.top)).toEqual([
+      'var(--lan-glow-a-top)',
+      'var(--lan-glow-b-top)',
+      'var(--lan-glow-c-top)',
+    ]);
+    // The section carries the class that sets them, and every value is rem:
+    // without it the glows fall back to `top: auto` and pile at the top.
+    expect(doc.querySelector('#overview')?.classList.contains('glows')).toBe(true);
+    const css = readFileSync(join(__dirname, 'HeroStage.module.css'), 'utf8');
+    const values = [...css.matchAll(/--lan-glow-[abc]-top:\s*([^;]+);/g)].map((m) => m[1]);
+    expect(values).toHaveLength(9);
+    expect(values.every((value) => /^[\d.]+rem$/.test(value))).toBe(true);
+  });
+});
