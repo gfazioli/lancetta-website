@@ -10,8 +10,9 @@
  * this app is SwiftUI, so here it is a copy, and a copy drifts. Three things
  * keep it honest:
  *
- * - the numbers are the ones in the hero's menu screenshot, so the reading in
- *   the bar, the panel it opens and the picture under it tell one story
+ * - the numbers are the ones in the menu screenshot (`screenshot-menu-dark.png`,
+ *   on /docs and /docs/the-menu since it left the hero on 2026-11-27), so the
+ *   reading in the bar, the panel it opens and that picture tell one story
  *   (`panel-demo.test.ts` compares the bar against this file). Since 0.50.0
  *   that screenshot is the app's capture cast (`LANCETTA_DEMO_AGENT=showcase`),
  *   posed with these same numbers, and every sentence of a suggestion is the
@@ -180,7 +181,7 @@ export function refreshLabel(ageSeconds: number, refreshing = false) {
 }
 
 /**
- * The panel in the hero's menu screenshot, row for row: one afternoon on which
+ * The panel in the menu screenshot, row for row: one afternoon on which
  * Claude is about to stop and Codex has a window about to go unused. Since
  * 0.61.0 the cast also has two Claude sessions working, so the stop suggestion
  * opens on them and its basis counts them (read off the cast's own usage.json).
