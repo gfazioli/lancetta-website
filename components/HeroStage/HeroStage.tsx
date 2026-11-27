@@ -257,9 +257,31 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
           ]}
           opacity={0.13}
         />
-        <Scene.Glow color="#13D1FB" size={560} blur={160} opacity={0.14} top="2%" left="12%" />
-        <Scene.Glow color="#824BFC" size={520} blur={160} opacity={0.16} top="8%" left="78%" />
-        <Scene.Glow color="#B117C5" size={420} blur={150} opacity={0.1} top="76%" left="58%" />
+        {/* Placed in rem from the section's top, never in %: `.glows` says why. */}
+        <Scene.Glow
+          color="#13D1FB"
+          size={560}
+          blur={160}
+          opacity={0.14}
+          top="var(--lan-glow-a-top)"
+          left="12%"
+        />
+        <Scene.Glow
+          color="#824BFC"
+          size={520}
+          blur={160}
+          opacity={0.16}
+          top="var(--lan-glow-b-top)"
+          left="78%"
+        />
+        <Scene.Glow
+          color="#B117C5"
+          size={420}
+          blur={150}
+          opacity={0.1}
+          top="var(--lan-glow-c-top)"
+          left="58%"
+        />
         <Scene.DotGrid color="gray" opacity={0.1} spacing={32} />
       </Scene>
       <div className={classes.dialBox} aria-hidden="true">
@@ -276,7 +298,7 @@ export function HeroStage({ cadence = fallbackReleaseCadence() }: { cadence?: Ca
   return (
     <section
       id="overview"
-      className={`lan-feather ${classes.hero}`}
+      className={`lan-feather ${classes.hero} ${classes.glows}`}
       aria-label="Lancetta, at a glance"
     >
       {wash}

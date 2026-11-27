@@ -553,3 +553,38 @@
     animation: none;
   }
 }
+
+/*
+ * Where the wash's three glows stand, from the top of the section, in rem.
+ * As a share of the section's height (2%, 8% and 76%) they moved while the
+ * page was still arriving: Chrome paints the HTML it has, the section is
+ * then a fraction of its height, and the rest of the page takes the glows
+ * down with it. Served in two parts, the home measured up to 0.93 of layout
+ * shift on a phone and 0.13 on a desktop (2026-11-27; netfox.app had the same,
+ * netfox-website#158). In rem they stay put while the page grows under them.
+ *
+ * The values are where 2%, 8% and 76% of the finished section fell (Chrome,
+ * 2026-11-27): 7390 to 8210 px tall under 48em, 8220 to 9350 px to 62em, and
+ * 5150 to 5320 px from there, where the frames go to two columns. Measured
+ * against the old placement at 12 widths from 360 to 1920px: the two high
+ * glows within 57px; the low one, the faintest (opacity 0.1), within 114px on
+ * phones and desktops and up to 480px at the edges of the middle tier (767,
+ * 768 and 991px), where the section's height changes fastest.
+ */
+.glows {
+  --lan-glow-a-top: 9.4rem;
+  --lan-glow-b-top: 37.5rem;
+  --lan-glow-c-top: 360rem;
+
+  @media (min-width: $mantine-breakpoint-sm) {
+    --lan-glow-a-top: 11rem;
+    --lan-glow-b-top: 44rem;
+    --lan-glow-c-top: 417rem;
+  }
+
+  @media (min-width: $mantine-breakpoint-md) {
+    --lan-glow-a-top: 6.6rem;
+    --lan-glow-b-top: 26.5rem;
+    --lan-glow-c-top: 251rem;
+  }
+}
