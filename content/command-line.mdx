@@ -85,7 +85,8 @@ The app rewrites the document after every read, once a refresh interval (45 seco
       ],
       "basis": "5 hours: 41% used, 51% an hour over the last 1h00m, from 14 readings. The Sessions pane shows 2 of its sessions working now.",
       "at": 1790404200,
-      "first": true
+      "first": true,
+      "window": "fiveHour"
     }
   ]
 }
@@ -113,6 +114,7 @@ The app rewrites the document after every read, once a refresh interval (45 seco
 | `title`, `steps`, `basis` | The words, for a person: what is happening, what to do (one step each, the most useful first), and what it rests on. They may be reworded in any version: a script matches on `kind`, `tone` and `agent`. |
 | `at` | When it matters, the stop, the reset or the lapse, or `null`. |
 | `first` | `true` on the one the island under the notch shows: the most urgent about an agent. |
+| `window` | The window it is about, `fiveHour` or `sevenDay`, or `null` for one about no window (a lapse, the Mac). Match on this, never on the words of `basis`. |
 
 Three rules hold everywhere in it:
 
@@ -225,16 +227,41 @@ One sentence: the suggestion that matters for the task at hand, such as "At this
 - `lancetta usage --json` exits 0 when it printed, 1 when there is no document yet (Lancetta is not running), and 74 when the document cannot be read.
 ```
 
+## Lancetta's records: history, sessions and tokens
+
+Three more commands print what Lancetta keeps in its own records, worked out when you ask by the app's own rules, so a script, an agent or the Raycast extension never has to read the app's private files or copy its rules. Each document has its own `schema`, under the same promise as `usage --json`; times are epoch seconds, an unknown is `null`, and every key is written. None of them reads an agent or the keychain, and none needs the app running, though the quota series grows, and the session wall changes, only while it is: compare `usage --json`'s `writtenAt` to tell.
+
+**`lancetta history --json`** prints, for each agent `usage --json` lists, the readings Lancetta recorded in its current windows, and in the window before each one, on one line:
+
+```json
+{"schema": 1, "app": "0.70.0", "asOf": 1790400000, "agents": [
+  {"agent": "Codex", "route": "appServer", "windows": [
+    {"window": "fiveHour", "length": 18000, "resetsAt": 1790410000,
+     "readings": [{"at": 1790395000, "usedPercent": 10}, {"at": 1790398000, "usedPercent": 20}],
+     "previous": {"resetsAt": 1790392000, "readings": [{"at": 1790380000, "usedPercent": 80}]}}
+  ]}
+]}
+```
+
+A window is `fiveHour`, `sevenDay`, or a model's `id` from `models`. Its readings are already one agent's, one route's, one account's and one window's: a window is told by its reset, which a source can move by up to half the window's length, so a reading can sit before the window's opening (`resetsAt` minus `length`), and a chart that starts at the opening cuts it there. `previous` is the window that ended as this one opened, or `null` when Lancetta did not record it. An agent with no reading has no windows.
+
+**`lancetta sessions --json`** prints the [Sessions](/docs/sessions) wall as Lancetta shows it: what waits on you (`yourTurn`), what is working, then the concluded sessions (`done`), the latest first. Each session has its `agent` (`claude` or `codex`), `kind`, `column`, `status`, `title`, `cwd`, `started`, `since`, `worked` and `waited` in seconds, `doneAt` and `doneBy`, its ids (`room`, `conversation`, `thread`), and **`opening`**, the command Lancetta's own Open runs: `binary` (`claude` or `codex`), `arguments` quoted for zsh, the `folder` to start in when the command needs one, and the whole `line`. Run `binary` through your own path to it, followed by `arguments`. When nothing opens a session, `opening` is `null` and `opensNot` says why: `working` (a Codex turn is running), `ownTerminal` (an interactive session still runs in its own terminal), `notListed` (its background session is gone) or `noID` (Lancetta recorded nothing that opens it). It holds your sessions' names and folders: what you pass on is yours to choose.
+
+**`lancetta tokens --json`** prints Claude Code's tokens per day and per project, counted as the Usage pane counts them, scanned from the transcripts on this Mac when you run it, so today is counted up to `asOf`: `days`, every day of the period with `0` for a quiet one, and `projects`, most first, each with its `tokens` and the `days` that had any. A project is Claude Code's folder for it without your home folder (`code-app` for `~/code/app`, `~` for the home folder itself). The period is the last 30 days; `--days N` takes 1 to 3650.
+
 ## What may change
 
-`schema` changes only when a field is removed, renamed or changes meaning. A new field can appear in any version, as `advice` did with `schema` still at 1, so ignore the keys you do not know.
+`schema` changes only when a field is removed, renamed or changes meaning, in each of the four documents. A new field can appear in any version, as `advice` and its `window` did with `schema` still at 1, so ignore the keys you do not know.
 
 ## Exit status
 
 - **`usage --json`**: `0` when it printed the document; `1` when there is none yet, said on standard error; `74` when the file cannot be read (a permission, say) or standard output will not take it.
 - **`statusline`**: `0` when it printed the line; `1` when there is no document to read, with `Lancetta: no reading yet` printed instead; `74` when standard output will not take it.
 - **`advice`**: `0` whether it printed or not; `74` when standard output will not take it.
-- **`64`** for anything else: a command it does not know, or an argument a command does not take (`statusline` takes only `--color`, `advice` only `--all`).
+- **`history --json`**: `0` when it printed; `1` when there is no `usage.json` yet, since the series is of the windows it reports; `65` when that document is not one this version reads; `74` when it cannot be read.
+- **`sessions --json`**: `0` when it printed, an empty list before Lancetta has seen a session; `74` when the wall's file cannot be read.
+- **`tokens --json`**: `0` when it printed; `74` when Claude Code's transcripts cannot be read, said on standard error.
+- **`64`** for anything else: a command it does not know, or an argument a command does not take (`statusline` takes only `--color`, `advice` only `--all`, `history` and `sessions` only `--json`, `tokens` `--json` and `--days N`).
 
 Run from a shell (a terminal, a script, an agent), it never starts a second copy of the app: `lancetta` alone, `lancetta Usage --json` or `lancetta -v` prints the usage and exits `64`. `lancetta --help` prints the usage on standard output.
 
