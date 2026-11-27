@@ -470,12 +470,14 @@ function FrameSection({ frame, side }: { frame: Frame; side: 'left' | 'right' })
       aria-label={frame.title}
     >
       {/*
-        Every frame is below the fold. As plain <img>s React preloaded all four
-        at the top of the document, so their 595 KB of PNG (the 249 KB window
-        among them) competed with the hero for bandwidth: on Lighthouse's phone
-        the hero's own 95 KB took 4.3 s to arrive (2026-09-29). Lazy, and WebP
-        at the drawn size; the dimensions hold the place, so arriving late
-        moves nothing.
+        On a phone every frame is below the fold. As plain <img>s React
+        preloaded all four at the top of the document, so their 595 KB of PNG
+        (the 249 KB window among them) competed with the hero for bandwidth: on
+        Lighthouse's phone the hero's own 95 KB took 4.3 s to arrive
+        (2026-09-29). Lazy, and WebP at the drawn size; the dimensions hold the
+        place, so arriving late moves nothing. On a desktop the first frame now
+        shows in the first screen and is the LCP, lazy as it is: 1.0 s,
+        performance 99 (Lighthouse desktop, 2026-11-27), so it stays lazy.
       */}
       {frame.src && (
         <Reveal variant={side} className={classes.frameShot}>

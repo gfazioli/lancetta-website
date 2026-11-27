@@ -59,9 +59,9 @@ export function ledBand(percent: number): LedBand {
 /**
  * The reading the header quotes, for both agents, because the bar shows them in
  * turn: each agent's 5-hour window in the panel it opens (`panel-demo.ts`),
- * which is the hero's menu screenshot, so the thing at the top of the page and
- * the picture under it tell one story. Read off that panel rather than written
- * twice.
+ * which is the menu screenshot on /docs and /docs/the-menu, so the thing at
+ * the top of every page and that picture tell one story. Read off that panel
+ * rather than written twice.
  *
  * ILLUSTRATION, not a claim: the app's capture cast on one afternoon. Every
  * figure the prose states comes from the measurement table in CLAUDE.md instead.
